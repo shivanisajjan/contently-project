@@ -65,14 +65,14 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/delete/{username}")
-    public ResponseEntity<String> delete(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+    public ResponseEntity<?> delete(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
         userService.deleteUser(username);
-        return new ResponseEntity<String>("Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Deleted Successfully"), HttpStatus.OK);
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<String> update(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
-        userService.deleteUser(username);
-        return new ResponseEntity<String>("Deleted Successfully", HttpStatus.OK);
+    public ResponseEntity<?> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+        userService.updateUser(user);
+        return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Deleted Successfully"), HttpStatus.OK);
     }
 }

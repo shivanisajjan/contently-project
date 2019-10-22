@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService{
             ){
                 throw new NullValueFieldException();
             }
-        if(userRepository.findByUsername(user.getUsername())==null){
+        if(userRepository.findByUsername(user.getUsername()) != null){
             throw new UserAlreadyExistsExceptions();
         }
         try {

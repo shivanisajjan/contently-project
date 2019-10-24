@@ -22,7 +22,7 @@ stages:
 maven_job:
   stage: build
   script:
-    - mvn clean install
+    - mvn clean install -DskipTests
   only:
     - master
     - v1.0.0
@@ -49,7 +49,7 @@ sonarqube_master_job:
 
 maven_build:
   stage: package
-  script: mvn clean package
+  script: mvn clean package -DskipTests
   only:
     - master
     - v1.0.0

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DTOUser {
+    private Long id;
     private String username;
     private String firstName;
     private String lastName;

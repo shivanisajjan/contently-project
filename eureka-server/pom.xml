@@ -6,9 +6,7 @@
 	<groupId>com.stackroute</groupId>
     <artifactId>contently</artifactId>
     <version>1.0.0</version>
-    <packaging>pom</packaging>
-    <name>contently</name>
-	</parent>
+    </parent>
 	<groupId>com.stackroute</groupId>
 	<artifactId>eureka-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

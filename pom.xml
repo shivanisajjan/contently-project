@@ -7,8 +7,6 @@
     <groupId>com.stackroute</groupId>
     <artifactId>contently</artifactId>
     <version>1.0.0</version>
-    <packaging>pom</packaging>
-    <name>contently</name>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

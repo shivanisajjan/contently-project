@@ -3,9 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.stackroute</groupId>
-		<artifactId>shoppers-zoid</artifactId>
-		<version>1.0.0</version>
+	<groupId>com.stackroute</groupId>
+    <artifactId>contently</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>contently</name>
 	</parent>
 	<groupId>com.stackroute</groupId>
 	<artifactId>eureka-server</artifactId>

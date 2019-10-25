@@ -4,8 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.stackroute</groupId>
-		<artifactId>shoppers-zoid</artifactId>
-		<version>1.0.0</version>
+        <artifactId>contently</artifactId>
+        <version>1.0.0</version>
+        <packaging>pom</packaging>
+        <name>contently</name>
 	</parent>
 	<groupId>com.stackroute</groupId>
 	<artifactId>api-gateway</artifactId>

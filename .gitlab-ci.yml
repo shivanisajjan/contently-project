@@ -22,7 +22,7 @@ stages:
 maven_job:
   stage: build
   script:
-    - mvn clean install -DskipTests
+    - mvn clean install
   only:
     - master
     - v1.0.0
@@ -45,11 +45,11 @@ sonarqube_master_job:
   tags:
     - immersive-runner-cgi
   script:
-    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.password=$SONAR_PASSWORD -DskipTests
+    - mvn --batch-mode verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.password=$SONAR_PASSWORD 
 
 maven_build:
   stage: package
-  script: mvn clean package -DskipTests
+  script: mvn clean package 
   only:
     - master
     - v1.0.0
@@ -73,7 +73,7 @@ code_coverage:
   tags:
     - immersive-runner-cgi
   script:
-    - "mvn clean test -DskipTests"
+    - "mvn clean test "
     - "mvn jacoco:report"
     - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/",instructions, "instructions covered"; print 100*covered/instructions, "% covered" }'
   coverage: '/Code coverage: \d+\.\d+/'

@@ -14,7 +14,8 @@ export class EditComponent implements OnInit {
   private body;
   private editorForm: FormGroup;
   private editorStyle = {
-    height: '500px'
+    height: '500px',
+    backgroundColor: 'white',
   };
   str: any;
 

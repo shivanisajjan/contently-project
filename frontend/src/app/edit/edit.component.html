@@ -4,13 +4,12 @@
 <!-- Theme included stylesheets -->
 <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<h1>dhiqhw</h1>
-<!--<div id="editor-wrapper">-->
-<!--  <form  [formGroup]="editorForm" (ngSubmit)="onSubmit()">-->
-<!--    <div class="form-group">-->
-<!--      <quill-editor [styles]="editorStyle" formControlName="editor"></quill-editor>-->
-<!--    </div>-->
-<!--    <input class="btn btn-primary" type="submit" value="Preview">-->
-<!--    <input class="btn btn-primary" type="button" value="Git-View" (click)="goToGitView()">-->
-<!--  </form>-->
-<!--</div>-->
+<div id="editor-wrapper">
+  <form  [formGroup]="editorForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <quill-editor [styles]="editorStyle" formControlName="editor"></quill-editor>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Preview">
+    <input class="btn btn-primary" type="button" value="Git-View" (click)="goToGitView()">
+  </form>
+</div>

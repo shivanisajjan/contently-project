@@ -14,9 +14,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import { QuillModule } from "ngx-quill";
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule} from '@angular/material';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
+import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
+import {MatCardModule} from "@angular/material/card";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [AppComponent,
@@ -24,13 +27,17 @@ import { EditComponent } from './edit/edit.component';
     LoginComponent,
     RegistrationComponent,
     DashboardComponent,
-    EditComponent],
+    EditComponent,
+    BookdetailsComponent
+  ],
 
   imports: [BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatTabsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,

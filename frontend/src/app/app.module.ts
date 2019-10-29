@@ -14,9 +14,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import { QuillModule } from "ngx-quill";
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule} from '@angular/material';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { EditComponent } from './edit/edit.component';
 import { IllustratorDashboardComponent, UploadFileDialog } from './illustrator-dashboard/illustrator-dashboard.component';
 import { EditorDashboardComponent, ChaptersDialog } from './editor-dashboard/editor-dashboard.component';
 import {
@@ -26,6 +23,11 @@ import {
   MatSelectModule
   
 } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditComponent } from './edit/edit.component';
+import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [AppComponent,
@@ -40,6 +42,8 @@ import {
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatTabsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,

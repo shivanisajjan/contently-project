@@ -1,5 +1,14 @@
 #dashboard-section{
   padding-top: 10%;
+  
+}
+
+.carousel-item {
+  padding-bottom: 20%;
+}
+
+.back{
+  background-attachment: fixed;
 }
 
 .dashboard-buttons{
@@ -18,6 +27,8 @@ table {
 .mat-elevation-z8{
   padding-top: 30%;
 }
+
+
 
 @media (min-width: 768px) {
   /* show 3 items */

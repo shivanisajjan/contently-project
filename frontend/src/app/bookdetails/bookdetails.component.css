@@ -1,0 +1,16 @@
+.example-card {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+h1{
+    text-align: center;
+}
+.mat-card-footer{
+    text-align: center;
+    padding: 20px;
+}

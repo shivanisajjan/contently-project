@@ -16,8 +16,8 @@ const  routes: Routes = [
     {path: 'register', component: RegistrationComponent},
     {path: 'edit', component: EditComponent},
     {path: 'illustrator-dashboard', component: IllustratorDashboardComponent},
-    {path: 'editor-dashboard', component: EditorDashboardComponent}
-    {path: 'book-details', component: BookdetailsComponent},
+    {path: 'editor-dashboard', component: EditorDashboardComponent},
+    {path: 'book-details', component: BookdetailsComponent}
 ];
 
 @NgModule({

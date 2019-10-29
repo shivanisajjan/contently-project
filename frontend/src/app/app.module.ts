@@ -9,9 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
 import { QuillModule } from "ngx-quill";
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule} from '@angular/material';
 import { IllustratorDashboardComponent, UploadFileDialog } from './illustrator-dashboard/illustrator-dashboard.component';
@@ -35,7 +35,12 @@ import {MatTabsModule} from "@angular/material/tabs";
     LoginComponent,
     RegistrationComponent,
     DashboardComponent,
-    EditComponent,IllustratorDashboardComponent, UploadFileDialog,EditorDashboardComponent, ChaptersDialog],
+    EditComponent,
+    IllustratorDashboardComponent, 
+    UploadFileDialog,
+    EditorDashboardComponent, 
+    ChaptersDialog,
+    BookdetailsComponent],
 
   imports: [BrowserModule,
     AppRoutingModule,
@@ -63,7 +68,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatTreeModule,
     MatCheckboxModule
   ],
-  entryComponents: [ UploadFileDialog,ChaptersDialog,LoginComponent],
+  entryComponents: [ UploadFileDialog,
+    ChaptersDialog,
+    LoginComponent],
   providers: [LoginService],
   bootstrap: [AppComponent]
 })

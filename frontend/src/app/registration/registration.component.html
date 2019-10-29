@@ -2,7 +2,7 @@
  <div   style="background-image: url('../../assets/images/069 Purple Division.png');" class="register-component site-section bg-light" id="contact-section">
   <div class="container">
 
-    <!-- <div class="row justify-content-center">
+    <div class="row justify-content-center">
       <div class="col-md-7">
 
 
@@ -10,7 +10,7 @@
         <h2 class="section-title mb-3">Register Here</h2>
     
 
-        <form action="" method="post" class="form-box">
+        <!-- <form action="" method="post" class="form-box">
             
                     <div class="form-group">
               <input #username type="text" class="form-control" placeholder="Username">
@@ -51,13 +51,13 @@
             <div class="form-group">
               <input (click) = "register(username.value, password.value, firstname.value, lastname.value, email.value, contact.value, gender.value, nationality.value, address1.value, address2.value, address3.value, dob.value)"type="submit" class="btn btn-primary btn-pill" value="Register">
             </div>
-          </form>
+          </form> -->
           <br>
          
       </div>
-    </div> -->
+    </div> 
 
-    <div class="reg-form col-md-7">
+    <!-- <div class="reg-form col-md-7">
     <form action="" method="post" class="form-box">
       <h3 class="h4 text-black mb-4">Register Here</h3>
       <mat-form-field>
@@ -105,7 +105,138 @@
       <h2 *ngIf = "fail">Login failed</h2> 
   
     </form>
-  </div>
+  </div>-->
   <h2 *ngIf = "registerv" style="color: white">Registered Successfully</h2>
+  
+  <mat-horizontal-stepper linear  #stepper>
+    <mat-step [stepControl]="firstFormGroup" [editable]="false">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your details</ng-template>
+        <!-- <mat-form-field>
+          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field> -->
+         <mat-form-field>
+          <input formControlName="email" #email matInput placeholder="Email" class="col">
+        </mat-form-field><br>
+        
+        <mat-form-field>
+          <input formControlName="username" #username matInput placeholder="Username" class="col">
+        </mat-form-field><br>
+        
+        <!-- <mat-form-field>
+          <input #password matInput placeholder="Password" [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field><br> -->
+        <mat-form-field>
+			<input formControlName="password" #password matInput placeholder="New password" formControlName="password" required>
+			<mat-error *ngIf="firstFormGroup.hasError('required', 'password')">
+				Please enter your newpassword
+			</mat-error>
+		</mat-form-field><br>
+
+		<mat-form-field>
+			<input matInput placeholder="Confirm password" formControlName="confirmPassword" [errorStateMatcher]="matcher">
+  			<mat-error *ngIf="firstFormGroup.hasError('notSame')">
+				Passwords do not match
+			</mat-error>  
+		</mat-form-field><br>
+
+         <mat-form-field>
+          <input formControlName="contact" #contact matInput placeholder="Contact Number" class="col">
+        </mat-form-field><br>
+        
+        <div>
+        <!-- <button mat-button (click)="register(username.value, password.value, email.value, contact.value)">Save</button>	 -->
+          <button mat-button matStepperNext (click)="register(username.value, password.value, email.value, contact.value)" >Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="false">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your details</ng-template>
+      
+       <mat-form-field>
+          <input  #firstname matInput placeholder="First Name" class="col">
+        </mat-form-field><br>
+        <mat-form-field>
+          <input #lastname matInput placeholder="Last Name" class="col">
+        </mat-form-field><br>
+
+       
+      <!--  <mat-radio-group  class="gender-radio" aria-label="Select an option">
+            <label >Gender</label><br>
+            <mat-radio-button style="padding-right:2px;"value="1">Male</mat-radio-button>
+            <mat-radio-button value="2">Female</mat-radio-button>
+          </mat-radio-group><br> 
+          <mat-form-field>
+          <input  matInput placeholder="Gender" class="col">
+        </mat-form-field><br>  -->
+
+        <mat-form-field>
+  				<mat-label>Gender</mat-label>
+  				<mat-select formControlName="gender" [(value)]="gender">
+  					<mat-option value="Female">Female</mat-option>
+  					<mat-option value="Male">Male</mat-option>
+    				<mat-option value="Other">Other</mat-option>
+ 				 </mat-select>
+  </mat-form-field><br>
+        <mat-form-field>
+            <input formControlName="date" matInput [matDatepicker]="dob" placeholder="Date of birth" #date>
+            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+            <mat-datepicker #dob></mat-datepicker>
+          </mat-form-field><br>
+          <mat-form-field>
+            <input formControlName="nationality" #nationality matInput placeholder="Nationality" class="col">
+          </mat-form-field><br>
+          <mat-form-field>
+              <input #address1 matInput placeholder="Address" class="col">
+            </mat-form-field><br>
+            <mat-form-field>
+              <input  #address2 matInput placeholder="State" class="col">
+            </mat-form-field><br>
+            <mat-form-field>
+              <input  #address3 matInput placeholder="Country" class="col">
+            </mat-form-field><br>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click) = "addPersonalDetails(username.value, password.value, email.value, contact.value, firstname.value, lastname.value, nationality.value, address1.value, address2.value, address3.value, date.value)" >Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form>
+          <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+              <!-- This is the tree node template for leaf nodes -->
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                <!-- use a disabled button to provide padding for tree leaf -->
+                <button mat-icon-button disabled></button>
+                <mat-checkbox #checkbox (click)="checkValue(node.name,checkbox.checked)">{{node.name}}</mat-checkbox>
+              </mat-tree-node>
+              <!-- This is the tree node template for expandable nodes -->
+              <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'toggle ' + node.name">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                {{node.name}}
+              </mat-tree-node>
+            </mat-tree><br>
+
+            
+      <ng-template matStepLabel>Done</ng-template>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="saveInterests(username.value)">Submit</button>
+      </div>
+    </form>
+
+
+    </mat-step>
+  </mat-horizontal-stepper>
   </div>
+
 </div>

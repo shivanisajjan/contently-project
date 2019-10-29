@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Upload Illustrated File</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+          <span>Select File :</span>
+          <br><br>
+          <button mat-raised-button color="primary" >
+          <input #fileInput type="file" (change)="upload($event.target.files)"/>
+          </button>
+     </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="onNoClick()">Done</button>
+</div>

@@ -13,10 +13,19 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import { QuillModule } from "ngx-quill";
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule} from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule} from '@angular/material';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
+import { IllustratorDashboardComponent, UploadFileDialog } from './illustrator-dashboard/illustrator-dashboard.component';
+import { EditorDashboardComponent, ChaptersDialog } from './editor-dashboard/editor-dashboard.component';
+import {
+  MatCardModule,
+  MatDialogModule,
+  MatStepperModule,
+  MatSelectModule
+  
+} from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent,
@@ -24,7 +33,7 @@ import { EditComponent } from './edit/edit.component';
     LoginComponent,
     RegistrationComponent,
     DashboardComponent,
-    EditComponent],
+    EditComponent,IllustratorDashboardComponent, UploadFileDialog,EditorDashboardComponent, ChaptersDialog],
 
   imports: [BrowserModule,
     AppRoutingModule,
@@ -41,9 +50,16 @@ import { EditComponent } from './edit/edit.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
-    QuillModule.forRoot()
+    MatCardModule,
+    MatDialogModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    QuillModule.forRoot(),
+    MatTreeModule,
+    MatCheckboxModule
   ],
-
+  entryComponents: [ UploadFileDialog,ChaptersDialog,LoginComponent],
   providers: [LoginService],
   bootstrap: [AppComponent]
 })

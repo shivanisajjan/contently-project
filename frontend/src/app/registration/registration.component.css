@@ -8,9 +8,14 @@
 
 }
 
+.gender-radio{
+  font-weight: 500;
+  color:white;
+}
+
 /* // mat-icon-stepper selected color change  */
 ::ng-deep .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
-  background-color: red!important;
+  background-color: rgb(23, 45, 117)!important;
 }
 
 /* //input outline color */
@@ -42,13 +47,13 @@
 
 /* // mat-label normal state style */
 ::ng-deep .mat-form-field-label {
-  color: rgba(0,0,0,.6)!important;
-  color: $mainColor!important;
+  color:white!important;
+  color: $mainColor!important; 
 }
 
 /* // mat-label focused style */
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-  color: red!important;
+  color: white!important;
 }
 
 /* // mat-label error style */
@@ -68,4 +73,8 @@
 
 .example-radio-button {
   margin: 5px;
+}
+
+input{
+  margin-left: 5px;
 }

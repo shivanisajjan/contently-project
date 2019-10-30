@@ -33,6 +33,7 @@ import { EditComponent } from './edit/edit.component';
 import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [AppComponent,
@@ -75,7 +76,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatTreeModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatButtonToggleModule 
+    MatButtonToggleModule,
+    FlexLayoutModule 
   ],
   entryComponents: [ UploadFileDialog,
     ChaptersDialog,

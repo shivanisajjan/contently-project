@@ -89,6 +89,27 @@ services:
       expose:
         - 8082
 
+  recommendation-service:
+     build: recommendation-service   
+     container_name: recommendation-service 
+     restart: always
+     depends_on:
+       - neo4j
+     ports:
+        - 8081:8081
+
+
+  neo4j:
+     image: neo4j:latest
+     ports:
+       - "7474:7474"
+       - "7687:7687"
+     volumes:
+       - $HOME/neo4j:/data/db  
+     environment:
+       NEO4J_AUTH : none
+      
+
   publishing-service:
       build: publishing-service
       container_name: publishing-service

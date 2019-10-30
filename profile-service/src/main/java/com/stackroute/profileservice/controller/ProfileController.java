@@ -1,0 +1,55 @@
+package com.stackroute.profileservice.controller;
+
+import com.stackroute.profileservice.model.Profile;
+import com.stackroute.profileservice.service.ProfileService;
+import com.stackroute.profileservice.service.ProfileServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/v1/profile")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class ProfileController {
+    private ProfileService profileService;
+    private ResponseEntity responseEntity;
+
+
+    @Autowired
+    public ProfileController(ProfileService profileService) {
+        this.profileService = profileService;
+    }
+
+
+    @PostMapping
+    public ResponseEntity<?> saveProfile(@RequestBody Profile profile)  {
+        profile.setId(profileService.getNextSequence("customSequences"));
+        responseEntity = new ResponseEntity<Profile>(this.profileService.saveProfile(profile), HttpStatus.CREATED);
+        return responseEntity;
+    }
+
+    @GetMapping
+    public List<Profile> getAllProfile() {
+        return (this.profileService.getallProfile());
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateMovie(@RequestBody Profile profile) {
+        profileService.update(profile);
+        responseEntity = new ResponseEntity<List<Profile>>(this.profileService.getallProfile(), HttpStatus.OK);
+        return responseEntity;
+    }
+
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteMovie(@RequestBody int id){
+        profileService.deleteProfile(id);
+        responseEntity = new ResponseEntity<String>("Successfully deleted", HttpStatus.OK);
+        return responseEntity;
+    }
+
+}

@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ContentService } from '../content.service';
+import { LoginService } from '../login.service';
 
 
 
@@ -15,11 +17,15 @@ import { Router } from '@angular/router';
 
 
 export class IllustratorDashboardComponent implements OnInit {
- 
+  public contentlist;
+
   
-  constructor(public dialog: MatDialog,private router: Router) { }
+  constructor(public dialog: MatDialog,private router: Router,
+    private _contentService: ContentService,
+    private _loginService: LoginService) { }
 
   ngOnInit() {
+    this.getContent();
   }
 
   illustrateFile() : void{
@@ -34,7 +40,9 @@ export class IllustratorDashboardComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-
+  getContent(){
+    this._contentService.getBooks(this._loginService.getUsername).subscribe(data => this.contentlist = data);
+  }
   
 }
 

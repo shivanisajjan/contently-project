@@ -16,7 +16,7 @@ export class BookFetchService {
 
     private headers = {
 
-        Authorization: 'Token 4c91e9c969aaace440c9c6437cb50359d61efe1f'
+        Authorization: 'Token 0292c484a2cd8d04f6437899efe2a1247ae689f0'
     
     };
 

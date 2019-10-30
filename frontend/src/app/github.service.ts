@@ -14,7 +14,7 @@ export class GithubService {
 
   // Personal Access Token for contently-books github
   private headers = {
-    Authorization: 'Token 5d76d53171394e79a0d18183bcd77cc2ed18cb23'
+    Authorization: 'Token 0292c484a2cd8d04f6437899efe2a1247ae689f0'
   };
   private httpOptions = {
     headers : this.headers

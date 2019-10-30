@@ -3,6 +3,7 @@ import { LoginService } from '../login.service';
 import { user } from '../user';
 import { EventEmitter } from 'events';
 import { Router } from '@angular/router';
+import { userReg } from '../userReg';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   router: Router;
   public fail: Boolean;
-  public getuser;
+  public getuser : userReg;
 
   constructor(
      private _loginService: LoginService,_router: Router
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.fail = false;
   }
+  
   public tokenObject:any;
 
  // @Output
@@ -40,14 +42,13 @@ export class LoginComponent implements OnInit {
         this.fail = true;
       }else{
         this._loginService.setUsername(username);
-        this._loginService.getUser(username).subscribe(user => this.getuser = user);
-        if(this.getuser.role == "reader/author"){
-            this.router.navigate(['/dashboard']);
-        }else if(this.getuser.role == "editor"){
-          this.router.navigate(['/editor-dashboard']);
-        }else{
-          this.router.navigate(['/illustrator-dashboard']);
-        }
+        this._loginService.setJwtToken(this.tokenObject.message);
+        this._loginService.getUser(username).subscribe(user => {this.getuser = user as userReg;
+              //console.log(this.getuser.role);
+              this._loginService.setRole(this.getuser.role);
+              this.router.navigate(['/dashboard']);
+        });
+       
       }
 
     }

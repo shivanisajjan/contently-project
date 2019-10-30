@@ -7,7 +7,7 @@
   
  div{
      text-align: center;
-     background: linear-gradient(to  right, rgb(223, 216, 130), rgb(100, 100, 21)),rgb(180, 75, 75);
+     background: #000;
      
      }
 
@@ -34,7 +34,7 @@ mat-button-toggle {
     
   }
   .mat-button-toggle-checked {
-    background-color: #0c0850;
+    background-color: #000;
     color: white;
     border-radius: 25px;
   }

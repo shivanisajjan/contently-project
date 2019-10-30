@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ContentService } from '../content.service';
+import { LoginService } from '../login.service';
 
 
 @Component({
@@ -10,10 +12,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./editor-dashboard.component.css']
 })
 export class EditorDashboardComponent implements OnInit {
-
-  constructor(public dialog: MatDialog) { }
+  public contentlist;
+  constructor(public dialog: MatDialog,
+    private _contentService: ContentService,
+    private _router: Router,
+    private _loginService: LoginService) { }
 
   ngOnInit() {
+    this.getContent();
   }
 
   editDialog(): void{
@@ -28,6 +34,10 @@ export class EditorDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  getContent(){
+    this._contentService.getBooks(this._loginService.getUsername).subscribe(data => this.contentlist = data);
   }
 }
 
@@ -58,4 +68,6 @@ export class ChaptersDialog {
     this.dialogRef.close();
     this.router.navigate(['/edit']);
   }
+
+  
 }

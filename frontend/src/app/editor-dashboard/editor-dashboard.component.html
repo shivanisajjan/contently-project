@@ -15,7 +15,15 @@
         <br>
     </mat-card>
     <br>
-  
+    <mat-card *ngFor="let content of contentlist">
+            <mat-card-title>{{content.tile}}</mat-card-title>
+            <mat-card-subtitle>{{content.subTile}}</mat-card-subtitle>
+            <p>{{content.description}}</p>
+            <mat-card-actions>
+                    <button (click)="editDialog()" mat-button>Edit</button>
+            </mat-card-actions>
+            <br>
+        </mat-card>
     </div> 
       <br>
       </div>

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
      private _loginService: LoginService,_router: Router
-    ) { 
+    ) {
       this.router = _router;
     }
 
@@ -30,10 +30,11 @@ export class LoginComponent implements OnInit {
 
 
   public authenticate(username, password){
+    console.log('authenticate');
     const checkUser: user = new user();
     checkUser.username = username;
     checkUser.password = password;
-    
+
     this._loginService.authenticateUser(checkUser).subscribe(result => {
       this.tokenObject = result;
       if(this.tokenObject.message == "Username/Password is invalid"){
@@ -51,7 +52,7 @@ export class LoginComponent implements OnInit {
       }
 
     }
-   );  
+   );
   }
 
 }

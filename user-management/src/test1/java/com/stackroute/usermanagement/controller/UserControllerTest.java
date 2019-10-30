@@ -67,7 +67,7 @@ public class UserControllerTest {
         when(userService.saveUser(any())).thenThrow(UserAlreadyExistsExceptions.class);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
         .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isConflict())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
@@ -75,7 +75,7 @@ public class UserControllerTest {
         when(userService.saveUser(any())).thenThrow(NullValueFieldException.class);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isNotAcceptable())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
@@ -99,7 +99,7 @@ public class UserControllerTest {
         when(userService.findByUsername(any())).thenThrow(InvalidCredentialException.class);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/login")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
@@ -117,7 +117,7 @@ public class UserControllerTest {
         when(userService.updateUser(any())).thenThrow(UserDoesNotExistException.class);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/user/update")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isConflict())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
@@ -133,7 +133,7 @@ public class UserControllerTest {
         when(userService.deleteUser(any())).thenThrow(UserDoesNotExistException.class);
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/user/delete/shivani")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isConflict())
                 .andDo(MockMvcResultHandlers.print());
     }
     private static String asJsonString(final Object obj)

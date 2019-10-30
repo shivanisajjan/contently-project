@@ -15,74 +15,76 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost", maxAge = 3600)
 @RestController
 @RequestMapping("api/v1/user")
-public class UserController {
+public class
+UserController {
 
     private UserService userService;
-    private RabbitMQSender rabbitMQSender;
     private ResponseEntity responseEntity;
+    private RabbitMQSender rabbitMQSender;
 
     @Autowired
-    public UserController(UserService userService, RabbitMQSender rabbitMQSender) {
+    public UserController(UserService userService,RabbitMQSender rabbitMQSender) {
         this.userService = userService;
-        this.rabbitMQSender = rabbitMQSender;
+        this.rabbitMQSender=rabbitMQSender;
     }
 
 
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) throws UserAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
+    public ResponseEntity<User> registerUser(@RequestBody User user) throws UserAlreadyExistsExceptions, InternalServerErrorException {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
+        User user1=userService.saveUser(user);
         DTOUser dtouser=new DTOUser();
-        dtouser.setUsername(user.getUsername());
-        dtouser.setRole(user.getRole());
-        dtouser.setPhoneNumber(user.getPhoneNumber());
-        dtouser.setNationality(user.getNationality());
-        dtouser.setLastName(user.getLastName());
-        dtouser.setGender(user.getGender());
-        dtouser.setFirstName(user.getFirstName());
-        dtouser.setEmail(user.getEmail());
-        dtouser.setDob(user.getDob());
-        dtouser.setAddressLine1(user.getAddressLine1());
-        dtouser.setAddressLine2(user.getAddressLine2());
-        dtouser.setAddressLine3(user.getAddressLine3());
+        dtouser.setId(user1.getId());
+        System.out.println(user1.getId());
+        System.out.println(dtouser.getId());
+        dtouser.setUsername(user1.getUsername());
+        dtouser.setRole(user1.getRole());
+        dtouser.setPhoneNumber(user1.getPhoneNumber());
+        dtouser.setNationality(user1.getNationality());
+        dtouser.setLastName(user1.getLastName());
+        dtouser.setGender(user1.getGender());
+        dtouser.setFirstName(user1.getFirstName());
+        dtouser.setEmail(user1.getEmail());
+        dtouser.setDob(user1.getDob());
+        dtouser.setAddressLine1(user1.getAddressLine1());
+        dtouser.setAddressLine2(user1.getAddressLine2());
+        dtouser.setAddressLine3(user1.getAddressLine3());
         rabbitMQSender.sendRegistry(dtouser);
-        return new ResponseEntity<User> (userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<User> (user1, HttpStatus.CREATED);
     }
 
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException {
+    public ResponseEntity login(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException {
         String jwtToken = "";
         userService.findByUsername(user);
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", new ArrayList<>());
-
-        jwtToken = Jwts.builder().setClaims(claims).setSubject(user.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
-                .signWith(SignatureAlgorithm.HS512, "secretkey").compact();
-
-
-//         = Jwts.builder().setSubject(user.getUsername()).setClaims(claims).setIssuedAt(new Date())
-//                .signWith(SignatureAlgorithm.HS512, "secretkey").compact();
+        jwtToken = Jwts.builder().setSubject(user.getUsername()).claim("roles", "user").setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
         return new ResponseEntity<AuthenticationResponse> (new AuthenticationResponse(jwtToken), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/delete/{username}")
-    public ResponseEntity<?> delete(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+    public ResponseEntity<String> delete(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
         userService.deleteUser(username);
-        return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Deleted Successfully"), HttpStatus.OK);
+        return new ResponseEntity<String>("Deleted Successfully", HttpStatus.OK);
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+    public ResponseEntity<String> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
         userService.updateUser(user);
-        return new ResponseEntity<AuthenticationResponse>(new AuthenticationResponse("Deleted Successfully"), HttpStatus.OK);
+        return new ResponseEntity<String>("Deleted Successfully", HttpStatus.OK);
     }
+
+    @GetMapping(value = "{username}")
+    public ResponseEntity<User> getByUsername(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+        return new ResponseEntity<User>(userService.getByUsername(username), HttpStatus.OK);
+    }
+
 }

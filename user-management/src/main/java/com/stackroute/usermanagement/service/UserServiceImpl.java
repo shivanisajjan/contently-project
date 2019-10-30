@@ -2,6 +2,7 @@ package com.stackroute.usermanagement.service;
 
 
 import com.stackroute.usermanagement.exceptions.*;
+import com.stackroute.usermanagement.model.DTOUser;
 import com.stackroute.usermanagement.model.User;
 import com.stackroute.usermanagement.repository.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
@@ -11,22 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Autowired
     private UserRepository userRepository;
-
-    public User saveUser(User user) throws UserAlreadyExistsExceptions,NullValueFieldException,InternalServerErrorException {
-        if(user.getUsername() == null ||
-           user.getPassword() == null ||
-           user.getFirstName() == null ||
-           user.getLastName() == null ||
-           user.getEmail() == null ||
-           user.getPhoneNumber() == null ||
-           user.getNationality() == null ||
-           user.getGender() == null
-            ){
-                throw new NullValueFieldException();
-            }
-        if(userRepository.findByUsername(user.getUsername()) != null){
+    private RabbitMQSender rabbitMQSender;
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, RabbitMQSender rabbitMQSender) {
+        this.userRepository = userRepository;
+        this.rabbitMQSender = rabbitMQSender;
+    }
+    @Override
+    public User saveUser(User user) throws UserAlreadyExistsExceptions,InternalServerErrorException {
+        if(userRepository.findByUsername(user.getUsername())!=null){
             throw new UserAlreadyExistsExceptions();
         }
         try {
@@ -37,7 +32,7 @@ public class UserServiceImpl implements UserService{
         }
 
     }
-
+    @Override
     public User findByUsername(User u) throws InternalServerErrorException, InvalidCredentialException {
         User user;
         try {
@@ -71,11 +66,14 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(user);
         return user;
     }
-
+    @Override
     public User updateUser(User user) throws UserDoesNotExistException,InternalServerErrorException{
-        if(userRepository.findByUsername(user.getUsername())!= null){
+        User u1=userRepository.findByUsername(user.getUsername());
+        if(u1!= null){
             try{
-                return userRepository.save(user);
+                user.setId(u1.getId());
+                User u=userRepository.save(user);
+                return u;
             }
             catch (Exception ex){
                 throw new InternalServerErrorException();
@@ -86,4 +84,9 @@ public class UserServiceImpl implements UserService{
             throw new UserDoesNotExistException();
         }
     }
+    @Override
+    public User getByUsername(String Username){
+        return userRepository.findByUsername(Username);
+    }
+
 }

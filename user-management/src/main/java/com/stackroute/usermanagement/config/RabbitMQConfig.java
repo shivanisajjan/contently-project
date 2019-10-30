@@ -12,30 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${registry.rabbitmq.queue}")
-    String queueName;
-
-    @Value("${registry.rabbitmq.exchange}")
-    String exchange;
-
-    @Value("${registry.rabbitmq.routingkey}")
-    private String routingkey;
-
-    @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
-    }
-
-    @Bean
-    DirectExchange exchange() {
-        return new DirectExchange(exchange);
-    }
-
-    @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingkey);
-    }
-
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

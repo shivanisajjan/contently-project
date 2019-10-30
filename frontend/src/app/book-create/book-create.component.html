@@ -1,0 +1,48 @@
+
+<div class="container-fluid"  fxLayout fxLayout.xs="column" 
+fxLayoutAlign="center"
+fxLayoutGap="10px"
+fxLayoutGap.xs="0">
+
+
+
+
+<div class="item item-1" fxFlex="18%" id="buttonHere">
+  
+<!-- <button (click)="toggleC()" id="buttonp">Introduction</button> 
+<button (click)="toggleD()" id="buttonp">Acknowledgements</button> -->
+
+
+<button  *ngFor="let bo of book" (click)="toggleC(bo.id)" > {{ bo.name }} </button> 
+
+
+</div>
+<div class="item item-2" fxFlex  id="mainCont" [style.background]="red">
+
+  <button (click)="preview()">preview</button>
+  <select [(ngModel)]="yy" (ngModelChange)="modelChange($event)">
+  <option *ngFor="let temp of customS" [value]="temp.name"> {{temp.name}}</option>  
+  </select>
+  
+
+<input type="text" #fieldName>
+  <button (click)="addRecord(fieldName.value)">Add a record</button>
+ <div
+  
+  *ngFor="let bo of book">
+  <div *ngIf='bo.show'>
+    <h4>{{ bo.name }}</h4>
+    <p>{{ bo.description }}</p>
+    <button (click)="onElementDeleted(bo)">delete</button>
+    <button (click)="createFile(bo.name)">add</button>
+    
+  </div>
+  
+</div>
+
+
+
+</div>
+
+</div>
+

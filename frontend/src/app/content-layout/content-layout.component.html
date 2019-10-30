@@ -1,0 +1,63 @@
+
+
+<div class="container-fluid" id="contentLayout" fxLayout fxLayout.xs="column"
+fxLayoutAlign="center"
+fxLayoutGap="10px"
+fxLayoutGap.xs="0">
+  <div class="item item-1"  fxFlex="15%">
+      <h2>Price Calculator</h2>
+  </div>
+  <div class="item item-2" fxFlex="20%" fxFlexOrder="3"><h2>Tips for  great book!</h2>
+
+    <ul>
+            <li>hghjghg</li>
+        </ul></div>
+  <div class="item item-3" id="mid" fxFlex>
+<h2>Enter Details</h2>
+
+<h3>Title</h3>
+<input type="text" #title placeholder="title">
+<h3></h3>
+
+<h3>Type</h3>
+<mat-button-toggle-group fxLayout fxLayout.xs="column"
+fxLayoutAlign="center"
+fxLayoutGap="10px"
+fxLayoutGap.xs="0"  #grouptype="matButtonToggleGroup">
+
+    <mat-button-toggle  fxFlex value="novel">Novel</mat-button-toggle>
+    <mat-button-toggle fxFlex value="biography">Biography</mat-button-toggle>
+    <mat-button-toggle fxFlex value="cookbook">CookBook</mat-button-toggle>
+    <mat-button-toggle fxFlexvalue="cookbook">memoir</mat-button-toggle>
+</mat-button-toggle-group>
+    <h3>Genre</h3>
+    <mat-button-toggle-group multiple #groupgenre="matButtonToggleGroup">
+    <mat-button-toggle value="horror">Horror</mat-button-toggle>
+    <mat-button-toggle value="Love">Love</mat-button-toggle>
+    <mat-button-toggle value="thriller">Thriller</mat-button-toggle>
+    <mat-button-toggle value="philosophy">Philosophy</mat-button-toggle>
+        
+     </mat-button-toggle-group>
+     <h3>Description</h3>
+     <input type="text" id="descinput" #description placeholder="description">
+
+     <h3>Target Audience</h3>
+
+     <mat-button-toggle-group multiple #grouptarget="matButtonToggleGroup">
+            <mat-button-toggle value="kids">kids</mat-button-toggle>
+            <mat-button-toggle value="teenagers">working</mat-button-toggle>
+            <mat-button-toggle value="old">Teenagers</mat-button-toggle>
+            <mat-button-toggle value="working">All</mat-button-toggle>
+                
+             </mat-button-toggle-group>
+      <!-- <h3>Cover image</h3>
+      <input type="file" (change)="onFileSelected($event)">
+      <button (click)="uploadImage()">UPLOAD</button> -->
+
+             <br>
+             <button (click)="someFunc(title.value,description.value,grouptype.value,groupgenre.value,grouptarget.value)">CREATE</button>
+             
+
+
+  </div>
+</div> 

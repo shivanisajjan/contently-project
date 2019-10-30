@@ -1,0 +1,8 @@
+footer{
+  background-color: white;
+  color: lightslategrey;
+  padding-top: 10px;
+}
+.mat-form-field-empty.mat-form-field-label {
+  color: green;
+}

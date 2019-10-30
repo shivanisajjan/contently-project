@@ -32,10 +32,10 @@ fxLayoutGap.xs="0">
   *ngFor="let bo of book">
   <div *ngIf='bo.show'>
     <h4>{{ bo.name }}</h4>
-    <p>{{ bo.description }}</p>
+    <p id="now"></p>
     <button (click)="onElementDeleted(bo)">delete</button>
     <button (click)="createFile(bo.name)">add</button>
-    
+    <button (click)="getGit(bo.name)">getGit</button>
   </div>
   
 </div>

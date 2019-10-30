@@ -38,6 +38,8 @@ this.http.post('url',temp).subscribe(res=>{console.log(res);})
 
   someFunc(title,desc,grouptype,groupgenre,grouptarget)
   {
+    this.bookFetch.repository=title; 
+    console.log("repo="+this.bookFetch.repository);
     this.bookobj={
       "name":title,
       "description":desc,

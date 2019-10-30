@@ -11,6 +11,10 @@ export class BookFetchService {
 
  public username:String;
  public token:String;
+ public repository:String;
+ public fileName:String;
+
+
 
     constructor(private ht:HttpClient) { } 
 
@@ -67,13 +71,20 @@ export class BookFetchService {
     }
 
 
-    createFile(bookObj,name):Observable<any>
+    createFile(bookObj):Observable<any>
     {
-      this.repo="helloworld";
-      this.path=name;
+      this.repo=this.repository;
+      this.path=this.fileName;
       console.log('obj: ', bookObj);
       return this.ht.put<any>("https://api.github.com/repos/contently-books/"+this.repo+"/contents/"+this.path,bookObj, this.httpOptions); 
 
+
+    }
+
+    getGit(name)
+    {this.repo="mom";
+      this.path=name;
+      return this.ht.get<any>("https://api.github.com/repos/contently-books/"+this.repo+"/contents/"+this.path, this.httpOptions);
 
     }
 

@@ -34,6 +34,7 @@ import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
 import {MatTabsModule} from "@angular/material/tabs";
 import { ContentService } from './content.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
@@ -53,7 +54,8 @@ import { FooterComponent } from './footer/footer.component';
     EditorDashboardComponent,
     ChaptersDialog,
     BookdetailsComponent,
-    FooterComponent],
+    FooterComponent
+  ],
 
   imports: [BrowserModule,
     AppRoutingModule,
@@ -82,6 +84,7 @@ import { FooterComponent } from './footer/footer.component';
     MatCheckboxModule,
     MatButtonModule,
     MatButtonToggleModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule

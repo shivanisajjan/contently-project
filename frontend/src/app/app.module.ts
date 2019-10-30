@@ -2,12 +2,16 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
+
 import { AppComponent } from "./app.component";
 import { LoginService } from "./login.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { ContentLayoutComponent } from './content-layout/content-layout.component';
+import { BookCreateComponent } from './book-create/book-create.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -28,12 +32,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
 import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [AppComponent,
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
+    ContentLayoutComponent,
+    BookCreateComponent,
     DashboardComponent,
     EditComponent,
     IllustratorDashboardComponent, 
@@ -66,7 +73,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatSelectModule,
     QuillModule.forRoot(),
     MatTreeModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule,
+    MatButtonToggleModule 
   ],
   entryComponents: [ UploadFileDialog,
     ChaptersDialog,

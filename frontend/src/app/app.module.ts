@@ -25,15 +25,20 @@ import {
   MatDialogModule,
   MatStepperModule,
   MatSelectModule
-  
+
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
 import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
 import {MatTabsModule} from "@angular/material/tabs";
+import { ContentService } from './content.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -44,11 +49,13 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     BookCreateComponent,
     DashboardComponent,
     EditComponent,
-    IllustratorDashboardComponent, 
+    IllustratorDashboardComponent,
     UploadFileDialog,
-    EditorDashboardComponent, 
+    EditorDashboardComponent,
     ChaptersDialog,
-    BookdetailsComponent],
+    BookdetailsComponent,
+    FooterComponent
+  ],
 
   imports: [BrowserModule,
     AppRoutingModule,
@@ -77,12 +84,15 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MatCheckboxModule,
     MatButtonModule,
     MatButtonToggleModule,
-    FlexLayoutModule 
+    FlexLayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   entryComponents: [ UploadFileDialog,
     ChaptersDialog,
     LoginComponent],
-  providers: [LoginService],
+  providers: [LoginService,ContentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

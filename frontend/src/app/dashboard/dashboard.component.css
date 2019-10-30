@@ -1,15 +1,8 @@
-#dashboard-section{
-  padding-top: 10%;
-  
+#illustrator-section{
+  min-height: 70%;
 }
 
-.carousel-item {
-  padding-bottom: 20%;
-}
 
-.back{
-  background-attachment: fixed;
-}
 
 .dashboard-buttons{
   margin-left: 40%;
@@ -28,7 +21,14 @@ table {
   padding-top: 30%;
 }
 
+.book-cards button{
+    float: right;   
+}
 
+.book-cards{
+  width: 80%;
+  margin: auto;
+}
 
 @media (min-width: 768px) {
   /* show 3 items */

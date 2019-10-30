@@ -28,6 +28,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
 import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
 import {MatTabsModule} from "@angular/material/tabs";
+import { ContentService } from './content.service';
 
 @NgModule({
   declarations: [AppComponent,
@@ -71,7 +72,7 @@ import {MatTabsModule} from "@angular/material/tabs";
   entryComponents: [ UploadFileDialog,
     ChaptersDialog,
     LoginComponent],
-  providers: [LoginService],
+  providers: [LoginService,ContentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

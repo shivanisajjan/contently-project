@@ -34,24 +34,24 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getContent();
 
 
 
-
-  this.loadScript("../../assets/js/jquery-3.3.1.min.js");
-  this.loadScript("../../assets/js/jquery-migrate-3.0.1.min.js");
-  this.loadScript("../../assets/js/jquery-ui.js");
-  this.loadScript("../../assets/js/popper.min.js");
-  this.loadScript("../../assets/js/bootstrap.min.js");
-  this.loadScript("../../assets/js/owl.carousel.min.js");
-  this.loadScript("../../assets/js/jquery.stellar.min.js");
-  this.loadScript("../../assets/js/jquery.countdown.min.js");
-  this.loadScript("../../assets/js/bootstrap-datepicker.min.js");
-  this.loadScript("../../assets/js/jquery.easing.1.3.js");
-  this.loadScript("../../assets/js/aos.js");
-  this.loadScript("../../assets/js/jquery.fancybox.min.js");
-  this.loadScript("../../assets/js/jquery.sticky.js");
-  this.loadScript("../../assets/js/main.js");
+  // this.loadScript("../../assets/js/jquery-3.3.1.min.js");
+  // this.loadScript("../../assets/js/jquery-migrate-3.0.1.min.js");
+  // this.loadScript("../../assets/js/jquery-ui.js");
+  // this.loadScript("../../assets/js/popper.min.js");
+  // this.loadScript("../../assets/js/bootstrap.min.js");
+  // this.loadScript("../../assets/js/owl.carousel.min.js");
+  // this.loadScript("../../assets/js/jquery.stellar.min.js");
+  // this.loadScript("../../assets/js/jquery.countdown.min.js");
+  // this.loadScript("../../assets/js/bootstrap-datepicker.min.js");
+  // this.loadScript("../../assets/js/jquery.easing.1.3.js");
+  // this.loadScript("../../assets/js/aos.js");
+  // this.loadScript("../../assets/js/jquery.fancybox.min.js");
+  // this.loadScript("../../assets/js/jquery.sticky.js");
+  // this.loadScript("../../assets/js/main.js");
 
 
 
@@ -102,5 +102,9 @@ export class DashboardComponent implements OnInit {
 
   // ngOnInit() {
   // }
+
+  getContent(){
+
+  }
 
 }

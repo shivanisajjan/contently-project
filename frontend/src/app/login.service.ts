@@ -10,6 +10,7 @@ headers: new HttpHeaders({'Content-Type':'application/json'})
  providedIn: 'root'
 })
 export class LoginService {
+ public username: string;
  constructor(private http:HttpClient) { }
  authenticateUser(checkUser: user):any{
    let post_url = `http://13.126.150.171:8080/user-management/api/v1/user/login`;
@@ -29,5 +30,18 @@ updateUser(regUser: userReg):any{
 saveInterests(saveProfile : profile):any{
   let post_url = `http://13.126.150.171:8080/profile-service/api/v1/profile`;
   return this.http.post(post_url, saveProfile, httpOptions);
+}
+
+getUser(username : string):any{
+  let post_url = `http://13.126.150.171:8080/profile-service/api/v1/profile/${username}`;
+  return this.http.get(post_url, httpOptions);
+}
+
+setUsername(username){
+  this.username = username;
+}
+
+getUsername(){
+  return this.username;
 }
 }

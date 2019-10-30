@@ -47,8 +47,10 @@
     </mat-toolbar>
     <!-- Add Content Here -->
     <div class="parallax">
-      <router-outlet></router-outlet>
-      <app-footer></app-footer>
+      <div class="router-component-wrapper">
+        <router-outlet></router-outlet>
+        <app-footer></app-footer>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

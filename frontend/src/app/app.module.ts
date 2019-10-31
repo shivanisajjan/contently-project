@@ -18,15 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { QuillModule } from "ngx-quill";
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule} from '@angular/material';
-import { IllustratorDashboardComponent, UploadFileDialog } from './illustrator-dashboard/illustrator-dashboard.component';
-import { EditorDashboardComponent, ChaptersDialog } from './editor-dashboard/editor-dashboard.component';
-import {
-  MatCardModule,
-  MatDialogModule,
-  MatStepperModule,
-  MatSelectModule
-
-} from '@angular/material';
+import { MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
@@ -41,7 +33,8 @@ import {MatListModule} from "@angular/material/list";
 import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [
+    AppComponent,
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
@@ -49,15 +42,12 @@ import { FooterComponent } from './footer/footer.component';
     BookCreateComponent,
     DashboardComponent,
     EditComponent,
-    IllustratorDashboardComponent,
-    UploadFileDialog,
-    EditorDashboardComponent,
-    ChaptersDialog,
     BookdetailsComponent,
     FooterComponent
   ],
 
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -89,10 +79,13 @@ import { FooterComponent } from './footer/footer.component';
     MatSidenavModule,
     MatListModule
   ],
-  entryComponents: [ UploadFileDialog,
-    ChaptersDialog,
-    LoginComponent],
-  providers: [LoginService,ContentService],
+  entryComponents: [
+    LoginComponent
+  ],
+  providers: [
+    LoginService,
+    ContentService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

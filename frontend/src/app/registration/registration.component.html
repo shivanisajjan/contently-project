@@ -108,8 +108,8 @@
   </div>-->
   <h2 *ngIf = "registerv" style="color: white">Registered Successfully</h2>
   
-  <mat-horizontal-stepper linear  #stepper>
-    <mat-step [stepControl]="firstFormGroup" [editable]="false">
+  <mat-horizontal-stepper   #stepper>
+    <mat-step [stepControl]="firstFormGroup" >
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Fill out your details</ng-template>
         <!-- <mat-form-field>
@@ -153,7 +153,7 @@
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" [editable]="false">
+    <mat-step [stepControl]="secondFormGroup" >
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Fill out your details</ng-template>
       

@@ -156,7 +156,7 @@
     <b><h2 style="color: #FFF; text-shadow: 2px 2px 4px #000000;"class="section-title mb-3">My Dashboard</h2></b><br>
     <div style="margin-left: 40%; margin-top: 1%;" class="col-xs-2">
         <ul class=" m-0 p-0">
-          <p class="cta"><button mat-button (click)="onCreate()">Create</button></p>
+          <p class="cta"><button mat-raised-button color="primary" (click)="onCreate()">Create</button></p>
         </ul></div>
     <div class="book-cards">
     <mat-card>
@@ -167,15 +167,18 @@
         </mat-card-actions>
         <br>
     </mat-card>
-    <mat-card *ngFor="let content of contentlist">
-        <mat-card-title>{{content.tile}}</mat-card-title>
-        <mat-card-subtitle>{{content.subTile}}</mat-card-subtitle>
+    <br>
+    <div *ngFor="let content of contentlist">
+    <mat-card >
+        <mat-card-title>{{content.title}}</mat-card-title>
+        <mat-card-subtitle>{{content.subTitle}}</mat-card-subtitle>
         <p>{{content.description}}</p>
         <mat-card-actions>
                 <button (click)="editDialog()" mat-button>Edit</button>
         </mat-card-actions>
         <br>
     </mat-card>
+    <br></div>
     <br>
   
     </div> 

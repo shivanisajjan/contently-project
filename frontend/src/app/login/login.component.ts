@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.fail = false;
   }
-  
+
   public tokenObject:any;
 
  // @Output
@@ -38,17 +38,17 @@ export class LoginComponent implements OnInit {
     
     this._loginService.authenticateUser(checkUser).subscribe(result => {
       this.tokenObject = result;
-      if(this.tokenObject.message == "Username/Password is invalid"){
+      console.log(this.tokenObject.authResponse);
+
+      if(this.tokenObject.authResponse == "Username/Password is invalid"){
         this.fail = true;
       }else{
-        this._loginService.setUsername(username);
-        this._loginService.setJwtToken(this.tokenObject.message);
-        this._loginService.getUser(username).subscribe(user => {this.getuser = user as userReg;
-              //console.log(this.getuser.role);
-              this._loginService.setRole(this.getuser.role);
-              this.router.navigate(['/dashboard']);
-        });
-       
+        console.log("AUTHENTICATION SUCCESSFUL")
+        this._loginService.setJwtToken(this.tokenObject.authResponse);
+        //console.log(this.tokenObject.authResponse);
+        //console.log(this.tokenObject.role);
+        this._loginService.setRole(this.tokenObject.role);
+        this.router.navigate(['/dashboard']);
       }
 
     }

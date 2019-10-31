@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     // this.role = this._loginService.role;
       // console.log('role',this.role);
-    // this.getContent();
+    this.getContent();
 
 
 
@@ -120,12 +120,9 @@ export class DashboardComponent implements OnInit {
   // }
 
   getContent(){
-    this._contentService.getBooks(this._loginService.getUsername)
-    .subscribe(data => {
-      this.contentlist = data as content[];
-      
-    }
-      );
+    console.log(this._loginService.getUsername);
+    this._contentService.getBooks("batman")
+    .subscribe(data => this.contentlist = data );
   }
   onCreate(){
     console.log('called');

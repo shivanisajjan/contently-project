@@ -2,7 +2,7 @@
 
  @import "https://fonts.googleapis.com/css?family=Muli:300,400,700,900";
 @import "fonts/icomoon/style.css";
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 @import "css/bootstrap.min.css";
 @import "css/jquery-ui.css";

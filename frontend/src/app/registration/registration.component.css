@@ -2,7 +2,6 @@
 .register-component-heading{
   text-align: center;
   padding: 10px;
-  color: white;
 }
 .register-component-body{
   padding: 10px 10px;
@@ -15,6 +14,7 @@
 mat-vertical-stepper{
   padding: 0 20px;
   border-radius: 5px;;
+  box-shadow: 0 0 10px 0 lightslategrey;
 }
 .back-button{
   margin-right: 20px;

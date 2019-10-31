@@ -31,6 +31,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import { FooterComponent } from './footer/footer.component';
+import { AddNewSectionComponent } from './book-create/add-new-section/add-new-section.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FooterComponent } from './footer/footer.component';
     DashboardComponent,
     EditComponent,
     BookdetailsComponent,
-    FooterComponent
+    FooterComponent,
+    AddNewSectionComponent
   ],
 
   imports: [
@@ -80,7 +82,8 @@ import { FooterComponent } from './footer/footer.component';
     MatListModule
   ],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    AddNewSectionComponent
   ],
   providers: [
     LoginService,

@@ -2,7 +2,7 @@ import {Component, HostListener, Inject} from "@angular/core";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import {LoginComponent} from "./login/login.component";
 
 @Component({
@@ -36,7 +36,7 @@ export class AppComponent {
 
   onLogin() {
     console.log('Login');
-    const dialogRef = this.dialog.open(LoginComponent, );
+    const dialogRef = this.dialog.open(LoginComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

@@ -13,11 +13,11 @@ fxLayoutGap.xs="0">
 <button (click)="toggleD()" id="buttonp">Acknowledgements</button> -->
 
 
-<button  *ngFor="let bo of book" (click)="toggleC(bo.id)" > {{ bo.name }} </button> 
+<button  id="content" *ngFor="let bo of book" (click)="toggleC(bo.id)" > {{ bo.name }} </button> 
 
 
 </div>
-<div class="item item-2" fxFlex  id="mainCont" [style.background]="red">
+<div *ngIf="load" class="item item-2" fxFlex  id="mainCont" [style.background]="red">
 
   <button (click)="preview()">preview</button>
   <select [(ngModel)]="yy" (ngModelChange)="modelChange($event)">
@@ -32,13 +32,13 @@ fxLayoutGap.xs="0">
   *ngFor="let bo of book">
   <div *ngIf='bo.show'>
     <h4>{{ bo.name }}</h4>
-    <p id="now"></p>
+    <div id = "{{ bo.name }}"> {{ bo.description }}</div>
     <button (click)="onElementDeleted(bo)">delete</button>
     <button (click)="createFile(bo.name)">add</button>
-    <button (click)="getGit(bo.name)">getGit</button>
+    <button id="kok"  (click)="getGit(bo.name)">getGit</button>
   </div>
   
-</div>
+</div> 
 
 
 

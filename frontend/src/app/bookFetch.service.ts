@@ -11,7 +11,7 @@ export class BookFetchService {
 
  public username:String;
  public token:String;
- public repository:String;
+ public repository:String="mom";
  public fileName:String;
 
 
@@ -20,7 +20,7 @@ export class BookFetchService {
 
     private headers = {
 
-        Authorization: 'Token caf85ac13cc5c171ccecbda05f414df89681c550'
+        Authorization: 'Token 419eac07f5f53ff8ae8ef23a52aa828df0c59c2e'
     
     };
 
@@ -81,10 +81,19 @@ export class BookFetchService {
 
     }
 
-    getGit(name)
-    {this.repo="mom";
+    getGit(name):Observable<any>
+    {
+      console.log("get file called");
+      this.repo=this.repository; 
       this.path=name;
       return this.ht.get<any>("https://api.github.com/repos/contently-books/"+this.repo+"/contents/"+this.path, this.httpOptions);
+
+    }
+
+    getAllFiles():Observable<any>
+    {console.log("get all file called");
+      this.repo=this.repository;
+      return this.ht.get<any>("https://api.github.com/repos/contently-books/"+this.repo+"/contents", this.httpOptions);//gets all file names of a repo
 
     }
 

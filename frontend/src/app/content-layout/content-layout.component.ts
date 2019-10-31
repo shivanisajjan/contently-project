@@ -48,7 +48,11 @@ this.http.post('url',temp).subscribe(res=>{console.log(res);})
 
  
 
-    this.bookFetch.addBook(this.bookobj).subscribe((data) =>{ console.log(data);}); 
+    this.bookFetch.addBook(this.bookobj)
+    .subscribe(
+      (data) =>{ 
+        console.log(data);
+      }); 
 
 
 

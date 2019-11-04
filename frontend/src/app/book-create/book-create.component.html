@@ -1,48 +1,29 @@
+<div *ngIf="load" class="section-list">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sections</mat-card-title>
+    </mat-card-header>
 
-<div class="container-fluid"  fxLayout fxLayout.xs="column" 
-fxLayoutAlign="center"
-fxLayoutGap="10px"
-fxLayoutGap.xs="0">
+    <mat-divider></mat-divider>
 
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let book of books">
+          <mat-divider></mat-divider>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <h5 mat-line>{{book.name}}</h5>
+          <button mat-raised-button color="primary" (click)="editFile(book.name)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
 
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="addNewSection()" ><mat-icon>add</mat-icon></button>
+    </mat-card-actions>
 
-
-<div class="item item-1" fxFlex="18%" id="buttonHere">
-  
-<!-- <button (click)="toggleC()" id="buttonp">Introduction</button> 
-<button (click)="toggleD()" id="buttonp">Acknowledgements</button> -->
-
-
-<button  *ngFor="let bo of book" (click)="toggleC(bo.id)" > {{ bo.name }} </button> 
-
-
-</div>
-<div class="item item-2" fxFlex  id="mainCont" [style.background]="red">
-
-  <button (click)="preview()">preview</button>
-  <select [(ngModel)]="yy" (ngModelChange)="modelChange($event)">
-  <option *ngFor="let temp of customS" [value]="temp.name"> {{temp.name}}</option>  
-  </select>
-  
-
-<input type="text" #fieldName>
-  <button (click)="addRecord(fieldName.value)">Add a record</button>
- <div
-  
-  *ngFor="let bo of book">
-  <div *ngIf='bo.show'>
-    <h4>{{ bo.name }}</h4>
-    <p id="now"></p>
-    <button (click)="onElementDeleted(bo)">delete</button>
-    <button (click)="createFile(bo.name)">add</button>
-    <button (click)="getGit(bo.name)">getGit</button>
-  </div>
-  
-</div>
-
+  </mat-card>
 
 
 </div>
-
-</div>
-

@@ -1,15 +1,15 @@
 export class Book {
-    public name: string;
-    public description: string;
-    public id:Number;
-    public show:Boolean;
-    
-  
-  
-  constructor(name: string, desc: string,num:Number) {
+    public name: String;
+    // public description: string;
+    // public id:Number;
+    // public show:Boolean;
+    public sha: String;
+    public content: String;
+
+
+  constructor(name: String, sha: String, content: String){
     this.name = name;
-    this.description = desc;
-    this.id=num;
-    this.show=true;
-    }
+    this.sha = sha;
+    this.content = content;
+  }
   }

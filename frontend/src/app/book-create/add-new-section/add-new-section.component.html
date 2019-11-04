@@ -1,0 +1,9 @@
+<form>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Section Name" #newSectionName >
+    </mat-form-field>
+  </div>
+  <button mat-raised-button color="primary" (click)="addComponent(newSectionName.value)">Add</button>
+
+</form>

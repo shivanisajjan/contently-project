@@ -129,7 +129,7 @@ export class RegistrationComponent implements OnInit {
     regUser.phoneNumber = contact;
     console.log(regUser.username);
     this._loginService.registerUser(regUser).subscribe( result => {
-      this.returnUser = result;
+     // this.returnUser = result;
       if(this.returnUser.id != null){
         this.registerv = true;      }
       if(this.returnUser.message == "Username Already Exists"){

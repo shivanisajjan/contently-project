@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { user } from './user';
 import { userReg } from './userReg';
 import { profile } from './profile';
+import { Observable } from 'rxjs';
 const httpOptions = {
 headers: new HttpHeaders({'Content-Type':'application/json'})
 };
@@ -10,11 +11,12 @@ headers: new HttpHeaders({'Content-Type':'application/json'})
  providedIn: 'root'
 })
 export class LoginService {
- public username: string;
+ public role: string;
+ public jwtToken: string;
  constructor(private http:HttpClient) { }
- authenticateUser(checkUser: user):any{
+ authenticateUser(checkUser: user):Observable<HttpResponse<any>>{
    let post_url = `http://13.126.150.171:8080/user-management/api/v1/user/login`;
-   return this.http.post(post_url,checkUser,httpOptions);
+   return this.http.post(post_url,checkUser,{ observe: 'response' });
  }
 
  registerUser(regUser: userReg):any{
@@ -32,16 +34,23 @@ saveInterests(saveProfile : profile):any{
   return this.http.post(post_url, saveProfile, httpOptions);
 }
 
-getUser(username : string):any{
-  let post_url = `http://13.126.150.171:8080/profile-service/api/v1/profile/${username}`;
-  return this.http.get(post_url, httpOptions);
+
+
+
+setRole(role){
+  this.role = role;
 }
 
-setUsername(username){
-  this.username = username;
+getRole(){
+  console.log("aditya"+this.role);
+  return this.role;
 }
 
-getUsername(){
-  return this.username;
+setJwtToken(token){
+  this.jwtToken = token;
+}
+
+getjwtToken(){
+  return this.jwtToken;
 }
 }

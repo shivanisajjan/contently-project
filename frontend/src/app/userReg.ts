@@ -11,4 +11,5 @@ export class userReg {
     addressLine2: string;
     addressLine3: string;
     dob: string;
+    role:string;
 }

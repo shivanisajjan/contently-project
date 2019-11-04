@@ -3,6 +3,10 @@ import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 
 import * as CanvasJS from '../../assets/js/canvasjs.min.js';
+import { content } from '../content.js';
+import { ContentService } from '../content.service.js';
+import { Router } from '@angular/router';
+import { LoginService } from '../login.service.js';
 
 export interface PeriodicElement {
   Title: string;
@@ -30,11 +34,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  public contentlist;
+  private role;
 
-
+  constructor(
+    private _contentService: ContentService,
+    private _router: Router,
+    private _loginService: LoginService
+   ) {}
 
   ngOnInit() {
+    // this.role = this._loginService.role;
+      // console.log('role',this.role);
     this.getContent();
+
+
 
 
 
@@ -81,8 +95,10 @@ export class DashboardComponent implements OnInit {
     
   
 
-	chart.render();
+	// chart.render();
     }
+
+
 
     public loadScript(url: string) {
       const body = <HTMLDivElement> document.body;
@@ -104,7 +120,13 @@ export class DashboardComponent implements OnInit {
   // }
 
   getContent(){
-
+   // console.log(localStorage.getItem('token'));
+    this._contentService.getBooks()
+    .subscribe(data => this.contentlist = data );
+  }
+  onCreate(){
+    console.log('called');
+    this._router.navigate(['/contentLayout']).then();
   }
 
 }

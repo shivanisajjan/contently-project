@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -31,14 +32,15 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        System.out.println("The request:\t"+request);
+        response.setStatus(HttpServletResponse.SC_OK);
 
-        System.out.println("The header from jwtConfig:\t"+jwtConfig.getHeader());
+
+        if(CorsUtils.isPreFlightRequest(request)) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
 
         // 1. get the authentication header. Tokens are supposed to be passed in the authentication header
         String header = request.getHeader(jwtConfig.getHeader());
-
-        System.out.println("the header:\t"+header);
 
         // 2. validate the header and check the prefix
         if(header == null) {
@@ -57,9 +59,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
         // 3. Get the token
         String token = header.replace(jwtConfig.getPrefix(), "");
-        System.out.println("token: " + token);
-
-
         // exceptions might be thrown in creating the claims if for example the token is expired
 
             // 4. Validate the token
@@ -67,10 +66,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                     .setSigningKey(jwtConfig.getSecret())
                     .parseClaimsJws(token)
                     .getBody();
-
-
             String username = claims.getSubject();
-            System.out.println("username:" + username );
         try {
 
             if(username != null) {
@@ -79,17 +75,11 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         username, null, authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                System.out.println("a");
-
-                SecurityContextHolder.getContext().setAuthentication(auth);
+               SecurityContextHolder.getContext().setAuthentication(auth);
             }
 
         } catch (Exception e) {
             // In case of failure. Make sure it's clear; so guarantee user won't be authenticated
-
-            System.out.println("GODDAM EXCEPTION");
-            System.out.println(e.getMessage());
             SecurityContextHolder.clearContext();
         }
 

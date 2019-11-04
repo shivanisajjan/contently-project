@@ -28,6 +28,6 @@ export class ContentService {
   saveBooks(jsonObj) {
     let post_url = `http://13.126.150.171:8080/content-service/api/v1/save`;
     return this.http.post(post_url, jsonObj, this.httpOptions);
-
   }
+
 }

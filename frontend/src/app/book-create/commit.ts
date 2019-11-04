@@ -1,6 +1,6 @@
 export class Commit{
   public message: String = 'Custom commit msg';
-  public committer = {
+  public committer: any = {
     name: String,
     email: String
   };

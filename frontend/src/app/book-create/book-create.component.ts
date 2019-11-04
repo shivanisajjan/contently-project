@@ -4,7 +4,8 @@ import {Book} from "./book";
 import {Router} from '@angular/router';
 import {Commit} from "./commit";
 import {AddNewSectionComponent} from "./add-new-section/add-new-section.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {PreviewComponent} from "./preview/preview.component";
 
 
 // let jsPDF = require('jspdf');
@@ -18,23 +19,12 @@ export class BookCreateComponent implements OnInit {
   private load: boolean = false;
   private username: String;
   private userEmail: String;
-
-  index: number = 2;
-  content: string = "nothing";
-  books: Book[] = [];
-
-  abc: boolean;
-  aa: boolean;
-  red: String;
-  selectedO: Number = 2;
-  yy: String = "50px";
-  showMe: Boolean;
+  private books: Book[] = [];
 
   constructor(private bookFetch: BookFetchService,
               private router: Router,
               private dialog: MatDialog) {
   }
-
 
   ngOnInit() {
     this.username = this.bookFetch.getUsername();
@@ -50,17 +40,9 @@ export class BookCreateComponent implements OnInit {
           this.load = true;
         },
         error => {
-
-        });
-
-    this.customS = [
-      {id: 1, name: "10px"},
-      {id: 2, name: "20px"},
-      {id: 3, name: "50px"}
-    ];
-
+        }
+      );
   }
-
 
   downloadPdf() {
     // let doc = new jsPDF();
@@ -68,12 +50,6 @@ export class BookCreateComponent implements OnInit {
     //    doc.save("obrz.pdf");
     // });
   }
-
-
-  modelChange(val: any) {
-    // console.log(btoa("password"));
-  }
-
 
   editFile(fileName: String) {
     console.log('editFile(): ', fileName);
@@ -86,45 +62,58 @@ export class BookCreateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      console.log('New Section Name: ', result);
+      let commit = new Commit("", this.bookFetch.getUsername(), this.bookFetch.getUserEmail(), "", "");
+      this.bookFetch.createFile(result, commit)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.books.push(new Book(result, "", ""));
+          },
+          error => {
+            console.log(error);
+          }
+        );
     });
   }
 
-  createFile(fileName) {
-    console.log('New File Create: ', fileName);
-    let commit = new Commit(fileName, this.username, this.userEmail, "", "");
-    let newBook = new Book(fileName, "", "");
-    console.log('commit: ', commit);
-    console.log('new book: ', newBook);
-    this.bookFetch.createFile(fileName, commit)
+  preview(sectionName: String) {
+    this.bookFetch.getGit(sectionName)
       .subscribe(
         data => {
-          console.log('Create file response from github [Data]: ', data);
+          console.log(data);
+          let content = atob(data.content);
+          const dialogRef = this.dialog.open(
+            PreviewComponent,
+            {
+              data: content,
+              height: '80%',
+              width: '80%'
+            }
+          );
         },
         error => {
-          console.log('Create file response from github [Error]: ', error);
+
         }
       );
-    this.books.push(newBook);
   }
 
-  onElementDeleted(element) {
-    // console.log("delete called");
-    // let index = this.book.indexOf(element);
-    // this.book.splice(index, 1);
-  }
-
-  getGit(name): Promise<Book> {
-    return new Promise(
-      resolve => {
-        this.bookFetch.getGit(name)
-          .subscribe(
-            (data) => {
-              // console.log("name: " + name);
-              let currentBook = new Book(data.name, data.sha, atob(data.content));
-              // console.log(currentBook);
-              resolve(currentBook);
-            });
-      }
-    );
+  delete(sectionName: String) {
+    this.bookFetch.getGit(sectionName)
+      .subscribe(
+        data => {
+          console.log(data);
+          let commit = new Commit('', this.bookFetch.getUsername(), this.bookFetch.getUserEmail(), data.sha, '');
+          this.bookFetch.deleteFile(sectionName, commit)
+            .subscribe(
+              data => {
+                console.log('data', data);
+              },
+              error => {
+                console.log('error', error);
+              }
+            );
+        }
+      );
   }
 }

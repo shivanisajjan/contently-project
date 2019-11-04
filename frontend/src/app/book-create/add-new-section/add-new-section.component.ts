@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, } from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-new-section',
@@ -7,13 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewSectionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+              private dialogRef: MatDialogRef<AddNewSectionComponent>,
+              @Inject(MAT_DIALOG_DATA)private data: String) { }
 
   ngOnInit() {
-  }
-
-  addComponent(sectionName: String) {
-    console.log('New Section Name: ', sectionName);
-
   }
 }

@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BookFetchService} from '../bookFetch.service';
 import {NgForm} from "@angular/forms";
+import {loadConfigurationFromPath} from "tslint/lib/configuration";
+import {ContentService} from "../content.service";
 
 @Component({
   selector: 'app-content-layout',
@@ -13,7 +15,8 @@ export class ContentLayoutComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private bookFetch: BookFetchService) {
+              private bookFetch: BookFetchService,
+              private contentService: ContentService) {
   }
 
   // selectedFile: File = null;
@@ -77,13 +80,25 @@ export class ContentLayoutComponent implements OnInit {
 
 
   onSubmit(input: NgForm) {
-    console.log(input.value.title, input.value.desc);
+    console.log(input.value);
+    let jsonObj: any = {
+      title: input.value.title,
+      description: input.value.desc,
+      authorname: localStorage.getItem('username'),
+      typeName: input.value.type,
+    };
+    console.log('json', jsonObj);
     this.bookFetch.createRepo(input.value.title, input.value.desc)
       .subscribe(
         data => {
           console.log('data: ',data);
           this.bookFetch.setRepository(input.value.title);
-          this.router.navigate(['/bookCreate']).then();
+          this.contentService.saveBooks(jsonObj).subscribe(
+            data =>{
+              console.log('saved: ', data);
+              this.router.navigate(['/bookCreate']).then();
+            }
+          );
         },
         error => {
           console.log('error: ', error);

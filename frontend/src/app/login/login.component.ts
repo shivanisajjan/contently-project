@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     //   console.log("AUTHENTICATION SUCCESSFUL")
     //   this.tokenObject = result;
     //   console.log(result.status);
-    //   
+    //
     //   this.router.navigate(['/dashboard']);
     // },
     // (error) =>{
@@ -77,11 +77,12 @@ export class LoginComponent implements OnInit {
     //   this.fail = true;
     // }
 
-    result => { 
+    result => {
       if(result.status == 202){
         console.log("AUTHENTICATION SUCCESSFUL")
         localStorage.setItem('token',result.body.authResponse);
-        //localStorage.setItem('token',"batman");
+        localStorage.setItem('role',result.body.role);
+        localStorage.setItem('username',username);
         this.dialogRef.close();
         this.router.navigate(['/dashboard']);
       } else {
@@ -90,7 +91,7 @@ export class LoginComponent implements OnInit {
       }
      }
    );
-  
+
   }
 
   private handleError (error: Response | any) {

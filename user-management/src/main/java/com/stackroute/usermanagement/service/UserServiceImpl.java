@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
@@ -37,19 +38,17 @@ public class UserServiceImpl implements UserService{
         User user;
         try {
             user = userRepository.findByUsername(u.getUsername());
+            System.out.println("username:"+user.getUsername());
         }
         catch(Exception ex){
+            System.out.println("Error");
             throw new InternalServerErrorException();
         }
-        if(user==null){
-            throw new InvalidCredentialException();
-        }
-        if(!BCrypt.checkpw(u.getPassword(),user.getPassword())){
+        if(user==null || !BCrypt.checkpw(u.getPassword(),user.getPassword())){
+            System.out.println("password:"+user.getPassword());
             throw new InvalidCredentialException();
         }
         return user;
-
-
     }
 
     @Override
@@ -78,7 +77,6 @@ public class UserServiceImpl implements UserService{
             catch (Exception ex){
                 throw new InternalServerErrorException();
             }
-
         }
         else {
             throw new UserDoesNotExistException();

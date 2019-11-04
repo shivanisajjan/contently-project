@@ -20,7 +20,7 @@ public class RabbitMQSender {
     private String routingkey;
 
 
-    public void sendRegistry(Profile profile) {
+    public void sendProfile(Profile profile) {
         rabbitTemplate.convertAndSend(exchange, routingkey, profile);
     }
 

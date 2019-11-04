@@ -31,8 +31,10 @@
         <module>eureka-server</module>
         <module>api-gateway</module>
         <module>user-management</module>
+        <module>profile-service</module>
         <module>content-service</module>
-        <module>publishing-service</module>
+        <module>recommendation-service</module>
+<!--        <module>publishing-service</module>-->
     </modules>
 
     <dependencies>

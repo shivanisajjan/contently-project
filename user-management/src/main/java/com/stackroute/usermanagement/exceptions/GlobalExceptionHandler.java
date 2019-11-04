@@ -1,6 +1,8 @@
 package com.stackroute.usermanagement.exceptions;
 
 
+import com.stackroute.usermanagement.model.AuthenticationResponse;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,11 +18,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<String>("Username Already Exists", HttpStatus.CONFLICT);
     }
 
-//    @ExceptionHandler(NullValueFieldException.class)
-//    public ResponseEntity<?> handleNullValueException(HttpServletRequest request, Exception ex){
-//        return new ResponseEntity<String>("Enter Proper Value", HttpStatus.NOT_ACCEPTABLE);
-//    }
-
     @ExceptionHandler(UserDoesNotExistException.class)
     public ResponseEntity<?> handleUserDoesNotException(HttpServletRequest request, Exception ex){
         return new ResponseEntity<String>("User Does Not Exist", HttpStatus.CONFLICT);
@@ -31,6 +28,8 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(InvalidCredentialException.class)
     public ResponseEntity<?> handleInvalidCredentialException(HttpServletRequest request, Exception ex){
-        return new ResponseEntity<String>("Username/Password is invalid", HttpStatus.NOT_FOUND);
+        AuthenticationResponse a=new AuthenticationResponse();
+        a.setAuthResponse("Username/Password is invalid");
+        return new ResponseEntity<AuthenticationResponse>(a, HttpStatus.OK);
     }
 }

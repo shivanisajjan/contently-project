@@ -32,6 +32,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import { FooterComponent } from './footer/footer.component';
 import { AddNewSectionComponent } from './book-create/add-new-section/add-new-section.component';
+import { PreviewComponent } from './book-create/preview/preview.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AddNewSectionComponent } from './book-create/add-new-section/add-new-se
     EditComponent,
     BookdetailsComponent,
     FooterComponent,
-    AddNewSectionComponent
+    AddNewSectionComponent,
+    PreviewComponent
   ],
 
   imports: [
@@ -83,7 +85,8 @@ import { AddNewSectionComponent } from './book-create/add-new-section/add-new-se
   ],
   entryComponents: [
     LoginComponent,
-    AddNewSectionComponent
+    AddNewSectionComponent,
+    PreviewComponent
   ],
   providers: [
     LoginService,

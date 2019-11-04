@@ -12,9 +12,9 @@
           <mat-divider></mat-divider>
           <mat-icon mat-list-icon>folder</mat-icon>
           <h5 mat-line>{{book.name}}</h5>
-          <button mat-raised-button color="primary" (click)="editFile(book.name)">
-            <mat-icon>edit</mat-icon>
-          </button>
+          <button mat-raised-button color="primary" (click)="editFile(book.name)" style="margin-right: 10px"><mat-icon>edit</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="preview(book.name)" style="margin-right: 10px"><mat-icon>remove_red_eye</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="delete(book.name)"><mat-icon>delete</mat-icon></button>
         </mat-list-item>
       </mat-list>
     </mat-card-content>

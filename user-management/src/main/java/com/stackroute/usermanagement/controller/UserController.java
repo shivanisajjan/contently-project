@@ -9,17 +9,24 @@ import com.stackroute.usermanagement.service.RabbitMQSender;
 import com.stackroute.usermanagement.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 
-@CrossOrigin(origins = "http://localhost", maxAge = 3600)
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/user")
+@Slf4j
 public class
 UserController {
 
@@ -39,6 +46,7 @@ UserController {
     public ResponseEntity<User> registerUser(@RequestBody User user) throws UserAlreadyExistsExceptions, InternalServerErrorException {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
         User user1=userService.saveUser(user);
+        log.debug("user saved:{}",user1);
         DTOUser dtouser=new DTOUser();
         dtouser.setId(user1.getId());
         System.out.println(user1.getId());
@@ -63,10 +71,16 @@ UserController {
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException {
         String jwtToken = "";
-        userService.findByUsername(user);
-        jwtToken = Jwts.builder().setSubject(user.getUsername()).claim("roles", "user").setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
-        return new ResponseEntity<AuthenticationResponse> (new AuthenticationResponse(jwtToken), HttpStatus.ACCEPTED);
+        User u=userService.findByUsername(user);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("authorities", new ArrayList<>());
+        jwtToken = Jwts.builder().setClaims(claims).setSubject(user.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
+                .signWith(SignatureAlgorithm.HS512, "secretkey").compact();
+        AuthenticationResponse authenticationResponse=new AuthenticationResponse();
+        authenticationResponse.setAuthResponse(jwtToken);
+        authenticationResponse.setRole(u.getRole());
+        System.out.println(jwtToken);
+         return new ResponseEntity<AuthenticationResponse> (authenticationResponse, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/delete/{username}")

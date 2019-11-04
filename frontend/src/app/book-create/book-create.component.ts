@@ -22,7 +22,7 @@ export class BookCreateComponent implements OnInit {
   index: number = 2;
   content: string = "nothing";
   books: Book[] = [];
-
+  private customS;
   abc: boolean;
   aa: boolean;
   red: String;

@@ -7,6 +7,7 @@ import { userReg } from '../userReg';
 import { Observable } from 'rxjs';
 import { Response } from '@angular/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
      private _loginService: LoginService,_router: Router,
      public dialogRef: MatDialogRef<LoginComponent>,
+     private _authService : AuthService
     ) {
       this.router = _router;
     }
@@ -67,7 +69,7 @@ export class LoginComponent implements OnInit {
     //   console.log("AUTHENTICATION SUCCESSFUL")
     //   this.tokenObject = result;
     //   console.log(result.status);
-    //   
+      
     //   this.router.navigate(['/dashboard']);
     // },
     // (error) =>{
@@ -81,8 +83,10 @@ export class LoginComponent implements OnInit {
       if(result.status == 202){
         console.log("AUTHENTICATION SUCCESSFUL")
         localStorage.setItem('token',result.body.authResponse);
-        //localStorage.setItem('token',"batman");
+        localStorage.setItem('role',result.body.role);
+        localStorage.setItem('username',username);
         this.dialogRef.close();
+        this._authService.setLoggedIn(true);
         this.router.navigate(['/dashboard']);
       } else {
         console.log("AUTHENTICATION UNSUCCESSFUL");

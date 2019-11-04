@@ -7,6 +7,7 @@ import { content } from '../content.js';
 import { ContentService } from '../content.service.js';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service.js';
+import { AuthService } from '../auth.service.js';
 
 export interface PeriodicElement {
   Title: string;
@@ -40,14 +41,21 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _contentService: ContentService,
     private _router: Router,
-    private _loginService: LoginService
+    private _loginService: LoginService,
+    private _authService : AuthService
    ) {}
 
   ngOnInit() {
     // this.role = this._loginService.role;
-      // console.log('role',this.role);
-    this.getContent();
-
+      
+    if(this._authService.isLoggedIn == false){
+      console.log("NOT LOGGED IN");
+      this._router.navigate(['/home'])
+    } else {
+      console.log(localStorage.getItem('role'));
+      this.role = localStorage.getItem('role');
+      this.getContent();
+    }
 
 
 
@@ -71,27 +79,27 @@ export class DashboardComponent implements OnInit {
 
 
 
-		let chart = new CanvasJS.Chart("chartContainer", {
-		animationEnabled: true,
-		exportEnabled: true,
-		title: {
-			text: "Basic Column Chart in Angular"
-		},
-		data: [{
-			type: "column",
-			dataPoints: [
-				{ y: 71, label: "Apple" },
-				{ y: 55, label: "Mango" },
-				{ y: 50, label: "Orange" },
-				{ y: 65, label: "Banana" },
-				{ y: 95, label: "Pineapple" },
-				{ y: 68, label: "Pears" },
-				{ y: 28, label: "Grapes" },
-				{ y: 34, label: "Lychee" },
-				{ y: 14, label: "Jackfruit" }
-			]
-		}]
-	});
+	// 	let chart = new CanvasJS.Chart("chartContainer", {
+	// 	animationEnabled: true,
+	// 	exportEnabled: true,
+	// 	title: {
+	// 		text: "Basic Column Chart in Angular"
+	// 	},
+	// 	data: [{
+	// 		type: "column",
+	// 		dataPoints: [
+	// 			{ y: 71, label: "Apple" },
+	// 			{ y: 55, label: "Mango" },
+	// 			{ y: 50, label: "Orange" },
+	// 			{ y: 65, label: "Banana" },
+	// 			{ y: 95, label: "Pineapple" },
+	// 			{ y: 68, label: "Pears" },
+	// 			{ y: 28, label: "Grapes" },
+	// 			{ y: 34, label: "Lychee" },
+	// 			{ y: 14, label: "Jackfruit" }
+	// 		]
+	// 	}]
+	// });
     
   
 

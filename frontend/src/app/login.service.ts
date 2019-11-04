@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { user } from './user';
 import { userReg } from './userReg';
 import { profile } from './profile';
+import { Observable } from 'rxjs';
 const httpOptions = {
 headers: new HttpHeaders({'Content-Type':'application/json'})
 };
@@ -13,9 +14,9 @@ export class LoginService {
  public role: string;
  public jwtToken: string;
  constructor(private http:HttpClient) { }
- authenticateUser(checkUser: user):any{
+ authenticateUser(checkUser: user):Observable<HttpResponse<any>>{
    let post_url = `http://13.126.150.171:8080/user-management/api/v1/user/login`;
-   return this.http.post(post_url,checkUser,httpOptions);
+   return this.http.post(post_url,checkUser,{ observe: 'response' });
  }
 
  registerUser(regUser: userReg):any{

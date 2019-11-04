@@ -41,7 +41,7 @@ export class IllustratorDashboardComponent implements OnInit {
     });
   }
   getContent(){
-    this._contentService.getBooks(this._loginService.getUsername).subscribe(data => this.contentlist = data);
+    this._contentService.getBooks().subscribe(data => this.contentlist = data);
   }
   
 }

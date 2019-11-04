@@ -22,8 +22,8 @@ public class RabbitMQSender {
 
 
     public void sendRegistry(DTOUser user) {
+        System.out.println(user.toString());
         rabbitTemplate.convertAndSend(exchange, routingkey, user);
-        System.out.println("Send msg = " + user.getUsername());
     }
 
 }

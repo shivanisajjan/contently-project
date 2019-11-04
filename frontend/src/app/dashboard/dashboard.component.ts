@@ -120,8 +120,8 @@ export class DashboardComponent implements OnInit {
   // }
 
   getContent(){
-    console.log(this._loginService.getUsername);
-    this._contentService.getBooks("batman")
+   // console.log(localStorage.getItem('token'));
+    this._contentService.getBooks()
     .subscribe(data => this.contentlist = data );
   }
   onCreate(){

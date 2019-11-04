@@ -10,11 +10,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ContentService {
-
+   httpOptions = {
+    headers: new HttpHeaders({'Content-Type':'application/json',
+    'Authorization':'Batman ' + localStorage.getItem('token')})
+    };
   constructor(private http:HttpClient) { }
 
-  getBooks(username){
-    let post_url = `http://13.126.150.171:8080/content-service/api/v1/contents/${username}`;
-   return this.http.get(post_url,httpOptions);
+  getBooks(){
+    let post_url = `http://13.126.150.171:8080/content-service/api/v1/contents`;
+   return this.http.get(post_url,this.httpOptions);
   }
 }

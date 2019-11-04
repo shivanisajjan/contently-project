@@ -59,16 +59,16 @@ export class EditComponent implements OnInit {
         email: 'author@github.com'
       },
       // sha,
-      
+
       content: btoa(this.editorForm.get('editor').value)
     };
-     
-    this.bookFetch.createFile(this.bod).subscribe((data) =>{ console.log(data);}); 
+
+    this.bookFetch.createFile(this.bod).subscribe((data) =>{ console.log(data);});
     console.log(this.editorForm.get('editor').value);
 
-    this.router.navigateByUrl('bookCreate');
+    this.router.navigateByUrl('bookCreate').then();
 
-  
+
   }
 
 }

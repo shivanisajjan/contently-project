@@ -109,20 +109,20 @@ export class BookFetchService {
   }
 
   // delete a file
-  deleteFile(fileName: String, commit: Commit): Observable<any> {
-    console.log('delete: ', commit);
-    let commit2: any = {
-      sha: commit.sha,
-      message: 'msg'
-    };
-    let options: any = {
-      headers: this.headers,
-      sha: commit.sha,
-      message: 'msg'
-    };
-    return this.http.delete("https://api.github.com/repos/contently-books/" + this.repository + "/contents/" + fileName, commit, this.httpOptions);
+  // deleteFile(fileName: String, commit: Commit): Observable<any> {
+    // console.log('delete: ', commit);
+    // let commit2: any = {
+    //   sha: commit.sha,
+    //   message: 'msg'
+    // };
+    // let options: any = {
+    //   headers: this.headers,
+    //   sha: commit.sha,
+    //   message: 'msg'
+    // };
+    // return this.http.delete("https://api.github.com/repos/contently-books/" + this.repository + "/contents/" + fileName, commit, this.httpOptions);
     // return this.http.request('delete',"https://api.github.com/repos/contently-books/"+this.repository+"/contents/"+fileName, options);
-  }
+  // }
 
 
 }

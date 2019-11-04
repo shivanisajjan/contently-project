@@ -104,15 +104,15 @@ export class BookCreateComponent implements OnInit {
         data => {
           console.log(data);
           let commit = new Commit('', this.bookFetch.getUsername(), this.bookFetch.getUserEmail(), data.sha, '');
-          this.bookFetch.deleteFile(sectionName, commit)
-            .subscribe(
-              data => {
-                console.log('data', data);
-              },
-              error => {
-                console.log('error', error);
-              }
-            );
+          // this.bookFetch.deleteFile(sectionName, commit)
+          //   .subscribe(
+          //     data => {
+          //       console.log('data', data);
+          //     },
+          //     error => {
+          //       console.log('error', error);
+          //     }
+          //   );
         }
       );
   }

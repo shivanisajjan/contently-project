@@ -26,26 +26,23 @@ public class UserServiceImpl implements UserService{
             throw new UserAlreadyExistsExceptions();
         }
         try {
-            User u = userRepository.save(user);
-            return u;
+            User userTemp = userRepository.save(user);
+            return userTemp;
         }catch (Exception e){
             throw new InternalServerErrorException();
         }
 
     }
     @Override
-    public User findByUsername(User u) throws InternalServerErrorException, InvalidCredentialException {
-        User user;
+    public User findByUsername(User user) throws InternalServerErrorException, InvalidCredentialException {
+        User userTemp;
         try {
-            user = userRepository.findByUsername(u.getUsername());
-            System.out.println("username:"+user.getUsername());
+            userTemp = userRepository.findByUsername(user.getUsername());
         }
         catch(Exception ex){
-            System.out.println("Error");
             throw new InternalServerErrorException();
         }
-        if(user==null || !BCrypt.checkpw(u.getPassword(),user.getPassword())){
-            System.out.println("password:"+user.getPassword());
+        if(userTemp==null || !BCrypt.checkpw(user.getPassword(),userTemp.getPassword())){
             throw new InvalidCredentialException();
         }
         return user;
@@ -67,12 +64,12 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public User updateUser(User user) throws UserDoesNotExistException,InternalServerErrorException{
-        User u1=userRepository.findByUsername(user.getUsername());
-        if(u1!= null){
+        User userTemp=userRepository.findByUsername(user.getUsername());
+        if(userTemp!= null){
             try{
-                user.setId(u1.getId());
-                User u=userRepository.save(user);
-                return u;
+                user.setId(userTemp.getId());
+                User user1=userRepository.save(user);
+                return user1;
             }
             catch (Exception ex){
                 throw new InternalServerErrorException();

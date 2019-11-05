@@ -1,4 +1,4 @@
-package com.stackroute.contentservice.Sequence;
+package com.stackroute.contentservice.sequence;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

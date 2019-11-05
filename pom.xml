@@ -34,7 +34,7 @@
         <module>profile-service</module>
         <module>content-service</module>
         <module>recommendation-service</module>
-<!--        <module>publishing-service</module>-->
+        <module>publishing-service</module>
     </modules>
 
     <dependencies>

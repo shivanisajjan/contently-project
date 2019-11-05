@@ -1,7 +1,7 @@
 package com.stackroute.contentservice.service;
 
 
-import com.stackroute.contentservice.Sequence.Custom;
+import com.stackroute.contentservice.sequence.Custom;
 import com.stackroute.contentservice.exceptions.ContentAlreadyExistsExceptions;
 import com.stackroute.contentservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.contentservice.exceptions.InternalServerErrorException;
@@ -56,9 +56,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public void deleteContent(int id) throws ContentDoesNotExistException, InternalServerErrorException {
+    public Optional<Content> deleteContent(int id) throws ContentDoesNotExistException, InternalServerErrorException {
         try {
+            Optional<Content> content = contentRepository.findById(id);
+
             contentRepository.deleteById(id);
+
+            return content;
         }catch (Exception e){
             throw new ContentDoesNotExistException();
         }

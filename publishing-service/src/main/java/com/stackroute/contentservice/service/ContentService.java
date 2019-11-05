@@ -17,7 +17,7 @@ public interface ContentService {
 
    List<Content> findByTitle(String title) throws InternalServerErrorException;
 
-   void deleteContent(int id) throws ContentDoesNotExistException,InternalServerErrorException;
+   Optional<Content> deleteContent(int id) throws ContentDoesNotExistException,InternalServerErrorException;
 
    Content updateContent(Content content) throws ContentDoesNotExistException,InternalServerErrorException;
 

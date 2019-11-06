@@ -21,13 +21,13 @@ pipeline {
         stage('Deploy') {
             when { branch 'master' }
             steps {
-                sh  "ssh ubuntu@10.20.1.216 'cd ~/'contently_master' ; docker-compose up --build -d'"
+                sh  "ssh ubuntu@10.20.1.216 'cd ~/'contently_master' ; sudo docker-compose up --build -d'"
             }
         }
         stage('Deployment status') {
             when { branch 'master' }
             steps {
-                 sh "ssh ubuntu@10.20.1.216 'cd ~/'contently_master' ; sleep 30 ; docker ps'"
+                 sh "ssh ubuntu@10.20.1.216 'cd ~/'contently_master' ; sleep 30 ; sudo docker ps'"
             }
         }
     }

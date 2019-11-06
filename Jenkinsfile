@@ -6,7 +6,7 @@ pipeline {
 
     environment {
 
-        repo_path = '$(basename $PWD)'
+        repo_path = 'contently'
 
     }
 
@@ -20,7 +20,7 @@ pipeline {
 
             steps {
 
-                sh "rsync -rva ../${repo_path} ubuntu@10.20.1.216:/home/ubuntu/"
+                sh "rsync -rva contently ubuntu@10.20.1.216:/home/ubuntu/"
 
             }
 
@@ -46,7 +46,7 @@ pipeline {
 
             steps {
 
-                sh "ssh ubuntu@10.20.1.216 'cd ~/'${repo_path}' ; docker-compose up --build -d'"
+                sh "ssh ubuntu@10.20.1.216 'cd ~/'contently' ; docker-compose up --build -d"
 
             }
 
@@ -58,7 +58,7 @@ pipeline {
 
             steps {
 
-                sh "ssh ubuntu@10.20.1.216 'cd ~/'${repo_path}' ; sleep 30 ; docker ps'"
+                sh "ssh ubuntu@10.20.1.216 'cd ~/'contently' ; sleep 30 ; docker ps'"
 
             }
 

@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-header>
+    <h3>Create Content</h3>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+  <form #newContent="ngForm">
+
+    <div class="input-group">
+      <h5><label>Title : </label></h5>
+      <mat-form-field class="input-item">
+        <input matInput name="title" ngModel placeholder="Title">
+      </mat-form-field>
+    </div>
+
+    <div class="input-group" >
+      <h5><label>Type of Content : </label></h5>
+      <mat-radio-group name="type" ngModel>
+        <mat-radio-button class="input-item" value="novel">Novel</mat-radio-button>
+        <mat-radio-button class="input-item" value="autoBio">Auto Biography</mat-radio-button>
+        <mat-radio-button class="input-item" value="bio">Biography</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="input-group">
+      <h5><label>Genre: </label></h5>
+      <mat-checkbox name="horror" ngModel class="input-item">Horror</mat-checkbox>
+      <mat-checkbox name="romance" ngModel class="input-item">Romance</mat-checkbox>
+      <mat-checkbox name="thriller" ngModel class="input-item">Thriller</mat-checkbox>
+      <mat-checkbox name="crime" ngModel class="input-item">Crime</mat-checkbox>
+      <mat-checkbox name="drama" ngModel class="input-item">Drama</mat-checkbox>
+    </div>
+
+    <div>
+      <h5><label>Description:   </label></h5>
+      <mat-form-field class="mat-input">
+        <textarea rows="5" matInput name="desc" ngModel placeholder="Description"></textarea>
+      </mat-form-field>
+    </div>
+
+  </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit(newContent)" >Start Creating</button>
+  </mat-card-actions>
+</mat-card>

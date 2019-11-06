@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
@@ -19,65 +20,32 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
         this.rabbitMQSender = rabbitMQSender;
     }
-
-    public User saveUser(User user) throws UserAlreadyExistsExceptions,NullValueFieldException,InternalServerErrorException {
-        if(user.getUsername() == null ||
-           user.getPassword() == null ||
-           user.getFirstName() == null ||
-           user.getLastName() == null ||
-           user.getEmail() == null ||
-           user.getPhoneNumber() == null ||
-           user.getNationality() == null ||
-           user.getGender() == null
-            ){
-                throw new NullValueFieldException();
-            }
+    @Override
+    public User saveUser(User user) throws UserAlreadyExistsExceptions,InternalServerErrorException {
         if(userRepository.findByUsername(user.getUsername())!=null){
             throw new UserAlreadyExistsExceptions();
         }
         try {
-            User u = userRepository.save(user);
-            DTOUser dtouser=new DTOUser();
-            dtouser.setId(u.getId());
-            System.out.println(u.getId());
-            System.out.println(dtouser.getId());
-            dtouser.setUsername(user.getUsername());
-            dtouser.setRole(user.getRole());
-            dtouser.setPhoneNumber(user.getPhoneNumber());
-            dtouser.setNationality(user.getNationality());
-            dtouser.setLastName(user.getLastName());
-            dtouser.setGender(user.getGender());
-            dtouser.setFirstName(user.getFirstName());
-            dtouser.setEmail(user.getEmail());
-            dtouser.setDob(user.getDob());
-            dtouser.setAddressLine1(user.getAddressLine1());
-            dtouser.setAddressLine2(user.getAddressLine2());
-            dtouser.setAddressLine3(user.getAddressLine3());
-            rabbitMQSender.sendRegistry(dtouser);
-            return u;
+            User userTemp = userRepository.save(user);
+            return userTemp;
         }catch (Exception e){
             throw new InternalServerErrorException();
         }
 
     }
-
-    public User findByUsername(User u) throws InternalServerErrorException, InvalidCredentialException {
-        User user;
+    @Override
+    public User findByUsername(User user) throws InternalServerErrorException, InvalidCredentialException {
+        User userTemp;
         try {
-            user = userRepository.findByUsername(u.getUsername());
+            userTemp = userRepository.findByUsername(user.getUsername());
         }
         catch(Exception ex){
             throw new InternalServerErrorException();
         }
-        if(user==null){
-            throw new InvalidCredentialException();
-        }
-        if(!BCrypt.checkpw(u.getPassword(),user.getPassword())){
+        if(userTemp==null || !BCrypt.checkpw(user.getPassword(),userTemp.getPassword())){
             throw new InvalidCredentialException();
         }
         return user;
-
-
     }
 
     @Override
@@ -94,19 +62,26 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(user);
         return user;
     }
-
+    @Override
     public User updateUser(User user) throws UserDoesNotExistException,InternalServerErrorException{
-        if(userRepository.findByUsername(user.getUsername())!= null){
+        User userTemp=userRepository.findByUsername(user.getUsername());
+        if(userTemp!= null){
             try{
-                return userRepository.save(user);
+                user.setId(userTemp.getId());
+                User user1=userRepository.save(user);
+                return user1;
             }
             catch (Exception ex){
                 throw new InternalServerErrorException();
             }
-
         }
         else {
             throw new UserDoesNotExistException();
         }
     }
+    @Override
+    public User getByUsername(String Username){
+        return userRepository.findByUsername(Username);
+    }
+
 }

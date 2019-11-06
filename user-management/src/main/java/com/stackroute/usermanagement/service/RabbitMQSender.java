@@ -2,7 +2,6 @@ package com.stackroute.usermanagement.service;
 
 
 import com.stackroute.usermanagement.model.DTOUser;
-import com.stackroute.usermanagement.model.User;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +22,7 @@ public class RabbitMQSender {
 
 
     public void sendRegistry(DTOUser user) {
+        System.out.println(user.toString());
         rabbitTemplate.convertAndSend(exchange, routingkey, user);
     }
 

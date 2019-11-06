@@ -1,0 +1,30 @@
+<div style="background-image: url('../../assets/images/dashboard_bg.jpeg');" class="container-fluid"  id="illustrator-section">
+    <br>
+
+    <div class="row justify-content-center">
+    <b><h2 style="color: #FFF; text-shadow: 2px 2px 4px #000000;"class="section-title mb-3">My Dashboard</h2></b>
+    
+    <div class="book-cards">
+    <mat-card>
+        <mat-card-title>Book 1</mat-card-title>
+        <mat-card-subtitle>Author</mat-card-subtitle>
+        <mat-card-subtitle>Book ID</mat-card-subtitle>
+        <mat-card-actions>
+                <button (click)="editDialog()" mat-button>Edit</button>
+        </mat-card-actions>
+        <br>
+    </mat-card>
+    <br>
+    <mat-card *ngFor="let content of contentlist">
+            <mat-card-title>{{content.tile}}</mat-card-title>
+            <mat-card-subtitle>{{content.subTile}}</mat-card-subtitle>
+            <p>{{content.description}}</p>
+            <mat-card-actions>
+                    <button (click)="editDialog()" mat-button>Edit</button>
+            </mat-card-actions>
+            <br>
+        </mat-card>
+    </div> 
+      <br>
+      </div>
+  </div>

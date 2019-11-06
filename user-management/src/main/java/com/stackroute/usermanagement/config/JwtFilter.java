@@ -1,6 +1,7 @@
 package com.stackroute.usermanagement.config;
 
 import io.jsonwebtoken.Claims;
+import org.springframework.context.annotation.Configuration;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.web.filter.GenericFilterBean;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Configuration
 public class JwtFilter extends GenericFilterBean {
 
 

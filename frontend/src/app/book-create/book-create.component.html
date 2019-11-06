@@ -1,0 +1,29 @@
+<div *ngIf="load" class="section-list">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sections</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let book of books">
+          <mat-divider></mat-divider>
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <h5 mat-line>{{book.name}}</h5>
+          <button mat-raised-button color="primary" (click)="editFile(book.name)" style="margin-right: 10px"><mat-icon>edit</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="preview(book.name)" style="margin-right: 10px"><mat-icon>remove_red_eye</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="delete(book.name)"><mat-icon>delete</mat-icon></button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="addNewSection()" ><mat-icon>add</mat-icon></button>
+    </mat-card-actions>
+
+  </mat-card>
+
+
+</div>

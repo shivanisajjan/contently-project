@@ -1,6 +1,9 @@
-#dashboard-section{
-  padding-top: 10%;
+#illustrator-section{
+  min-height: 70%;
+  background-image: url('../../assets/images/main_bg.jpeg');
 }
+
+
 
 .dashboard-buttons{
   margin-left: 40%;
@@ -17,6 +20,15 @@ table {
 
 .mat-elevation-z8{
   padding-top: 30%;
+}
+
+.book-cards button{
+    float: right;   
+}
+
+.book-cards{
+  width: 80%;
+  margin: auto;
 }
 
 @media (min-width: 768px) {

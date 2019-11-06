@@ -9,7 +9,7 @@ services:
 
   mongo:
     image: mongo
-    container_name: mongo
+    container_name: mongo-docker
     restart: always
     volumes:
       - $HOME/mongo:/data/db
@@ -69,5 +69,64 @@ services:
       - rabbitmq
       - config-server
       - eureka-server
+      
+  content-service:
+      build: content-service
+      container_name: content-service
+      restart: always
+      depends_on:
+        - mongo
+        - rabbitmq
+        - config-server
+        - eureka-server
+      links:
+        - mongo
+        - rabbitmq
+        - config-server
+        - eureka-server
+      ports:
+        - 8082:8082
+      expose:
+        - 8082
+
+  recommendation-service:
+     build: recommendation-service   
+     container_name: recommendation-service 
+     restart: always
+     depends_on:
+       - neo4j
+     ports:
+        - 8081:8081
+
+
+  neo4j:
+     image: neo4j:latest
+     ports:
+       - "7474:7474"
+       - "7687:7687"
+     volumes:
+       - $HOME/neo4j:/data/db  
+     environment:
+       NEO4J_AUTH : none
+      
+
+  publishing-service:
+      build: publishing-service
+      container_name: publishing-service
+      restart: always
+      depends_on:
+        - mongo
+        - rabbitmq
+        - config-server
+        - eureka-server
+      links:
+        - mongo
+        - rabbitmq
+        - config-server
+        - eureka-server
+      ports:
+        - 8081:8081
+      expose:
+        - 8081
 
 

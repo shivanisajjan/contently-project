@@ -1,0 +1,20 @@
+/*material css*/
+.section-list{
+  width: 70%;
+  background-color: red;
+  margin: 10px auto;
+  box-shadow: 0 0 10px 0 lightslategrey;
+}
+.add-new-section{
+  float: right;
+  overflow: auto;
+}
+
+mat-list-item button{
+  display: none;
+}
+
+mat-list-item:hover button{
+  display: flex;
+}
+/*material css*/

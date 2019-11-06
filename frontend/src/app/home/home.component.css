@@ -1,62 +1,129 @@
-@media (min-width: 768px) {
-    /* show 3 items */
-    .carousel-inner .active,
-    .carousel-inner .active + .carousel-item,
-    .carousel-inner .active + .carousel-item + .carousel-item {
-      display: block;
-    }
-  
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
-      transition: none;
-    }
-  
-    .carousel-inner .carousel-item-next,
-    .carousel-inner .carousel-item-prev {
-      position: relative;
-      transform: translate3d(0, 0, 0);
-    }
-  
-    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: absolute;
-      top: 0;
-      right: -33.3333%;
-      z-index: -1;
-      display: block;
-      visibility: visible;
-    }
-  
-    /* left or forward direction */
-    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-    .carousel-item-next.carousel-item-left + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
-      position: relative;
-      transform: translate3d(-100%, 0, 0);
-      visibility: visible;
-    }
-  
-    /* farthest right hidden item must be abso position for animations */
-    .carousel-inner .carousel-item-prev.carousel-item-right {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      display: block;
-      visibility: visible;
-    }
-  
-    /* right or prev direction */
-    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-    .carousel-item-prev.carousel-item-right + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
-      position: relative;
-      transform: translate3d(100%, 0, 0);
-      visibility: visible;
-      display: block;
-      visibility: visible;
-    }
-  }
-  
+/*carousel header*/
+.carousel-header{
+  text-align: center;
+  padding: 10px;
+}
+/* end carousel header*/
+
+/*carousel controls*/
+.card-wrapper{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.card{
+  flex-basis: 30%;
+  margin: 0 10px;
+  opacity: 1;
+  max-width: 230px;
+  transition: .5s ease;
+  box-shadow: 0 0 10px 0 lightslategrey;
+}
+.description {
+  opacity: 0;
+  position: absolute;
+  text-align: justify;
+  transition: .5s ease;
+  padding: 10px;
+  color: white;
+  height: 100%;
+}
+.card:hover{
+  margin-top: -10px;
+}
+.card:hover .description{
+  background-color: rgba(0,0,0,0.7);
+  opacity: 1;
+}
+.card img{
+  margin: 0 auto;
+  height: 300px;
+  width: 100%;
+}
+.card-title, .card-text{
+  color: black;
+}
+/* end carousel controls*/
+
+/*our programs*/
+.our-programs-header{
+  text-align: center;
+  padding: 10px 100px;
+}
+.reader, .author, .editor, .designer{
+  height: 600px;
+  position: relative;
+  /*padding: 20px;*/
+  overflow: hidden;
+}
+.user-image{
+  flex-shrink: 0;
+  min-height: 100%;
+  min-width: 100%;
+  margin: 0 auto;
+}
+.reader-text h4, .author-text h4 {
+  margin-bottom: 10px;
+}
+.reader-text{
+  position: absolute;
+  top: 60px;
+  left: 100px;
+  width: 40%;
+}
+.author-text{
+  position: absolute;
+  top: 60px;
+  right: 100px;
+  width: 40%;
+}
+/*end our programs*/
+
+.our-clients{
+  height: 700px;
+  background: grey;
+  display: none;
+}
+
+
+/*our authors*/
+.our-authors{
+  justify-content: center;
+}
+.our-authors-heading{
+  text-align: center;
+  padding: 10px 100px;
+}
+.our-authors-body{
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+}
+.author-avatar{
+  height: 150px;
+  width: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+mat-card{
+  padding: 10px;
+  justify-content: center;
+  flex-basis: 33%;
+  margin: 0 10px;
+  border-color: #d3dbda;
+  border-width: 1px;
+  border-style: solid;
+}
+mat-card:hover{
+  box-shadow: 0 0 20px 0 lightslategrey;
+  transition: 0.2s;
+  margin-top: -10px;
+}
+mat-card-content{
+  text-align: center;
+}
+/* end our authors*/
+
+.container{
+  /*background-image: url('../../assets/images/main_bg.jpeg');*/
+}

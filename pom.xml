@@ -9,7 +9,6 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>contently</name>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -32,6 +31,10 @@
         <module>eureka-server</module>
         <module>api-gateway</module>
         <module>user-management</module>
+        <module>profile-service</module>
+        <module>content-service</module>
+        <module>recommendation-service</module>
+        <module>publishing-service</module>
     </modules>
 
     <dependencies>

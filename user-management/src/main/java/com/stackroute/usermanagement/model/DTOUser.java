@@ -1,14 +1,12 @@
 package com.stackroute.usermanagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class DTOUser {
     private Long id;
     private String username;

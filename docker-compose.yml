@@ -105,7 +105,7 @@ services:
        - "7474:7474"
        - "7687:7687"
      volumes:
-       - $HOME/neo4j:/data/db  
+       -$HOME/imports:/var/lib/neo4j/import
      environment:
        NEO4J_AUTH : none
       

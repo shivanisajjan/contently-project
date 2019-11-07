@@ -1,8 +1,8 @@
-package com.stackroute.SpringNeo4j.service;
+package com.stackroute.reccomendation.service;
 
 
-import com.stackroute.SpringNeo4j.domain.Book;
-import com.stackroute.SpringNeo4j.repository.BookRepository;
+import com.stackroute.reccomendation.domain.Book;
+import com.stackroute.reccomendation.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

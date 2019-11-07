@@ -160,7 +160,7 @@
         </ul></div>
     <div class="book-cards">
     <mat-card>
-        <mat-card-title>Book 1</mat-card-title>
+        <mat-card-title>Book 1..</mat-card-title>
         <mat-card-subtitle>Book ID</mat-card-subtitle>
         <mat-card-actions>
                 <button (click)="editDialog()" mat-button>Edit</button>
@@ -168,16 +168,23 @@
         <br>
     </mat-card>
     <br>
-    <div *ngFor="let content of contentlist">
-    <mat-card >
-        <mat-card-title>{{content.title}}</mat-card-title>
-        <mat-card-subtitle>{{content.subTitle}}</mat-card-subtitle>
-        <p>{{content.description}}</p>
+    <div class="container" id="recbox"
+    fxLayout
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="10px"
+    fxLayoutGap.xs="0">
+    <div *ngFor="let bookvar of bookVar">
+    <mat-card id="cardhere">
+        <mat-card-title>{{bookvar.bookName}}</mat-card-title>
+        <mat-card-subtitle>no</mat-card-subtitle>
+        <img mat-card-image src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="card image">
+        <p>some text</p>
         <mat-card-actions>
                 <button (click)="editDialog()" mat-button>Edit</button>
         </mat-card-actions>
         <br>
-    </mat-card>
+    </mat-card></div>
     <br></div>
     <br>
   

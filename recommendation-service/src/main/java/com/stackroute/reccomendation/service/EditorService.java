@@ -1,7 +1,7 @@
-package com.stackroute.SpringNeo4j.service;
+package com.stackroute.reccomendation.service;
 
-import com.stackroute.SpringNeo4j.domain.Editor;
-import com.stackroute.SpringNeo4j.repository.EditorRepository;
+import com.stackroute.reccomendation.domain.Editor;
+import com.stackroute.reccomendation.repository.EditorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

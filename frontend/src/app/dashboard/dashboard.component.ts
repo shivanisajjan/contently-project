@@ -8,6 +8,7 @@ import { ContentService } from '../content.service.js';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service.js';
 import { AuthService } from '../auth.service.js';
+import {BookFetchService} from '../bookFetch.service';
 
 export interface PeriodicElement {
   Title: string;
@@ -37,12 +38,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardComponent implements OnInit {
   public contentlist;
   private role;
+  public bookVar:[];
 
   constructor(
     private _contentService: ContentService,
     private _router: Router,
     private _loginService: LoginService,
-    private _authService : AuthService
+    private _authService : AuthService,
+    private _bookFetch :BookFetchService 
    ) {}
 
   ngOnInit() {
@@ -56,6 +59,9 @@ export class DashboardComponent implements OnInit {
       this.role = localStorage.getItem('role');
       this.getContent();
     }
+
+    this._bookFetch.getRecommendation()
+    .subscribe(data => {this.contentlist = data;console.log(data) ;this.bookVar=data;}); 
 
 
 
@@ -136,5 +142,7 @@ export class DashboardComponent implements OnInit {
     console.log('called');
     this._router.navigate(['/contentLayout']).then();
   }
+
+  
 
 }

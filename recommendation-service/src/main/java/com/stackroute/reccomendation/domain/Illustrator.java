@@ -1,4 +1,4 @@
-package com.stackroute.SpringNeo4j.domain;
+package com.stackroute.reccomendation.domain;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;

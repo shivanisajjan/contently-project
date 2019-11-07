@@ -3,7 +3,18 @@
   background-image: url('../../assets/images/main_bg.jpeg');
 }
 
+#recbox
+{
+  width: 100%; 
+  overflow-x: scroll;
+}
 
+
+#cardhere
+{
+  height: 200px;
+  width: 150px;
+}
 
 .dashboard-buttons{
   margin-left: 40%;

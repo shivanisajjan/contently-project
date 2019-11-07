@@ -1,19 +1,20 @@
-package com.stackroute.SpringNeo4j;
+package com.stackroute.reccomendation;
 
-import com.stackroute.SpringNeo4j.domain.Book;
-import com.stackroute.SpringNeo4j.domain.Editor;
-import com.stackroute.SpringNeo4j.domain.Illustrator;
-import com.stackroute.SpringNeo4j.domain.User;
-import com.stackroute.SpringNeo4j.service.BookService;
-import com.stackroute.SpringNeo4j.service.EditorService;
-import com.stackroute.SpringNeo4j.service.IllustratorService;
-import com.stackroute.SpringNeo4j.service.UserService;
+import com.stackroute.reccomendation.domain.Book;
+import com.stackroute.reccomendation.domain.Editor;
+import com.stackroute.reccomendation.domain.Illustrator;
+import com.stackroute.reccomendation.domain.User;
+import com.stackroute.reccomendation.service.BookService;
+import com.stackroute.reccomendation.service.EditorService;
+import com.stackroute.reccomendation.service.IllustratorService;
+import com.stackroute.reccomendation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("api/v1")
 public class UserController {
@@ -38,6 +39,12 @@ public class UserController {
 
     @GetMapping("books/rec/{name}")
     public Collection<Book> getBookRec(@PathVariable String name){return userService.getBookRec(name);}
+
+    @GetMapping("books/rec")
+    public Collection<Book> getRecAccProfile(@RequestBody User user)
+    {
+        return userService.getRecAccProfile(user);
+    }
 
     @GetMapping("priceRec/{genre}")
     public int getPriceRec(@PathVariable String genre)

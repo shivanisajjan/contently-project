@@ -1,15 +1,14 @@
 package com.stackroute.zuulapi;
 
-import com.stackroute.zuulapi.pre.SimpleFilter;
+import com.stackroute.zuulapi.filters.PreFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.cloud.netflix.zuul.EnableZuulServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
 
 @SpringBootApplication
 @EnableZuulProxy
@@ -20,10 +19,9 @@ public class ZuulApiApplication {
 	}
 
 	@Bean
-	public SimpleFilter simpleFilter(){
-		return new SimpleFilter();
+	public PreFilter preFilter() {
+		return new PreFilter();
 	}
-
 	@Bean
 	public CorsFilter corsFilter() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

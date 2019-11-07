@@ -12,11 +12,10 @@ public interface ContentRepository extends MongoRepository<Content, Integer> {
 
 
     @Query("{'title' : ?0}")
-    List<Content> findByTitle(String title);
+    Content findByTitle(String title);
 
 
-
-    @Query("{'editorIds' : { $all: [ ?0 ] } }")
-    List<Content> findByEditorId(int id);
+    @Query("{'authorName' :  ?0 }")
+    List<Content> findByName(String name);
 
 }

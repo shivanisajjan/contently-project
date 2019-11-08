@@ -9,15 +9,6 @@ import {Commit} from "./book-create/commit";
 })
 export class BookFetchService {
 
-  // logged user's username
-  private username: String = 'User Name';
-  private userEmail: String = 'user.name@example.com';
-  // logged user's JWT token
-  public token: String;
-  // current content's repository name
-  public repository: String = 'new';
-  public fileName: String;
-
   constructor(private http: HttpClient) {
   }
 
@@ -26,56 +17,10 @@ export class BookFetchService {
     Authorization: 'Token 38082b67020bce12020e9587f5b0cae858228b0d'
   };
 
-  // backend authorization header
-  private headers1 = {
-    Authorization: 'Batman ' + this.token
-  };
-
   // httpOption for github api request
   private httpOptions = {
     headers: this.headers
   };
-
-  // httpOption for backend api request
-  private httpOptions1 = {
-    headers: this.headers1
-  };
-
-  // setters and getters
-  getUsername() {
-    return this.username;
-  }
-
-  setUsername(username: String) {
-    this.username = username;
-  }
-
-  getUserEmail() {
-    return this.userEmail;
-  }
-
-  setUserEmail(userEmail: String) {
-    this.username = userEmail;
-  }
-
-  setRepository(repoName: String) {
-    this.repository = repoName;
-  }
-
-  // getBook(): Observable<any> {
-  //   return this.http.get<any>("");
-  // }
-  //
-  // addBook(bookObj): Observable<any> {
-  //   console.log('obj: ', bookObj);
-  //   return this.http.post<any>(this.url, bookObj, this.httpOptions);
-  //
-  // }
-  //
-  // addContent(contObj): Observable<any> {
-  //   console.log('obj: ', contObj);
-  //   return this.http.post<any>("http://localhost:8082/api/v1/save", contObj, this.httpOptions1);
-  // }
 
   createRepo(repoName: String, description: String) {
     let postObject: any = {
@@ -107,28 +52,27 @@ export class BookFetchService {
 
   }
 
-  getRecommendation() : Observable<any> {
+  getRecommendation(): Observable<any> {
     console.log('recommending..');
     return this.http.get<any>("http://localhost:8081/api/v1/books", this.httpOptions1);
-
 
 
   }
 
   // delete a file
   // deleteFile(fileName: String, commit: Commit): Observable<any> {
-    // console.log('delete: ', commit);
-    // let commit2: any = {
-    //   sha: commit.sha,
-    //   message: 'msg'
-    // };
-    // let options: any = {
-    //   headers: this.headers,
-    //   sha: commit.sha,
-    //   message: 'msg'
-    // };
-    // return this.http.delete("https://api.github.com/repos/contently-books/" + this.repository + "/contents/" + fileName, commit, this.httpOptions);
-    // return this.http.request('delete',"https://api.github.com/repos/contently-books/"+this.repository+"/contents/"+fileName, options);
+  // console.log('delete: ', commit);
+  // let commit2: any = {
+  //   sha: commit.sha,
+  //   message: 'msg'
+  // };
+  // let options: any = {
+  //   headers: this.headers,
+  //   sha: commit.sha,
+  //   message: 'msg'
+  // };
+  // return this.http.delete("https://api.github.com/repos/contently-books/" + this.repository + "/contents/" + fileName, commit, this.httpOptions);
+  // return this.http.request('delete',"https://api.github.com/repos/contently-books/"+this.repository+"/contents/"+fileName, options);
   // }
 
 

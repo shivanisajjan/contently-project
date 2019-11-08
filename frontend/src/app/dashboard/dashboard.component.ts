@@ -45,15 +45,21 @@ export class DashboardComponent implements OnInit {
           console.log('Content All Books data: ', data);
           this.contentsList = data;
           this.contentsLoaded = true;
+          // // this chunk has to removed after publication service is ready
+          // console.log(this.contentsList[0]);
+          // this.booksList.push(
+          //   {
+          //     this.contentsList[0],
+          //     noOfPurchases: 23,
+          //   }
+          // );
+          // console.log('books', this.booksList[0]);
         },
         error => {
           console.log('Content All Books error: ', error);
         }
       );
-    this.booksList.push(
-      this.contentsList[0]
-    );
-    console.log('books', this.booksList[0]);
+
   }
 
   edit(i: number) {

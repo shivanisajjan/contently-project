@@ -13,6 +13,7 @@ import { userReg } from '../userReg';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
+  private username;
   private gender = 'female';
   isLinear = false;
   public interestsBoolean = false;
@@ -23,7 +24,7 @@ export class EditProfileComponent implements OnInit {
   private $interest: interest;
   private $genre: genre;
   private updateStatus = false;
-  
+  private profileData;
   constructor(
     private _formBuilder: FormBuilder,
     private _loginService: LoginService,
@@ -31,9 +32,19 @@ export class EditProfileComponent implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.profileData = JSON.parse(localStorage.getItem('editProfile'));
+    this.username = this.profileData.username;
+    console.log(this.profileData);
     this.firstFormGroup = this._formBuilder.group({
-      nationality: ['', Validators.required],
-      gender: ['', Validators.required],
+      firstName:[this.profileData.firstName,Validators.required],
+      lastName:[this.profileData.lastName],
+      email:[this.profileData.email],
+      contact:[this.profileData.phoneNumber],
+      address1:[this.profileData.addressLine1],
+      address2:[this.profileData.addressLine2],
+      address3:[this.profileData.addressLine3],
+      nationality: [this.profileData.nationality, Validators.required],
+      gender: [this.profileData.gender, Validators.required],
       date: ['', Validators.required]    });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -47,12 +58,11 @@ export class EditProfileComponent implements OnInit {
     this.$profile.interest.push(this.$interest);
   }
 
-  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, date){
+  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, email, contact){
     const regUser: userReg = new userReg();
-    // regUser.username = username;
-    // regUser.password = password;
-    // regUser.email = email;
-    // regUser.phoneNumber = contact;
+    regUser.username = this.profileData.username;
+    regUser.email = email;
+    regUser.phoneNumber = contact;
     regUser.firstName = firstname;
     regUser.lastName = lastname;
     regUser.nationality = nationality;
@@ -66,6 +76,7 @@ export class EditProfileComponent implements OnInit {
         this.updateStatus = true;
       }
     });
+    localStorage.removeItem('editProfile');
   }
 
   checkValue(event, check) {
@@ -115,11 +126,11 @@ export class EditProfileComponent implements OnInit {
     console.log(this.$profile);
   }
 
-  saveInterests(username){
+  saveInterests(){
     if (this.interestsBoolean) {
-      this.$profile.username = username;
+      this.$profile.username = this.username;
       this._loginService.saveInterests(this.$profile).subscribe();
-      this._router.navigate(['/home']).then();
+      this._router.navigate(['/afterLogin']).then();
     }
   }
 

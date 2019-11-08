@@ -71,4 +71,9 @@ export class DashboardComponent implements OnInit {
   ifAuthor(): boolean {
     return localStorage.getItem('role') === 'reader/author';
   }
+
+  editProfile(){
+    localStorage.setItem('editProfile',JSON.stringify(this.profileData));
+    this.router.navigate(['/editProfile']);
+  }
 }

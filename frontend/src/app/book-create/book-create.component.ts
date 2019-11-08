@@ -114,12 +114,12 @@ export class BookCreateComponent implements OnInit {
   }
 
   delete(sectionName: String) {
-    this.bookFetch.getGit(this.bookDetails.id, sectionName)
-      .subscribe(
-        data => {
-          console.log(data);
-          const commit = new Commit('', this.bookFetch.getUsername(), this.bookFetch.getUserEmail(), data.sha, '');
-          // this.bookFetch.deleteFile(sectionName, commit)
+    // this.bookFetch.getGit(this.bookDetails.id, sectionName)
+    //   .subscribe(
+    //     data => {
+    //       console.log(data);
+    //       const commit = new Commit('', this.bookFetch.getUsername(), this.bookFetch.getUserEmail(), data.sha, '');
+    //       // this.bookFetch.deleteFile(sectionName, commit)
           //   .subscribe(
           //     data => {
           //       console.log('data', data);
@@ -127,9 +127,9 @@ export class BookCreateComponent implements OnInit {
           //     error => {
           //       console.log('error', error);
           //     }
-          //   );
-        }
-      );
+      //     //   );
+      //   }
+      // );
   }
 
   private _filter(value: string): string[] {

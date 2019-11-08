@@ -125,5 +125,8 @@ mat-card-content{
 /* end our authors*/
 
 .container{
+  /*margin: auto;*/
+  justify-content: center;
+  width: 100%;
   /*background-image: url('../../assets/images/main_bg.jpeg');*/
 }

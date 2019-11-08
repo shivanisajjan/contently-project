@@ -33,6 +33,9 @@ import {MatListModule} from "@angular/material/list";
 import { FooterComponent } from './footer/footer.component';
 import { AddNewSectionComponent } from './book-create/add-new-section/add-new-section.component';
 import { PreviewComponent } from './book-create/preview/preview.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -81,7 +84,10 @@ import { PreviewComponent } from './book-create/preview/preview.component';
     FlexLayoutModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule,
+    MatGridListModule,
+    MatExpansionModule
   ],
   entryComponents: [
     LoginComponent,

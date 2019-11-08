@@ -6,6 +6,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: mysql
+    volumes:
+      - $HOME/mysql:/var/lib/mysql
 
   mongo:
     image: mongo
@@ -69,64 +71,72 @@ services:
       - rabbitmq
       - config-server
       - eureka-server
-      
-  content-service:
-      build: content-service
-      container_name: content-service
-      restart: always
-      depends_on:
-        - mongo
-        - rabbitmq
-        - config-server
-        - eureka-server
-      links:
-        - mongo
-        - rabbitmq
-        - config-server
-        - eureka-server
-      ports:
-        - 8082:8082
-      expose:
-        - 8082
 
-  recommendation-service:
-     build: recommendation-service   
-     container_name: recommendation-service 
-     restart: always
-     depends_on:
-       - neo4j
-     ports:
-        - 8081:8081
+  content-service:
+    build: content-service
+    container_name: content-service
+    restart: always
+    depends_on:
+      - mongo
+      - rabbitmq
+      - config-server
+      - eureka-server
+    links:
+      - mongo
+      - rabbitmq
+      - config-server
+      - eureka-server
+    ports:
+      - 8082:8082
+    expose:
+      - 8082
+
+  #  recommendation-service:
+  #     build: recommendation-service
+  #     container_name: recommendation-service
+  #     restart: always
+  #     depends_on:
+  #       - neo4j
+  #     ports:
+  #        - 8081:8081
 
 
   neo4j:
-     image: neo4j:latest
-     ports:
-       - "7474:7474"
-       - "7687:7687"
-     volumes:
-       - $HOME/neo4j:/data/db  
-     environment:
-       NEO4J_AUTH : none
-      
+    image: neo4j:latest
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - $HOME/neo4j:/data/db
+    environment:
+      NEO4J_AUTH: none
+
 
   publishing-service:
-      build: publishing-service
-      container_name: publishing-service
-      restart: always
-      depends_on:
-        - mongo
-        - rabbitmq
-        - config-server
-        - eureka-server
-      links:
-        - mongo
-        - rabbitmq
-        - config-server
-        - eureka-server
-      ports:
-        - 8081:8081
-      expose:
-        - 8081
+    build: publishing-service
+    container_name: publishing-service
+    restart: always
+    depends_on:
+      - mongo
+      - rabbitmq
+      - config-server
+      - eureka-server
+    links:
+      - mongo
+      - rabbitmq
+      - config-server
+      - eureka-server
+    ports:
+      - 8081:8081
+    expose:
+      - 8081
 
+  contently-frontend:
+    build: frontend/
+    restart: always
+    container_name: contently-frontend
+    depends_on:
+      - api-gateway
+    ports:
+      - 4200:80
 

@@ -9,10 +9,6 @@ pipeline {
             steps {
                 sh "rsync -rva ../${repo_path} ubuntu@10.20.1.216:/home/ubuntu/"
             }
-            when{ branch 'v1.0.2'}
-            steps{
-                sh "rsync -rva ../${repo_path} ubuntu@10.20.1.216:/home/ubuntu/"
-            }
         }
         stage('build') {
             when { branch 'master' }

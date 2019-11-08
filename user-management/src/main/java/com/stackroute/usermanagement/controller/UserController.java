@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -112,7 +113,11 @@ public class UserController {
     @ApiOperation(value = "get user by username")
     @GetMapping(value = "{username}")
     public ResponseEntity<User> getByUsername(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
-        return new ResponseEntity<User>(userService.getByUsername(username), HttpStatus.OK);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Access-Control-Allow-Origin","*");
+        responseHeaders.add("Content-Type","application/json");
+        return new ResponseEntity<User>(userService.getByUsername(username),responseHeaders HttpStatus.OK);
     }
 
 }

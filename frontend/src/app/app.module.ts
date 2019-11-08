@@ -33,9 +33,8 @@ import {MatListModule} from "@angular/material/list";
 import { FooterComponent } from './footer/footer.component';
 import { AddNewSectionComponent } from './book-create/add-new-section/add-new-section.component';
 import { PreviewComponent } from './book-create/preview/preview.component';
-import {MatMenuModule} from "@angular/material/menu";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatExpansionModule} from "@angular/material/expansion";
+import { ConversionComponent } from './conversion/conversion.component';
+import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +49,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
     BookdetailsComponent,
     FooterComponent,
     AddNewSectionComponent,
-    PreviewComponent
+    PreviewComponent,
+    ConversionComponent,
+    PageAfterLoginComponent
   ],
 
   imports: [
@@ -84,10 +85,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     FlexLayoutModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule,
-    MatMenuModule,
-    MatGridListModule,
-    MatExpansionModule
+    MatListModule
   ],
   entryComponents: [
     LoginComponent,

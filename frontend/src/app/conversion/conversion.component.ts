@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import { Document,Packer,Paragraph,TextRun } from 'docx';
-var htmlDocx = require('pt-html-docx-js');
+// var htmlDocx = require('pt-html-docx-js');
 import {BookFetchService} from '../bookFetch.service';
 
 
@@ -62,8 +62,8 @@ export class ConversionComponent implements OnInit {
   
   });
 
-  var converted = htmlDocx.asBlob(this.toPrint, {orientation: 'landscape', margins: {top: 720}});
-saveAs(converted, 'test.docx');
+  // var converted = htmlDocx.asBlob(this.toPrint, {orientation: 'landscape', margins: {top: 720}});
+// saveAs(converted, 'test.docx');
 
 
     

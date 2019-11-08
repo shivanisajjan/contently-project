@@ -27,7 +27,7 @@ public class Content {
     private String designerName;
     private String typeName;
     private List<String> genres;
-    private Map<String,String> status;
+    private List<Status> status;
     private String  createdAt;
 
 }

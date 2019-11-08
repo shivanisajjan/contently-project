@@ -8,10 +8,9 @@
 		<version>1.0.0</version>
 	</parent>
 	<groupId>com.stackroute</groupId>
-	<artifactId>SpringNeo4j</artifactId>
+	<artifactId>recommendation-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringNeo4j</name>
-	<description>Demo project for Spring Boot</description>
+	<name>recommendation-service</name>
 
 	<properties>
 		<java.version>11</java.version>

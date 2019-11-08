@@ -31,14 +31,14 @@
         <module>eureka-server</module>
         <module>api-gateway</module>
         <module>user-management</module>
-        <module>profile-service</module>
         <module>content-service</module>
+        <module>profile-service</module>
         <module>recommendation-service</module>
-        <module>publishing-service</module>
+        <module>notification</module>
+        <module>publication-service</module>
     </modules>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -82,6 +82,23 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

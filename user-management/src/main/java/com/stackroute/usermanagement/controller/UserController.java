@@ -42,6 +42,7 @@ UserController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) throws UserAlreadyExistsExceptions, InternalServerErrorException {
+        System.out.println("sdhfghsfdgdytf");
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
         User user1=userService.saveUser(user);
         DTOUser dtouser=new DTOUser();
@@ -88,9 +89,12 @@ UserController {
 
     @PutMapping(value = "/update")
     public ResponseEntity<String> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
+        User uname=userService.getByUsername(user.getUsername());
+        user.setPassword(uname.getPassword());
+        user.setRole(user.getRole());
+//        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
         userService.updateUser(user);
-        return new ResponseEntity<String>("Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<String>("Updated Successfully", HttpStatus.OK);
     }
 
     @GetMapping(value = "{username}")

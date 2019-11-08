@@ -15,7 +15,7 @@ public interface ContentRepository extends MongoRepository<Content, Integer> {
     Content findByTitle(String title);
 
 
-    @Query("{'authorName' :  ?0 }")
-    List<Content> findByName(String name);
+    @Query("{ $or: [ {'authorName' :  ?0 }, {'editorName' :  ?0 },{'designerName' :  ?0 } ] }")
+    List<Content> findByName(String authorName);
 
 }

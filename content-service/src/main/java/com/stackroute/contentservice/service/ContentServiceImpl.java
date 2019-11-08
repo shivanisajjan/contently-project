@@ -85,24 +85,24 @@ public class ContentServiceImpl implements ContentService {
         }
     }
 
-    @Override
-    public Content saveChapters(Content content) throws InternalServerErrorException {
-        Content saveChapter = content;
-        try{
-            List<Content> authorList=findByName(content.getAuthorName());
-            for (Content temp : authorList) {
-                if(temp.getTitle().equals(content.getTitle())){
-                    temp.setStatus(content.getStatus());
-                    saveChapter=contentRepository.save(temp);
-                }
-            }
-        }
-        catch (Exception e){
-            throw new InternalServerErrorException();
-        }
-        System.out.println("save:"+saveChapter.toString());
-        return saveChapter;
-    }
+//    @Override
+//    public Content saveChapters(Content content) throws InternalServerErrorException {
+//        Content saveChapter = content;
+//        try{
+//            List<Content> authorList=findByName(content.getAuthorName());
+//            for (Content temp : authorList) {
+//                if(temp.getTitle().equals(content.getTitle())){
+//                    temp.setStatus(content.getStatus());
+//                    saveChapter=contentRepository.save(temp);
+//                }
+//            }
+//        }
+//        catch (Exception e){
+//            throw new InternalServerErrorException();
+//        }
+//        System.out.println("save:"+saveChapter.toString());
+//        return saveChapter;
+//    }
 
     @Override
     public Content findTitleById(int id) throws ContentDoesNotExistException {

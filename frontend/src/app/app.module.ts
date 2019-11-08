@@ -1,7 +1,9 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";import { AppRoutingModule } from "./app-routing.module";import { AppComponent } from "./app.component";
-import { LoginService } from "./login.service";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginService } from './login.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
@@ -12,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
-import { QuillModule } from "ngx-quill";
+import { QuillModule } from 'ngx-quill';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule} from '@angular/material';
 import { MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,17 +24,20 @@ import {BookdetailsComponent, SampleChapterDialog} from "./bookdetails/bookdetai
 import {MatTabsModule} from "@angular/material/tabs";
 import { ContentService } from './content.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { FlexLayoutModule } from "@angular/flex-layout";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListModule} from "@angular/material/list";
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 import { FooterComponent } from './footer/footer.component';
 import { AddNewSectionComponent } from './book-create/add-new-section/add-new-section.component';
 import { PreviewComponent } from './book-create/preview/preview.component';
-import {MatMenuModule} from "@angular/material/menu";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatExpansionModule} from "@angular/material/expansion";import { ConversionComponent } from './conversion/conversion.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ConversionComponent } from './conversion/conversion.component';
 import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,10 +54,10 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SetStatusDialog,
     SampleChapterDialog,
     ConversionComponent,
-    PageAfterLoginComponent
+    PageAfterLoginComponent,
+    EditProfileComponent
   ],
 
   imports: [
@@ -97,7 +102,6 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SetStatusDialog,
     SampleChapterDialog
   ],
   providers: [

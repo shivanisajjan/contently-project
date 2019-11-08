@@ -57,10 +57,10 @@ public class ContentController {
         responseEntity=new ResponseEntity<>(contentService.findTitleById(id),HttpStatus.OK);
         return responseEntity;
     }
-    @PostMapping(value = "/update/chapter")
-    public ResponseEntity<?> saveChapter(@RequestBody Content content) throws InternalServerErrorException
-    {
-        responseEntity=new ResponseEntity<>(contentService.saveChapters(content),HttpStatus.OK);
-        return responseEntity;
-    }
+//    @PostMapping(value = "/update/chapter")
+//    public ResponseEntity<?> saveChapter(@RequestBody Content content) throws InternalServerErrorException
+//    {
+//        responseEntity=new ResponseEntity<>(contentService.saveChapters(content),HttpStatus.OK);
+//        return responseEntity;
+//    }
 }

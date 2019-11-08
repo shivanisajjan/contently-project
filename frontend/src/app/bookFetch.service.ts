@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Commit} from "./book-create/commit";
 
@@ -55,11 +55,17 @@ export class BookFetchService {
   //     this.repository + "/contents", this.httpOptions);
   //
   // }
-  //
-  // getRecommendation(): Observable<any> {
-  //   console.log('recommending..');
-  //   return this.http.get<any>('http://localhost:8081/api/v1/books', this.httpOptions1);
-  // }
+
+  getRecommendation(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    console.log('recommending..');
+    return this.http.get<any>('http://localhost:8081/api/v1/books', httpOptions);
+  }
 
 
 }

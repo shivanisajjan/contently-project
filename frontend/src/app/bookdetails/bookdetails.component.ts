@@ -18,7 +18,7 @@ export class BookdetailsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    
+
   }
 
 
@@ -58,13 +58,14 @@ export class SampleChapterDialog implements OnInit{
 
   ngOnInit(): void {
       console.log("Fetching Sample Chapter of  " + this.data.bookId)
+      this.getSampleChapter();
     }
       
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  getSampleChapter(id){
+  getSampleChapter(){
     this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id, JSON.parse(localStorage.getItem('book')).status[0].chapterName)
       .subscribe(
         result => this.sampleChapter = result

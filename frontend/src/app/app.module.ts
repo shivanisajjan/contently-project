@@ -1,9 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-
-import { AppRoutingModule } from "./app-routing.module";
-
-import { AppComponent } from "./app.component";
+import { NgModule } from "@angular/core";import { AppRoutingModule } from "./app-routing.module";import { AppComponent } from "./app.component";
 import { LoginService } from "./login.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
@@ -35,8 +31,8 @@ import { AddNewSectionComponent } from './book-create/add-new-section/add-new-se
 import { PreviewComponent } from './book-create/preview/preview.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatGridListModule} from "@angular/material/grid-list";
-import {MatExpansionModule} from "@angular/material/expansion";
-
+import {MatExpansionModule} from "@angular/material/expansion";import { ConversionComponent } from './conversion/conversion.component';
+import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +50,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
     SelectEditorDialog,
     SelectIllustratorDialog,
     SetStatusDialog,
-    SampleChapterDialog
+    SampleChapterDialog,
+    ConversionComponent,
+    PageAfterLoginComponent
   ],
 
   imports: [
@@ -109,3 +107,5 @@ import {MatExpansionModule} from "@angular/material/expansion";
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+

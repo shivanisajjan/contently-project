@@ -7,6 +7,8 @@ import {EditComponent} from "./edit/edit.component";
 import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
 import { ContentLayoutComponent } from './content-layout/content-layout.component';
 import { BookCreateComponent } from './book-create/book-create.component';
+import { ConversionComponent } from './conversion/conversion.component';
+import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
 
 
 
@@ -18,7 +20,9 @@ const  routes: Routes = [
     {path: 'edit/:fileName', component: EditComponent},
     {path: 'book-details/:id', component: BookdetailsComponent},
     {path:'contentLayout',component:ContentLayoutComponent},
-    {path:'bookCreate',component:BookCreateComponent}
+    {path:'bookCreate',component:BookCreateComponent},
+    {path:'conversion',component:ConversionComponent},
+    {path:'afterLogin',component:PageAfterLoginComponent} 
 
 ];
 

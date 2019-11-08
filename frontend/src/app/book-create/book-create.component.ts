@@ -125,7 +125,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   preview(sectionName: String) {
-    this.bookFetch.getGit(sectionName)
+    this.bookFetch.getGit(this.bookDetails.id,sectionName)
       .subscribe(
         data => {
           console.log(data);
@@ -146,7 +146,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   delete(sectionName: String) {
-    this.bookFetch.getGit(sectionName)
+    this.bookFetch.getGit(this.bookDetails.id,sectionName)
       .subscribe(
         data => {
           console.log(data);

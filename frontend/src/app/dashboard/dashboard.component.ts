@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(localStorage.getItem('username'));
+    this.ifAuthor();
     this.login.getUser()
       .subscribe(
         data => {
@@ -49,9 +49,14 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
+
   edit(i: number) {
     console.log(this.contentsList[i]);
     localStorage.setItem('book', JSON.stringify(this.contentsList[i]));
     this.router.navigate(['/bookCreate']).then();
+  }
+
+  ifAuthor(): boolean {
+    return localStorage.getItem('role') === 'reader/author';
   }
 }

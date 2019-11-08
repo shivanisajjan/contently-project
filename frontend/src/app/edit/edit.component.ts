@@ -43,7 +43,7 @@ export class EditComponent implements OnInit {
     this.username = this.bookFetch.getUsername();
     this.userEmail = this.bookFetch.getUserEmail();
     console.log('editing filename: ', this.fileName);
-    this.bookFetch.getGit(this.fileName)
+    this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id,this.fileName)
       .subscribe(
         data => {
           this.book = new Book(data.name, data.sha, atob(data.content));

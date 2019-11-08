@@ -15,12 +15,12 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match(a:User{name: {namep} }) return a")
     Collection<User> findbyname(@Param("namep") String namea);
 
-    @Query("match(a:User{name:{username}})-[:bought]->(v:Book)<-[:bought]-(b:User)-[:bought]->(k:Book) where v.bookGenre = k.bookGenre return distinct k")
+    @Query("match (g:Genre),(a:User{name:{username}})-[:bought]->(v:Book)<-[:bought]-(b:User)-[:bought]->(k:Book) where (v)-[:has_genre]->(g)<-[:has_genre]-(k) return distinct k")
     Collection<Book> bookReccomendation(@Param("username") String name);                //main book recommendation
 
 
 
-    @Query("match(u:User),(b:Book),(g:gender),(a:agegroup) where g.name={gender} and a.name={agegroup} and (u)-[:gender]->(g) and (u)-[:bought]->(b) return b")
+    @Query("match(u:User),(b:Book),(g:Gender),(a:AgeGroup) where g.name={gender} and a.name={agegroup} and (u)-[:has_gender]->(g) and (u)-[:bought]->(b) return b")
     Collection<Book> getRecAccProfile(@Param("agegroup") String agegroup,@Param("gender") String gender);
 
 

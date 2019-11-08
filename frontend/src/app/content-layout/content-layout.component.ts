@@ -50,6 +50,8 @@ export class ContentLayoutComponent implements OnInit {
             .subscribe(
               data2 => {
                 console.log('Create Repo data: ', data2);
+                localStorage.setItem('book', JSON.stringify(data));
+                this.router.navigate(['/bookCreate']).then();
               },
               error2 => {
                 console.log('Create Repo error', error2);

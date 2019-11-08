@@ -15,7 +15,7 @@ export class ContentService {
 
   constructor(private http: HttpClient) {
   }
-
+  // used to update item inside content
   saveContent(content) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -38,6 +38,7 @@ export class ContentService {
     return this.http.get(postUrl, this.httpOptions);
   }
 
+  // used get details of one content by id
   getBookDetails(name) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -49,7 +50,7 @@ export class ContentService {
     return this.http.get(postUrl, this.httpOptions);
   }
 
-
+  // used to get all contents of 'username'
   getBooks() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -61,6 +62,7 @@ export class ContentService {
     return this.http.get(postUrl, this.httpOptions);
   }
 
+  // used to save new content
   saveBooks(jsonObj) {
     const httpOptions = {
       headers: new HttpHeaders({

@@ -7,7 +7,7 @@
 </mat-card>
 <br>
 <mat-card class="editor-illustrator">
-  
+
   <mat-grid-list cols="2" rowHeight="175px">
       <mat-grid-tile class="choose-editor-tile">
           <!-- <form class="example-form">
@@ -18,9 +18,9 @@
                   <mat-option *ngFor="let option of filteredEditorOptions | async" [value]="option" style="width: 100%;">
                     {{option}}
                   </mat-option>
-                  
+
                 </mat-autocomplete>
-                
+
               </mat-form-field>
             </form> -->
       <div class="select-editor-header">
@@ -30,7 +30,7 @@
       <mat-grid-tile-header *ngIf = "bookDetails.editorName">
         <h2>Editor Selected</h2>
       </mat-grid-tile-header>
-    </div>      
+    </div>
       <h3 *ngIf="editor">{{editor}}</h3>
       <h3 *ngIf = "bookDetails.editorName">{{bookDetails.editorName}}</h3>
       </mat-grid-tile>
@@ -44,15 +44,15 @@
               <mat-grid-tile-header *ngIf = "bookDetails.designerName">
                 <h2>Illustrator Selected</h2>
               </mat-grid-tile-header>
-            </div>      
+            </div>
               <h3 *ngIf="illustrator">{{illustrator}}</h3>
               <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
       </mat-grid-tile>
     </mat-grid-list>
-  
+
 </mat-card><br>
 
-<div *ngIf="load" class="section-list">
+<div class="section-list">
   <mat-card>
     <mat-card-header>
       <mat-card-title>Chapters</mat-card-title>
@@ -84,8 +84,8 @@
       </mat-list>
     </mat-card-content>
 
-    <mat-card-actions >
-      <button  mat-button color="primary" (click)="addNewSection()" ><mat-icon>add</mat-icon></button>
+    <mat-card-actions *ngIf="ifAuthor()">
+      <button  mat-raised-button color="primary" (click)="addNewSection()" ><mat-icon>add</mat-icon></button>
     </mat-card-actions>
 
   </mat-card>

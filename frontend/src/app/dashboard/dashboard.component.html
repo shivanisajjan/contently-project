@@ -47,7 +47,6 @@
     </mat-expansion-panel-header>
     <mat-grid-list rowHeight="2em" cols="4">
       <div *ngFor="let content of contentsList, index as i">
-<!--        <mat-card-content>-->
           <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
 
           <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
@@ -61,9 +60,11 @@
 
           <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
 
-          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button>Edit</button></mat-grid-tile>
-<!--        </mat-card-content>-->
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)">Edit</button></mat-grid-tile>
       </div>
+      <mat-grid-tile colspan="4" rowspan="1" *ngIf="ifAuthor()">
+        <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
+      </mat-grid-tile>
     </mat-grid-list>
   </mat-expansion-panel>
 

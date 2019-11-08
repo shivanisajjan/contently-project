@@ -12,8 +12,10 @@ import {ContentService} from '../content.service';
 export class DashboardComponent implements OnInit {
   private profileData;
   private contentsList;
+  private booksList = [];
   private profileLoaded = false;
   private contentsLoaded = false;
+  private booksLoaded = false;
 
   constructor(
     private router: Router,
@@ -48,6 +50,10 @@ export class DashboardComponent implements OnInit {
           console.log('Content All Books error: ', error);
         }
       );
+    this.booksList.push(
+      this.contentsList[0]
+    );
+    console.log('books', this.booksList[0]);
   }
 
   edit(i: number) {

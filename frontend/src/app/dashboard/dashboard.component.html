@@ -45,37 +45,50 @@
     <mat-expansion-panel-header>
       Current Projects
     </mat-expansion-panel-header>
-    <mat-card>
-      <mat-card-content>
-        <mat-grid-list cols="4" rowHeight="3em" *ngIf="contentsLoaded">
-          <div class="list-item-entry" *ngFor="let content of contentsList; index as i">
-            <mat-grid-tile class="info-value" colspan="3" rowspan="1"><h5>{{content.title}}</h5></mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.type}}</mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="1" rowspan="1"><strong>Editor : </strong>{{content.designerName}}
-            </mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="1" rowspan="1"><strong>Designer
-              :</strong>{{content.designerName}}</mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="1" rowspan="1"><strong>Created On :</strong>{{content.createdAt}}
-            </mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.genre}}</mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="4" rowspan="1">{{content.description}}</mat-grid-tile>
-            <mat-grid-tile class="info-value" colspan="4" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)">Edit</button></mat-grid-tile>
-          </div>
-        </mat-grid-list>
-        <p *ngIf="!contentsLoaded">You have no Current projects. </p>
-      </mat-card-content>
-      <mat-divider></mat-divider>
-      <mat-card-actions *ngIf="ifAuthor()">
-        <a mat-raised-button color="primary" routerLink="/contentLayout">Start Creating</a>
-      </mat-card-actions>
-    </mat-card>
+    <mat-grid-list rowHeight="2em" cols="4">
+      <div *ngFor="let content of contentsList, index as i">
+<!--        <mat-card-content>-->
+          <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} , &nbsp; {{content.genres}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button>Edit</button></mat-grid-tile>
+<!--        </mat-card-content>-->
+      </div>
+    </mat-grid-list>
   </mat-expansion-panel>
 
   <mat-expansion-panel class="books-published">
     <mat-expansion-panel-header>
       Published Books
     </mat-expansion-panel-header>
+    <div *ngFor="let content of contentsList, index as i">
+      <!--        <mat-card-content>-->
+      <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
 
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} , &nbsp; {{content.genres}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button>Edit</button></mat-grid-tile>
+      <!--        </mat-card-content>-->
+    </div>
   </mat-expansion-panel>
   <mat-expansion-panel class="purchases-made">
     <mat-expansion-panel-header>

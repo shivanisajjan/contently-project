@@ -36,6 +36,7 @@ import { PreviewComponent } from './book-create/preview/preview.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatExpansionModule} from "@angular/material/expansion";
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     BookdetailsComponent,
     FooterComponent,
     AddNewSectionComponent,
-    PreviewComponent
+    PreviewComponent,
+    EditProfileComponent
   ],
 
   imports: [

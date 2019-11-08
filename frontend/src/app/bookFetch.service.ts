@@ -109,7 +109,7 @@ export class BookFetchService {
   }
 
   getRecommendation() : Observable<any> {
-    console.log("recommending..");
+    console.log('recommending..');
     return this.http.get<any>("http://localhost:8081/api/v1/books", this.httpOptions1);
 
 

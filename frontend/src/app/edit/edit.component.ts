@@ -40,8 +40,6 @@ export class EditComponent implements OnInit {
     this.editorForm = new FormGroup({
       editor: new FormControl()
     });
-    this.username = this.bookFetch.getUsername();
-    this.userEmail = this.bookFetch.getUserEmail();
     console.log('editing filename: ', this.fileName);
     this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id,this.fileName)
       .subscribe(

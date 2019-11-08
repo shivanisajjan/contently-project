@@ -46,7 +46,8 @@ export class ContentLayoutComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Save book data:', data);
-          this.bookFetch.createRepo(data.id, data.description)
+          const temp: any = data;
+          this.bookFetch.createRepo(temp.id, temp.description)
             .subscribe(
               data2 => {
                 console.log('Create Repo data: ', data2);

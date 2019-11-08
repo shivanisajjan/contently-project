@@ -16,7 +16,7 @@ const  routes: Routes = [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'register', component: RegistrationComponent},
     {path: 'edit/:fileName', component: EditComponent},
-    {path: 'book-details', component: BookdetailsComponent},
+    {path: 'book-details/:id', component: BookdetailsComponent},
     {path:'contentLayout',component:ContentLayoutComponent},
     {path:'bookCreate',component:BookCreateComponent}
 

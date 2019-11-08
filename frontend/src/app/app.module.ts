@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ContentLayoutComponent } from './content-layout/content-layout.component';
-import { BookCreateComponent } from './book-create/book-create.component';
+import { BookCreateComponent, SelectEditorDialog, SelectIllustratorDialog, SetStatusDialog } from './book-create/book-create.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -22,7 +22,7 @@ import { MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule } fro
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
-import {BookdetailsComponent} from "./bookdetails/bookdetails.component";
+import {BookdetailsComponent, SampleChapterDialog} from "./bookdetails/bookdetails.component";
 import {MatTabsModule} from "@angular/material/tabs";
 import { ContentService } from './content.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -50,7 +50,11 @@ import {MatExpansionModule} from "@angular/material/expansion";
     BookdetailsComponent,
     FooterComponent,
     AddNewSectionComponent,
-    PreviewComponent
+    PreviewComponent,
+    SelectEditorDialog,
+    SelectIllustratorDialog,
+    SetStatusDialog,
+    SampleChapterDialog
   ],
 
   imports: [
@@ -92,7 +96,11 @@ import {MatExpansionModule} from "@angular/material/expansion";
   entryComponents: [
     LoginComponent,
     AddNewSectionComponent,
-    PreviewComponent
+    PreviewComponent,
+    SelectEditorDialog,
+    SelectIllustratorDialog,
+    SetStatusDialog,
+    SampleChapterDialog
   ],
   providers: [
     LoginService,

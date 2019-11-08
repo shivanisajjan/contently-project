@@ -95,9 +95,9 @@ export class BookFetchService {
   }
 
   // get contents of the file : fileName
-  getGit(fileName: String): Observable<any> {
+  getGit(repoName, fileName): Observable<any> {
     console.log('get contents of file: ', fileName);
-    return this.http.get<any>('https://api.github.com/repos/contently-books/' + this.repository + '/contents/' + fileName, this.httpOptions);
+    return this.http.get<any>('https://api.github.com/repos/contently-books/' + repoName + '/contents/' + fileName, this.httpOptions);
 
   }
 

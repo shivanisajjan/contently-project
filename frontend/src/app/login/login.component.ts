@@ -50,7 +50,11 @@ export class LoginComponent implements OnInit {
               }
             );
           this.dialogRef.close();
+          if(result.body.role == 'reader/author'){
+            this.router.navigate(['/afterLogin']).then();
+          }else{
           this.router.navigate(['/dashboard']).then();
+        }
         },
         error => {
           console.log('AUTHENTICATION UNSUCCESSFUL', error);

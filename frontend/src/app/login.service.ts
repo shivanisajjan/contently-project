@@ -29,14 +29,14 @@ export class LoginService {
   }
 
   updateUser(regUser: userReg): any {
-    const header = {
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      };
-    const httpOptions = {
-        headers: header
-      };
+    // const header = {
+    //     Authorization: 'Batman ' + localStorage.getItem('token')
+    //   };
+    // const httpOptions = {
+    //     headers: header
+    //   };
     const postUrl = `http://13.126.150.171:8080/user-management/api/v1/user/update`;
-    return this.http.put(postUrl, regUser, httpOptions);
+    return this.http.put(postUrl, regUser);
   }
 
   saveInterests(saveProfile: profile): any {

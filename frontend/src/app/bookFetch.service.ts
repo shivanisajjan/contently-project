@@ -54,7 +54,7 @@ export class BookFetchService {
 
   getRecommendation(): Observable<any> {
     console.log('recommending..');
-    return this.http.get<any>("http://localhost:8081/api/v1/books", this.httpOptions1);
+    return this.http.get<any>("http://13.126.150.171:8081/api/v1/books", this.httpOptions1);
 
 
   }

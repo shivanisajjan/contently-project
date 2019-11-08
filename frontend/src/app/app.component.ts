@@ -68,5 +68,16 @@ export class AppComponent implements OnInit {
     else return false;
   }
 
+  ifReader(){
+    if(localStorage.getItem('role') == 'reader/author'){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  goToDashboard(){
+    this.router.navigate(['/dashboard']).then();
+  }
 }
 

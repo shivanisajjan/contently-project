@@ -102,15 +102,16 @@ services:
 
 
   neo4j:
-    image: neo4j:latest
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    volumes:
-      - $HOME/neo4j:/data/db
-    environment:
-      NEO4J_AUTH: none
 
+     image: neo4j:latest
+     ports:
+       - "7474:7474"
+       - "7687:7687"
+     volumes:
+       -$HOME/imports:/var/lib/neo4j/import
+     environment:
+       NEO4J_AUTH : none
+      
 
   publishing-service:
     build: publishing-service

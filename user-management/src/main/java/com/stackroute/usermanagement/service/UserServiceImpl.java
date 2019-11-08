@@ -9,6 +9,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 
 public class UserServiceImpl implements UserService{
@@ -26,23 +28,26 @@ public class UserServiceImpl implements UserService{
             throw new UserAlreadyExistsExceptions();
         }
         try {
-            User userTemp = userRepository.save(user);
-            return userTemp;
+            User u = userRepository.save(user);
+            return u;
         }catch (Exception e){
             throw new InternalServerErrorException();
         }
 
     }
     @Override
-    public User findByUsername(User user) throws InternalServerErrorException, InvalidCredentialException {
-        User userTemp;
+    public User findByUsername(User u) throws InternalServerErrorException, InvalidCredentialException {
+        User user;
         try {
-            userTemp = userRepository.findByUsername(user.getUsername());
+            user = userRepository.findByUsername(u.getUsername());
+            System.out.println("username:"+user.getUsername());
         }
         catch(Exception ex){
+            System.out.println("Error");
             throw new InternalServerErrorException();
         }
-        if(userTemp==null || !BCrypt.checkpw(user.getPassword(),userTemp.getPassword())){
+        if(user==null || !BCrypt.checkpw(u.getPassword(),user.getPassword())){
+            System.out.println("password:"+user.getPassword());
             throw new InvalidCredentialException();
         }
         return user;
@@ -64,12 +69,12 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public User updateUser(User user) throws UserDoesNotExistException,InternalServerErrorException{
-        User userTemp=userRepository.findByUsername(user.getUsername());
-        if(userTemp!= null){
+        User u1=userRepository.findByUsername(user.getUsername());
+        if(u1!= null){
             try{
-                user.setId(userTemp.getId());
-                User user1=userRepository.save(user);
-                return user1;
+                user.setId(u1.getId());
+                User u=userRepository.save(user);
+                return u;
             }
             catch (Exception ex){
                 throw new InternalServerErrorException();
@@ -82,6 +87,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getByUsername(String Username){
         return userRepository.findByUsername(Username);
+    }
+
+    @Override
+    public List<String> getByRole(String role) throws InvalidRoleInfoException {
+        return userRepository.findByRole(role);
     }
 
 }

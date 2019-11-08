@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../login.service';
-import {ContentService} from "../content.service";
+import {ContentService} from '../content.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -53,5 +54,4 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('book', JSON.stringify(this.contentsList[i]));
     this.router.navigate([]).then();
   }
-
 }

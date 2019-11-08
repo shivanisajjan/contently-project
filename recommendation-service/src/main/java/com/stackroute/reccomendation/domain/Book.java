@@ -1,4 +1,4 @@
-package com.stackroute.SpringNeo4j.domain;
+package com.stackroute.reccomendation.domain;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
@@ -10,11 +10,20 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long bookId, String bookName,  String bookRating, double price) {
+    public int getIdd() {
+        return idd;
+    }
+
+    public void setIdd(int idd) {
+        this.idd = idd;
+    }
+
+    public Book(Long bookId, String bookName, String bookRating, double price,int idd) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.bookRating = bookRating;
         this.bookPrice = price;
+        this.idd = idd;
     }
 
     public Long getBookId() {
@@ -35,6 +44,7 @@ public class Book {
 
     @Id@GeneratedValue
     private Long bookId;
+    int idd;
     private String bookName;
     private String bookRating;
     private double bookPrice;

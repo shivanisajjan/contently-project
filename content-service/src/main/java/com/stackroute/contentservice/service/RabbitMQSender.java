@@ -14,14 +14,14 @@ public class RabbitMQSender {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    @Value("${registry.rabbitmq.exchange}")
+    @Value("${content.rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${registry.rabbitmq.routingkey}")
+    @Value("${content.rabbitmq.routingkey}")
     private String routingkey;
 
 
-    public void sendRegistry(Content content) {
+    public void sendContent(Content content) {
         rabbitTemplate.convertAndSend(exchange, routingkey, content);
         System.out.println("Send msg = " + content.getId());
     }

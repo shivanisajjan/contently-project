@@ -3,6 +3,8 @@ package com.stackroute.usermanagement.service;
 import com.stackroute.usermanagement.exceptions.*;
 import com.stackroute.usermanagement.model.User;
 
+import java.util.List;
+
 public interface UserService {
 
     User saveUser(User user) throws UserAlreadyExistsExceptions,InternalServerErrorException;
@@ -14,5 +16,8 @@ public interface UserService {
     User updateUser(User user) throws UserDoesNotExistException,InternalServerErrorException;
 
     User getByUsername(String Username);
+
+    List<String> getByRole(String role) throws InvalidRoleInfoException;
+
 
 }

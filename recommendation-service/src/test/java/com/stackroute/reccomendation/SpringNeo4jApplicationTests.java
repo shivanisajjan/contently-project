@@ -1,4 +1,4 @@
-package com.stackroute.SpringNeo4j;
+package com.stackroute.reccomendation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

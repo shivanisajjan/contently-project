@@ -1,14 +1,11 @@
-package com.stackroute.SpringNeo4j.config;
+package com.stackroute.reccomendation.config;
 
 
-import com.stackroute.SpringNeo4j.service.RabbitMQConsumer;
-import org.springframework.amqp.core.AmqpTemplate;
+import com.stackroute.reccomendation.service.RabbitMQConsumer;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;

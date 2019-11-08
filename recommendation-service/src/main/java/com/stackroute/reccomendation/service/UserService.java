@@ -1,10 +1,10 @@
-package com.stackroute.SpringNeo4j.service;
+package com.stackroute.reccomendation.service;
 
 
-import com.stackroute.SpringNeo4j.domain.Book;
-import com.stackroute.SpringNeo4j.domain.Editor;
-import com.stackroute.SpringNeo4j.domain.User;
-import com.stackroute.SpringNeo4j.repository.UserRepository;
+import com.stackroute.reccomendation.domain.Book;
+import com.stackroute.reccomendation.domain.Editor;
+import com.stackroute.reccomendation.domain.User;
+import com.stackroute.reccomendation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +57,25 @@ public Collection<Book> getIdRec(int id)
     public Collection<User> getAll() {
         return (Collection<User>) userRepository.findAll();
     }
+
+
+public Collection<Book> getRecAccProfile(User user)
+{
+    return userRepository.getRecAccProfile(user.getAgeGroup(),user.getGender());
+}
+
+
+
+    public void dop() {
+        userRepository.dop();
+    }
+    public void pop() {
+        userRepository.pop();
+    }
+    public void bob() {
+        userRepository.bob();
+    }
+
 }
 
 

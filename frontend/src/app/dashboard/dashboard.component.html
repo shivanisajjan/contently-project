@@ -65,7 +65,7 @@
         <p *ngIf="!contentsLoaded">You have no Current projects. </p>
       </mat-card-content>
       <mat-divider></mat-divider>
-      <mat-card-actions>
+      <mat-card-actions *ngIf="ifAuthor()">
         <a mat-raised-button color="primary" routerLink="/contentLayout">Start Creating</a>
       </mat-card-actions>
     </mat-card>

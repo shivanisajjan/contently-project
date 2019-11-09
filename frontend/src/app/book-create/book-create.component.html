@@ -66,7 +66,7 @@
           <mat-divider></mat-divider>
           <mat-icon mat-list-icon>folder</mat-icon>
           <h5 mat-line>{{chapter.chapterName}}</h5>
-          <button class="hover-btn" mat-fab color="primary" (click)="editFile(chapter.chapterName)" style="margin-right: 10px"><mat-icon class="mat_icon">edit</mat-icon></button>
+          <button class="hover-btn" mat-fab color="primary" *ngIf="getShowEditButton(i)" (click)="editFile(chapter.chapterName)" style="margin-right: 10px"><mat-icon class="mat_icon">edit</mat-icon></button>
           <button class="hover-btn" mat-fab color="primary" (click)="preview(chapter.chapterName)" style="margin-right: 10px"><mat-icon class="mat_icon">remove_red_eye</mat-icon></button>
           <!-- <button class="chapter-status-btn"  mat-button color="primary" (click)="openSetStatusDialog()">{{chapter.status}}</button> -->
           <button mat-button [matMenuTriggerFor]="menu">{{chapter.status}}</button>

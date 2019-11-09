@@ -25,11 +25,11 @@ export interface EditorDialogData {
 
 export class BookCreateComponent implements OnInit {
 
-  private books: Book[] = [];
   private editor;
   private illustrator;
   private bookDetails;
   private chapterStatus = [];
+  private showEditButton: boolean[] = [];
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
@@ -50,6 +50,8 @@ export class BookCreateComponent implements OnInit {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
     this.bookDetails = JSON.parse(localStorage.getItem('book'));
+    this.showEditButton = [this.bookDetails.status.length];
+    this.setShowEditButton();
     console.log('book details: ', this.bookDetails);
   }
 
@@ -185,6 +187,38 @@ export class BookCreateComponent implements OnInit {
       });
   }
 
+  setShowEditButton() {
+    for (let i = 0; i < this.bookDetails.status.length; i++){
+      const chapter = this.bookDetails.status[i].chapterName;
+      const status = this.bookDetails.status[i].status;
+      let cond = false;
+      // author
+      if (localStorage.getItem('role') === 'reader/author') {
+        if (status === 'Writing Phase') {
+          cond = true;
+        }
+      }
+      // editor
+      if (localStorage.getItem('role') === 'editor') {
+        if (status === 'Editing Phase') {
+          cond = true;
+        }
+      }
+      // illustrator
+      if (localStorage.getItem('role') === 'illustrator') {
+        if (status === 'Designing Phase') {
+          cond = true;
+        }
+      }
+      // console.log(chapter, status, cond);
+      this.showEditButton[i] = cond;
+    }
+  }
+  getShowEditButton(index: number) {
+    // console.log('returning: ', this.bookDetails.status[index].chapterName, this.showEditButton[index]);
+    return this.showEditButton[index];
+  }
+
   changeChapterStatus(status: String, i: number) {
     if (window.confirm('Change the Status of chapter' +this.bookDetails.status[i].chapterName + ' to :' + status)) {
       console.log(status, i);
@@ -195,6 +229,8 @@ export class BookCreateComponent implements OnInit {
         .subscribe(
           data => {
             console.log('status changed data: ', data);
+            this.setShowEditButton();
+            // this.ngOnInit();
           },
           error => {
             console.log('status changed error: ', error);

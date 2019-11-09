@@ -76,7 +76,7 @@ export class BookCreateComponent implements OnInit {
           .subscribe(
             data => {
               console.log(data);
-              if(this.bookDetails.status === null){
+              if (this.bookDetails.status === null) {
                 this.bookDetails.status = [];
               }
               this.bookDetails.status.push(
@@ -188,7 +188,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   setShowEditButton() {
-    for (let i = 0; i < this.bookDetails.status.length; i++){
+    for (let i = 0; i < this.bookDetails.status.length; i++) {
       const chapter = this.bookDetails.status[i].chapterName;
       const status = this.bookDetails.status[i].status;
       let cond = false;
@@ -214,13 +214,14 @@ export class BookCreateComponent implements OnInit {
       this.showEditButton[i] = cond;
     }
   }
+
   getShowEditButton(index: number) {
     // console.log('returning: ', this.bookDetails.status[index].chapterName, this.showEditButton[index]);
     return this.showEditButton[index];
   }
 
   changeChapterStatus(status: String, i: number) {
-    if (window.confirm('Change the Status of chapter' +this.bookDetails.status[i].chapterName + ' to :' + status)) {
+    if (window.confirm('Change the Status of chapter' + this.bookDetails.status[i].chapterName + ' to :' + status)) {
       console.log(status, i);
       this.bookDetails.status[i].status = status;
       console.log('status changed to :', this.bookDetails.status[i].status);

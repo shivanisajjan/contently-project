@@ -23,7 +23,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/update`;
+    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
     return this.http.put(postUrl, content, this.httpOptions);
   }
 

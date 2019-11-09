@@ -13,13 +13,8 @@ import {Commit} from "../book-create/commit";
 })
 export class EditComponent implements OnInit {
 
-  private html;
-  private body;
-
   private book: Book;
   private fileName: String;
-  private username: String;
-  private userEmail: String;
   private editorForm: FormGroup;
   private editorStyle = {
     height: '400px',
@@ -58,7 +53,7 @@ export class EditComponent implements OnInit {
   onSubmit() {
     console.log(this.editorForm.get('editor').value);
     let content = btoa(this.editorForm.get('editor').value);
-    let commit = new Commit("", this.username, this.userEmail, this.book.sha, content);
+    let commit = new Commit("", localStorage.getItem('fullName'), localStorage.getItem('email'), this.book.sha, content);
     this.bookFetch.createFile(this.fileName, commit)
       .subscribe(
         data => {

@@ -66,19 +66,18 @@
           <mat-divider></mat-divider>
           <mat-icon mat-list-icon>folder</mat-icon>
           <h5 mat-line>{{chapter.chapterName}}</h5>
-          <button class="hover-btn" mat-fab color="primary" (click)="editFile(book.name)" style="margin-right: 10px"><mat-icon class="mat_icon">edit</mat-icon></button>
-          <button class="hover-btn" mat-fab color="primary" (click)="preview(book.name)" style="margin-right: 10px"><mat-icon class="mat_icon">remove_red_eye</mat-icon></button>
-          <button class="hover-btn" mat-fab color="primary" (click)="delete(book.name)"><mat-icon class="mat_icon">delete</mat-icon></button>
+          <button class="hover-btn" mat-fab color="primary" (click)="editFile(chapter.chapterName)" style="margin-right: 10px"><mat-icon class="mat_icon">edit</mat-icon></button>
+          <button class="hover-btn" mat-fab color="primary" (click)="preview(chapter.chapterName)" style="margin-right: 10px"><mat-icon class="mat_icon">remove_red_eye</mat-icon></button>
           <!-- <button class="chapter-status-btn"  mat-button color="primary" (click)="openSetStatusDialog()">{{chapter.status}}</button> -->
           <button mat-button [matMenuTriggerFor]="menu">{{chapter.status}}</button>
             <mat-menu #menu="matMenu">
                 <button *ngFor="let status of chapterStatus" mat-menu-item (click)="changeChapterStatus(status,i)">{{status}}</button>
-                <!-- <button *ngIf="author" mat-menu-item value="Ready to Edit" (click)="changeChapterStatus('Writing Phase',i)">Writing Phase</button>
+                <button *ngIf="author" mat-menu-item value="Ready to Edit" (click)="changeChapterStatus('Writing Phase',i)">Writing Phase</button>
                 <button *ngIf="editor_author" mat-menu-item value="Ready to Edit" (click)="changeChapterStatus('Editing Phase',i)">Editing Phase</button>
                 <button *ngIf="editor" mat-menu-item (click)="changeChapterStatus('Editing Completed',i)">Editing Completed</button>
                 <button *ngIf="illustrator_author" mat-menu-item (click)="changeChapterStatus('Designing Phase',i)">Designing Phase</button>
                 <button *ngIf="illustrator" mat-menu-item (click)="changeChapterStatus('Designing Completed',i)">Designing Completed</button>
-                <button *ngIf="author" mat-menu-item (click)="changeChapterStatus('Finished',i)">Finished</button> -->
+                <button *ngIf="author" mat-menu-item (click)="changeChapterStatus('Finished',i)">Finished</button>
             </mat-menu>
         </mat-list-item>
       </mat-list>

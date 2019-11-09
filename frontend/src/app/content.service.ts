@@ -73,4 +73,15 @@ export class ContentService {
     const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content`;
     return this.http.post(postUrl, jsonObj, httpOptions);
   }
+
+  getBookDetailPage(id){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/content/${id}`;
+    return this.http.get(postUrl, httpOptions);
+  }
 }

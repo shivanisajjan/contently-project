@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {BookFetchService} from '../bookFetch.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -7,11 +9,18 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() {
+  public bookVar:[];
+  constructor( 
+    private _bookFetch :BookFetchService,
+    private router: Router) {
   }
 
   ngOnInit() {
+    this._bookFetch.getRecommendation()
+    .subscribe(data => {console.log(data) ;this.bookVar=data;}); 
   }
 
+  bookDetails(id){
+    this.router.navigate(['/book-details',id]);
+  }
 }

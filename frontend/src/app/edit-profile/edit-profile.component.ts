@@ -29,7 +29,11 @@ export class EditProfileComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _loginService: LoginService,
     private _router: Router
-    ) {}
+    ) {
+      if (!localStorage.getItem('token')) {
+        this._router.navigate(['/home']).then();
+      }
+    }
 
   ngOnInit() {
     this.profileData = JSON.parse(localStorage.getItem('editProfile'));

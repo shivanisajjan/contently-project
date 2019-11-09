@@ -6,6 +6,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
 import {Router} from "@angular/router";
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import $ from 'jquery';
+import { MatSnackBar } from '@angular/material';
+import { notification } from './notification';
+import { NotificationService } from './notification.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +23,10 @@ export class AppComponent implements OnInit {
   private showNavigationBarLinks: boolean = true;
   private TABLET = 768;
   private loggedIn = false;
+  private serverUrl = 'http://localhost:8716/socket'
+  private stompClient;
+  private notificationList : any;
+  private notificationCount;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,7 +37,9 @@ export class AppComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               private dialog: MatDialog,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private _snackBar: MatSnackBar,
+              private notificationService : NotificationService) {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
   }
 
@@ -36,6 +48,8 @@ export class AppComponent implements OnInit {
       console.log('LOGGED IN');
       this.loggedIn = true;
     }
+
+    this.getNotifications();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -44,6 +58,17 @@ export class AppComponent implements OnInit {
   }
 
   search() {
+  }
+
+
+  loadStripe() {
+    if(!window.document.getElementById('stripe-script')) {
+      var s = window.document.createElement("script");
+      s.id = "stripe-script";
+      s.type = "text/javascript";
+      s.src = "https://checkout.stripe.com/checkout.js";
+      window.document.body.appendChild(s);
+    }
   }
 
   onLogin() {
@@ -68,6 +93,34 @@ export class AppComponent implements OnInit {
     else return false;
   }
 
+  initializeWebSocketConnection()
+  {
+    let ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, (frame) => {
+      that.stompClient.subscribe("/user/"+localStorage.getItem('username')+"/notif", (message) => {
+        if(message.body) {
+          console.log("New Notification");
+          this._snackBar.open(message.body,"close", {
+            duration: 2000,
+          });
+        }
+      });
+    });
+  }
 
+
+  getNotifications(){
+    this.notificationService.getNotification(localStorage.getItem('username')).subscribe(
+        result => {
+          this.notificationList = result;
+          this.notificationCount = Object.keys(this.notificationList).length;
+        });
+  }
+
+  removeNewNotifications(){
+    this.notificationCount = null;
+  }
 }
 

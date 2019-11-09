@@ -18,7 +18,10 @@ export class ContentLayoutComponent implements OnInit {
               private router: Router,
               private bookFetch: BookFetchService,
               private contentService: ContentService) {
-  }
+                if (!localStorage.getItem('token')) {
+                  this.router.navigate(['/home']).then();
+                }
+            } 
 
   ngOnInit() {
   }

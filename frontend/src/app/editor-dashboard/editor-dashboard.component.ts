@@ -16,7 +16,11 @@ export class EditorDashboardComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private _contentService: ContentService,
     private _router: Router,
-    private _loginService: LoginService) { }
+    private _loginService: LoginService) {
+      if (!localStorage.getItem('token')) {
+        this._router.navigate(['/home']).then();
+      }
+     }
 
   ngOnInit() {
     this.getContent();

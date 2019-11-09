@@ -25,11 +25,11 @@ export interface EditorDialogData {
 
 export class BookCreateComponent implements OnInit {
 
-  private books: Book[] = [];
   private editor;
   private illustrator;
   private bookDetails;
   private chapterStatus = [];
+  private showEditButton: boolean[] = [];
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
@@ -50,6 +50,8 @@ export class BookCreateComponent implements OnInit {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
     this.bookDetails = JSON.parse(localStorage.getItem('book'));
+    this.showEditButton = [this.bookDetails.status.length];
+    this.setShowEditButton();
     console.log('book details: ', this.bookDetails);
   }
 
@@ -74,7 +76,9 @@ export class BookCreateComponent implements OnInit {
           .subscribe(
             data => {
               console.log(data);
-              this.bookDetails.status = [];
+              if (this.bookDetails.status === null) {
+                this.bookDetails.status = [];
+              }
               this.bookDetails.status.push(
                 {
                   chapterName: result,
@@ -83,6 +87,15 @@ export class BookCreateComponent implements OnInit {
               );
               localStorage.setItem('book', JSON.stringify(this.bookDetails));
               console.log(this.bookDetails);
+              this.contentService.saveContent(this.bookDetails)
+                .subscribe(
+                  data2 => {
+                    console.log('Update Content data2: ', data2);
+                  },
+                  error2 => {
+                    console.log('Update Content error2: ', error2);
+                  }
+                );
             },
             error => {
               console.log(error);
@@ -107,29 +120,7 @@ export class BookCreateComponent implements OnInit {
             }
           );
         },
-        error => {
-
-        }
       );
-  }
-
-  delete(sectionName: String) {
-    // this.bookFetch.getGit(this.bookDetails.id, sectionName)
-    //   .subscribe(
-    //     data => {
-    //       console.log(data);
-    //       const commit = new Commit('', this.bookFetch.getUsername(), this.bookFetch.getUserEmail(), data.sha, '');
-    //       // this.bookFetch.deleteFile(sectionName, commit)
-          //   .subscribe(
-          //     data => {
-          //       console.log('data', data);
-          //     },
-          //     error => {
-          //       console.log('error', error);
-          //     }
-      //     //   );
-      //   }
-      // );
   }
 
   private _filter(value: string): string[] {
@@ -196,11 +187,57 @@ export class BookCreateComponent implements OnInit {
       });
   }
 
+  setShowEditButton() {
+    for (let i = 0; i < this.bookDetails.status.length; i++) {
+      const chapter = this.bookDetails.status[i].chapterName;
+      const status = this.bookDetails.status[i].status;
+      let cond = false;
+      // author
+      if (localStorage.getItem('role') === 'reader/author') {
+        if (status === 'Writing Phase') {
+          cond = true;
+        }
+      }
+      // editor
+      if (localStorage.getItem('role') === 'editor') {
+        if (status === 'Editing Phase') {
+          cond = true;
+        }
+      }
+      // illustrator
+      if (localStorage.getItem('role') === 'illustrator') {
+        if (status === 'Designing Phase') {
+          cond = true;
+        }
+      }
+      // console.log(chapter, status, cond);
+      this.showEditButton[i] = cond;
+    }
+  }
+
+  getShowEditButton(index: number) {
+    // console.log('returning: ', this.bookDetails.status[index].chapterName, this.showEditButton[index]);
+    return this.showEditButton[index];
+  }
+
   changeChapterStatus(status: String, i: number) {
-    console.log(status, i);
-    this.bookDetails.status[i].status = status;
-    console.log('status', this.bookDetails.status[i].status);
-    this.contentService.saveContent(this.bookDetails).subscribe();
+    if (window.confirm('Change the Status of chapter' + this.bookDetails.status[i].chapterName + ' to :' + status)) {
+      console.log(status, i);
+      this.bookDetails.status[i].status = status;
+      console.log('status changed to :', this.bookDetails.status[i].status);
+      localStorage.setItem('book', JSON.stringify(this.bookDetails));
+      this.contentService.saveContent(this.bookDetails)
+        .subscribe(
+          data => {
+            console.log('status changed data: ', data);
+            this.setShowEditButton();
+            // this.ngOnInit();
+          },
+          error => {
+            console.log('status changed error: ', error);
+          }
+        );
+    }
   }
 
   getBookDetails(id) {

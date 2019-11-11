@@ -92,7 +92,7 @@ mat-grid-tile {
 }
 
 .choose-editor-tile {
-  display: inline-block;
+  display: block;
 }
 
 .select-editor-header {

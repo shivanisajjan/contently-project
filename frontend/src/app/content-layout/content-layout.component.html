@@ -31,10 +31,12 @@
       <mat-checkbox name="drama" ngModel class="input-item">Drama</mat-checkbox>
     </div>
 
-    <div class="input-group">
-        <h5><label>Selection of Editor/Illustrator: </label></h5>
-        <mat-checkbox name="Self" ngModel class="input-item">Self</mat-checkbox>
-        <mat-checkbox name="Automated" ngModel class="input-item">Automated</mat-checkbox>
+    <div class="input-group" >
+      <h5><label>Assigning of Editor/Illustrator : </label></h5>
+      <mat-radio-group name="selectHelper" ngModel>
+        <mat-radio-button class="input-item" value="true">Self</mat-radio-button>
+        <mat-radio-button class="input-item" value="false">Automated</mat-radio-button>
+      </mat-radio-group>
     </div>
 
     <div>

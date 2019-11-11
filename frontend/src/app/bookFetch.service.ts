@@ -66,6 +66,7 @@ export class BookFetchService {
     console.log('recommending..');
     return this.http.get<any>('http://13.126.150.171:8080/recommendation-service/api/v1/books', httpOptions);
   }
+  
 
 
 }

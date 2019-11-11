@@ -42,8 +42,10 @@ export class ContentLayoutComponent implements OnInit {
       authorName: localStorage.getItem('username'),
       typeName: input.value.type,
       genres,
-      createdAt: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      createdAt: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      selectHelper:input.value.selectHelper
     };
+    localStorage.setItem('selectHelper',input.value.selectHelper);
     console.log('json', jsonObj);
     this.contentService.saveBooks(jsonObj)
       .subscribe(

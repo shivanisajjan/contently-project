@@ -17,8 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Notification {
 
     @Id
-    int id;
-    String sender, receiver, message;
-    boolean status;
+    private int id;
+    private String sender, receiver, message;
+    private boolean status;
 
 }

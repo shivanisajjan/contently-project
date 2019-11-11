@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins = "http://localhost", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class PublicationController {
@@ -46,7 +46,7 @@ public class PublicationController {
         publicationService.updateContent(content);
         return new ResponseEntity<Publications>(content, HttpStatus.OK);
     }
-    @GetMapping(value = "/content/{title}")
+    @GetMapping(value = "/{title}")
     public ResponseEntity<?> getContent(@PathVariable("title") String title) throws ContentDoesNotExistException,InternalServerErrorException
     {
 
@@ -54,7 +54,7 @@ public class PublicationController {
         responseEntity=new ResponseEntity<>(publicationService.findByTitle(title),HttpStatus.OK);
         return responseEntity;
     }
-    @GetMapping(value = "/content/editor/{id}")
+    @GetMapping(value = "/book/{id}")
     public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException
     {
 

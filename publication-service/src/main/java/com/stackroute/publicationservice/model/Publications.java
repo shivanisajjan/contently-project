@@ -1,6 +1,5 @@
 package com.stackroute.publicationservice.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,15 +19,15 @@ public class Publications {
     @Id
     int id;
     String title;
-    String subTitle;
     String description;
-    int  authorId;
-    List<Integer>  editorIds; // list of userId of editors
-    List<Integer> designerIds; // list of userId of designer
+    String  authorName;
+    List<String>  editorName; // list of userId of editors
+    List<String> designerName; // list of userId of designer
     String typeName;
     List<String> genres;
-    List<String> targetedAudience;
+//    List<String> targetedAudience;
     String  createdAt;
+    double price;
     String gitUrl;
     String publishedAt;
     int noOfViews;

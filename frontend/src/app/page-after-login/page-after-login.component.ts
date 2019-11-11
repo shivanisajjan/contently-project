@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-after-login',
@@ -8,7 +9,13 @@ import {BookFetchService} from '../bookFetch.service';
 })
 export class PageAfterLoginComponent implements OnInit {
   public bookVar:[];
-  constructor(private _bookFetch :BookFetchService ) { }
+  constructor(
+    private _bookFetch :BookFetchService,
+    private router : Router) {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/home']).then();
+    }
+   }
 
   ngOnInit() {
     this._bookFetch.getRecommendation()

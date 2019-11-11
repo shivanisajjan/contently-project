@@ -2,7 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../login.service';
 import {ContentService} from '../content.service';
-
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import $ from 'jquery';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,16 +19,35 @@ export class DashboardComponent implements OnInit {
   private profileLoaded = false;
   private contentsLoaded = false;
   private booksLoaded = false;
+  private serverUrl = 'http://13.126.150.171:8716/socket'
+  private stompClient;
 
   constructor(
     private router: Router,
     private login: LoginService,
+    private _snackBar: MatSnackBar,
     private contentService: ContentService) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
+    this.initializeWebSocketConnection();
   }
-
+  initializeWebSocketConnection()
+    {
+      let ws = new SockJS(this.serverUrl);
+      this.stompClient = Stomp.over(ws);
+      let that = this;
+      this.stompClient.connect({}, (frame) => {
+        that.stompClient.subscribe("/user/"+localStorage.getItem('username')+"/notif", (message) => {
+          if(message.body) {
+            this._snackBar.open(message.body,"close", {
+              duration: 2000,
+            });
+            
+          }
+        });
+      });
+    }
   ngOnInit() {
     this.ifAuthor();
     this.login.getUser()

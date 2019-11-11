@@ -11,14 +11,16 @@ import { BookFetchService } from '../bookFetch.service';
 })
 export class BookdetailsComponent implements OnInit {
 
-  
+  private bookDetails: any;
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    ) { }
+    private contentService : ContentService
+    ) {     
+    }
 
   ngOnInit() {
-
+    this.getBookDetails();
   }
 
 
@@ -38,6 +40,10 @@ export class BookdetailsComponent implements OnInit {
 
   }
 
+  getBookDetails(){
+
+  }
+
 }
 
 
@@ -49,6 +55,7 @@ export class BookdetailsComponent implements OnInit {
 })
 export class SampleChapterDialog implements OnInit{
   private sampleChapter;
+  private bookDetails;
   constructor(
     public dialogRef: MatDialogRef<SampleChapterDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -71,7 +78,11 @@ export class SampleChapterDialog implements OnInit{
         result => this.sampleChapter = result
       );
   }
- 
 
+  getBookDetails(id){
+    this._contentService.getBookDetailPage(id).subscribe(
+      result => this.bookDetails = result
+    )
+  }
 }
 

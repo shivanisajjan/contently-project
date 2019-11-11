@@ -15,7 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { QuillModule } from 'ngx-quill';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule} from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule, MatSnackBarModule, MatBadgeModule} from '@angular/material';
 import { MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -37,6 +37,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ConversionComponent } from './conversion/conversion.component';
 import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
     SampleChapterDialog,
     ConversionComponent,
     PageAfterLoginComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    PaymentComponent
   ],
 
   imports: [
@@ -94,7 +96,9 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
     MatListModule,
     MatMenuModule,
     MatGridListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatBadgeModule
   ],
   entryComponents: [
     LoginComponent,

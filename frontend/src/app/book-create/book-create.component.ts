@@ -10,6 +10,8 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 import {ContentService} from '../content.service';
+import { notification } from '../notification';
+import { NotificationService } from '../notification.service';
 
 export interface EditorDialogData {
   name: string;
@@ -38,9 +40,13 @@ export class BookCreateComponent implements OnInit {
               private router: Router,
               private dialog: MatDialog,
               private contentService: ContentService,
-              private route: ActivatedRoute) {
-  }
-
+              private route: ActivatedRoute,
+              private notificationService : NotificationService) {
+                if (!localStorage.getItem('token')) {
+                  this.router.navigate(['/home']).then();
+                }
+            }
+            
   ngOnInit() {
     if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
@@ -143,6 +149,7 @@ export class BookCreateComponent implements OnInit {
     const dialogSubmitSubscription = dialogRef.componentInstance.selectEditorEvent.subscribe(
       result => {
         this.editor = result;
+        this.sendNotification(this.editor, localStorage.getItem('username') + " has requested you to edit " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
     );
@@ -250,6 +257,15 @@ export class BookCreateComponent implements OnInit {
       }
     );
   }
+
+  sendNotification(receiver,message){
+    const newNotification: notification = new notification();
+    newNotification.sender = localStorage.getItem('username');
+    newNotification.receiver = receiver;
+    newNotification.message = message; 
+    // newNotification.status = true;
+    this.notificationService.sendNotification(newNotification).subscribe();
+  }
 }
 
 @Component({
@@ -278,6 +294,7 @@ export class SelectEditorDialog implements OnInit {
 
   selectEditor(editor) {
     console.log('Selected Editor : ' + editor);
+    
     this.selectEditorEvent.emit(editor);
     this.dialogRef.close();
   }

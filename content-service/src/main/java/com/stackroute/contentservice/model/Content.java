@@ -26,6 +26,7 @@ public class Content {
     private String editorName;
     private String designerName;
     private String typeName;
+    private Boolean selectHelper;
     private List<String> genres;
     private List<Status> status;
     private String  createdAt;

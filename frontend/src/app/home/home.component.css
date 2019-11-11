@@ -130,3 +130,37 @@ mat-card-content{
   width: 100%;
   /*background-image: url('../../assets/images/main_bg.jpeg');*/
 }
+#cardhere
+{
+  border: 2px solid rgb(190, 175, 147);
+  border-radius: 20px;
+  height: 390px;
+  width: 200px;
+  overflow: visible;
+  animation: mymove 5s infinite;
+  
+}
+
+#cardhere:hover{
+  margin-top: -10px;
+  background-color: rgba(0,0,0,0.7);
+  opacity: 0.9;
+  
+}
+#recbox
+{
+  margin-top:5%;  
+  width: 100%; 
+  overflow-x: scroll;
+
+}
+#recbox::-webkit-scrollbar{
+
+  height: 0;
+  width: 0; 
+  color: transparent;
+}
+@keyframes mymove {
+  from {left: 0px;}
+  to {left: 100%;}
+}

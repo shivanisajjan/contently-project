@@ -6,6 +6,7 @@ import {BookFetchService} from '../bookFetch.service';
 
 
 import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-conversion',
   templateUrl: './conversion.component.html',
@@ -14,7 +15,13 @@ import { saveAs } from 'file-saver';
 export class ConversionComponent implements OnInit {
 
   public toPrint:string;  
-  constructor(private bookFetch:BookFetchService) { } 
+  constructor(
+    private bookFetch:BookFetchService,
+    private router: Router) { 
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/home']).then();
+    }
+  } 
 
   ngOnInit() {
   }

@@ -26,6 +26,9 @@ export class EditComponent implements OnInit {
               private router: Router,
               private bookFetch: BookFetchService,
               private route: ActivatedRoute) {
+                if (!localStorage.getItem('token')) {
+                  this.router.navigate(['/home']).then();
+                }
     this.route.params.subscribe(params => {
       this.fileName = params['fileName'];
     });

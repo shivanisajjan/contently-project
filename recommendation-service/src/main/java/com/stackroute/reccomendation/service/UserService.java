@@ -3,6 +3,7 @@ package com.stackroute.reccomendation.service;
 
 import com.stackroute.reccomendation.domain.Book;
 import com.stackroute.reccomendation.domain.Editor;
+import com.stackroute.reccomendation.domain.Illustrator;
 import com.stackroute.reccomendation.domain.User;
 import com.stackroute.reccomendation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,37 +33,46 @@ UserRepository userRepository;
     return (Collection<User>) userRepository.findAll();
 }
 
-public Collection<Book> getBookRec(String name)
+public Collection<Book> bookReccomendation(String name)
 {
     return userRepository.bookReccomendation(name);
 }
 
-public int getBookPriceRec(String genre)
-{
-
-    return userRepository.getBookPriceRec(genre);
-}
 
 
-public Collection<Editor> getEditorRec(String genre)
-{
-    return userRepository.getEditorRec(genre);
-}
 
-public Collection<Book> getIdRec(int id)
-    {
-        return userRepository.getIdRec(id);
-    }
 
     public Collection<User> getAll() {
         return (Collection<User>) userRepository.findAll();
     }
 
 
-public Collection<Book> getRecAccProfile(User user)
+public Collection<Book> getRecAccProfile(String name)
 {
-    return userRepository.getRecAccProfile(user.getAgeGroup(),user.getGender());
+    return userRepository.getRecAccProfile(name);
 }
+
+public Collection<Book> getRecAccAuth(String name)
+{
+    return userRepository.getRecAccAuth(name);
+}
+
+public Collection<Book> getTrending()
+{
+    return userRepository.getTrending();
+}
+
+public Collection<User> getIllustratorRec(String genre)
+{
+    return userRepository.getIllustratorRec(genre);
+}
+
+    public Collection<User> getEditorRec(String genre)
+    {
+        return userRepository.getEditorRec(genre);
+    }
+
+
 
 
 

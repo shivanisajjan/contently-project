@@ -13,17 +13,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-@org.springframework.stereotype.Controller
 @RestController
 @RequestMapping("api")
-public class Controller {
+@CrossOrigin
+public class NotificationController {
 
     NotificationService notificationService;
 
     private final SimpMessagingTemplate template;
     private RabbitMQSender rabbitMQSender;
     @Autowired
-    Controller(NotificationService notificationService, SimpMessagingTemplate template, RabbitMQSender rabbitMQSender){
+    NotificationController(NotificationService notificationService, SimpMessagingTemplate template, RabbitMQSender rabbitMQSender){
 
         this.notificationService = notificationService;
         this.template = template;
@@ -50,5 +50,4 @@ public class Controller {
     {
         return new ResponseEntity<>(notificationService.findByReceiver(receiver), HttpStatus.OK);
     }
-
 }

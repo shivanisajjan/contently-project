@@ -173,7 +173,7 @@ services:
       ports:
         - 8083:8083
   contently-frontend:
-      build: frontend/
+      build: frontend
       restart: always
       container_name: contently-frontend
       depends_on:

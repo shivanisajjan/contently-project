@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins = "http://localhost", maxAge = 3600)
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class PublicationController {
@@ -29,12 +31,12 @@ public class PublicationController {
     }
 
 
-
     @PostMapping(value = "/save")
     public ResponseEntity<Publications> registerUser(@RequestBody Publications content) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
         content.setId(publicationService.getNextSequence("customSequences"));
-        return new ResponseEntity<Publications> (publicationService.saveContent(content), HttpStatus.CREATED);
+        return new ResponseEntity<Publications>(publicationService.saveContent(content), HttpStatus.CREATED);
     }
+
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) throws InternalServerErrorException, ContentDoesNotExistException {
         publicationService.deleteContent(id);
@@ -46,20 +48,19 @@ public class PublicationController {
         publicationService.updateContent(content);
         return new ResponseEntity<Publications>(content, HttpStatus.OK);
     }
-    @GetMapping(value = "/content/{title}")
-    public ResponseEntity<?> getContent(@PathVariable("title") String title) throws ContentDoesNotExistException,InternalServerErrorException
-    {
 
+    @GetMapping(value = "/{title}")
+    public ResponseEntity<?> getContent(@PathVariable("title") String title) throws ContentDoesNotExistException {
 
-        responseEntity=new ResponseEntity<>(publicationService.findByTitle(title),HttpStatus.OK);
+        responseEntity = new ResponseEntity<List<Publications>>(publicationService.findByTitle(title), HttpStatus.OK);
         return responseEntity;
     }
-    @GetMapping(value = "/content/editor/{id}")
-    public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException
-    {
+
+    @GetMapping(value = "/book/{id}")
+    public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException {
 
 
-        responseEntity=new ResponseEntity<>(publicationService.findByEditorId(id),HttpStatus.OK);
+        responseEntity = new ResponseEntity<>(publicationService.findByEditorId(id), HttpStatus.OK);
         return responseEntity;
     }
 }

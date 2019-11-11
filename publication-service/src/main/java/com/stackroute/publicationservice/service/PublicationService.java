@@ -14,7 +14,7 @@ public interface PublicationService {
 
     Publications saveContent(Publications publications) throws ContentAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException;
 
-   List<Publications> findByTitle(String title) throws InternalServerErrorException;
+   List<Publications> findByTitle(String title);
 
    void deleteContent(int id) throws ContentDoesNotExistException,InternalServerErrorException;
 

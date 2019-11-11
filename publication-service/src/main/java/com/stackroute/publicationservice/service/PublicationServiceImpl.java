@@ -22,10 +22,14 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @Service
 public class PublicationServiceImpl implements PublicationService {
 
-    @Autowired
     private PublicationRepository publicationRepository;
-    @Autowired
     private MongoOperations mongo;
+
+    @Autowired
+    public PublicationServiceImpl(PublicationRepository publicationRepository, MongoOperations mongo) {
+        this.publicationRepository = publicationRepository;
+        this.mongo = mongo;
+    }
 
     public Publications saveContent(Publications publications) throws ContentAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
 
@@ -38,18 +42,14 @@ public class PublicationServiceImpl implements PublicationService {
 
     }
 
-   public List<Publications> findByTitle(String title) throws InternalServerErrorException {
-
-        try {
+   public List<Publications> findByTitle(String title) {
             return publicationRepository.findByTitle(title);
-        }
-        catch(Exception ex){
-            throw new InternalServerErrorException();
-        }
-
-
-
-
+//        try {
+//            return publicationRepository.findByTitle(title);
+//        }
+//        catch(Exception ex){
+//            throw new InternalServerErrorException();
+//        }
     }
 
     @Override

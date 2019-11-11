@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   private stompClient;
   private notificationList : any;
   private notificationCount;
+  private role=true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

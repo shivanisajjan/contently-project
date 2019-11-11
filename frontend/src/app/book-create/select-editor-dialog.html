@@ -1,20 +1,12 @@
 <div class="select-editor-dialog">
 <mat-card>
    <mat-card-header>
-        <mat-form-field class="example-full-width"  style="width: 80%;">
+        <mat-form-field [(ngModel)] = "searchTerm" (ngModelChange) = "search()" class="example-full-width"  style="width: 80%;">
                 <input matInput placeholder="Search Editor">
              </mat-form-field>
     </mat-card-header>
 </mat-card><br>
-<div class="list-editors">
-<mat-card matRipple  class="editor-card" (click)="selectEditor('Batman')" [mat-dialog-close]="editorData" cdkFocusInitial>
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>Batman</mat-card-title>
-          <mat-card-subtitle style="color: white;">Price</mat-card-subtitle>
-        </mat-card-header>
-</mat-card><br>
-</div>
+
 <div *ngFor="let editor of editorList" class="list-editors">
         <mat-card  matRipple  class="editor-card" (click)="selectEditor(editor)" [mat-dialog-close]="editorData" cdkFocusInitial>
                 <mat-card-header>

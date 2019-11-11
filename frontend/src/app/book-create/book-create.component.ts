@@ -32,6 +32,7 @@ export class BookCreateComponent implements OnInit {
   private bookDetails;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
+  // private selectHelper = true;
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
@@ -61,6 +62,9 @@ export class BookCreateComponent implements OnInit {
     console.log('book details: ', this.bookDetails);
   }
 
+  isSelectHelper():boolean{
+      return localStorage.getItem('selectHelper')=== 'true';
+  }
   ifAuthor(): boolean {
     return localStorage.getItem('role') === 'reader/author';
   }
@@ -171,6 +175,7 @@ export class BookCreateComponent implements OnInit {
     const dialogSubmitSubscription = dialogRef.componentInstance.selectIllustratorEvent.subscribe(
       result => {
         this.illustrator = result;
+        this.sendNotification(this.illustrator, localStorage.getItem('username') + " has requested you to illustrate " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
     );
@@ -277,7 +282,8 @@ export class SelectEditorDialog implements OnInit {
 
   @Output() selectEditorEvent = new EventEmitter<any>();
   public editorList;
-
+  public editorListFiltered;
+  public searchTerm;
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
     @Inject(MAT_DIALOG_DATA) public editorData: String,
@@ -305,6 +311,13 @@ export class SelectEditorDialog implements OnInit {
       result => this.editorList = result
     );
   }
+
+  search(): void {
+    let term = this.searchTerm;
+    this.editorListFiltered = this.editorList.filter(function(tag) {
+        return tag.name.indexOf(term) >= 0;
+    }); 
+}
 }
 
 

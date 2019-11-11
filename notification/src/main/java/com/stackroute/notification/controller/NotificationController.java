@@ -50,5 +50,4 @@ public class NotificationController {
     {
         return new ResponseEntity<>(notificationService.findByReceiver(receiver), HttpStatus.OK);
     }
-
 }

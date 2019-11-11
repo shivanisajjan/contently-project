@@ -7,13 +7,6 @@
             </mat-card-header>
         </mat-card><br>
         <div class="list-editors">
-        <mat-card matRipple  class="editor-card" (click)="selectIllustrator('Luffy')" [mat-dialog-close]="editorData" cdkFocusInitial>
-                <mat-card-header>
-                  <div mat-card-avatar class="example-header-image"></div>
-                  <mat-card-title>Luffy</mat-card-title>
-                  <mat-card-subtitle style="color: white;">Price</mat-card-subtitle>
-                </mat-card-header>
-        </mat-card><br>
         <mat-card *ngFor="let illustrator of illustratorList" matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
                 <mat-card-header>
                   <div mat-card-avatar class="example-header-image"></div>

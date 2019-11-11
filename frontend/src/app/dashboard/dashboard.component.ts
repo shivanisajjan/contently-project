@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
         that.stompClient.subscribe("/user/"+localStorage.getItem('username')+"/notif", (message) => {
           if(message.body) {
             this._snackBar.open(message.body,"close", {
-              duration: 2000,
+              duration: 3000,
             });
             
           }

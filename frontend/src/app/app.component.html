@@ -59,12 +59,20 @@
               <a mat-menu-item  routerLink="/dashboard">Profile</a>
               <a mat-menu-item (click)="onLogout()">Logout</a>
             </mat-menu>
-            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">announcement</i></button>
+            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">notifications_none</i></button>
             <mat-menu class="notificaiton-menu" #notification="matMenu">
                 <button mat-menu-item *ngIf="notificationCount == 0">No new notificaitons</button>
                 <div class="notifications" *ngIf="notificationCount != 0" >
-                <button mat-menu-item *ngFor = "let notification of notificationList" >{{notification.message}}</button>
-              </div>
+                <div *ngIf="role">
+                  <button mat-menu-item *ngFor = "let notification of notificationList" >{{notification.message}}</button>
+                </div>
+               </div>
+              <!-- <button style="" mat-menu-item>KUHFDKHDKFHDKHFKUDHUHKUHKHKHUKHHKHKHKHKHKH</button> -->
+              <button mat-menu-item  >
+                  <p>Batman has sent you a request to Edit The Dark Knight</p>
+                  <button mat-button color="primary">Accept</button>
+                  <button mat-button color="primary">Reject</button>
+                </button>
             </mat-menu>
           </ng-template>
         </mat-nav-list>

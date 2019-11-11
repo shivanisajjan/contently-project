@@ -32,6 +32,7 @@ export class BookCreateComponent implements OnInit {
   private bookDetails;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
+  private selectHelper = true;
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
@@ -171,6 +172,7 @@ export class BookCreateComponent implements OnInit {
     const dialogSubmitSubscription = dialogRef.componentInstance.selectIllustratorEvent.subscribe(
       result => {
         this.illustrator = result;
+        this.sendNotification(this.illustrator, localStorage.getItem('username') + " has requested you to illustrate " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
     );

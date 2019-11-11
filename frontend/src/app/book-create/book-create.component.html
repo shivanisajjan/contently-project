@@ -1,28 +1,14 @@
 <div class="continer">
   <br>
-  <mat-card class="book-details">
+  <mat-card  class="book-details">
     <img mat-card-image src="../../assets/images/book_cover.jpg" alt="Photo of a Shiba Inu">
     <h2>{{bookDetails.title}}</h2>
     <p>{{bookDetails.description}}</p>
   </mat-card>
   <br>
-  <mat-card class="editor-illustrator">
-
+  <mat-card *ngIf="selectHelper" class="editor-illustrator">
     <mat-grid-list cols="2" rowHeight="175px">
       <mat-grid-tile class="choose-editor-tile">
-        <!-- <form class="example-form">
-            <h3>Choose your Editor</h3>
-            <mat-form-field class="example-full-width">
-              <input type="text" placeholder="Editor" aria-label="Number" matInput [formControl]="myEditorControl" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredEditorOptions | async" [value]="option" style="width: 100%;">
-                  {{option}}
-                </mat-option>
-
-              </mat-autocomplete>
-
-            </mat-form-field>
-          </form> -->
         <div class="select-editor-header">
           <mat-grid-tile-header *ngIf="!bookDetails.editorName" matRipple [matRippleColor]="myColor" class=""
                                 (click)="openSelectEditorDialog()">
@@ -54,6 +40,32 @@
 
   </mat-card>
   <br>
+
+
+  <mat-card *ngIf="!selectHelper" class="editor-illustrator">
+      <mat-grid-list cols="2" rowHeight="175px">
+        <mat-grid-tile class="choose-editor-tile">
+          <div class="select-editor-header">
+            <mat-grid-tile-header >
+              <h2>Editor Selected</h2>
+            </mat-grid-tile-header>
+          </div>
+          <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
+        </mat-grid-tile>
+  
+        <mat-grid-tile>
+  
+          <div class="select-editor-header">
+            <mat-grid-tile-header >
+              <h2>Illustrator Selected</h2>
+            </mat-grid-tile-header>
+          </div>
+          <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
+        </mat-grid-tile>
+      </mat-grid-list>
+  
+    </mat-card>  <br>
+
 
   <div class="section-list">
     <mat-card>

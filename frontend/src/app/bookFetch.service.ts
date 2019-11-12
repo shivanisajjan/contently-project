@@ -59,8 +59,8 @@ export class BookFetchService {
   getRecommendation(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
+        'Content-Type': 'application/json'
+        // Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
     console.log('recommending..');

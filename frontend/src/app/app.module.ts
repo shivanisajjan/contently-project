@@ -37,6 +37,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ConversionComponent } from './conversion/conversion.component';
 import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
+import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 
@@ -60,7 +61,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     ConversionComponent,
     PageAfterLoginComponent,
     EditProfileComponent,
-    PaymentComponent
+    PaymentComponent,
+    LoadingComponent
   ],
 
   imports: [

@@ -2,107 +2,71 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BookFetchService} from '../bookFetch.service';
-import {NgForm} from "@angular/forms";
-import {loadConfigurationFromPath} from "tslint/lib/configuration";
-import {ContentService} from "../content.service";
+import {NgForm} from '@angular/forms';
+import {ContentService} from '../content.service';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-content-layout',
   templateUrl: './content-layout.component.html',
   styleUrls: ['./content-layout.component.css']
 })
-export class ContentLayoutComponent implements OnInit {
 
+export class ContentLayoutComponent implements OnInit {
+  private genresList = ['horror', 'romance', 'thriller', 'crime', 'drama'];
   constructor(private http: HttpClient,
               private router: Router,
               private bookFetch: BookFetchService,
               private contentService: ContentService) {
-  }
-
-  // selectedFile: File = null;
-  // public data;
-  // public bookData: Number;
-
+                if (!localStorage.getItem('token')) {
+                  this.router.navigate(['/home']).then();
+                }
+            } 
 
   ngOnInit() {
   }
 
-
-  // onFileSelected(event) {
-  //   console.log(event);
-  //   this.selectedFile = <File>event.target.files[0];
-  // }
-  //
-  // uploadImage() {
-  //   const temp = new FormData();
-  //   temp.append('image', this.selectedFile, this.selectedFile.name);
-  //   this.http.post('url', temp).subscribe(res => {
-  //     console.log(res);
-  //   })
-  //
-  // }
-  //
-  // bookobj: any;
-  // contobj: any;
-  //
-  // someFunc(title, desc, grouptype, groupgenre, grouptarget) {
-  //   this.bookFetch.repository = title;
-  //   console.log("repo=" + this.bookFetch.repository);
-  //   this.bookobj = {
-  //     "name": title,
-  //     "description": desc,
-  //     "private": true
-  //   };
-  //
-  //
-  //   this.bookFetch.addBook(this.bookobj)
-  //     .subscribe(
-  //       (data) => {
-  //         console.log(data);
-  //       });
-  //
-  //
-  //   this.contobj = {
-  //     "title": title,
-  //     "description": desc,
-  //     "grouptype": grouptype,
-  //     "groupgenre": groupgenre,
-  //     "grouptarget": grouptarget,
-  //     // "gitUrl":this.data
-  //   };
-  //
-  //   this.bookFetch.addContent(this.contobj).subscribe((data) => {
-  //     console.log(data.id);
-  //   });
-  //
-  //   this.router.navigateByUrl('bookCreate');
-  // }
-
-
   onSubmit(input: NgForm) {
     console.log(input.value);
-    let jsonObj: any = {
+    const genres = [];
+
+    for (let i = 0; i < this.genresList.length; i++) {
+      const genre = this.genresList[i];
+      if (input.value[genre] === true) {
+        genres.push(genre);
+      }
+    }
+    const jsonObj: any = {
       title: input.value.title,
       description: input.value.desc,
-      authorname: localStorage.getItem('username'),
+      authorName: localStorage.getItem('username'),
       typeName: input.value.type,
+      genres,
+      createdAt: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      selectHelper:input.value.selectHelper
     };
+    localStorage.setItem('selectHelper',input.value.selectHelper);
     console.log('json', jsonObj);
-    this.bookFetch.createRepo(input.value.title, input.value.desc)
+    this.contentService.saveBooks(jsonObj)
       .subscribe(
         data => {
-          console.log('data: ',data);
-          this.bookFetch.setRepository(input.value.title);
-          this.contentService.saveBooks(jsonObj).subscribe(
-            data =>{
-              console.log('saved: ', data);
-              this.router.navigate(['/bookCreate']).then();
-            }
-          );
+          console.log('Save book data:', data);
+          const temp: any = data;
+          this.bookFetch.createRepo(temp.id, temp.description)
+            .subscribe(
+              data2 => {
+                console.log('Create Repo data: ', data2);
+                localStorage.setItem('book', JSON.stringify(data));
+                this.router.navigate(['/bookCreate']).then();
+              },
+              error2 => {
+                console.log('Create Repo error', error2);
+              }
+            );
         },
         error => {
-          console.log('error: ', error);
+          console.log('Save book error:', error);
         }
-      )
+      );
   }
 }

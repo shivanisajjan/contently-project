@@ -1,187 +1,99 @@
-<!-- 
+<div class="dashboard-wrapper">
+  <mat-expansion-panel class="profile-details">
+    <mat-expansion-panel-header>
+      Profile Details
+    </mat-expansion-panel-header>
+    <mat-card *ngIf="profileLoaded">
+      <mat-card-content>
+        <mat-grid-list cols="4" rowHeight="2em">
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>First Name: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.firstName}}</mat-grid-tile>
 
-<div class="site-wrap">
-  <div class="intro-section" id="home-section">
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>Last Name: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.lastName}}</mat-grid-tile>
 
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>Gender: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.gender}}</mat-grid-tile>
 
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>E-mail: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.email}}</mat-grid-tile>
 
-<div style="background-image: url('../../assets/images/hero_1.jpg'); "  class="container-fluid"  id="dashboard-section">
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>Phone Number: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.phoneNumber}}</mat-grid-tile>
 
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>Nationality: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.nationality}}</mat-grid-tile>
 
+          <mat-grid-tile [colspan]="1" class="info-label"><strong>Address: </strong></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.addressLine1}}</mat-grid-tile>
 
-  
+          <mat-grid-tile [colspan]="1" class="info-label"></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.addressLine2}}</mat-grid-tile>
 
-
-    <br>
-    <b><h1 style = "color:white" class="text-center mb-3">My Dashboard</h1></b>
-    <div class="row dashboard-buttons">
-        <div class="col-xs-2">
-          <ul class="site-menu main-menu site-menu-dark js-clone-nav  d-none d-lg-block m-0 p-0">
-            <p class="cta"><a href="#dashboard-section" routerLink="/contentLayout" class="nav-link"><span>Upload</span></a></p>
-          </ul></div>
-          <div class="col-xs-2">
-          <ul class="site-menu main-menu site-menu-dark js-clone-nav  d-none d-lg-block m-0 p-0">
-              <p class="cta"><a href="#dashboard-section" class="nav-link"><span>Editor</span></a></p>
-            </ul></div>
-          </div><br>
-   
-      <br>
-
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner row w-100 mx-auto">
-        <div class="carousel-item col-md-4 active">
-          <div class="card">
-            <img class="card-img-top img-fluid" src="http://placehold.it/800x600/f44242/fff" alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title">Book 1</h4>
-              <p class="card-text">Views : 24</p>
-              <p class="card-text">Rating : 4/5</p>
-              <a href="#" class="btn btn-primary">Edit file</a>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item col-md-4">
-          <div class="card">
-            <img class="card-img-top img-fluid" src="http://placehold.it/800x600/418cf4/fff" alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title">Book 2</h4>
-              <p class="card-text">Views : 45</p>
-              <p class="card-text">Rating : 3/5</p>
-              <a href="#" class="btn btn-primary">Edit file</a>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item col-md-4">
-          <div class="card">
-            <img class="card-img-top img-fluid" src="http://placehold.it/800x600/3ed846/fff" alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title">Book 3</h4>
-              <p class="card-text">Views : 55</p>
-              <p class="card-text">Rating : 4.5/5</p>
-              <a href="#" class="btn btn-primary">Edit</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-item col-md-4">
-          <div class="card">
-            <img class="card-img-top img-fluid" src="http://placehold.it/800x600/8e41f4/fff" alt="Card image cap">
-            <div class="card-body">
-              <h4 class="card-title">Card 7</h4>
-              <p class="card-text">Views : 55</p>
-              <p class="card-text">Rating : 4.5/5</p>
-              <a href="#" class="btn btn-primary">Edit file</a>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-  
-    </div> 
-
-
-
-
-
-
-
-
-
-
-
-
-    <br>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
-      
-      
-        <ng-container matColumnDef="Title">
-          <th mat-header-cell *matHeaderCellDef> Book Title </th>
-          <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
-        </ng-container>
-      
-        
-        <ng-container matColumnDef="Views">
-          <th mat-header-cell *matHeaderCellDef> Views </th>
-          <td mat-cell *matCellDef="let element"> {{element.Views}} </td>
-        </ng-container>
-      
-     
-        <ng-container matColumnDef="Rating">
-          <th mat-header-cell *matHeaderCellDef> Rating </th>
-          <td mat-cell *matCellDef="let element"> {{element.Rating}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <br>
-
-
-
-      
-
-
-
-
-
-
-
-
- <div id="chartContainer" style="height: 370px; width: 100%;"></div> 
-
-
-  </div>
-
-
- <div id="chartContainer" style="height: 370px; width: 100%;"></div> 
-
-  </div>
-          <div id="chartContainer" style="height: 370px; width: 60%;  margin: auto;"></div>
-
-  </div>
-
-
-  
-   -->
-
-   <div style="background-image: url('../../assets/images/main_bg.jpeg');" class="container-fluid"  id="illustrator-section">
-    <br>
-
-    <div class="row justify-content-center">
-    <b><h2 style="color: #FFF; text-shadow: 2px 2px 4px #000000;"class="section-title mb-3">My Dashboard</h2></b><br>
-    <div style="margin-left: 40%; margin-top: 1%;" class="col-xs-2">
-        <ul class=" m-0 p-0">
-          <p class="cta"><button *ngIf="role == 'reader/author'" mat-raised-button color="primary" (click)="onCreate()">Create</button></p>
-        </ul></div>
-    <div class="book-cards">
-    <mat-card>
-        <mat-card-title>Book 1</mat-card-title>
-        <mat-card-subtitle>Book ID</mat-card-subtitle>
-        <mat-card-actions>
-                <button (click)="editDialog()" mat-button>Edit</button>
-        </mat-card-actions>
-        <br>
+          <mat-grid-tile [colspan]="1" class="info-label"></mat-grid-tile>
+          <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.addressLine3}}</mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <a mat-raised-button color="primary" (click)="editProfile()">Edit Profile</a>
+      </mat-card-actions>
     </mat-card>
-    <br>
-    <div *ngFor="let content of contentlist">
-    <mat-card >
-        <mat-card-title>{{content.title}}</mat-card-title>
-        <mat-card-subtitle>{{content.subTitle}}</mat-card-subtitle>
-        <p>{{content.description}}</p>
-        <mat-card-actions>
-                <button (click)="editDialog()" mat-button>Edit</button>
-        </mat-card-actions>
-        <br>
-    </mat-card>
-    <br></div>
-    <br>
-  
-    </div> 
-      <br>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="contents-under-development">
+    <mat-expansion-panel-header>
+      Current Projects
+    </mat-expansion-panel-header>
+    <mat-grid-list rowHeight="2em" cols="4">
+      <div *ngFor="let content of contentsList, index as i">
+          <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} , &nbsp; {{content.genres}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
+
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)">Edit</button></mat-grid-tile>
       </div>
-  </div>
+      <mat-grid-tile colspan="4" rowspan="1" *ngIf="ifAuthor()">
+        <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="books-published">
+    <mat-expansion-panel-header>
+      Published Books
+    </mat-expansion-panel-header>
+    <div *ngFor="let content of contentsList, index as i">
+      <!--        <mat-card-content>-->
+      <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} , &nbsp; {{content.genres}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button>Edit</button></mat-grid-tile>
+      <!--        </mat-card-content>-->
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="purchases-made">
+    <mat-expansion-panel-header>
+      Purchases
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</div>

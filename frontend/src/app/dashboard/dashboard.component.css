@@ -1,94 +1,28 @@
-#illustrator-section{
-  min-height: 70%;
-  background-image: url('../../assets/images/main_bg.jpeg');
-}
-
-
-
-.dashboard-buttons{
-  margin-left: 40%;
-}
-
-.nav{
-  display: inline;
-}
-
-table {
+.profile-details, .contents-under-development, .books-published, .purchases-made{
   width: 80%;
-  margin-left: 10%;
+  margin: 10px auto;
 }
 
-.mat-elevation-z8{
-  padding-top: 30%;
+.info-label > ::ng-deep figure{
+  justify-content: flex-end;
+  padding: 0 5px;
 }
 
-.book-cards button{
-    float: right;   
+.info-value > ::ng-deep figure {
+  padding: 0 5px;
+  justify-content: flex-start;
+  background-color: #0d95e8;
 }
-
-.book-cards{
-  width: 80%;
-  margin: auto;
+.info-value-last > ::ng-deep figure {
+  padding: 0 5px;
+  justify-content: flex-start;
+  bottom: 20px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
-
-@media (min-width: 768px) {
-  /* show 3 items */
-  .carousel-inner .active,
-  .carousel-inner .active + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item {
-    display: block;
-  }
-
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
-    transition: none;
-  }
-
-  .carousel-inner .carousel-item-next,
-  .carousel-inner .carousel-item-prev {
-    position: relative;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
-    position: absolute;
-    top: 0;
-    right: -33.3333%;
-    z-index: -1;
-    display: block;
-    visibility: visible;
-  }
-
-  /* left or forward direction */
-  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-  .carousel-item-next.carousel-item-left + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
-    position: relative;
-    transform: translate3d(-100%, 0, 0);
-    visibility: visible;
-  }
-
-  /* farthest right hidden item must be abso position for animations */
-  .carousel-inner .carousel-item-prev.carousel-item-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    display: block;
-    visibility: visible;
-  }
-
-  /* right or prev direction */
-  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-  .carousel-item-prev.carousel-item-right + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
-    position: relative;
-    transform: translate3d(100%, 0, 0);
-    visibility: visible;
-    display: block;
-    visibility: visible;
-  }
+.list-item-entry > mat-grid-tile{
+  /*background-color: blue;*/
+}
+.list-item-entry:hover{
+  background-color: lightgrey;
 }

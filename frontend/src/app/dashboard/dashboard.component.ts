@@ -1,33 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableModule} from '@angular/material/table';
-
-import * as CanvasJS from '../../assets/js/canvasjs.min.js';
-import { content } from '../content.js';
-import { ContentService } from '../content.service.js';
-import { Router } from '@angular/router';
-import { LoginService } from '../login.service.js';
-import { AuthService } from '../auth.service.js';
-
-export interface PeriodicElement {
-  Title: string;
-  position: number;
-  Views: number;
-  Rating: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, Title: 'Book 1', Views: 10079, Rating: '1/4'},
-  {position: 2, Title: 'Book 2', Views: 4026, Rating: '2/4'},
-  {position: 3, Title: 'Book 3', Views: 6941, Rating: '3/4'},
-  {position: 4, Title: 'Book 4', Views: 90122, Rating: '4/4'},
-  {position: 5, Title: 'Book 5', Views: 10811, Rating: '4/4'},
-  {position: 6, Title: 'Book 6', Views: 120107, Rating: '3/4'},
-  {position: 7, Title: 'Book 7', Views: 140067, Rating: '2/4'},
-  {position: 8, Title: 'Book 8', Views: 159994, Rating: '1/4'},
-  {position: 9, Title: 'Book 9', Views: 189984, Rating: '2/4'},
-  {position: 10, Title: 'Book 10', Views: 201797, Rating: '3/4'},
-];
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {LoginService} from '../login.service';
+import {ContentService} from '../content.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import $ from 'jquery';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,106 +13,89 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public contentlist;
-  private role;
+  private profileData;
+  private contentsList;
+  private booksList = [];
+  private profileLoaded = false;
+  private contentsLoaded = false;
+  private booksLoaded = false;
+  private serverUrl = 'http://13.126.150.171:8716/socket'
+  private stompClient;
 
   constructor(
-    private _contentService: ContentService,
-    private _router: Router,
-    private _loginService: LoginService,
-    private _authService : AuthService
-   ) {}
-
+    private router: Router,
+    private login: LoginService,
+    private _snackBar: MatSnackBar,
+    private contentService: ContentService) {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/home']).then();
+    }
+    this.initializeWebSocketConnection();
+  }
+  initializeWebSocketConnection()
+    {
+      let ws = new SockJS(this.serverUrl);
+      this.stompClient = Stomp.over(ws);
+      let that = this;
+      this.stompClient.connect({}, (frame) => {
+        that.stompClient.subscribe("/user/"+localStorage.getItem('username')+"/notif", (message) => {
+          if(message.body) {
+            this._snackBar.open(message.body,"close", {
+              duration: 3000,
+            });
+            
+          }
+        });
+      });
+    }
   ngOnInit() {
-    // this.role = this._loginService.role;
-      
-    if(this._authService.isLoggedIn == false){
-      console.log("NOT LOGGED IN");
-      this._router.navigate(['/home'])
-    } else {
-      console.log(localStorage.getItem('role'));
-      this.role = localStorage.getItem('role');
-      this.getContent();
-    }
+    this.ifAuthor();
+    this.login.getUser()
+      .subscribe(
+        data => {
+          console.log('Profile data: ', data);
+          this.profileData = data;
+          this.profileLoaded = true;
+        },
+        error => {
+          console.log('Profile error: ', error);
+        }
+      );
+    this.contentService.getBooks()
+      .subscribe(
+        data => {
+          console.log('Content All Books data: ', data);
+          this.contentsList = data;
+          this.contentsLoaded = true;
+          // // this chunk has to removed after publication service is ready
+          // console.log(this.contentsList[0]);
+          // this.booksList.push(
+          //   {
+          //     this.contentsList[0],
+          //     noOfPurchases: 23,
+          //   }
+          // );
+          // console.log('books', this.booksList[0]);
+        },
+        error => {
+          console.log('Content All Books error: ', error);
+        }
+      );
 
-
-
-
-  // this.loadScript("../../assets/js/jquery-3.3.1.min.js");
-  // this.loadScript("../../assets/js/jquery-migrate-3.0.1.min.js");
-  // this.loadScript("../../assets/js/jquery-ui.js");
-  // this.loadScript("../../assets/js/popper.min.js");
-  // this.loadScript("../../assets/js/bootstrap.min.js");
-  // this.loadScript("../../assets/js/owl.carousel.min.js");
-  // this.loadScript("../../assets/js/jquery.stellar.min.js");
-  // this.loadScript("../../assets/js/jquery.countdown.min.js");
-  // this.loadScript("../../assets/js/bootstrap-datepicker.min.js");
-  // this.loadScript("../../assets/js/jquery.easing.1.3.js");
-  // this.loadScript("../../assets/js/aos.js");
-  // this.loadScript("../../assets/js/jquery.fancybox.min.js");
-  // this.loadScript("../../assets/js/jquery.sticky.js");
-  // this.loadScript("../../assets/js/main.js");
-
-
-
-
-
-	// 	let chart = new CanvasJS.Chart("chartContainer", {
-	// 	animationEnabled: true,
-	// 	exportEnabled: true,
-	// 	title: {
-	// 		text: "Basic Column Chart in Angular"
-	// 	},
-	// 	data: [{
-	// 		type: "column",
-	// 		dataPoints: [
-	// 			{ y: 71, label: "Apple" },
-	// 			{ y: 55, label: "Mango" },
-	// 			{ y: 50, label: "Orange" },
-	// 			{ y: 65, label: "Banana" },
-	// 			{ y: 95, label: "Pineapple" },
-	// 			{ y: 68, label: "Pears" },
-	// 			{ y: 28, label: "Grapes" },
-	// 			{ y: 34, label: "Lychee" },
-	// 			{ y: 14, label: "Jackfruit" }
-	// 		]
-	// 	}]
-	// });
-    
-  
-
-	// chart.render();
-    }
-
-
-
-    public loadScript(url: string) {
-      const body = <HTMLDivElement> document.body;
-      const script = document.createElement('script');
-      script.innerHTML = '';
-      script.src = url;
-      script.async = false;
-      script.defer = true;
-      body.appendChild(script);
-    }
-  
-
-
-  // displayedColumns: string[] = ['position', 'Title', 'Views', 'Rating'];
-  // dataSource = ELEMENT_DATA;
-  // constructor() { }
-
-  // ngOnInit() {
-  // }
-
-  getContent(){
-   // console.log(localStorage.getItem('token'));
-    this._contentService.getBooks()
-    .subscribe(data => this.contentlist = data );
-  }
-  onCreate(){
-    console.log('called');
-    this._router.navigate(['/contentLayout']).then();
   }
 
+  edit(i: number) {
+    console.log(this.contentsList[i]);
+    localStorage.setItem('book', JSON.stringify(this.contentsList[i]));
+    this.router.navigate(['/bookCreate']).then(this.ngOnInit);
+  }
+
+  ifAuthor(): boolean {
+    return localStorage.getItem('role') === 'reader/author';
+  }
+
+  editProfile(){
+    localStorage.setItem('editProfile',JSON.stringify(this.profileData));
+    this.router.navigate(['/editProfile']);
+  }
 }

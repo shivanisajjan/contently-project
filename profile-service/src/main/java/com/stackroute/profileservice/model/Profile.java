@@ -15,4 +15,7 @@ public class Profile {
     private String username;
     private List<Interest> interest;
     private Long ratings;
+    private int experience;
+    private double costPerPage;
+    private double numberOfHoursWorked;
 }

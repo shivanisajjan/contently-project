@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
-import { userReg } from '../userReg';
+import {Component, OnInit} from '@angular/core';
+import {LoginService} from '../login.service';
+import {userReg} from '../userReg';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
-import { profile } from '../profile';
-import { interest } from '../interest';
-import { genre } from '../genre';
-import { Router } from '@angular/router';
+import {FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlattener, MatTreeFlatDataSource} from '@angular/material';
+import {profile} from '../profile';
+import {interest} from '../interest';
+import {genre} from '../genre';
+import {Router} from '@angular/router';
 
 interface FoodNode {
   name: string;
@@ -26,7 +26,7 @@ const TREE_DATA: FoodNode[] = [
     ]
   }, {
     name: 'Biography'
-  },{
+  }, {
     name: 'Autobiography'
   }
 ];
@@ -39,7 +39,7 @@ interface ExampleFlatNode {
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  
+
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
     const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
@@ -58,29 +58,29 @@ export class RegistrationComponent implements OnInit {
   public registerv = false;
   public $profile = new profile();
 
-  public $interest : interest;
-  public $genre : genre;
+  public $interest: interest;
+  public $genre: genre;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  checkusername : string;
+  checkusername: string;
   matcher = new MyErrorStateMatcher();
   public remove;
   public gender = 'Female';
-  
-  
+
+
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       level: level,
     };
-  }
+  };
 
   treeControl = new FlatTreeControl<ExampleFlatNode>(
-      node => node.level, node => node.expandable);
+    node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
-      this._transformer, node => node.level, node => node.expandable, node => node.children);
+    this._transformer, node => node.level, node => node.expandable, node => node.children);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -88,12 +88,12 @@ export class RegistrationComponent implements OnInit {
     private _loginService: LoginService,
     private _formBuilder: FormBuilder,
     private _router: Router
-    ) {
-      this.dataSource.data = TREE_DATA;
+  ) {
+    this.dataSource.data = TREE_DATA;
 
-     }
+  }
 
-     hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   ngOnInit() {
     this.registerv = false;
@@ -103,10 +103,10 @@ export class RegistrationComponent implements OnInit {
       contact: ['', Validators.required],
       password: ['', [Validators.required]],
       confirmPassword: [''],
-    },{ validator: this.checkPasswords });
+    }, {validator: this.checkPasswords});
     this.secondFormGroup = this._formBuilder.group({
       nationality: ['', Validators.required],
-      gender:['', Validators.required],
+      gender: ['', Validators.required],
       date: ['', Validators.required]
 
     });
@@ -116,29 +116,30 @@ export class RegistrationComponent implements OnInit {
     this.$interest.name = "Novel";
     this.$interest.genre = [];
     console.log(this.$interest.name);
-    this.$profile.interest.push(this.$interest); 
+    this.$profile.interest.push(this.$interest);
   }
 
   public returnUser: any;
 
-  public register(username, password, email, contact){
+  public register(username, password, email, contact) {
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;
     regUser.email = email;
     regUser.phoneNumber = contact;
     console.log(regUser.username);
-    this._loginService.registerUser(regUser).subscribe( result => {
-     // this.returnUser = result;
-      if(this.returnUser.id != null){
-        this.registerv = true;      }
-      if(this.returnUser.message == "Username Already Exists"){
-        
-      }  
+    this._loginService.registerUser(regUser).subscribe(result => {
+      this.returnUser = result;
+      if (this.returnUser.id != null) {
+        this.registerv = true;
+      }
+      if (this.returnUser.message == "Username Already Exists") {
+
+      }
     });
   }
 
-  public addPersonalDetails(username, password, email, contact,firstname, lastname, nationality, address1, address2, address3, date){
+  public addPersonalDetails(username, password, email, contact, firstname, lastname, nationality, address1, address2, address3, date) {
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;
@@ -153,76 +154,75 @@ export class RegistrationComponent implements OnInit {
     regUser.gender = this.gender;
     this._loginService.updateUser(regUser).subscribe(result => {
       this.returnUser = result;
-      if(this.returnUser.id != null){
-        this.registerv = true;     
-       }  
+      if (this.returnUser.id != null) {
+        this.registerv = true;
+      }
     });
 
   }
 
-  checkValue(event,check){
+  checkValue(event, check) {
     this.interestsBoolean = true;
     console.log(check);
-    if(check == false){
-    if((event == "Biography" || event == "Autobiography") ){
-        
+    if (check == false) {
+      if ((event == "Biography" || event == "Autobiography")) {
+
         this.$interest = new interest();
         this.$interest.name = event;
         this.$interest.genre = [];
         console.log(this.$interest.name);
         this.$profile.interest.push(this.$interest);
 
-      }else{
+      } else {
 
         this.$genre = new genre();
         this.$genre.name = event;
         this.$profile.interest[0].genre.push(this.$genre);
-        
+
       }
-    }else{
-      if(event == "Biography" || event == "Autobiography"){
+    } else {
+      if (event == "Biography" || event == "Autobiography") {
         this.$interest = new interest();
         this.$interest.name = event;
         this.$interest.genre = [];
         let i;
-        for( i = 1; i<this.$profile.interest.length ; ++i){
-          if(this.$profile.interest[i].name == event){
-            this.remove = this.$profile.interest.splice(i,1);
+        for (i = 1; i < this.$profile.interest.length; ++i) {
+          if (this.$profile.interest[i].name == event) {
+            this.remove = this.$profile.interest.splice(i, 1);
             console.log(this.remove);
             break;
           }
         }
-        
-      }else{
+
+      } else {
         let i;
-        for( i = 0 ; i < this.$profile.interest[0].genre.length ; i++){
-          if(this.$profile.interest[0].genre[i].name == event){
-            this.remove = this.$profile.interest[0].genre.splice(i,1);
+        for (i = 0; i < this.$profile.interest[0].genre.length; i++) {
+          if (this.$profile.interest[0].genre[i].name == event) {
+            this.remove = this.$profile.interest[0].genre.splice(i, 1);
             console.log(this.remove);
             break;
           }
         }
       }
     }
-     console.log(this.$profile);
- }
+    console.log(this.$profile);
+  }
 
- saveInterests(username){
-   if(this.interestsBoolean){
-   this.$profile.username = username;
-   this._loginService.saveInterests(this.$profile).subscribe();
-   this._router.navigate(['/home']).then();
-   }
+  saveInterests(username) {
+    if (this.interestsBoolean) {
+      this.$profile.username = username;
+      this._loginService.saveInterests(this.$profile).subscribe();
+      this._router.navigate(['/home']).then();
+    }
 
   }
-   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
     let pass = group.controls.password.value;
     let confirmPass = group.controls.confirmPassword.value;
 
-    return pass === confirmPass ? null : { notSame: true };
+    return pass === confirmPass ? null : {notSame: true};
   }
 
 
-
- 
 }

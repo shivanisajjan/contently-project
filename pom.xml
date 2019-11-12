@@ -31,14 +31,14 @@
         <module>eureka-server</module>
         <module>api-gateway</module>
         <module>user-management</module>
-        <module>profile-service</module>
         <module>content-service</module>
+        <module>profile-service</module>
         <module>recommendation-service</module>
-        <module>publishing-service</module>
+        <module>notification</module>
+        <module>publication-service</module>
     </modules>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -82,6 +82,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -140,9 +147,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.0.0-M2</version>
-                <configuration>
-                    <argLine>${failsafeArgLine}</argLine>
-                </configuration>
+
                 <executions>
                     <execution>
                         <goals>
@@ -212,11 +217,7 @@
     </build>
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.22.0</version>
-            </plugin>
+
 
             <plugin>
                 <groupId>com.github.spotbugs</groupId>

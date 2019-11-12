@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -18,18 +19,18 @@ public class Content {
 
 
     @Id
-    int id;
-    String title;
-    String subTitle;
-    String description;
-    int  authorId;
-    List<Integer>  editorIds; // list of userId of editors
-    List<Integer> designerIds; // list of userId of designer
-    String typeName;
-    List<String> genres;
-    List<String> targetedAudience;
-    String  createdAt;
-    String gitUrl;
-
+    private int id;
+    private String title;
+    private String description;
+    private String authorName;
+    private String editorName;
+    private String editorStatus;
+    private String designerStatus;
+    private String designerName;
+    private String typeName;
+    private Boolean selectHelper;
+    private List<String> genres;
+    private List<Status> status;
+    private String  createdAt;
 
 }

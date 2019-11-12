@@ -1,20 +1,113 @@
 /*material css*/
-.section-list{
+.continer {
+  background-image: url('../../assets/images/main_bg.jpeg');
+  height: 100%;
+}
+
+.section-list {
   width: 70%;
+  margin-left: 24%;
   background-color: red;
-  margin: 10px auto;
+
   box-shadow: 0 0 10px 0 lightslategrey;
 }
-.add-new-section{
+
+.add-new-section {
   float: right;
   overflow: auto;
 }
 
-mat-list-item button{
+mat-list-item .hover-btn {
   display: none;
 }
 
-mat-list-item:hover button{
-  display: flex;
+
+.chapter-status-btn {
+  height: 100%;
 }
+
+.editor-illustrator mat-option {
+}
+
+.editor-status-icons {
+  float: right;
+}
+
+.book-details {
+  width: 100%;
+  margin: auto;
+}
+
+.book-details img {
+  width: 20%;
+  height: 100%;
+  float: left;
+  margin-right: 2%;
+  margin-left: 1%;
+  margin-top: 1%;
+  border: 10px solid #ddd;
+
+}
+
+.mat-card-actions {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+mat-list-item:hover .hover-btn {
+  display: flex;
+
+}
+
+.mat-list-item {
+  height: 70px !important;
+}
+
+.mat_icon {
+  margin-left: 65%;
+  margin-bottom: 10%;
+}
+
+mat-grid-tile {
+  background: lightblue;
+}
+
+.editor-illustrator {
+  margin-left: 24%;
+  width: 70%;
+  box-shadow: 0 0 10px 0 lightslategrey;
+}
+
+.editor-card {
+  background-color: rgb(16, 14, 110);
+  color: white;
+  cursor: pointer;
+}
+
+.select-editor-dialog {
+}
+
+.hover-btn {
+}
+
+.choose-editor-tile {
+  display: block;
+}
+
+.select-editor-header {
+  background-color: aqua;
+  cursor: pointer;
+}
+
+.chapter-status-btn {
+  background-color: #131183;
+  width: 60%;
+  color: white;
+}
+
+.select-editor-header:hover {
+  background-color: blueviolet;
+}
+
 /*material css*/

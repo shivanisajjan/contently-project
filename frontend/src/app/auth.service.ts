@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +7,15 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private loggedInStatus = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  setLoggedIn(value : boolean){
+  setLoggedIn(value: boolean) {
     this.loggedInStatus = value;
     localStorage.setItem('loggedIn', value.toString());
   }
 
-  
-
-  get isLoggedIn(){
+  get isLoggedIn() {
     return JSON.parse(localStorage.getItem('loggedIn') || this.loggedInStatus.toString());
   }
 }

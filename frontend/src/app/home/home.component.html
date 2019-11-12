@@ -1,215 +1,148 @@
-<div class="container">
-<div class="recent-publication-carousel">
-  <div class="carousel-header">
-    <h3>Recent Publications</h3>
-  </div>
-  <div id="carouselControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
+<!--<div class="container">-->
+    <br><br>
+    <h2 style="margin-left: 5%;">Trending Books</h2>
+    <div class="container" id="recbox"
+    fxLayout
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="10px"
+    fxLayoutGap.xs="0">
 
-      <div class="carousel-item active">
-        <div class="card-wrapper">
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
+    <div *ngFor="let bookvar of bookVar">
+    <mat-card (click)="bookDetails(bookvar.bookId)" id="cardhere">
+
+        <img mat-card-image src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="card image">
+        <h4>{{bookvar.bookName}}</h4>
+        <br>
+    </mat-card></div>
+    <br></div>
+
+  <div class="our-programs">
+    <div class="our-programs-header">
+      <h3>Our Programs</h3>
+      <h5>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut
+        reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut
+        reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
+      </h5>
+    </div>
+    <div class="our-programs-body">
+      <div class="reader">
+        <div class="reader-text">
+          <h4>We offer huge varieties of contents to our readers</h4>
+          <p>
+            <i class="material-icons">library_books</i>
+            More than 24,450+ huge varieties of books
+          </p>
+          <p>
+            <i class="material-icons">person</i>
+            Over 1,00,000 satisfied customers
+          </p>
+          <p>
+            <i class="material-icons">person_add</i>
+            130 Readers joining our community every week
+          </p>
         </div>
+        <img class="user-image" src="https://joansproject.files.wordpress.com/2016/01/wp-14528274073611.jpg?w=1400"
+             alt="">
       </div>
 
-      <div class="carousel-item">
-        <div class="card-wrapper">
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
-          <div class="card">
-            <img class="card-img-top" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Book Name</h5>
-              <p class="card-text">Author Name</p>
-            </div>
-            <div class="description">
-              <p>Some random book description. Some random book description. Some random book description. Some random book description</p>
-            </div>
-          </div>
+      <div class="author">
+        <div class="author-text">
+          <h4>Lot of authors use our services to write their own content</h4>
+          <p>
+            <i class="material-icons">person</i>
+            Over 1,500 authors
+          </p>
+          <p>
+            <i class="material-icons">person_add</i>
+            130 authors joining our community every week
+          </p>
         </div>
+        <img class="user-image"
+             src="https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+             alt="">
       </div>
 
-
-    </div>
-
-    <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-
-    <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-</div>
-
-<div class="our-programs">
-  <div class="our-programs-header">
-    <h3>Our Programs</h3>
-    <h5>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
-    </h5>
-  </div>
-  <div class="our-programs-body">
-    <div class="reader">
-      <div class="reader-text">
-        <h4>We offer huge varieties of contents to our readers</h4>
-        <p>
-          <i class="material-icons">library_books</i>
-          More than 24,450+ huge varieties of books
-        </p>
-        <p>
-          <i class="material-icons">person</i>
-          Over 1,00,000 satisfied customers
-        </p>
-        <p>
-          <i class="material-icons">person_add</i>
-          130 Readers joining our community every week
-        </p>
+      <div class="designer">
+        <div class="designer-text">
+          <h4>We work with professional designers to make the content look eye catchy</h4>
+          <p>
+            <i class="material-icons">person</i>
+            Over 400 designers
+          </p>
+          <p>
+            <i class="material-icons">person_add</i>
+            Each having minimum of 4-5 years of experience
+          </p>
+        </div>
+        <img class="user-image"
+             src="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1346&q=80"
+             alt="">
       </div>
-      <img class="user-image" src="https://joansproject.files.wordpress.com/2016/01/wp-14528274073611.jpg?w=1400" alt="">
-    </div>
-
-    <div class="author">
-      <div class="author-text">
-        <h4>Lot of authors like our services too</h4>
-        <p>
-          <i class="material-icons">person</i>
-          Over 1,500 authors
-        </p>
-        <p>
-          <i class="material-icons">person_add</i>
-          130 authors joining our community every week
-        </p>
-      </div>
-      <img class="user-image" src="https://previews.123rf.com/images/wavebreakmediamicro/wavebreakmediamicro1111/wavebreakmediamicro111108208/11214177-serious-male-student-writing-in-a-laboratory.jpg" alt="">
-    </div>
-
-    <div class="editor">
 
     </div>
-    <div class="designer"></div>
   </div>
-</div>
 
-<div class="our-clients">
+  <div class="our-authors">
+    <div class="our-authors-heading">
+      <h3>Testimonies</h3>
+      <h5>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+        adipisci at provident.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+        adipisci at provident.
+      </h5>
+    </div>
+    <div class="our-authors-body">
+      <mat-card>
+        <mat-card-header></mat-card-header>
+        <mat-card-content>
+          <img class="author-avatar"
+               src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1"
+               alt="">
+          <mat-card-title>James Hawkins</mat-card-title>
+          <mat-card-subtitle>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+            adipisci at provident.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+            adipisci at provident.
+          </mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
 
-</div>
+      <mat-card>
+        <mat-card-header></mat-card-header>
+        <mat-card-content>
+          <img class="author-avatar"
+               src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1"
+               alt="">
+          <mat-card-title>James Hawkins</mat-card-title>
+          <mat-card-subtitle>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+            adipisci at provident.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+            adipisci at provident.
+          </mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
 
-
-<div class="our-authors">
-  <div class="our-authors-heading">
-    <h3>Testimonies</h3>
-    <h5>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-    </h5>
+      <mat-card>
+        <mat-card-header></mat-card-header>
+        <mat-card-content>
+          <img class="author-avatar"
+               src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1"
+               alt="">
+          <mat-card-title>James Hawkins</mat-card-title>
+          <mat-card-subtitle>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+            adipisci at provident.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
+            adipisci at provident.
+          </mat-card-subtitle>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
-  <div class="our-authors-body">
-    <mat-card>
-      <mat-card-header></mat-card-header>
-      <mat-card-content>
-        <img class="author-avatar"  src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1" alt="">
-        <mat-card-title>James Hawkins</mat-card-title>
-        <mat-card-subtitle>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-        </mat-card-subtitle>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header></mat-card-header>
-      <mat-card-content>
-        <img class="author-avatar"  src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1" alt="">
-        <mat-card-title>James Hawkins</mat-card-title>
-        <mat-card-subtitle>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-        </mat-card-subtitle>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card>
-      <mat-card-header></mat-card-header>
-      <mat-card-content>
-        <img class="author-avatar"  src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1" alt="">
-        <mat-card-title>James Hawkins</mat-card-title>
-        <mat-card-subtitle>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.
-        </mat-card-subtitle>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-</div>
+<!--</div>-->

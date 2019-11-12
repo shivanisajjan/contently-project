@@ -1,22 +1,19 @@
 package com.stackroute.contentservice.service;
 
 
-import com.stackroute.contentservice.sequence.Custom;
+import com.stackroute.contentservice.Sequence.Custom;
 import com.stackroute.contentservice.exceptions.ContentAlreadyExistsExceptions;
 import com.stackroute.contentservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.contentservice.exceptions.InternalServerErrorException;
 import com.stackroute.contentservice.exceptions.NullValueFieldException;
 import com.stackroute.contentservice.model.Content;
 import com.stackroute.contentservice.repository.ContentRepository;
-import com.stackroute.contentservice.service.ContentService;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -35,14 +32,14 @@ public class ContentServiceImpl implements ContentService {
         try {
             Content u = contentRepository.save(content);
             return u;
-        }catch (Exception e){
+        }
+        catch (Exception e){
             throw new InternalServerErrorException();
         }
 
     }
 
-   public List<Content> findByTitle(String title) throws InternalServerErrorException {
-
+   public Content findByTitle(String title) throws InternalServerErrorException {
         try {
             return contentRepository.findByTitle(title);
         }
@@ -51,55 +48,70 @@ public class ContentServiceImpl implements ContentService {
         }
 
 
-
-
     }
 
     @Override
-    public Optional<Content> deleteContent(int id) throws ContentDoesNotExistException, InternalServerErrorException {
-        try {
-            Optional<Content> content = contentRepository.findById(id);
-
-            contentRepository.deleteById(id);
-
-            return content;
-        }catch (Exception e){
+    public Content deleteContent(String title) throws ContentDoesNotExistException, InternalServerErrorException {
+        Content content = contentRepository.findByTitle(title);
+        if (content==null){
             throw new ContentDoesNotExistException();
-        }
-    }
-    @Override
-    public Content updateContent(Content user) throws ContentDoesNotExistException,InternalServerErrorException{
-        if(contentRepository.findById(user.getId()).isPresent()){
-            try{
-                return contentRepository.save(user);
-            }
-            catch (Exception ex){
-                throw new ContentDoesNotExistException();
-            }
-
         }
         else {
+            contentRepository.delete(content);
+            return content;
+        }
+    }
+    @Override
+    public Content updateContent(Content content) throws ContentDoesNotExistException,InternalServerErrorException{
+        if(contentRepository.findById(content.getId()).isPresent()){
+            return contentRepository.save(content);
+        }
+        else
+        {
             throw new ContentDoesNotExistException();
         }
     }
 
 
-
-
-    public List<Content> findByEditorId(int id) throws InternalServerErrorException
+    public List<Content> findByName(String name) throws InternalServerErrorException
     {
-
         try
         {
-            return contentRepository.findByEditorId((id));
+            return contentRepository.findByName(name);
         }
         catch (Exception e)
         {
             throw new InternalServerErrorException();
         }
+    }
 
+//    @Override
+//    public Content saveChapters(Content content) throws InternalServerErrorException {
+//        Content saveChapter = content;
+//        try{
+//            List<Content> authorList=findByName(content.getAuthorName());
+//            for (Content temp : authorList) {
+//                if(temp.getTitle().equals(content.getTitle())){
+//                    temp.setStatus(content.getStatus());
+//                    saveChapter=contentRepository.save(temp);
+//                }
+//            }
+//        }
+//        catch (Exception e){
+//            throw new InternalServerErrorException();
+//        }
+//        System.out.println("save:"+saveChapter.toString());
+//        return saveChapter;
+//    }
 
-
+    @Override
+    public Content findTitleById(int id) throws ContentDoesNotExistException {
+        Content content=contentRepository.findById(id).get();
+        System.out.println(content.toString());
+        if(content==null){
+            throw new ContentDoesNotExistException();
+        }
+        return content;
     }
 
 

@@ -13,13 +13,8 @@ import {Commit} from "../book-create/commit";
 })
 export class EditComponent implements OnInit {
 
-  private html;
-  private body;
-
   private book: Book;
   private fileName: String;
-  private username: String;
-  private userEmail: String;
   private editorForm: FormGroup;
   private editorStyle = {
     height: '400px',
@@ -31,6 +26,9 @@ export class EditComponent implements OnInit {
               private router: Router,
               private bookFetch: BookFetchService,
               private route: ActivatedRoute) {
+                if (!localStorage.getItem('token')) {
+                  this.router.navigate(['/home']).then();
+                }
     this.route.params.subscribe(params => {
       this.fileName = params['fileName'];
     });
@@ -40,10 +38,8 @@ export class EditComponent implements OnInit {
     this.editorForm = new FormGroup({
       editor: new FormControl()
     });
-    this.username = this.bookFetch.getUsername();
-    this.userEmail = this.bookFetch.getUserEmail();
     console.log('editing filename: ', this.fileName);
-    this.bookFetch.getGit(this.fileName)
+    this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id,this.fileName)
       .subscribe(
         data => {
           this.book = new Book(data.name, data.sha, atob(data.content));
@@ -60,7 +56,7 @@ export class EditComponent implements OnInit {
   onSubmit() {
     console.log(this.editorForm.get('editor').value);
     let content = btoa(this.editorForm.get('editor').value);
-    let commit = new Commit("", this.username, this.userEmail, this.book.sha, content);
+    let commit = new Commit("", localStorage.getItem('fullName'), localStorage.getItem('email'), this.book.sha, content);
     this.bookFetch.createFile(this.fileName, commit)
       .subscribe(
         data => {

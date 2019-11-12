@@ -30,6 +30,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleInvalidCredentialException(HttpServletRequest request, Exception ex){
         AuthenticationResponse a=new AuthenticationResponse();
         a.setAuthResponse("Username/Password is invalid");
-        return new ResponseEntity<AuthenticationResponse>(a, HttpStatus.OK);
+        return new ResponseEntity<AuthenticationResponse>(a, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(InvalidRoleInfoException.class)
+    public ResponseEntity<?> InvalidRoleException(HttpServletRequest request, Exception ex){
+        return new ResponseEntity<String>("Role Does Not Exist", HttpStatus.CONFLICT);
     }
 }

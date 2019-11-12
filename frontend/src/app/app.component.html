@@ -6,11 +6,13 @@
                mode="over"
   >
     <mat-toolbar color="primary">Menu</mat-toolbar>
-    <mat-nav-list  >
+    <mat-nav-list>
       <mat-form-field class="search-form" color="accent">
-        <input matInput type="search" placeholder="Search" >
+        <input matInput type="search" placeholder="Search">
       </mat-form-field>
-      <button mat-icon-button (click)="search()"><mat-icon>search</mat-icon></button>
+      <button mat-icon-button (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
       <a mat-list-item href="#">Link 1</a>
       <a mat-list-item href="#">Link 2</a>
       <a mat-list-item href="#">Link 3</a>
@@ -27,22 +29,53 @@
         *ngIf="!showNavigationBarLinks">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+      <!--   Nav bar brand name and logo   -->
       <nav class="navbar navbar-dark ">
         <a class="navbar-brand" routerLink="/home">
-          <img src="https://www.logolynx.com/images/logolynx/36/362087235008be84086f892df697f50d.png" width="30" height="30" class="d-inline-block align-top" alt="">
+          <img src="https://www.logolynx.com/images/logolynx/36/362087235008be84086f892df697f50d.png" width="30"
+               height="30" class="d-inline-block align-top" alt="">
           ontently
         </a>
       </nav>
       <div>
-        <mat-nav-list *ngIf="showNavigationBarLinks" >
+        <mat-nav-list *ngIf="showNavigationBarLinks">
           <mat-form-field class="search-form" color="accent">
-            <input matInput type="search" placeholder="Search" >
+            <input matInput type="search" placeholder="Search">
           </mat-form-field>
-          <button mat-icon-button (click)="search()"><mat-icon>search</mat-icon></button>
-          <a mat-button routerLink="/register">Register</a>
-          <a mat-button routerLink="/dashboard">Dashboard</a>
-          <a *ngIf = "!loggedIn" mat-button (click)="onLogin()">Login</a>
-          <a *ngIf = "loggedIn" mat-button (click)="onLogout()">Logout</a>
+          <button mat-icon-button (click)="search()">
+            <mat-icon>search</mat-icon>
+          </button>
+
+          <div  *ngIf="!ifToken(); then thenBlock; else elseBlock"></div>
+
+          <ng-template #thenBlock>
+            <a mat-button routerLink="/register">Register</a>
+            <button mat-button (click)="onLogin()">Login</button>
+          </ng-template>
+
+          <ng-template #elseBlock>
+            <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
+            <mat-menu #menu="matMenu">
+              <a mat-menu-item  routerLink="/dashboard">Profile</a>
+              <a mat-menu-item (click)="onLogout()">Logout</a>
+            </mat-menu>
+            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">notifications_none</i></button>
+            <mat-menu class="notificaiton-menu" #notification="matMenu">
+                <mat-card *ngIf="!notificationList">No new notificaitons</mat-card>
+                <div class="notifications" *ngIf="notificationCount != 0" >
+                <div *ngFor = "let notification of notificationList">
+                  <mat-card *ngIf="isAuthor()">{{notification.message}}</mat-card>
+                  <mat-card *ngIf="!isAuthor()">
+                      <mat-card-content><p>{{notification.message}}</p></mat-card-content>
+                      <mat-card-actions>
+                          <button mat-button color="primary" (click)="acceptRequest()">Accept</button>
+                          <button mat-button color="primary" (click)="deleteRequest()">Reject</button>
+                      </mat-card-actions>
+                  </mat-card>
+                </div>
+               </div>
+               </mat-menu>
+          </ng-template>
         </mat-nav-list>
       </div>
     </mat-toolbar>

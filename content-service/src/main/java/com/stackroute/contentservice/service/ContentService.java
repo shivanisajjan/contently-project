@@ -7,7 +7,6 @@ import com.stackroute.contentservice.exceptions.NullValueFieldException;
 import com.stackroute.contentservice.model.Content;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface ContentService {
@@ -15,15 +14,17 @@ public interface ContentService {
 
     Content saveContent(Content content) throws ContentAlreadyExistsExceptions, NullValueFieldException,InternalServerErrorException;
 
-   List<Content> findByTitle(String title) throws InternalServerErrorException;
+   Content findByTitle(String title) throws InternalServerErrorException;
 
-   Optional<Content> deleteContent(int id) throws ContentDoesNotExistException,InternalServerErrorException;
+   Content deleteContent(String title) throws ContentDoesNotExistException,InternalServerErrorException;
 
    Content updateContent(Content content) throws ContentDoesNotExistException,InternalServerErrorException;
 
+    List<Content> findByName(String name) throws InternalServerErrorException;
 
-    List<Content> findByEditorId(int id) throws InternalServerErrorException;
+//    Content saveChapters(Content content) throws InternalServerErrorException;
 
+    Content findTitleById(int id) throws ContentDoesNotExistException;
 
     int getNextSequence(String seq);
 }

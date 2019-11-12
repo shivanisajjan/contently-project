@@ -8,10 +8,6 @@ import com.stackroute.contentservice.exceptions.NullValueFieldException;
 import com.stackroute.contentservice.model.Content;
 import com.stackroute.contentservice.service.ContentService;
 import com.stackroute.contentservice.service.RabbitMQSender;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-//@CrossOrigin(origins = "http://localhost", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
-@Api(value="content", description="contentservice")
 public class ContentController {
 
     private ContentService contentService;
@@ -35,53 +30,37 @@ public class ContentController {
         this.contentService = contentService;
         this.rabbitMQSender = rabbitMQSender;
     }
-
-
-
-    @ApiOperation(value = "save new content")
-    @PostMapping(value = "/save")
-    public ResponseEntity<Content> registerUser(@RequestBody Content content) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
-
+    @PostMapping(value = "/content")
+    public ResponseEntity<Content> saveBook(@RequestBody Content content) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
+        rabbitMQSender.sendContent(content);
         content.setId(contentService.getNextSequence("customSequences"));
         return new ResponseEntity<Content> (contentService.saveContent(content), HttpStatus.CREATED);
     }
-
-    @ApiOperation(value = "deletes in a user")
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id) throws InternalServerErrorException, ContentDoesNotExistException {
-        Optional<Content> content = contentService.deleteContent(id);
-        return new ResponseEntity<>(content, HttpStatus.OK);
+    @DeleteMapping(value = "/delete/{title}")
+    public ResponseEntity<?> delete(@PathVariable String title) throws InternalServerErrorException, ContentDoesNotExistException {
+        Content deletedContent=contentService.deleteContent(title);
+        return new ResponseEntity<Content>(deletedContent, HttpStatus.OK);
     }
-
-    @ApiOperation(value = "updates the existing content")
-    @ApiResponses(
-            value = { @ApiResponse(code = 401,message = "unauthorized"),
-                    @ApiResponse(code = 201,message = "returning the whole content object")}
-    )
     @PutMapping(value = "/update")
     public ResponseEntity<?> update(@RequestBody Content content) throws InternalServerErrorException, ContentDoesNotExistException {
         contentService.updateContent(content);
         return new ResponseEntity<Content>(content, HttpStatus.OK);
     }
-
-    @ApiOperation(value = "get the existing content by title")
-    @GetMapping(value = "/content/{title}")
-    public ResponseEntity<?> getContent(@PathVariable("title") String title) throws ContentDoesNotExistException,InternalServerErrorException
+    @GetMapping(value = "/contents/{name}")
+    public ResponseEntity<?> getByName(@PathVariable String name) throws InternalServerErrorException
     {
-
-
-        responseEntity=new ResponseEntity<>(contentService.findByTitle(title),HttpStatus.OK);
+        responseEntity=new ResponseEntity<>(contentService.findByName(name),HttpStatus.OK);
         return responseEntity;
     }
-
-    @ApiOperation(value = "get the existing content by editor id")
-
-    @GetMapping(value = "/content/editor/{id}")
-    public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException
-    {
-
-
-        responseEntity=new ResponseEntity<>(contentService.findByEditorId(id),HttpStatus.OK);
+    @GetMapping(value = "/content/id/{id}")
+    public ResponseEntity<?> getTitleById(@PathVariable int id) throws InternalServerErrorException, ContentDoesNotExistException {
+        responseEntity=new ResponseEntity<>(contentService.findTitleById(id),HttpStatus.OK);
         return responseEntity;
     }
+//    @PostMapping(value = "/update/chapter")
+//    public ResponseEntity<?> saveChapter(@RequestBody Content content) throws InternalServerErrorException
+//    {
+//        responseEntity=new ResponseEntity<>(contentService.saveChapters(content),HttpStatus.OK);
+//        return responseEntity;
+//    }
 }

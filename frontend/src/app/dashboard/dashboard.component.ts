@@ -5,7 +5,7 @@ import {ContentService} from '../content.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,24 +32,24 @@ export class DashboardComponent implements OnInit {
     }
     this.initializeWebSocketConnection();
   }
-  initializeWebSocketConnection()
-    {
-      let ws = new SockJS(this.serverUrl);
-      this.stompClient = Stomp.over(ws);
-      let that = this;
-      this.stompClient.connect({}, (frame) => {
-        that.stompClient.subscribe("/user/"+localStorage.getItem('username')+"/notif", (message) => {
-          if(message.body) {
-            this._snackBar.open(message.body,"close", {
-              duration: 3000,
-            });
-            
-          }
-        });
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, (frame) => {
+      that.stompClient.subscribe("/user/" + localStorage.getItem('username') + "/notif", (message) => {
+        if (message.body) {
+          this._snackBar.open(message.body, "close", {
+            duration: 3000,
+          });
+
+        }
       });
-    }
+    });
+  }
+
   ngOnInit() {
-    this.ifAuthor();
     this.login.getUser()
       .subscribe(
         data => {
@@ -94,8 +94,8 @@ export class DashboardComponent implements OnInit {
     return localStorage.getItem('role') === 'reader/author';
   }
 
-  editProfile(){
-    localStorage.setItem('editProfile',JSON.stringify(this.profileData));
+  editProfile() {
+    localStorage.setItem('editProfile', JSON.stringify(this.profileData));
     this.router.navigate(['/editProfile']);
   }
 }

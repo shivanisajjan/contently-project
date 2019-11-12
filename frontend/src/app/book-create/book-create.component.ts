@@ -10,8 +10,9 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 import {ContentService} from '../content.service';
-import { notification } from '../notification';
-import { NotificationService } from '../notification.service';
+import {notification} from '../notification';
+import {NotificationService} from '../notification.service';
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 export interface EditorDialogData {
   name: string;
@@ -36,21 +37,19 @@ export class BookCreateComponent implements OnInit {
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
-  // private editorStatus = false;
-  // private editorStatusMessage = "";
 
   constructor(private bookFetch: BookFetchService,
               private router: Router,
               private dialog: MatDialog,
               private contentService: ContentService,
               private route: ActivatedRoute,
-              private notificationService : NotificationService) {
-                if (!localStorage.getItem('token')) {
-                  this.router.navigate(['/home']).then();
-                }
-                this.bookDetails = JSON.parse(localStorage.getItem('book'));
-            }
-            
+              private notificationService: NotificationService) {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/home']).then();
+    }
+    this.bookDetails = JSON.parse(localStorage.getItem('book'));
+  }
+
   ngOnInit() {
     if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
@@ -59,18 +58,35 @@ export class BookCreateComponent implements OnInit {
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
-    //this.bookDetails = JSON.parse(localStorage.getItem('book'));
     console.log('book details: ', this.bookDetails);
-
-    this.showEditButton = [this.bookDetails.status.length];
     this.setShowEditButton();
     console.log('book details: ', this.bookDetails);
   }
 
-  isSelectHelper():boolean{
-      // return localStorage.getItem('selectHelper')=== 'true';
-      return this.bookDetails.selectHelper;
+  isSelectHelper(): boolean {
+    // return localStorage.getItem('selectHelper')=== 'true';
+    return this.bookDetails.selectHelper;
   }
+
+  drop(event: CdkDragDrop<String[]>){
+    moveItemInArray(this.bookDetails.status, event.previousIndex, event.currentIndex);
+    localStorage.setItem('book', JSON.stringify(this.bookDetails));
+    console.log('drop: ', event.previousIndex, event.currentIndex);
+    this.contentService.saveContent(this.bookDetails)
+      .subscribe(
+        data => {
+          console.log('index changed data: ', data);
+          this.setShowEditButton();
+          // this.ngOnInit();
+        },
+        error => {
+          console.log('index changed error: ', error);
+        }
+      );
+    console.log('status: ', this.bookDetails.status);
+
+  }
+
   ifAuthor(): boolean {
     return localStorage.getItem('role') === 'reader/author';
   }
@@ -98,9 +114,10 @@ export class BookCreateComponent implements OnInit {
               this.bookDetails.status.push(
                 {
                   chapterName: result,
-                  status: 'Writing Phase'
+                  status: 'Writing Phase',
                 }
               );
+              this.setShowEditButton();
               localStorage.setItem('book', JSON.stringify(this.bookDetails));
               console.log(this.bookDetails);
               this.contentService.saveContent(this.bookDetails)
@@ -220,6 +237,9 @@ export class BookCreateComponent implements OnInit {
   }
 
   setShowEditButton() {
+    if(this.bookDetails.status === null) {
+      return;
+    }
     for (let i = 0; i < this.bookDetails.status.length; i++) {
       const chapter = this.bookDetails.status[i].chapterName;
       const status = this.bookDetails.status[i].status;
@@ -242,7 +262,7 @@ export class BookCreateComponent implements OnInit {
           cond = true;
         }
       }
-      // console.log(chapter, status, cond);
+      console.log(chapter, status, cond);
       this.showEditButton[i] = cond;
     }
   }
@@ -293,8 +313,8 @@ export class BookCreateComponent implements OnInit {
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 
-  getHelperStatus(){
-    
+  getHelperStatus() {
+
   }
 }
 
@@ -311,6 +331,7 @@ export class SelectEditorDialog implements OnInit {
   public allEditorList;
   public allEditorListFiltered;
   public searchTerm;
+
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -334,7 +355,7 @@ export class SelectEditorDialog implements OnInit {
 
   getRecommendedEditors() {
     console.log('Fetching Editors');
-    this.contentService.getRecommendedEditorsOrIllustrators('editor', this.data[0] ).subscribe(
+    this.contentService.getRecommendedEditorsOrIllustrators('editor', this.data[0]).subscribe(
       result => {
         this.editorList = result
         this.editorListFiltered = this.editorList
@@ -353,13 +374,13 @@ export class SelectEditorDialog implements OnInit {
   search(): void {
     let term = this.searchTerm;
     console.log(term)
-    this.editorListFiltered = this.editorList.filter(function(tag) {
-        return tag.name.toLowerCase().indexOf(term) >= 0;
-    }); 
-    this.allEditorListFiltered = this.allEditorList.filter(function(tag) {
+    this.editorListFiltered = this.editorList.filter(function (tag) {
+      return tag.name.toLowerCase().indexOf(term) >= 0;
+    });
+    this.allEditorListFiltered = this.allEditorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
-  });
-}
+    });
+  }
 }
 
 
@@ -407,7 +428,7 @@ export class SelectIllustratorDialog implements OnInit {
       });
   }
 
-  getAllIllustrators(){
+  getAllIllustrators() {
     console.log('Fetching All Illustrators');
     this.contentService.getEditorsOrIllustrators('designer').subscribe(
       result => {
@@ -419,13 +440,13 @@ export class SelectIllustratorDialog implements OnInit {
   search(): void {
     let term = this.searchTerm;
     console.log(term)
-    this.illustratorListFiltered = this.illustratorList.filter(function(tag) {
-        return tag.name.toLowerCase().indexOf(term) >= 0;
-    }); 
-    this.allIllustratorListFiltered = this.allIllustratorList.filter(function(tag) {
+    this.illustratorListFiltered = this.illustratorList.filter(function (tag) {
+      return tag.name.toLowerCase().indexOf(term) >= 0;
+    });
+    this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
-  }); 
-}
+    });
+  }
 
 }
 

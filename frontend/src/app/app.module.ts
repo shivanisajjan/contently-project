@@ -39,6 +39,7 @@ import { ConversionComponent } from './conversion/conversion.component';
 import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { PaymentComponent } from './payment/payment.component';
     MatGridListModule,
     MatExpansionModule,
     MatSnackBarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    DragDropModule
   ],
   entryComponents: [
     LoginComponent,

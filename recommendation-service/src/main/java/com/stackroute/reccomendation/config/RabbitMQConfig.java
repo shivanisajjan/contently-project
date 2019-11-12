@@ -64,6 +64,31 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(queue1).to(exchange1).with(routingkey1);
     }
 
+    @Value("${publication.rabbitmq.queue}")
+    private String queueName2;
+
+    @Value("${publication.rabbitmq.exchange}")
+    private String exchange2;
+
+    @Value("${publication.rabbitmq.routingkey}")
+    private String routingkey2;
+
+    @Bean
+    Queue queue2() {
+        return new Queue(queueName2, false);
+    }
+
+    @Bean
+    DirectExchange exchange2() {
+        return new DirectExchange(exchange2);
+    }
+
+    @Bean
+    Binding binding2(Queue queue2, DirectExchange exchange1) {
+        return BindingBuilder.bind(queue2).to(exchange1).with(routingkey1);
+    }
+
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

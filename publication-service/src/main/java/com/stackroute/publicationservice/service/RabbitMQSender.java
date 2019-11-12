@@ -2,7 +2,6 @@ package com.stackroute.publicationservice.service;
 
 
 import com.stackroute.publicationservice.model.Publications;
-import com.stackroute.publicationservice.model.PublicationsDto;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,9 +21,9 @@ public class RabbitMQSender {
     private String routingkey;
 
 
-    public void sendRegistry(PublicationsDto publications) {
+    public void sendRegistry(Publications publications) {
         rabbitTemplate.convertAndSend(exchange, routingkey, publications);
-        System.out.println("Send msg = " + publications);
+        System.out.println("Send msg = " + publications.getId());
     }
 
 }

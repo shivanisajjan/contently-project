@@ -87,7 +87,7 @@ services:
       - config-server
       - eureka-server
     ports:
-      - 8081:8081
+      - 8088:8088
 
   user-management:
     build: user-management

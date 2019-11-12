@@ -1,5 +1,6 @@
 package com.stackroute.reccomendation.service;
 
+import com.stackroute.reccomendation.domain.PublicationsDto;
 import com.stackroute.reccomendation.domain.User;
 import com.stackroute.reccomendation.domain.UserDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -28,14 +29,14 @@ public class RabbitMQConsumer {
     public void recievedMessage(UserDto userDto) {
         System.out.println("got username is"+userDto.getUsername());
 
-        user.setName(userDto.getUsername());
-     user.setGender(userDto.getGender());
-     user.setNationality(userDto.getNationality());
 
-     String temp[]=userDto.getDob().split("/");
-
-     if(temp.length!=0)
-     user.setAgeGroup(temp[temp.length-1]);
+            if(userDto.getUsername()!=null)
+                user.setName(userDto.getUsername());
+//        if(userDto.getGender()!=null)
+//     user.setGender(userDto.getGender());
+//        if(userDto.getNationality()!=null)
+//     user.setNationality(userDto.getNationality());
+//        if(use)
 
 
 
@@ -51,6 +52,14 @@ public class RabbitMQConsumer {
     public void recievedMessage1(String message) {
         System.out.println(message);
     }
+
+    @RabbitListener(queues = "publication_queue")
+    public void recievedMessage2(PublicationsDto publicationsDto) {
+        System.out.println("message received="+publicationsDto.getTitle());
+    }
+
+
+
 
 
 }

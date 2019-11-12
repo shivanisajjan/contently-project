@@ -25,10 +25,8 @@ public class Publications {
     List<String> designerName; // list of userId of designer
     String typeName;
     List<String> genres;
-//    List<String> targetedAudience;
     String  createdAt;
     double price;
-    String gitUrl;
     String publishedAt;
     int noOfViews;
     int noOfPurchases;

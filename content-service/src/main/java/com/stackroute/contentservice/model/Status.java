@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Status {
     private String chapterName;
-    private String status;
+    private String status="Writing phase";
 }

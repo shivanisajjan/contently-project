@@ -91,23 +91,35 @@
         <mat-list class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)" >
           <mat-list-item class="drag-list-item" cdkDrag *ngFor="let chapter of bookDetails.status;index as i">
 <!--            <mat-divider></mat-divider>-->
-            <mat-icon mat-list-icon cdkDragHandle>drag_handle</mat-icon>
-            <mat-icon mat-list-icon>folder</mat-icon>
-            <h5 mat-line>{{chapter.chapterName}}</h5>
             <div *cdkDragPreview><h5 mat-line>{{chapter.chapterName}}</h5></div>
-            <button mat-raised-button style="width: 20em; margin-right: 10px;" [matMenuTriggerFor]="menu">{{chapter.status}}</button>
-            <mat-menu #menu="matMenu">
-              <button *ngFor="let status of chapterStatus" mat-menu-item
-                      (click)="changeChapterStatus(status,i)">{{status}}</button>
-            </mat-menu>
-            <button class="hover-btn" mat-raised-button color="primary" *ngIf="getShowEditButton(i)"
-                    (click)="editFile(chapter.chapterName)" style="margin-right: 10px">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button class="hover-btn"  mat-raised-button color="primary" (click)="preview(chapter.chapterName)"
-                    style="margin-right: 10px">
-              <mat-icon class="mat_icon">remove_red_eye</mat-icon>
-            </button>
+
+            <div class="chapter-title">
+              <mat-icon mat-list-icon cdkDragHandle>drag_handle</mat-icon>
+              <mat-icon mat-list-icon>folder</mat-icon>
+              <h5 mat-line>{{chapter.chapterName}}</h5>
+            </div>
+
+            <div class="status">
+              <button mat-raised-button style="margin-right: 10px;" [matMenuTriggerFor]="menu">{{chapter.status}}</button>
+              <mat-menu #menu="matMenu">
+                <button *ngFor="let status of chapterStatus" mat-menu-item
+                        (click)="changeChapterStatus(status,i)">{{status}}</button>
+              </mat-menu>
+            </div>
+
+            <div class="buttons-actions">
+              <button class="hover-btn" mat-raised-button color="primary" *ngIf="getShowEditButton(i)"
+                      (click)="editFile(chapter.chapterName)" style="margin-right: 10px">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="hover-btn"  mat-raised-button color="primary" (click)="preview(chapter.chapterName)"
+                      style="margin-right: 10px">
+                <mat-icon class="mat_icon">remove_red_eye</mat-icon>
+              </button>
+            </div>
+
+
+
 
           </mat-list-item>
         </mat-list>

@@ -108,18 +108,13 @@ export class BookCreateComponent implements OnInit {
           .subscribe(
             data => {
               console.log(data);
-              let length;
               if (this.bookDetails.status === null) {
                 this.bookDetails.status = [];
-                length = 0;
-              } else {
-                length = this.bookDetails.status.length;
               }
               this.bookDetails.status.push(
                 {
                   chapterName: result,
                   status: 'Writing Phase',
-                  index: length
                 }
               );
               this.setShowEditButton();

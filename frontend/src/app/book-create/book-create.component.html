@@ -6,6 +6,7 @@
     <p>{{bookDetails.description}}</p>
   </mat-card>
   <br>
+  <div *ngIf="ifAuthor()">
   <mat-card *ngIf="isSelectHelper()" class="editor-illustrator">
     <mat-grid-list cols="2" rowHeight="175px">
       <mat-grid-tile class="choose-editor-tile">
@@ -75,9 +76,8 @@
           <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
         </mat-grid-tile>
       </mat-grid-list>
-    </mat-card>
-    <br></div>
-
+    </mat-card><br></div>
+  </div>
 
   <div class="section-list">
     <mat-card>

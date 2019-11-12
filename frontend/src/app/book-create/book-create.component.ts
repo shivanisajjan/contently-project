@@ -65,7 +65,7 @@ export class BookCreateComponent implements OnInit {
 
   isSelectHelper(): boolean {
     // return localStorage.getItem('selectHelper')=== 'true';
-    return true;
+    return this.bookDetails.selectHelper;
   }
 
   drop(event: CdkDragDrop<String[]>){
@@ -182,8 +182,8 @@ export class BookCreateComponent implements OnInit {
         this.bookDetails.editorName = this.editor;
         this.bookDetails.editorStatus = 'pending';
         this.contentService.saveBookDetails(this.bookDetails).subscribe();
-        localStorage.setItem('book', JSON.stringify(this.bookDetails))
-        this.sendNotification(this.editor, localStorage.getItem('username') + " has requested you to edit " + this.bookDetails.title + ".");
+        localStorage.setItem('book',JSON.stringify(this.bookDetails))
+        this.sendNotification(this.editor, this.bookDetails.id, localStorage.getItem('username') + " has requested you to edit " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
     );
@@ -211,8 +211,8 @@ export class BookCreateComponent implements OnInit {
         this.bookDetails.designerName = this.illustrator;
         this.bookDetails.designerStatus = 'pending';
         this.contentService.saveBookDetails(this.bookDetails).subscribe();
-        localStorage.setItem('book', JSON.stringify(this.bookDetails))
-        this.sendNotification(this.illustrator, localStorage.getItem('username') + " has requested you to illustrate " + this.bookDetails.title + ".");
+        localStorage.setItem('book',JSON.stringify(this.bookDetails))
+        this.sendNotification(this.illustrator, this.bookDetails.id, localStorage.getItem('username') + " has requested you to illustrate " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
     );
@@ -303,12 +303,13 @@ export class BookCreateComponent implements OnInit {
     );
   }
 
-  sendNotification(receiver, message) {
+  sendNotification(receiver, bookId, message){
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
+    newNotification.bookId = bookId;
     newNotification.receiver = receiver;
-    newNotification.message = message;
-    // newNotification.status = true;
+    newNotification.message = message; 
+    newNotification.status = true;
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 

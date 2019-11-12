@@ -10,6 +10,7 @@ import { BookCreateComponent } from './book-create/book-create.component';
 import { ConversionComponent } from './conversion/conversion.component';
 import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
 
 
@@ -26,7 +27,8 @@ const  routes: Routes = [
     {path:'conversion',component:ConversionComponent},
     {path:'afterLogin',component:PageAfterLoginComponent},
     {path:'editProfile',component:EditProfileComponent},
-    {path:'pay',component:PaymentComponent} 
+    {path:'pay',component:PaymentComponent},
+    {path:'loading',component:LoadingComponent}
 
 ];
 

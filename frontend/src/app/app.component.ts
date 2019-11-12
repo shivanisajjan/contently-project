@@ -12,6 +12,7 @@ import $ from 'jquery';
 import { MatSnackBar } from '@angular/material';
 import { notification } from './notification';
 import { NotificationService } from './notification.service';
+import { ContentService } from './content.service';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,8 @@ export class AppComponent implements OnInit {
   private stompClient;
   private notificationList : any;
   private notificationCount;
+  private notificationStatusList: notification[] = new Array();;
+  private book:any;
   //private role=true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -40,8 +43,10 @@ export class AppComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private _snackBar: MatSnackBar,
-              private notificationService : NotificationService) {
+              private notificationService : NotificationService,
+              private contentService : ContentService) {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
+    
   }
 
   ngOnInit() {
@@ -78,6 +83,7 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      window.location.reload();
     });
   }
 
@@ -106,6 +112,7 @@ export class AppComponent implements OnInit {
           this._snackBar.open(message.body,"close", {
             duration: 2000,
           });
+          this.ngOnInit
         }
       });
     });
@@ -116,12 +123,25 @@ export class AppComponent implements OnInit {
     this.notificationService.getNotification(localStorage.getItem('username')).subscribe(
         result => {
           this.notificationList = result;
-          this.notificationCount = Object.keys(this.notificationList).length;
+          this.notificationCount = 0;
+          for(let n of this.notificationList){
+            if(n.status == true){
+              this.notificationCount = this.notificationCount + 1
+            }
+          }
+        
+          console.log("New Notifications : ", this.notificationCount)
         });
   }
 
   removeNewNotifications(){
-    this.notificationCount = null;
+    for(let n of this.notificationList){
+      console.log(n.status)
+      if( n.status == true){
+        this.notificationStatusList.push(n)
+      }
+    }
+    this.notificationService.updateNotifications(this.notificationStatusList).subscribe(this.ngOnInit);
   }
 
   isAuthor(){
@@ -131,21 +151,62 @@ export class AppComponent implements OnInit {
       return false;  
   }
 
-  acceptRequest(){
-
+  acceptRequest(notification, index){
+      this.contentService.getBookDetails(notification.bookId).subscribe(
+      result => {
+      this.book = result;
+      this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + " has accepted your request to edit your book  " + this.book.title);
+      if(localStorage.getItem('role') == 'editor'){
+        this.book.editorStatus = 'confirmed';
+      } else {
+        this.book.designerStatus = 'confirmed';
+      }
+      console.log("UPDATED BOOK : ", this.book)
+      this.contentService.saveBookDetails(this.book).subscribe()
+      });
+      this.notificationService.deleteNotification(notification.id).subscribe(
+        (result) => this.ngOnInit(),
+        (error) => this.ngOnInit()
+      );
   }
 
-  deleteRequest(){
-
+  deleteRequest(notification , index){
+    this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + " has rejected your request to edit your book of id : " + notification.bookId);
+    this.contentService.getBookDetails(notification.bookId).subscribe(
+      result => {
+        this.book = result;
+        if(localStorage.getItem('role') == 'editor'){
+          this.book.editorStatus = 'rejected';
+        } else {
+          this.book.designerStatus = 'rejected';
+        }
+        console.log("UPDATED BOOK : ", this.book)
+        this.contentService.saveBookDetails(this.book).subscribe();
+      });
+    this.notificationService.deleteNotification(notification.id).subscribe(
+      (result) => this.ngOnInit(),
+        (error) => this.ngOnInit()
+    );
   }
 
-  sendNotification(receiver,message){
+  sendNotification(receiver, bookId, message){
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
     newNotification.receiver = receiver;
     newNotification.message = message; 
-    // newNotification.status = true;
+    newNotification.bookId = bookId;
+    newNotification.status =true
     this.notificationService.sendNotification(newNotification).subscribe();
   }
+
+
+  ifNotifications(){
+    if(this.notificationList){
+    if(Object.keys(this.notificationList).length == 0)
+      return true
+    else  
+      return false  
+  }
+}
 }
 

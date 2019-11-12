@@ -38,6 +38,17 @@ export class ContentService {
     return this.http.get(postUrl, this.httpOptions);
   }
 
+  updateEditorOrIllustratorStatus(id,role,status) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/${id}/${role}/${status}`;
+    return this.http.put(postUrl, this.httpOptions);
+  }
+
   getEditorsOrIllustrators(role) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -50,15 +61,15 @@ export class ContentService {
   }
 
   // used get details of one content by id
-  getBookDetails(name) {
+  getBookDetails(id) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/id/${name}`;
-    return this.http.get(postUrl, this.httpOptions);
+    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/id/${id}`;
+    return this.http.get(postUrl, httpOptions);
   }
 
   // used to get all contents of 'username'

@@ -37,6 +37,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ConversionComponent } from './conversion/conversion.component';
 import { PageAfterLoginComponent } from './page-after-login/page-after-login.component';
+import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
@@ -59,7 +60,8 @@ import { PaymentComponent } from './payment/payment.component';
     ConversionComponent,
     PageAfterLoginComponent,
     EditProfileComponent,
-    PaymentComponent
+    PaymentComponent,
+    LoadingComponent
   ],
 
   imports: [

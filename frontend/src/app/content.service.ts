@@ -27,14 +27,14 @@ export class ContentService {
     return this.http.put(postUrl, content, this.httpOptions);
   }
 
-  getEditorsOrIllustrators(role) {
+  getEditorsOrIllustrators(role,genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/user-management/api/v1/user/role/${role}`;
+    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/${role}/${genre}`;
     return this.http.get(postUrl, this.httpOptions);
   }
 
@@ -83,5 +83,16 @@ export class ContentService {
     };
     const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/content/${id}`;
     return this.http.get(postUrl, httpOptions);
+  }
+
+  saveBookDetails(book){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
+    return this.http.put(postUrl, book, this.httpOptions);
   }
 }

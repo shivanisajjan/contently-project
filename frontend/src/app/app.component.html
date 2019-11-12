@@ -63,17 +63,18 @@
             <mat-menu class="notificaiton-menu" #notification="matMenu">
                 <button mat-menu-item *ngIf="notificationCount == 0">No new notificaitons</button>
                 <div class="notifications" *ngIf="notificationCount != 0" >
-                <div *ngIf="role">
-                  <button mat-menu-item *ngFor = "let notification of notificationList" >{{notification.message}}</button>
+                <div *ngFor = "let notification of notificationList">
+                  <mat-card *ngIf="isAuthor()">{{notification.message}}</mat-card>
+                  <mat-card *ngIf="!isAuthor()">
+                      <mat-card-content><p>{{notification.message}}</p></mat-card-content>
+                      <mat-card-actions>
+                          <button mat-button color="primary" (click)="acceptRequest()">Accept</button>
+                          <button mat-button color="primary" (click)="deleteRequest()">Reject</button>
+                      </mat-card-actions>
+                  </mat-card>
                 </div>
                </div>
-              <!-- <button style="" mat-menu-item>KUHFDKHDKFHDKHFKUDHUHKUHKHKHUKHHKHKHKHKHKH</button> -->
-              <button mat-menu-item  >
-                  <p>Batman has sent you a request to Edit The Dark Knight</p>
-                  <button mat-button color="primary">Accept</button>
-                  <button mat-button color="primary">Reject</button>
-                </button>
-            </mat-menu>
+               </mat-menu>
           </ng-template>
         </mat-nav-list>
       </div>

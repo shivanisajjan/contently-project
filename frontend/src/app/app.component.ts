@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   private stompClient;
   private notificationList : any;
   private notificationCount;
-  private role=true;
+  //private role=true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -122,6 +122,21 @@ export class AppComponent implements OnInit {
 
   removeNewNotifications(){
     this.notificationCount = null;
+  }
+
+  isAuthor(){
+    if(localStorage.getItem('role') == 'reader/author')
+      return true;
+    else
+      return false;  
+  }
+
+  acceptRequest(){
+
+  }
+
+  deleteRequest(){
+    
   }
 }
 

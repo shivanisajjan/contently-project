@@ -36,6 +36,8 @@ export class BookCreateComponent implements OnInit {
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
+  // private editorStatus = false;
+  // private editorStatusMessage = "";
 
   constructor(private bookFetch: BookFetchService,
               private router: Router,
@@ -46,6 +48,7 @@ export class BookCreateComponent implements OnInit {
                 if (!localStorage.getItem('token')) {
                   this.router.navigate(['/home']).then();
                 }
+                this.bookDetails = JSON.parse(localStorage.getItem('book'));
             }
             
   ngOnInit() {
@@ -56,14 +59,17 @@ export class BookCreateComponent implements OnInit {
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
-    this.bookDetails = JSON.parse(localStorage.getItem('book'));
+    //this.bookDetails = JSON.parse(localStorage.getItem('book'));
+    console.log('book details: ', this.bookDetails);
+
     this.showEditButton = [this.bookDetails.status.length];
     this.setShowEditButton();
     console.log('book details: ', this.bookDetails);
   }
 
   isSelectHelper():boolean{
-      return localStorage.getItem('selectHelper')=== 'true';
+      // return localStorage.getItem('selectHelper')=== 'true';
+      return true;
   }
   ifAuthor(): boolean {
     return localStorage.getItem('role') === 'reader/author';
@@ -144,7 +150,10 @@ export class BookCreateComponent implements OnInit {
       width: '70%',
       autoFocus: false,
       maxHeight: '90vh',
-      height: '60%'
+      height: '60%',
+      data: {
+        genre: this.bookDetails.genres
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -153,6 +162,10 @@ export class BookCreateComponent implements OnInit {
     const dialogSubmitSubscription = dialogRef.componentInstance.selectEditorEvent.subscribe(
       result => {
         this.editor = result;
+        this.bookDetails.editorName = this.editor;
+        this.bookDetails.editorStatus = 'pending';
+        this.contentService.saveBookDetails(this.bookDetails).subscribe();
+        localStorage.setItem('book',JSON.stringify(this.bookDetails))
         this.sendNotification(this.editor, localStorage.getItem('username') + " has requested you to edit " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
@@ -166,7 +179,10 @@ export class BookCreateComponent implements OnInit {
       width: '70%',
       autoFocus: false,
       maxHeight: '90vh',
-      height: '60%'
+      height: '60%',
+      data: {
+        genre: this.bookDetails.genres
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -175,6 +191,10 @@ export class BookCreateComponent implements OnInit {
     const dialogSubmitSubscription = dialogRef.componentInstance.selectIllustratorEvent.subscribe(
       result => {
         this.illustrator = result;
+        this.bookDetails.designerName = this.illustrator;
+        this.bookDetails.designerStatus = 'pending';
+        this.contentService.saveBookDetails(this.bookDetails).subscribe();
+        localStorage.setItem('book',JSON.stringify(this.bookDetails))
         this.sendNotification(this.illustrator, localStorage.getItem('username') + " has requested you to illustrate " + this.bookDetails.title + ".");
         dialogSubmitSubscription.unsubscribe();
       }
@@ -271,6 +291,10 @@ export class BookCreateComponent implements OnInit {
     // newNotification.status = true;
     this.notificationService.sendNotification(newNotification).subscribe();
   }
+
+  getHelperStatus(){
+    
+  }
 }
 
 @Component({
@@ -286,12 +310,13 @@ export class SelectEditorDialog implements OnInit {
   public searchTerm;
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
-    @Inject(MAT_DIALOG_DATA) public editorData: String,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private contentService: ContentService) {
   }
 
   ngOnInit(): void {
     this.getEditors();
+    console.log(this.data)
   }
 
   onNoClick(): void {
@@ -299,23 +324,25 @@ export class SelectEditorDialog implements OnInit {
   }
 
   selectEditor(editor) {
-    console.log('Selected Editor : ' + editor);
-    
-    this.selectEditorEvent.emit(editor);
+    console.log('Selected Editor : ' + editor.name);
+    this.selectEditorEvent.emit(editor.name);
     this.dialogRef.close();
   }
 
   getEditors() {
     console.log('Fetching Editors');
-    this.contentService.getEditorsOrIllustrators('editor').subscribe(
-      result => this.editorList = result
-    );
+    this.contentService.getEditorsOrIllustrators('editor', this.data[0] ).subscribe(
+      result => {
+        this.editorList = result
+        this.editorListFiltered = this.editorList
+      });
   }
 
   search(): void {
     let term = this.searchTerm;
+    console.log(term)
     this.editorListFiltered = this.editorList.filter(function(tag) {
-        return tag.name.indexOf(term) >= 0;
+        return tag.name.toLowerCase().indexOf(term) >= 0;
     }); 
 }
 }
@@ -328,16 +355,20 @@ export class SelectEditorDialog implements OnInit {
 })
 export class SelectIllustratorDialog implements OnInit {
   public illustratorList;
+  public illustratorListFiltered;
+  public searchTerm;
+
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<SelectIllustratorDialog>,
-    @Inject(MAT_DIALOG_DATA) public editorData: String,
+    @Inject(MAT_DIALOG_DATA) public data: String,
     private contentService: ContentService) {
   }
 
   ngOnInit(): void {
     this.getIllustrators();
+    console.log(this.data);
   }
 
   onNoClick(): void {
@@ -352,10 +383,21 @@ export class SelectIllustratorDialog implements OnInit {
 
   getIllustrators() {
     console.log('Fetching Illustrators');
-    this.contentService.getEditorsOrIllustrators('illustrator').subscribe(
-      result => this.illustratorList = result
-    );
+    this.contentService.getEditorsOrIllustrators('illustrator', this.data[0]).subscribe(
+      result => {
+        this.illustratorList = result;
+        this.illustratorListFiltered = this.illustratorList;
+      });
   }
+
+  search(): void {
+    let term = this.searchTerm;
+    console.log(term)
+    this.illustratorListFiltered = this.illustratorList.filter(function(tag) {
+        return tag.name.toLowerCase().indexOf(term) >= 0;
+    }); 
+}
+
 }
 
 @Component({

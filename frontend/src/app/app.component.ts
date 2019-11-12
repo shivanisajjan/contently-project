@@ -136,7 +136,16 @@ export class AppComponent implements OnInit {
   }
 
   deleteRequest(){
-    
+
+  }
+
+  sendNotification(receiver,message){
+    const newNotification: notification = new notification();
+    newNotification.sender = localStorage.getItem('username');
+    newNotification.receiver = receiver;
+    newNotification.message = message; 
+    // newNotification.status = true;
+    this.notificationService.sendNotification(newNotification).subscribe();
   }
 }
 

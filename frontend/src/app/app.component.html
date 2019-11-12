@@ -61,7 +61,7 @@
             </mat-menu>
             <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">notifications_none</i></button>
             <mat-menu class="notificaiton-menu" #notification="matMenu">
-                <button mat-menu-item *ngIf="notificationCount == 0">No new notificaitons</button>
+                <mat-card *ngIf="!notificationList">No new notificaitons</mat-card>
                 <div class="notifications" *ngIf="notificationCount != 0" >
                 <div *ngFor = "let notification of notificationList">
                   <mat-card *ngIf="isAuthor()">{{notification.message}}</mat-card>

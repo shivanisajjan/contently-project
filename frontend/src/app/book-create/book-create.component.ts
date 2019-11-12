@@ -307,6 +307,8 @@ export class SelectEditorDialog implements OnInit {
   @Output() selectEditorEvent = new EventEmitter<any>();
   public editorList;
   public editorListFiltered;
+  public allEditorList;
+  public allEditorListFiltered;
   public searchTerm;
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
@@ -315,7 +317,7 @@ export class SelectEditorDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEditors();
+    this.getRecommendedEditors();
     console.log(this.data)
   }
 
@@ -324,17 +326,26 @@ export class SelectEditorDialog implements OnInit {
   }
 
   selectEditor(editor) {
-    console.log('Selected Editor : ' + editor.name);
-    this.selectEditorEvent.emit(editor.name);
+    console.log('Selected Editor : ' + editor);
+    this.selectEditorEvent.emit(editor);
     this.dialogRef.close();
   }
 
-  getEditors() {
+  getRecommendedEditors() {
     console.log('Fetching Editors');
-    this.contentService.getEditorsOrIllustrators('editor', this.data[0] ).subscribe(
+    this.contentService.getRecommendedEditorsOrIllustrators('editor', this.data[0] ).subscribe(
       result => {
         this.editorList = result
         this.editorListFiltered = this.editorList
+      });
+  }
+
+  getAllEditors() {
+    console.log('Fetching All Editors');
+    this.contentService.getEditorsOrIllustrators('editor').subscribe(
+      result => {
+        this.allEditorList = result
+        this.allEditorListFiltered = this.allEditorList
       });
   }
 
@@ -344,6 +355,9 @@ export class SelectEditorDialog implements OnInit {
     this.editorListFiltered = this.editorList.filter(function(tag) {
         return tag.name.toLowerCase().indexOf(term) >= 0;
     }); 
+    this.allEditorListFiltered = this.allEditorList.filter(function(tag) {
+      return tag.toLowerCase().indexOf(term) >= 0;
+  });
 }
 }
 
@@ -357,6 +371,8 @@ export class SelectIllustratorDialog implements OnInit {
   public illustratorList;
   public illustratorListFiltered;
   public searchTerm;
+  public allIllustratorList;
+  public allIllustratorListFiltered;
 
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
@@ -367,7 +383,7 @@ export class SelectIllustratorDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getIllustrators();
+    this.getRecommendedIllustrators();
     console.log(this.data);
   }
 
@@ -381,12 +397,21 @@ export class SelectIllustratorDialog implements OnInit {
     this.dialogRef.close();
   }
 
-  getIllustrators() {
+  getRecommendedIllustrators() {
     console.log('Fetching Illustrators');
-    this.contentService.getEditorsOrIllustrators('illustrator', this.data[0]).subscribe(
+    this.contentService.getRecommendedEditorsOrIllustrators('illustrator', this.data[0]).subscribe(
       result => {
         this.illustratorList = result;
         this.illustratorListFiltered = this.illustratorList;
+      });
+  }
+
+  getAllIllustrators(){
+    console.log('Fetching All Illustrators');
+    this.contentService.getEditorsOrIllustrators('designer').subscribe(
+      result => {
+        this.allIllustratorList = result;
+        this.allIllustratorListFiltered = this.allIllustratorList;
       });
   }
 
@@ -396,6 +421,9 @@ export class SelectIllustratorDialog implements OnInit {
     this.illustratorListFiltered = this.illustratorList.filter(function(tag) {
         return tag.name.toLowerCase().indexOf(term) >= 0;
     }); 
+    this.allIllustratorListFiltered = this.allIllustratorList.filter(function(tag) {
+      return tag.toLowerCase().indexOf(term) >= 0;
+  }); 
 }
 
 }

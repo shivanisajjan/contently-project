@@ -52,7 +52,7 @@
 
   <div *ngIf="!isSelectHelper()">
   <mat-card *ngIf="!isSelectHelper()" class="editor-illustrator">
-      <mat-grid-list cols="2" rowHeight="175px">
+      <mat-grid-list *ngIf="bookDetails.editorName" cols="2" rowHeight="175px">
         <mat-grid-tile class="choose-editor-tile">
           <div class="select-editor-header">
             <mat-grid-tile-header >

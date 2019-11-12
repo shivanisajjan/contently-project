@@ -27,7 +27,7 @@ export class ContentService {
     return this.http.put(postUrl, content, this.httpOptions);
   }
 
-  getEditorsOrIllustrators(role,genre) {
+  getRecommendedEditorsOrIllustrators(role,genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -35,6 +35,17 @@ export class ContentService {
       })
     };
     const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/${role}/${genre}`;
+    return this.http.get(postUrl, this.httpOptions);
+  }
+
+  getEditorsOrIllustrators(role) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/user-management/api/v1/user/role/${role}`;
     return this.http.get(postUrl, this.httpOptions);
   }
 

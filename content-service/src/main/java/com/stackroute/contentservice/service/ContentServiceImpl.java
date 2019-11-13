@@ -77,6 +77,13 @@ public class ContentServiceImpl implements ContentService {
     {
         try
         {
+            List<Content> content=contentRepository.findByName(name);
+            if(content.get(0).getAuthorName()==name){
+                System.out.println("Yessss,I am an author");
+            }
+            else {
+                System.out.println("yess,I am an editor/illustrator");
+            }
             return contentRepository.findByName(name);
         }
         catch (Exception e)

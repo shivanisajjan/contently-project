@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class PageAfterLoginComponent implements OnInit {
   public bookVar:[];
+  public bookRec : [];
   constructor(
     private _bookFetch :BookFetchService,
     private router : Router) {
@@ -21,6 +22,9 @@ export class PageAfterLoginComponent implements OnInit {
     this._bookFetch.getRecommendation()
     .subscribe(data => {console.log(data) ;this.bookVar=data;});
 
+    this._bookFetch.getRecommendedBooks(localStorage.getItem('username')).subscribe(
+      data => this.bookRec = data
+    );
   }
 
   bookDetails(id){

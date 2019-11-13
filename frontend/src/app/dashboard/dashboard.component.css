@@ -48,6 +48,11 @@ mat-icon {
   border-bottom-width: 1px;
   border-bottom-color: lightslategrey;
 }
+
+
+.dashboard-wrapper{
+  background-image: url('../../assets/images/main_bg.jpeg');
+}
 .content-title{
   font-size: 2em;
 }

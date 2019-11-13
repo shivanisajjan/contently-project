@@ -171,7 +171,7 @@ export class AppComponent implements OnInit {
   }
 
   deleteRequest(notification , index){
-    this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + " has rejected your request to edit your book of id : " + notification.bookId);
+    this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + " has rejected your request to edit your book of id : " + this.book.title);
     this.contentService.getBookDetails(notification.bookId).subscribe(
       result => {
         this.book = result;

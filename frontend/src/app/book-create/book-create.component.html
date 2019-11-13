@@ -102,7 +102,7 @@
 
             <div class="status">
               <button mat-raised-button style="margin-right: 10px;"
-                      [matMenuTriggerFor]="menu">{{chapter.status}}</button>
+                      [matMenuTriggerFor]="menu" [disabled]="!getShowEditButton(i)">{{chapter.status}}</button>
               <mat-menu #menu="matMenu">
                 <button *ngFor="let status of chapterStatus" mat-menu-item
                         (click)="changeChapterStatus(status,i)">{{status}}</button>

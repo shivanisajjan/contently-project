@@ -93,8 +93,15 @@ export class BookCreateComponent implements OnInit {
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
-    this.setShowEditButton();
-    console.log('book details: ', this.bookDetails);
+    this.contentService.getBookDetails(this.bookDetails.id)
+      .subscribe(
+        data => {
+          this.bookDetails = data;
+          localStorage.setItem('book', JSON.stringify(this.bookDetails));
+          this.setShowEditButton();
+          console.log('book details: ', this.bookDetails);
+        }
+      );
   }
 
   isSelectHelper(): boolean {
@@ -318,7 +325,7 @@ export class BookCreateComponent implements OnInit {
       let cond = false;
       // author
       if (localStorage.getItem('role') === 'reader/author') {
-        if (status === 'Writing Phase') {
+        if (status === 'Writing Phase' || status === 'Editing Done' || status === 'Designing Done') {
           cond = true;
         }
       }
@@ -329,7 +336,7 @@ export class BookCreateComponent implements OnInit {
         }
       }
       // illustrator
-      if (localStorage.getItem('role') === 'illustrator') {
+      if (localStorage.getItem('role') === 'designer') {
         if (status === 'Designing Phase') {
           cond = true;
         }
@@ -355,7 +362,6 @@ export class BookCreateComponent implements OnInit {
           data => {
             console.log('status changed data: ', data);
             this.setShowEditButton();
-            // this.ngOnInit();
           },
           error => {
             console.log('status changed error: ', error);

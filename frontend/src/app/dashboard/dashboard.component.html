@@ -1,4 +1,6 @@
 <div class="dashboard-wrapper">
+    
+  <br>
   <mat-expansion-panel class="profile-details">
     <mat-expansion-panel-header>
       Profile Details
@@ -36,7 +38,7 @@
       </mat-card-content>
       <mat-divider></mat-divider>
       <mat-card-actions>
-        <a mat-raised-button color="primary" (click)="editProfile()">Edit Profile</a>
+        <a mat-raised-button color="primary" (click)="editProfile()" class="edit-button">Edit Profile</a>
       </mat-card-actions>
     </mat-card>
   </mat-expansion-panel>
@@ -47,7 +49,7 @@
     </mat-expansion-panel-header>
     <mat-grid-list rowHeight="2em" cols="4">
       <div *ngFor="let content of contentsList, index as i">
-          <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="1" rowspan="7"></mat-grid-tile>
 
           <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
 
@@ -58,12 +60,13 @@
           <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
           <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
 
-          <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
+          <mat-grid-tile class="info-value" colspan="3" rowspan="3">{{content.description}}</mat-grid-tile>
 
-          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)">Edit</button></mat-grid-tile>
-      </div>
+          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)" style="border-radius: 25px;">Edit</button></mat-grid-tile>
+          <mat-grid-tile colspan="4" rowspan="1"></mat-grid-tile>
+        </div>
       <mat-grid-tile colspan="4" rowspan="1" *ngIf="ifAuthor()">
-        <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
+        <a mat-raised-button color="primary" routerLink="/contentLayout" style="border-radius: 50px;">New Content</a>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-expansion-panel>
@@ -96,4 +99,5 @@
       Purchases
     </mat-expansion-panel-header>
   </mat-expansion-panel>
+  <div style="height: 170px;"></div>
 </div>

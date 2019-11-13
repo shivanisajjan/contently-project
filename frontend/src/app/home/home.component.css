@@ -164,3 +164,15 @@ mat-card-content{
   from {left: 0px;}
   to {left: 100%;}
 }
+.trending-books{
+  padding: 2%;
+  color: white;
+  text-shadow: 4px 4px #333333;
+  background-image: url('../../assets/images/trend.jpg');
+  background-repeat: initial;
+  font-weight: bold;
+
+}
+
+.home-container{
+}

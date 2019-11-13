@@ -22,4 +22,8 @@ export class PageAfterLoginComponent implements OnInit {
     .subscribe(data => {console.log(data) ;this.bookVar=data;}); 
   }
 
+  bookDetails(id){
+    this.router.navigate(['/book-details',id]);
+  }
+
 }

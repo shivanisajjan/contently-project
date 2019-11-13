@@ -117,7 +117,7 @@
         <button mat-raised-button color="primary" (click)="addNewSection()">
           <mat-icon>add</mat-icon>
         </button>
-        <button mat-raised-button color="primary">Publish</button>
+        <button mat-raised-button color="primary" *ngIf="canPublish">Publish</button>
       </mat-card-actions>
 
     </mat-card>

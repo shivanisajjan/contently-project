@@ -6,7 +6,7 @@
     fxLayoutGap="10px"
     fxLayoutGap.xs="0">
     <div *ngFor="let bookvar of bookVar">
-    <mat-card id="cardhere">
+    <mat-card (click)="bookDetails(bookvar.bookId)" id="cardhere">
         
         <img mat-card-image src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="card image">
         <h4>{{bookvar.bookName}}</h4>

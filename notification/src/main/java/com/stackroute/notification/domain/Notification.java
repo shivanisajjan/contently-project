@@ -18,6 +18,7 @@ public class Notification {
 
     @Id
     private int id;
+    private int bookId;
     private String sender, receiver, message;
     private boolean status;
 

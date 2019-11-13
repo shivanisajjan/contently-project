@@ -24,5 +24,5 @@ public interface PublicationService {
     List<Publications> findByEditorId(int id) throws InternalServerErrorException;
 
 
-    int getNextSequence(String seq);
+//    int getNextSequence(String seq);
 }

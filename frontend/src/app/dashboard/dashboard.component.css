@@ -9,9 +9,18 @@
 }
 
 .info-value > ::ng-deep figure {
-  padding: 0 5px;
+  padding: 5px;
   justify-content: flex-start;
-  background-color: #0d95e8;
+  position: absolute;
+  /*background-color: #0d95e8;*/
+}
+.info-value-textarea{
+  height: 100%;
+  width: 100%;
+  resize: none;
+  background-color: white;
+  color: black;
+  border-width: 0;
 }
 .info-value-last > ::ng-deep figure {
   padding: 0 5px;
@@ -25,4 +34,10 @@
 }
 .list-item-entry:hover{
   background-color: lightgrey;
+}
+.content-list-last{
+  margin-bottom: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: lightslategrey;
 }

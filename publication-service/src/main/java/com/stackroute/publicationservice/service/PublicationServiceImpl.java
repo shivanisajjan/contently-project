@@ -1,7 +1,7 @@
 package com.stackroute.publicationservice.service;
 
 
-import com.stackroute.publicationservice.Sequence.Custom;
+//import com.stackroute.publicationservice.Sequence.Custom;
 import com.stackroute.publicationservice.exceptions.ContentAlreadyExistsExceptions;
 import com.stackroute.publicationservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.publicationservice.exceptions.InternalServerErrorException;
@@ -10,7 +10,7 @@ import com.stackroute.publicationservice.model.Publications;
 import com.stackroute.publicationservice.repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Update;
+//import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -96,14 +96,14 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
 
-    public int getNextSequence(String seqName)
-        {
-            Custom counter = mongo.findAndModify(
-                    query(where("_id").is(seqName)),
-                    new Update().inc("seq",1),
-                    options().returnNew(true).upsert(true),
-                    Custom.class);
-            return counter.getSeq();
-        }
+//    public int getNextSequence(String seqName)
+//        {
+//            Custom counter = mongo.findAndModify(
+//                    query(where("_id").is(seqName)),
+//                    new Update().inc("seq",1),
+//                    options().returnNew(true).upsert(true),
+//                    Custom.class);
+//            return counter.getSeq();
+//        }
 
 }

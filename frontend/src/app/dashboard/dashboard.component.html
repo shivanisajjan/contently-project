@@ -47,19 +47,28 @@
     <mat-expansion-panel-header>
       Current Projects
     </mat-expansion-panel-header>
+<<<<<<< HEAD
     <mat-grid-list rowHeight="2em" cols="4">
       <div *ngFor="let content of contentsList, index as i">
           <mat-grid-tile class="info-value" colspan="1" rowspan="7"></mat-grid-tile>
+=======
+    <mat-divider></mat-divider>
+    <mat-grid-list rowHeight="40px" cols="3">
+      <div class="content-list" *ngFor="let content of contentsList, index as i">
+<!--        <mat-grid-tile class="info-value content-list-last" colspan="1" rowspan="6"></mat-grid-tile>-->
+>>>>>>> e47ea2e14aed1424ea4d0623460d7f4121426758
 
-          <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
+        <mat-grid-tile class="info-value" colspan="3" rowspan="1"><strong>{{content.title}}</strong></mat-grid-tile>
 
-          <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
-          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} , &nbsp; {{content.genres}}</mat-grid-tile>
+        <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
+        <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} ,
+          &nbsp; {{content.genres}}</mat-grid-tile>
 
-          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
-          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
-          <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
+        <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
+        <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
+        <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdAt}}</mat-grid-tile>
 
+<<<<<<< HEAD
           <mat-grid-tile class="info-value" colspan="3" rowspan="3">{{content.description}}</mat-grid-tile>
 
           <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)" style="border-radius: 25px;">Edit</button></mat-grid-tile>
@@ -67,6 +76,18 @@
         </div>
       <mat-grid-tile colspan="4" rowspan="1" *ngIf="ifAuthor()">
         <a mat-raised-button color="primary" routerLink="/contentLayout" style="border-radius: 50px;">New Content</a>
+=======
+        <mat-grid-tile colspan="3" rowspan="2">
+          <textarea class="info-value-textarea" disabled>{{content.description}}</textarea>
+        </mat-grid-tile>
+
+        <mat-grid-tile class="info-value content-list-last" colspan="3" rowspan="1">
+          <button mat-raised-button color="primary" (click)="edit(i)">Edit</button>
+        </mat-grid-tile>
+      </div>
+      <mat-grid-tile colspan="3" rowspan="1" *ngIf="ifAuthor()">
+        <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
+>>>>>>> e47ea2e14aed1424ea4d0623460d7f4121426758
       </mat-grid-tile>
     </mat-grid-list>
   </mat-expansion-panel>
@@ -82,7 +103,8 @@
       <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
 
       <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
-      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} , &nbsp; {{content.genres}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} ,
+        &nbsp; {{content.genres}}</mat-grid-tile>
 
       <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
       <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
@@ -90,7 +112,9 @@
 
       <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
 
-      <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button>Edit</button></mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">
+        <button>Edit</button>
+      </mat-grid-tile>
       <!--        </mat-card-content>-->
     </div>
   </mat-expansion-panel>

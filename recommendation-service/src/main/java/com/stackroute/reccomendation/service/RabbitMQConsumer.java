@@ -7,6 +7,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+
 
 @Service
 public class RabbitMQConsumer {
@@ -30,13 +32,34 @@ public class RabbitMQConsumer {
         System.out.println("got username is"+userDto.getUsername());
 
 
+        user.setAgeGroup("t");
+        user.setNationality("i");
+        user.setName("m");
             if(userDto.getUsername()!=null)
                 user.setName(userDto.getUsername());
-//        if(userDto.getGender()!=null)
-//     user.setGender(userDto.getGender());
-//        if(userDto.getNationality()!=null)
-//     user.setNationality(userDto.getNationality());
-//        if(use)
+        if(userDto.getGender()!=null)
+     user.setGender(userDto.getGender());
+        if(userDto.getNationality()!=null)
+     user.setNationality(userDto.getNationality());
+        if(userDto.getDob()!=null)
+        {
+            int dobYear=0;
+            String temp[]=userDto.getDob().split("/");
+            dobYear=Integer.parseInt(temp[temp.length-1]);
+            int year = Calendar.getInstance().get(Calendar.YEAR);//agegroup -10-k  -20-t  -30-a 40-o
+            int decideValue=year-dobYear;
+            if(decideValue<15)
+                user.setAgeGroup("k");
+            else
+            if(decideValue<25)
+            user.setAgeGroup("t");
+            else
+            if(decideValue<45)
+                user.setAgeGroup("a");
+            else
+                user.setAgeGroup("o");
+
+        }
 
 
 

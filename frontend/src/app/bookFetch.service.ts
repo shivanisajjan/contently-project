@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Commit} from "./book-create/commit";
+import {Commit} from './book-create/commit';
 
 
 @Injectable({
@@ -22,7 +22,7 @@ export class BookFetchService {
     headers: this.headers
   };
 
-  createRepo(repoName: String, description: String) {
+  createRepo(repoName: string, description: string) {
     const postObject: any = {
       name: repoName,
       description,
@@ -30,11 +30,11 @@ export class BookFetchService {
       auto_init: true
     };
     console.log('Creating repo: ', repoName);
-    return this.http.post<any>("https://api.github.com/user/repos", postObject, this.httpOptions);
+    return this.http.post<any>('https://api.github.com/user/repos', postObject, this.httpOptions);
   }
 
   // creates/modifies file: fileName
-  createFile(fileName: String, commit: Commit): Observable<any> {
+  createFile(fileName: string, commit: Commit): Observable<any> {
     console.log('create/modify: ', commit);
     const repoName = JSON.parse(localStorage.getItem('book')).id;
     return this.http.put<any>('https://api.github.com/repos/contently-books/' +
@@ -48,6 +48,29 @@ export class BookFetchService {
       repoName + '/contents/' + fileName, this.httpOptions);
   }
 
+  // get list of commits
+  getCommit(repoName, fileName): Observable<any> {
+    console.log('getCommit(): ', repoName, fileName);
+    return this.http.get<any>('https://api.github.com/repos/contently-books/' +
+      repoName + '/commits', {
+      headers: this.headers,
+      params : {
+        path: fileName
+      }
+    });
+  }
+
+  // get single commit content
+  getSingleCommit(repoName, fileName, sha) {
+    console.log('getCommit(): ', repoName, fileName, sha);
+    return this.http.get<any>('https://api.github.com/repos/contently-books/' +
+      repoName + '/contents/' + fileName, {
+      headers: this.headers,
+      params : {
+        ref: sha
+      }
+    });
+  }
   // returns all the files in specified github repository
   // getAllFiles(): Observable<any> {
   //   console.log('getAllFiles(): ');
@@ -67,7 +90,7 @@ export class BookFetchService {
     return this.http.get<any>('http://13.126.150.171:8080/recommendation-service/api/v1/books', httpOptions);
   }
 
-  saveToPublication(bookDetails):Observable<any>{
+  saveToPublication(bookDetails): Observable<any> {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -76,11 +99,9 @@ export class BookFetchService {
       })
     };
 
-    console.log("saving to publication");
-    return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save',bookDetails,httpOptions);
-
-  } 
-  
+    console.log('saving to publication');
+    return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save', bookDetails, httpOptions);
+  }
 
 
 }

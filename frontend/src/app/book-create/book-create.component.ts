@@ -1,22 +1,17 @@
 import {Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
-import {Book} from './book';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Commit} from './commit';
 import {AddNewSectionComponent} from './add-new-section/add-new-section.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {PreviewComponent} from './preview/preview.component';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
 import {ContentService} from '../content.service';
 import {notification} from '../notification';
 import {NotificationService} from '../notification.service';
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import * as AWS from 'aws-sdk/global';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as S3 from 'aws-sdk/clients/s3';
-import { FileSaverService } from 'ngx-filesaver';
-import * as jsPDF from 'jspdf';
+import {FileSaverService} from 'ngx-filesaver';
+import {formatDate} from "@angular/common";
 
 export interface EditorDialogData {
   name: string;
@@ -30,16 +25,18 @@ export interface EditorDialogData {
   styleUrls: ['./book-create.component.css']
 })
 
-export class BookCreateComponent implements OnInit { 
+export class BookCreateComponent implements OnInit {
 
 
-  gotFile:any; 
+  gotFile: any;
   private editor;
   private illustrator;
   private bookDetails;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
-  private canPublish:boolean;
+  private commitList = [];
+  private commitListLoaded = false;
+  private canPublish: boolean;
   // private selectHelper = true;
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
@@ -62,32 +59,32 @@ export class BookCreateComponent implements OnInit {
 
     const bucket = new S3(
       {
-          accessKeyId: 'AKIASD2RRW35M5E63FFP ',
-          secretAccessKey: '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',
-          region: 'us-east-2'
+        accessKeyId: 'AKIASD2RRW35M5E63FFP ',
+        secretAccessKey: 'T6fN6pn/VnCMNMC3NwYc87h6IlvILJRfRlSjiHV5',
+        region: 'us-east-2'
       }
-  );
-  const params = {
-    Bucket: 'convertedbooks', // your bucket name,
-    Key: ''+this.bookDetails.id
-  };
+    );
+    const params = {
+      Bucket: 'convertedbooks', // your bucket name,
+      Key: '' + this.bookDetails.id
+    };
 
-  bucket.getObject(params, function(err, data) {
-    // Handle any error and exit
-    if (err)
-        {
-          console.log(err);
-          return err};
+    bucket.getObject(params, function (err, data) {
+      // Handle any error and exit
+      if (err) {
+        console.log(err);
+        return err;
+      }
 
-  // No error happened
-  // Convert Body from a Buffer to a String
+      // No error happened
+      // Convert Body from a Buffer to a String
 
-  let objectData = data.Body.toString('utf-8'); // Use the encoding necessary
-  document.getElementById('got').innerHTML=objectData;
-  console.log("working"+objectData+"not working"+this.gotFile);
+      const objectData = data.Body.toString('utf-8'); // Use the encoding necessary
+      document.getElementById('got').innerHTML = objectData;
+      console.log('working' + objectData + 'not working' + this.gotFile);
 
- 
-});
+
+    });
 
     if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
@@ -96,13 +93,6 @@ export class BookCreateComponent implements OnInit {
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
-    // console.log(this.bookDetails.status[3].status)
-    // for (let s in this.bookDetails.status){
-    //     console.log(s)
-    //     if(s != "finished")  {
-    //       this.canPublish = false
-    //     }
-    //   }
     this.setShowEditButton();
     console.log('book details: ', this.bookDetails);
   }
@@ -112,7 +102,7 @@ export class BookCreateComponent implements OnInit {
     return this.bookDetails.selectHelper;
   }
 
-  drop(event: CdkDragDrop<String[]>){
+  drop(event: CdkDragDrop<String[]>) {
     moveItemInArray(this.bookDetails.status, event.previousIndex, event.currentIndex);
     localStorage.setItem('book', JSON.stringify(this.bookDetails));
     console.log('drop: ', event.previousIndex, event.currentIndex);
@@ -147,7 +137,8 @@ export class BookCreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       result => {
         console.log('New Section Name: ', result);
-        const commit = new Commit('', localStorage.getItem('fullName'), localStorage.getItem('email'), '', '');
+        const commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en') + ' - Created',
+          localStorage.getItem('fullName'), localStorage.getItem('email'), '', '');
         this.bookFetch.createFile(result, commit)
           .subscribe(
             data => {
@@ -200,6 +191,43 @@ export class BookCreateComponent implements OnInit {
       );
   }
 
+  commits(filename) {
+    this.commitList = [];
+    this.commitListLoaded = false;
+    this.bookFetch.getCommit(this.bookDetails.id, filename)
+      .subscribe(
+        data => {
+          console.log('commits data: ', data);
+          this.commitList = data;
+          this.commitListLoaded = true;
+        },
+        error => {
+          console.log('commits error: ', error);
+          this.commitListLoaded = false;
+        }
+      );
+  }
+
+  singleCommit(filename, sha) {
+    this.bookFetch.getSingleCommit(this.bookDetails.id, filename, sha)
+      .subscribe(
+        data => {
+          console.log('single commits data: ', atob(data.content));
+          const dialogRef = this.dialog.open(
+            PreviewComponent,
+            {
+              data: atob(data.content),
+              height: '80%',
+              width: '80%'
+            }
+          );
+        },
+        error => {
+          console.log('single commits error: ', error);
+        }
+      );
+  }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -226,8 +254,8 @@ export class BookCreateComponent implements OnInit {
         this.bookDetails.editorName = this.editor;
         this.bookDetails.editorStatus = 'pending';
         this.contentService.saveBookDetails(this.bookDetails).subscribe();
-        localStorage.setItem('book',JSON.stringify(this.bookDetails))
-        this.sendNotification(this.editor, this.bookDetails.id, localStorage.getItem('username') + " has requested you to edit " + this.bookDetails.title + ".");
+        localStorage.setItem('book', JSON.stringify(this.bookDetails));
+        this.sendNotification(this.editor, this.bookDetails.id, localStorage.getItem('username') + ' has requested you to edit ' + this.bookDetails.title + '.');
         dialogSubmitSubscription.unsubscribe();
       }
     );
@@ -255,8 +283,8 @@ export class BookCreateComponent implements OnInit {
         this.bookDetails.designerName = this.illustrator;
         this.bookDetails.designerStatus = 'pending';
         this.contentService.saveBookDetails(this.bookDetails).subscribe();
-        localStorage.setItem('book',JSON.stringify(this.bookDetails))
-        this.sendNotification(this.illustrator, this.bookDetails.id, localStorage.getItem('username') + " has requested you to illustrate " + this.bookDetails.title + ".");
+        localStorage.setItem('book', JSON.stringify(this.bookDetails));
+        this.sendNotification(this.illustrator, this.bookDetails.id, localStorage.getItem('username') + ' has requested you to illustrate ' + this.bookDetails.title + '.');
         dialogSubmitSubscription.unsubscribe();
       }
     );
@@ -281,7 +309,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   setShowEditButton() {
-    if(this.bookDetails.status === null) {
+    if (this.bookDetails.status === null) {
       return;
     }
     for (let i = 0; i < this.bookDetails.status.length; i++) {
@@ -347,12 +375,12 @@ export class BookCreateComponent implements OnInit {
     );
   }
 
-  sendNotification(receiver, bookId, message){
+  sendNotification(receiver, bookId, message) {
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
     newNotification.bookId = bookId;
     newNotification.receiver = receiver;
-    newNotification.message = message; 
+    newNotification.message = message;
     newNotification.status = true;
     this.notificationService.sendNotification(newNotification).subscribe();
   }
@@ -362,99 +390,96 @@ export class BookCreateComponent implements OnInit {
   }
 
   uploadFile(file) {
-     
-    console.log("s3 upload called");
+
+    console.log('s3 upload called');
     const bucket = new S3(
-          {
-              accessKeyId: 'AKIASD2RRW35M5E63FFP ',
-              secretAccessKey: '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',
-              region: 'us-east-2'
-          }
-      );
-      const params = {
+      {
+        accessKeyId: 'AKIASD2RRW35M5E63FFP ',
+        secretAccessKey: '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',
+        region: 'us-east-2'
+      }
+    );
+    const params = {
 
-        
-          Bucket: 'convertedbooks',  
-          Key: file.name, 
-          Body: file,  
-          ACL: 'public-read', 
-          ContentType: file.type,
-      };
-      bucket.upload(params, function (err, data) {
-          if (err) {
-              console.log('There was an error uploading your file: ', err);
-              return false;
-          }
-          console.log('Successfully uploaded file.', data);
-          return true;
-      });
 
-  
-}  
+      Bucket: 'convertedbooks',
+      Key: file.name,
+      Body: file,
+      ACL: 'public-read',
+      ContentType: file.type,
+    };
+    bucket.upload(params, function (err, data) {
+      if (err) {
+        console.log('There was an error uploading your file: ', err);
+        return false;
+      }
+      console.log('Successfully uploaded file.', data);
+      return true;
+    });
 
-  publishFile()
-  {
-    
+
+  }
+
+  publishFile() {
+
     const fileName = `save.docx`;
 
     const len = this.bookDetails.status.length;
     let count = 0;
     const fileType = this._FileSaverService.genType(fileName);
     let txtBlob;
-    let htmlContent = [];
-    for(let i = 0; i < this.bookDetails.status.length; i++){
+    const htmlContent = [];
+    for (let i = 0; i < this.bookDetails.status.length; i++) {
       htmlContent.push({
         chapterName: this.bookDetails.status[i].chapterName,
         content: ''
       });
     }
     console.log(htmlContent);
-    for(let i = 0; i < len; i++){
+    for (let i = 0; i < len; i++) {
       this.bookFetch.getGit(this.bookDetails.id, this.bookDetails.status[i].chapterName)
-      .subscribe(
-        data => {
-          htmlContent[i].content = atob(data.content);
-          count++;
-          if(count === len){
-            let combined = ''
-            for(let j=0; j<len; j++){
-              combined += '<div>' + htmlContent[j].content + '</div>';
-            }
-            console.log(combined);
-            txtBlob = new Blob([combined], { type : fileType });
-            let file = new File([txtBlob], this.bookDetails.id);
-
-            console.log(file);
-            this.uploadFile(file);
-
-            this.bookFetch.saveToPublication(this.bookDetails).subscribe(
-              data=>{
-                console.log(data); 
+        .subscribe(
+          data => {
+            htmlContent[i].content = atob(data.content);
+            count++;
+            if (count === len) {
+              let combined = '';
+              for (let j = 0; j < len; j++) {
+                combined += '<div>' + htmlContent[j].content + '</div>';
               }
-            );
-            
+              console.log(combined);
+              txtBlob = new Blob([combined], {type: fileType});
+              const file = new File([txtBlob], this.bookDetails.id);
+
+              console.log(file);
+              this.uploadFile(file);
+
+              this.bookFetch.saveToPublication(this.bookDetails).subscribe(
+                data => {
+                  console.log(data);
+                }
+              );
+
+            }
           }
-        }
-      );
+        );
     }
-    
-    
 
 
-   }
+  }
 
-   downloadFile()
-   {
+  downloadFile() {
 
-   const fileName ='save.docx' ;
-  const fileType = this._FileSaverService.genType(fileName); 
+    const fileName = 'save.docx';
+    const fileType = this._FileSaverService.genType(fileName);
 
- 
-  const txtBlob = new Blob([document.getElementById('got').innerHTML], { type: fileType });
-  console.log(txtBlob);
-  this._FileSaverService.save(txtBlob, fileName);
- 
-}}
+
+    const txtBlob = new Blob([document.getElementById('got').innerHTML], {type: fileType});
+    console.log(txtBlob);
+    this._FileSaverService.save(txtBlob, fileName);
+
+  }
+}
 
 @Component({
   selector: 'select-editor-dialog',
@@ -478,7 +503,7 @@ export class SelectEditorDialog implements OnInit {
 
   ngOnInit(): void {
     this.getRecommendedEditors();
-    console.log(this.data)
+    console.log(this.data);
   }
 
   onNoClick(): void {
@@ -495,8 +520,8 @@ export class SelectEditorDialog implements OnInit {
     console.log('Fetching Editors');
     this.contentService.getRecommendedEditorsOrIllustrators('editor', this.data[0]).subscribe(
       result => {
-        this.editorList = result
-        this.editorListFiltered = this.editorList
+        this.editorList = result;
+        this.editorListFiltered = this.editorList;
       });
   }
 
@@ -504,14 +529,14 @@ export class SelectEditorDialog implements OnInit {
     console.log('Fetching All Editors');
     this.contentService.getEditorsOrIllustrators('editor').subscribe(
       result => {
-        this.allEditorList = result
-        this.allEditorListFiltered = this.allEditorList
+        this.allEditorList = result;
+        this.allEditorListFiltered = this.allEditorList;
       });
   }
 
   search(): void {
-    let term = this.searchTerm;
-    console.log(term)
+    const term = this.searchTerm;
+    console.log(term);
     this.editorListFiltered = this.editorList.filter(function (tag) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
@@ -576,8 +601,8 @@ export class SelectIllustratorDialog implements OnInit {
   }
 
   search(): void {
-    let term = this.searchTerm;
-    console.log(term)
+    const term = this.searchTerm;
+    console.log(term);
     this.illustratorListFiltered = this.illustratorList.filter(function (tag) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
@@ -613,6 +638,5 @@ export class SetStatusDialog {
     this.dialogRef.close();
   }
 
-  
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface UserRepository extends Neo4jRepository<User, Long> {
 
@@ -37,6 +38,9 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("match(u:User{name: {username} }),(b:Book),(c:Book),(a:User) where (u)-[:bought]->(b)<-[:has_authored]-(a)-[:has_authored]->(c) return c")
     Collection<Book> getRecAccAuth(@Param("username") String username);
+
+    @Query("match(g:Genre{name:{genre}})<-[:has_genre]-(b:Book)<-[r:bought]-(u:User) Return u  Order by r.created_at desc  Limit 1000")
+    List<User> getPriceRec(@Param("genre") String genre);
 
     @Query("LOAD CSV WITH HEADERS FROM \"file:///users.csv\" AS csvLine\n" +
             "MERGE (g:Gender {name: csvLine.gender})\n" +

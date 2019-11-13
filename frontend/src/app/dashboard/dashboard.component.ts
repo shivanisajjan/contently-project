@@ -6,6 +6,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {bool} from "aws-sdk/clients/signer";
 
 @Component({
   selector: 'app-dashboard',
@@ -96,6 +97,9 @@ export class DashboardComponent implements OnInit {
 
   editProfile() {
     localStorage.setItem('editProfile', JSON.stringify(this.profileData));
-    this.router.navigate(['/editProfile']);
+    this.router.navigate(['/editProfile']).then();
+  }
+  ifConfirmed(status: String): boolean {
+    return status === 'confirmed';
   }
 }

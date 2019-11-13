@@ -117,10 +117,10 @@
   height: 70px !important;
 }
 
-.mat_icon {
-  margin-left: 65%;
-  margin-bottom: 10%;
-}
+/*.mat_icon {*/
+/*  margin-left: 65%;*/
+/*  margin-bottom: 10%;*/
+/*}*/
 
 mat-grid-tile {
   background: lightblue;

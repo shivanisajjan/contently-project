@@ -19,11 +19,18 @@
   width: 100%;
   resize: none;
   background-color: white;
-  color: black;
+  color: lightslategrey;
   border-width: 0;
+  text-align: justify;
+  vertical-align: center;
+}
+mat-icon {
+  color: grey;
+  font-size: 18px;
+  margin-right: 10px;
 }
 .info-value-last > ::ng-deep figure {
-  padding: 0 5px;
+  padding: 5px;
   justify-content: flex-start;
   bottom: 20px;
   border-bottom-style: solid;
@@ -45,4 +52,7 @@
 
 .dashboard-wrapper{
   background-image: url('../../assets/images/main_bg.jpeg');
+}
+.content-title{
+  font-size: 2em;
 }

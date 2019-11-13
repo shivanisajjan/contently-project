@@ -35,23 +35,9 @@
 .list-item-entry:hover{
   background-color: lightgrey;
 }
-<<<<<<< HEAD
-
-.mat-grid-tile{
-  padding: 5px !important;
-}
-
-.edit-button{
-  border-radius: 25px;
-}
-
-.dashboard-wrapper{
-  background-image: url('../../assets/images/main_bg.jpeg');
-=======
 .content-list-last{
   margin-bottom: 5px;
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: lightslategrey;
->>>>>>> e47ea2e14aed1424ea4d0623460d7f4121426758
 }

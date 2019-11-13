@@ -49,6 +49,7 @@ mat-sidenav-content{
 body {
   flex: 1;
   background-color: aquamarine;
+  font-family: 'Dosis', sans-serif;
 }
 
 .footer{
@@ -62,3 +63,15 @@ body {
 .test-menu{
   width: 100%;
 }
+
+.router-outlet{
+  background-image: url('../assets/images/main_bg.jpeg');
+}
+.app-footer{
+  position: absolute;
+  bottom: 0;
+}
+
+/* .push{
+  height: 170px;
+} */

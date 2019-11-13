@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~8.2.8",
     "@angular/platform-browser-dynamic": "~8.2.8",
     "@angular/router": "~8.2.8",
-    "aws-sdk": "^2.569.0",
+    "aws-sdk": "^2.570.0",
     "docx": "^5.0.0-rc7",
     "file-saver": "^2.0.2",
     "gapi": "0.0.3",

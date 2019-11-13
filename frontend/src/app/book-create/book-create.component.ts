@@ -39,6 +39,7 @@ export class BookCreateComponent implements OnInit {
   private bookDetails;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
+  private canPublish:boolean;
   // private selectHelper = true;
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
@@ -95,7 +96,13 @@ export class BookCreateComponent implements OnInit {
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
     }
-    console.log('book details: ', this.bookDetails);
+    // console.log(this.bookDetails.status[3].status)
+    // for (let s in this.bookDetails.status){
+    //     console.log(s)
+    //     if(s != "finished")  {
+    //       this.canPublish = false
+    //     }
+    //   }
     this.setShowEditButton();
     console.log('book details: ', this.bookDetails);
   }

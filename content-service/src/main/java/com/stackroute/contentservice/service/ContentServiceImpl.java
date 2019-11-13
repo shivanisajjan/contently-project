@@ -84,9 +84,9 @@ public class ContentServiceImpl implements ContentService {
                 return contentRepository.findByName(name);
             }
             else {
-                if(content.get(0).getEditorName().equals(name)){
-                    for(Content content1:content){
-                        if(content1.getEditorStatus().equals("confirmed")){
+                if (content.get(0).getEditorName()!=null && content.get(0).getEditorName().equals(name)) {
+                    for (Content content1 : content) {
+                        if (content1.getEditorStatus().equals("confirmed")) {
                             contentList.add(content1);
                         }
                     }

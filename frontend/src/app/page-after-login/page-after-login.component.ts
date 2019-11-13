@@ -19,7 +19,8 @@ export class PageAfterLoginComponent implements OnInit {
 
   ngOnInit() {
     this._bookFetch.getRecommendation()
-    .subscribe(data => {console.log(data) ;this.bookVar=data;}); 
+    .subscribe(data => {console.log(data) ;this.bookVar=data;});
+
   }
 
   bookDetails(id){

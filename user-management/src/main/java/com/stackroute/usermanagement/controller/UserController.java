@@ -42,26 +42,8 @@ UserController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) throws UserAlreadyExistsExceptions, InternalServerErrorException {
-        System.out.println("sdhfghsfdgdytf");
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
         User user1=userService.saveUser(user);
-        DTOUser dtouser=new DTOUser();
-        dtouser.setId(user1.getId());
-        System.out.println(user1.getId());
-        System.out.println(dtouser.getId());
-        dtouser.setUsername(user1.getUsername());
-        dtouser.setRole(user1.getRole());
-        dtouser.setPhoneNumber(user1.getPhoneNumber());
-        dtouser.setNationality(user1.getNationality());
-        dtouser.setLastName(user1.getLastName());
-        dtouser.setGender(user1.getGender());
-        dtouser.setFirstName(user1.getFirstName());
-        dtouser.setEmail(user1.getEmail());
-        dtouser.setDob(user1.getDob());
-        dtouser.setAddressLine1(user1.getAddressLine1());
-        dtouser.setAddressLine2(user1.getAddressLine2());
-        dtouser.setAddressLine3(user1.getAddressLine3());
-        rabbitMQSender.sendRegistry(dtouser);
         return new ResponseEntity<User> (user1, HttpStatus.CREATED);
     }
 
@@ -91,8 +73,21 @@ UserController {
     public ResponseEntity<String> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
         User uname=userService.getByUsername(user.getUsername());
         user.setPassword(uname.getPassword());
-        user.setRole(user.getRole());
-//        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
+        DTOUser dtouser=new DTOUser();
+        dtouser.setId(user.getId());
+        dtouser.setUsername(user.getUsername());
+        dtouser.setRole(user.getRole());
+        dtouser.setPhoneNumber(user.getPhoneNumber());
+        dtouser.setNationality(user.getNationality());
+        dtouser.setLastName(user.getLastName());
+        dtouser.setGender(user.getGender());
+        dtouser.setFirstName(user.getFirstName());
+        dtouser.setEmail(user.getEmail());
+        dtouser.setDob(user.getDob());
+        dtouser.setAddressLine1(user.getAddressLine1());
+        dtouser.setAddressLine2(user.getAddressLine2());
+        dtouser.setAddressLine3(user.getAddressLine3());
+        rabbitMQSender.sendRegistry(dtouser);
         userService.updateUser(user);
         return new ResponseEntity<String>("Updated Successfully", HttpStatus.OK);
     }

@@ -1,9 +1,6 @@
 package com.stackroute.reccomendation;
 
-import com.stackroute.reccomendation.domain.Book;
-import com.stackroute.reccomendation.domain.Editor;
-import com.stackroute.reccomendation.domain.Illustrator;
-import com.stackroute.reccomendation.domain.User;
+import com.stackroute.reccomendation.domain.*;
 import com.stackroute.reccomendation.service.BookService;
 import com.stackroute.reccomendation.service.EditorService;
 import com.stackroute.reccomendation.service.IllustratorService;
@@ -57,6 +54,11 @@ public class UserController {
 
 
 
+    @PostMapping("priceRec")
+    public int getPriceRec(@RequestBody PriceRec priceRec)
+    {
+        return userService.getPriceRec(priceRec);
+    }
 
 
 

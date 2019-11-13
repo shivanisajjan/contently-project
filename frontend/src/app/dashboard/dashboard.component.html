@@ -62,15 +62,6 @@
         <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
         <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdAt}}</mat-grid-tile>
 
-<<<<<<< HEAD
-          <mat-grid-tile class="info-value" colspan="3" rowspan="3">{{content.description}}</mat-grid-tile>
-
-          <mat-grid-tile class="info-value" colspan="3" rowspan="1"><button mat-raised-button color="primary" (click)="edit(i)" style="border-radius: 25px;">Edit</button></mat-grid-tile>
-          <mat-grid-tile colspan="4" rowspan="1"></mat-grid-tile>
-        </div>
-      <mat-grid-tile colspan="4" rowspan="1" *ngIf="ifAuthor()">
-        <a mat-raised-button color="primary" routerLink="/contentLayout" style="border-radius: 50px;">New Content</a>
-=======
         <mat-grid-tile colspan="3" rowspan="2">
           <textarea class="info-value-textarea" disabled>{{content.description}}</textarea>
         </mat-grid-tile>
@@ -81,7 +72,6 @@
       </div>
       <mat-grid-tile colspan="3" rowspan="1" *ngIf="ifAuthor()">
         <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
->>>>>>> e47ea2e14aed1424ea4d0623460d7f4121426758
       </mat-grid-tile>
     </mat-grid-list>
   </mat-expansion-panel>

@@ -13,6 +13,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api")
 @CrossOrigin
@@ -49,5 +51,17 @@ public class NotificationController {
     public ResponseEntity<?> getByReceiver(@PathVariable("receiver") String receiver) throws InternalServerErrorException
     {
         return new ResponseEntity<>(notificationService.findByReceiver(receiver), HttpStatus.OK);
+    }
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> deleteNotif(@PathVariable int id){
+        System.out.println("id:"+id);
+        int deletedID=notificationService.deleteById(id);
+        System.out.println("After");
+        return new ResponseEntity<String>("Deleted Successfully",HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<?> updateStatus(@RequestBody List<Notification> notifications){
+        return new ResponseEntity<>(notificationService.updateNotif(notifications),HttpStatus.OK);
     }
 }

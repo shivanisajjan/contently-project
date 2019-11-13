@@ -11,6 +11,10 @@ public interface NotificationService {
 
     List<Notification> findByReceiver(String receiver) throws InternalServerErrorException;
 
+    int deleteById(int id);
+
+    List<Notification> updateNotif(List<Notification> notifications);
+
     int getNextSequence(String seq);
 
 

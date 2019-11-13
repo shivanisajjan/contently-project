@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
@@ -47,6 +48,29 @@ public class NotificationServiceImpl implements NotificationService{
             throw  new InternalServerErrorException();
         }
     }
+
+    @Override
+    public int deleteById(int id){
+        if(notificationRepository.existsById(id)) {
+            System.out.println("Exist");
+            notificationRepository.deleteById(id);
+        }
+        return id;
+    }
+
+    @Override
+    public List<Notification> updateNotif(List<Notification> notifications) {
+        List<Notification> notificationList=new ArrayList<>();
+        for(Notification notification:notifications){
+            System.out.println("hiiiiiiiii");
+            notification.setStatus(false);
+            notificationRepository.save(notification);
+            System.out.println("shivaniiii");
+            notificationList.add(notification);
+        }
+        return notificationList;
+    }
+
     public int getNextSequence(String seqName)
     {
         Custom counter = mongo.findAndModify(

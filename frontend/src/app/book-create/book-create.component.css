@@ -12,6 +12,11 @@
   box-shadow: 0 0 10px 0 lightslategrey;
 }
 
+#got
+{
+  background: rgb(202, 187, 102);
+}
+
 /* drag and drop css*/
 
 .drag-list{

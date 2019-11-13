@@ -54,7 +54,7 @@ export class BookFetchService {
     return this.http.get<any>('https://api.github.com/repos/contently-books/' +
       repoName + '/commits', {
       headers: this.headers,
-      params : {
+      params: {
         path: fileName
       }
     });
@@ -66,11 +66,12 @@ export class BookFetchService {
     return this.http.get<any>('https://api.github.com/repos/contently-books/' +
       repoName + '/contents/' + fileName, {
       headers: this.headers,
-      params : {
+      params: {
         ref: sha
       }
     });
   }
+
   // returns all the files in specified github repository
   // getAllFiles(): Observable<any> {
   //   console.log('getAllFiles(): ');
@@ -101,7 +102,19 @@ export class BookFetchService {
 
     console.log('saving to publication');
     return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save', bookDetails, httpOptions);
+
   }
 
+  getRecommendedBooks(username) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/books/rec3/${username}`;
+    return this.http.get<any>(postUrl, httpOptions);
+
+  }
 
 }

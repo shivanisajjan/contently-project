@@ -52,6 +52,9 @@ body {
   font-family: 'Dosis', sans-serif;
 }
 
+.mat-toolbar{
+  /* background-image: url('../assets/images/trend.jpg') */
+}
 .footer{
   background-color: white;
   padding-top: 10px;

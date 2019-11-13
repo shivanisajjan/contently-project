@@ -128,7 +128,11 @@ mat-card-content{
   /*margin: auto;*/
   justify-content: center;
   width: 100%;
-  /*background-image: url('../../assets/images/main_bg.jpeg');*/
+  /* background-image: url('../../assets/images/main_bg.jpeg'); */
+}
+
+.home-container{
+  background-color: #ffffff;
 }
 #cardhere
 {
@@ -166,9 +170,9 @@ mat-card-content{
 }
 .trending-books{
   padding: 2%;
-  color: white;
-  text-shadow: 4px 4px #333333;
-  background-image: url('../../assets/images/trend.jpg');
+  color: black;
+  /* text-shadow: 4px 4px #333333; */
+  /* background-image: url('../../assets/images/trend.jpg'); */
   background-repeat: initial;
   font-weight: bold;
 

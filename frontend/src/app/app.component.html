@@ -5,7 +5,7 @@
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                mode="over"
   >
-    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-toolbar >Menu</mat-toolbar>
     <mat-nav-list>
       <mat-form-field class="search-form" color="accent">
         <input matInput type="search" placeholder="Search">
@@ -105,7 +105,7 @@
     <div class="parallax">
       <div class="router-component-wrapper">
         <router-outlet></router-outlet>
-        <div class="push"></div>
+          <div class="push"></div>
         <app-footer></app-footer>
       </div>
     </div>

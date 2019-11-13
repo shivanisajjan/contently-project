@@ -1,0 +1,18 @@
+mat-card{
+    width: 70%;
+    margin: auto;
+    height: 100%;
+}
+
+.edit-profile-page{
+    background-image: url('../../assets/images/main_bg.jpeg');
+}
+
+.genre-radio-group{
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+.genre-radio-buttons{
+    margin-left: 10%;
+}

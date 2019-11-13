@@ -1,0 +1,20 @@
+/*material css*/
+mat-card{
+  width: 80%;
+  margin: 20px auto;
+}
+.mat-input{
+  width: 100%;
+}
+.input-group{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.input-item{
+  margin: 5px;
+}
+textarea{
+  resize: none;
+}
+/*material css*/

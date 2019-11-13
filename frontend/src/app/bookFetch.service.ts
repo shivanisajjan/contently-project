@@ -81,6 +81,16 @@ export class BookFetchService {
 
   } 
   
+  getRecommendedBooks(username){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/books/rec3/${username}`;
+    return this.http.get<any>(postUrl, httpOptions);
 
+  }
 
 }

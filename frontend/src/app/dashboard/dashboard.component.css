@@ -12,7 +12,6 @@
   padding: 5px;
   justify-content: flex-start;
   position: absolute;
-  /*background-color: #0d95e8;*/
 }
 
 .info-value-textarea {
@@ -30,13 +29,6 @@ mat-icon {
   font-size: 20px;
   margin-right: 10px;
 }
-.info-value-last > ::ng-deep figure {
-  padding: 5px;
-  justify-content: flex-start;
-  bottom: 20px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-}
 .list-item-entry:hover {
   background-color: lightgrey;
 }
@@ -45,7 +37,4 @@ mat-icon {
 }
 .content-title {
   font-size: 2em;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: lightslategray;
 }

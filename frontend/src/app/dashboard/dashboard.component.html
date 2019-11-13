@@ -1,7 +1,7 @@
 <div class="dashboard-wrapper">
 
   <br>
-  <mat-expansion-panel class="profile-details">
+  <mat-expansion-panel class="profile-details" expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title>Profile Details</mat-panel-title>
       <mat-panel-description>{{profileData.username}}</mat-panel-description>
@@ -45,37 +45,43 @@
     </mat-expansion-panel-header>
     <mat-grid-list rowHeight="40px" cols="3">
       <div class="content-list" *ngFor="let content of contentsList, index as i">
-
         <mat-grid-tile class="info-value content-title" colspan="3" rowspan="1">
           <mat-icon>book</mat-icon>
-          {{content.title | titlecase}}</mat-grid-tile>
+          {{content.title | titlecase}}
+        </mat-grid-tile>
 
         <mat-grid-tile class="info-value" colspan="2" rowspan="1">
-          <mat-icon>person</mat-icon>
-          {{content.authorName}}</mat-grid-tile>
+          <mat-icon>person</mat-icon>{{content.authorName}}
+        </mat-grid-tile>
+
         <mat-grid-tile class="info-value" colspan="1" rowspan="1">
-          <mat-icon>local_offer</mat-icon>
-          {{content.typeName | titlecase}} ,
-          &nbsp; {{content.genres | titlecase}}</mat-grid-tile>
+          <mat-icon>local_offer</mat-icon>{{content.typeName | titlecase}} ,&nbsp; {{content.genres | titlecase}}
+        </mat-grid-tile>
 
         <mat-grid-tile *ngIf="ifConfirmed(content.editorStatus)" class="info-value" colspan="1" rowspan="1">
-          <mat-icon>border_color</mat-icon>
-          {{content.editorName}}</mat-grid-tile>
+          <mat-icon>border_color</mat-icon>{{content.editorName}}
+        </mat-grid-tile>
+
         <mat-grid-tile *ngIf="ifConfirmed(content.designerStatus)" class="info-value" colspan="1" rowspan="1">
-          <mat-icon>format_paint</mat-icon>
-          {{content.designerName}}</mat-grid-tile>
+          <mat-icon>format_paint</mat-icon>{{content.designerName}}
+        </mat-grid-tile>
+
         <mat-grid-tile class="info-value" colspan="1" rowspan="1">
-          <mat-icon>date_range</mat-icon>
-          {{content.createdAt}}</mat-grid-tile>
+          <mat-icon>date_range</mat-icon>{{content.createdAt}}
+        </mat-grid-tile>
 
         <mat-grid-tile colspan="3" rowspan="2">
           <textarea class="info-value-textarea" disabled>{{content.description}}</textarea>
         </mat-grid-tile>
 
-        <mat-grid-tile class="info-value content-list-last" colspan="3" rowspan="1">
+        <mat-grid-tile class="info-value" colspan="3" rowspan="1">
           <button mat-raised-button color="primary" (click)="edit(i)">Edit</button>
         </mat-grid-tile>
-        <br>
+
+        <mat-grid-tile colspan='3'>
+          <mat-divider style="width: 100%;"></mat-divider>
+        </mat-grid-tile>
+
       </div>
     </mat-grid-list>
     <mat-action-row style="justify-content: center" *ngIf="ifAuthor()">

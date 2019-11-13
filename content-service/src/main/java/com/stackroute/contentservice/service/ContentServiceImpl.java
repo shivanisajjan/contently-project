@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
@@ -75,16 +76,31 @@ public class ContentServiceImpl implements ContentService {
 
     public List<Content> findByName(String name) throws InternalServerErrorException
     {
+        List<Content> contentList=new ArrayList<>();
         try
         {
             List<Content> content=contentRepository.findByName(name);
-            if(content.get(0).getAuthorName()==name){
-                System.out.println("Yessss,I am an author");
+            if(content.get(0).getAuthorName().equals(name)){
+                return contentRepository.findByName(name);
             }
             else {
-                System.out.println("yess,I am an editor/illustrator");
+                if(content.get(0).getEditorName().equals(name)){
+                    for(Content content1:content){
+                        if(content1.getEditorStatus().equals("confirmed")){
+                            contentList.add(content1);
+                        }
+                    }
+                    return contentList;
+                }
+                else {
+                    for(Content content1:content){
+                        if(content1.getDesignerStatus().equals("confirmed")){
+                            contentList.add(content1);
+                        }
+                    }
+                    return contentList;
+                }
             }
-            return contentRepository.findByName(name);
         }
         catch (Exception e)
         {

@@ -13,6 +13,10 @@ import {ContentService} from '../content.service';
 import {notification} from '../notification';
 import {NotificationService} from '../notification.service';
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import * as AWS from 'aws-sdk/global';
+import * as S3 from 'aws-sdk/clients/s3';
+import { FileSaverService } from 'ngx-filesaver';
+import * as jsPDF from 'jspdf';
 
 export interface EditorDialogData {
   name: string;
@@ -26,8 +30,10 @@ export interface EditorDialogData {
   styleUrls: ['./book-create.component.css']
 })
 
-export class BookCreateComponent implements OnInit {
+export class BookCreateComponent implements OnInit { 
 
+
+  gotFile:any; 
   private editor;
   private illustrator;
   private bookDetails;
@@ -43,6 +49,7 @@ export class BookCreateComponent implements OnInit {
               private dialog: MatDialog,
               private contentService: ContentService,
               private route: ActivatedRoute,
+              private _FileSaverService: FileSaverService,
               private notificationService: NotificationService) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
@@ -51,6 +58,36 @@ export class BookCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const bucket = new S3(
+      {
+          accessKeyId: 'AKIASD2RRW35M5E63FFP ',
+          secretAccessKey: 'T6fN6pn/VnCMNMC3NwYc87h6IlvILJRfRlSjiHV5',
+          region: 'us-east-2'
+      }
+  );
+  const params = {
+    Bucket: 'convertedbooks', // your bucket name,
+    Key: ''+this.bookDetails.id
+  };
+
+  bucket.getObject(params, function(err, data) {
+    // Handle any error and exit
+    if (err)
+        {
+          console.log(err);
+          return err};
+
+  // No error happened
+  // Convert Body from a Buffer to a String
+
+  let objectData = data.Body.toString('utf-8'); // Use the encoding necessary
+  document.getElementById('got').innerHTML=objectData;
+  console.log("working"+objectData+"not working"+this.gotFile);
+
+ 
+});
+
     if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
     } else if (localStorage.getItem('role') == 'designer') {
@@ -316,7 +353,101 @@ export class BookCreateComponent implements OnInit {
   getHelperStatus() {
 
   }
-}
+
+  uploadFile(file) {
+     
+    console.log("s3 upload called");
+    const bucket = new S3(
+          {
+              accessKeyId: 'AKIASD2RRW35M5E63FFP ',
+              secretAccessKey: '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',
+              region: 'us-east-2'
+          }
+      );
+      const params = {
+
+        
+          Bucket: 'convertedbooks',  
+          Key: file.name, 
+          Body: file,  
+          ACL: 'public-read', 
+          ContentType: file.type,
+      };
+      bucket.upload(params, function (err, data) {
+          if (err) {
+              console.log('There was an error uploading your file: ', err);
+              return false;
+          }
+          console.log('Successfully uploaded file.', data);
+          return true;
+      });
+
+  
+}  
+
+  publishFile()
+  {
+    
+    const fileName = `save.docx`;
+
+    const len = this.bookDetails.status.length;
+    let count = 0;
+    const fileType = this._FileSaverService.genType(fileName);
+    let txtBlob;
+    let htmlContent = [];
+    for(let i = 0; i < this.bookDetails.status.length; i++){
+      htmlContent.push({
+        chapterName: this.bookDetails.status[i].chapterName,
+        content: ''
+      });
+    }
+    console.log(htmlContent);
+    for(let i = 0; i < len; i++){
+      this.bookFetch.getGit(this.bookDetails.id, this.bookDetails.status[i].chapterName)
+      .subscribe(
+        data => {
+          htmlContent[i].content = atob(data.content);
+          count++;
+          if(count === len){
+            let combined = ''
+            for(let j=0; j<len; j++){
+              combined += '<div>' + htmlContent[j].content + '</div>';
+            }
+            console.log(combined);
+            txtBlob = new Blob([combined], { type : fileType });
+            let file = new File([txtBlob], this.bookDetails.id);
+
+            console.log(file);
+            this.uploadFile(file);
+
+            this.bookFetch.saveToPublication(this.bookDetails).subscribe(
+              data=>{
+                console.log(data); 
+              }
+            );
+            
+          }
+        }
+      );
+    }
+    
+    
+
+
+   }
+
+   downloadFile()
+   {
+
+   const fileName ='save.docx' ;
+  const fileType = this._FileSaverService.genType(fileName); 
+
+ 
+  const txtBlob = new Blob([document.getElementById('got').innerHTML], { type: fileType });
+  console.log(txtBlob);
+  this._FileSaverService.save(txtBlob, fileName);
+ 
+}}
 
 @Component({
   selector: 'select-editor-dialog',
@@ -474,5 +605,7 @@ export class SetStatusDialog {
     this.chapterStatusEvent.emit(this.chapterStatus);
     this.dialogRef.close();
   }
+
+  
 
 }

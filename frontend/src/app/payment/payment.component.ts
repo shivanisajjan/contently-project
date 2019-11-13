@@ -55,16 +55,11 @@ export class PaymentComponent implements OnInit {
       headers: header
     };
     const headers = new Headers({'token': token, 'amount': "100"});
-    this.http.post('http://localhost:8181/api/v1/payment', {}, httpOptions)
+    this.http.post('http://13.126.150.171:8080/purchasing-service/api/v1/payment', {}, httpOptions)
       .subscribe(resp => {
-
         console.log("RESP = ",resp);
-
       })
   }
-
-
-
 
   ngOnInit() {
 

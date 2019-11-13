@@ -66,6 +66,20 @@ export class BookFetchService {
     console.log('recommending..');
     return this.http.get<any>('http://13.126.150.171:8080/recommendation-service/api/v1/books', httpOptions);
   }
+
+  saveToPublication(bookDetails):Observable<any>{
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+
+    console.log("saving to publication");
+    return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save',bookDetails,httpOptions);
+
+  } 
   
 
 

@@ -12,6 +12,10 @@
   box-shadow: 0 0 10px 0 lightslategrey;
 }
 
+#got
+{
+  background: rgb(202, 187, 102);
+}
 .chapter-title{
   width: 60%;
 }
@@ -132,12 +136,6 @@ mat-grid-tile {
   background-color: rgb(16, 14, 110);
   color: white;
   cursor: pointer;
-}
-
-.select-editor-dialog {
-}
-
-.hover-btn {
 }
 
 .choose-editor-tile {

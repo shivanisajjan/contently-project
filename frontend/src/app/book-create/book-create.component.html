@@ -129,13 +129,16 @@
         <button mat-raised-button color="primary" (click)="addNewSection()">
           <mat-icon>add</mat-icon>
         </button>
-        <button mat-raised-button color="primary">Publish</button>
+        <button (click)="publishFile()" mat-raised-button color="primary">Publish</button>
+        <button (click)="downloadFile()" mat-raised-button color="primary">download</button>
       </mat-card-actions>
 
-    </mat-card>
+    </mat-card> 
+
+    <div id="got"></div>
 
 
-  </div>
+  </div> 
   <br>
 
 </div>

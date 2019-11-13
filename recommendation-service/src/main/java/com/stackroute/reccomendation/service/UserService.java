@@ -1,10 +1,7 @@
 package com.stackroute.reccomendation.service;
 
 
-import com.stackroute.reccomendation.domain.Book;
-import com.stackroute.reccomendation.domain.Editor;
-import com.stackroute.reccomendation.domain.Illustrator;
-import com.stackroute.reccomendation.domain.User;
+import com.stackroute.reccomendation.domain.*;
 import com.stackroute.reccomendation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,6 +67,18 @@ public Collection<User> getIllustratorRec(String genre)
     public Collection<User> getEditorRec(String genre)
     {
         return userRepository.getEditorRec(genre);
+    }
+
+    public int getPriceRec(PriceRec priceRec)
+    {
+        int count=1;
+         count=userRepository.getPriceRec(priceRec.getGenre()).size();
+         if(count<=0)
+             count=1;
+
+        int price=priceRec.getEditorPay()+priceRec.getIllustratorPay()+priceRec.getBase()+count/10+priceRec.getNoOfWords()/1000;
+        System.out.println("price="+price);
+        return price;
     }
 
 

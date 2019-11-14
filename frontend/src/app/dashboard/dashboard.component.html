@@ -1,0 +1,124 @@
+<div class="dashboard-wrapper">
+
+  <br>
+  <mat-expansion-panel class="profile-details" expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Profile Details</mat-panel-title>
+      <mat-panel-description>{{profileData.username}}</mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-grid-list *ngIf="profileLoaded" cols="4" rowHeight="2em">
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>First Name: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.firstName}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>Last Name: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.lastName}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>Gender: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.gender}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>E-mail: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.email}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>Phone Number: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.phoneNumber}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>Nationality: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.nationality}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"><strong>Address: </strong></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.addressLine1}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.addressLine2}}</mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" class="info-label"></mat-grid-tile>
+      <mat-grid-tile [colspan]="3" class="info-value">{{ profileData.addressLine3}}</mat-grid-tile>
+    </mat-grid-list>
+    <mat-action-row style="justify-content: center">
+      <a mat-raised-button color="primary" (click)="editProfile()" class="edit-button">Edit Profile</a>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="contents-under-development">
+    <mat-expansion-panel-header>
+      Current Projects
+    </mat-expansion-panel-header>
+    <mat-grid-list rowHeight="40px" cols="3">
+      <div class="content-list" *ngFor="let content of contentsList, index as i">
+        <mat-grid-tile class="info-value content-title" colspan="3" rowspan="1">
+          <mat-icon>book</mat-icon>
+          {{content.title | titlecase}}
+        </mat-grid-tile>
+
+        <mat-grid-tile class="info-value" colspan="2" rowspan="1">
+          <mat-icon>person</mat-icon>{{content.authorName}}
+        </mat-grid-tile>
+
+        <mat-grid-tile class="info-value" colspan="1" rowspan="1">
+          <mat-icon>local_offer</mat-icon>{{content.typeName | titlecase}} ,&nbsp; {{content.genres | titlecase}}
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="ifConfirmed(content.editorStatus)" class="info-value" colspan="1" rowspan="1">
+          <mat-icon>border_color</mat-icon>{{content.editorName}}
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="ifConfirmed(content.designerStatus)" class="info-value" colspan="1" rowspan="1">
+          <mat-icon>format_paint</mat-icon>{{content.designerName}}
+        </mat-grid-tile>
+
+        <mat-grid-tile class="info-value" colspan="1" rowspan="1">
+          <mat-icon>date_range</mat-icon>{{content.createdAt}}
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="2">
+          <textarea class="info-value-textarea" disabled>{{content.description}}</textarea>
+        </mat-grid-tile>
+
+        <mat-grid-tile class="info-value" colspan="3" rowspan="1">
+          <button mat-raised-button color="primary" (click)="edit(i)">Edit</button>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan='3'>
+          <mat-divider style="width: 100%;"></mat-divider>
+        </mat-grid-tile>
+
+      </div>
+    </mat-grid-list>
+    <mat-action-row style="justify-content: center" *ngIf="ifAuthor()">
+      <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="books-published">
+    <mat-expansion-panel-header>
+      Published Books
+    </mat-expansion-panel-header>
+    <div *ngFor="let content of contentsList, index as i">
+      <!--        <mat-card-content>-->
+      <mat-grid-tile class="info-value" colspan="1" rowspan="5"></mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.title}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="2" rowspan="1">{{content.authorName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.typeName}} ,
+        &nbsp; {{content.genres}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.editorName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.designerName}}</mat-grid-tile>
+      <mat-grid-tile class="info-value" colspan="1" rowspan="1">{{content.createdOn}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">{{content.description}}</mat-grid-tile>
+
+      <mat-grid-tile class="info-value" colspan="3" rowspan="1">
+        <button>Edit</button>
+      </mat-grid-tile>
+      <!--        </mat-card-content>-->
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="purchases-made">
+    <mat-expansion-panel-header>
+      Purchases
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div style="height: 170px;"></div>
+</div>

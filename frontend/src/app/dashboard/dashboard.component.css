@@ -1,0 +1,40 @@
+.profile-details, .contents-under-development, .books-published, .purchases-made {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.info-label > ::ng-deep figure {
+  justify-content: flex-end;
+  padding: 0 5px;
+}
+
+.info-value > ::ng-deep figure {
+  padding: 5px;
+  justify-content: flex-start;
+  position: absolute;
+}
+
+.info-value-textarea {
+  height: 100%;
+  width: 100%;
+  resize: none;
+  background-color: white;
+  color: lightslategrey;
+  border-width: 0;
+  text-align: justify;
+  vertical-align: center;
+}
+mat-icon {
+  color: darkslategray;
+  font-size: 20px;
+  margin-right: 10px;
+}
+.list-item-entry:hover {
+  background-color: lightgrey;
+}
+.dashboard-wrapper {
+  background-image: url('../../assets/images/main_bg.jpeg');
+}
+.content-title {
+  font-size: 2em;
+}

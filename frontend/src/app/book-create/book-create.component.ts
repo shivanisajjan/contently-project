@@ -409,7 +409,7 @@ console.log(data);
 
 
 onSelectFile(event) { // called each time file input changes
-    if (event.target.files && event.target.files[0]) {
+    if (event.target.files && event.target.files[0]) { 
       
 
     
@@ -420,7 +420,7 @@ onSelectFile(event) { // called each time file input changes
     }
 }
 
-  }
+
 
   publishFile() {
 
@@ -470,7 +470,7 @@ onSelectFile(event) { // called each time file input changes
 
   }
 
-  downloadFile() {
+  downloadFile(){
 
     const fileName = 'save.docx';
     const fileType = this._FileSaverService.genType(fileName);

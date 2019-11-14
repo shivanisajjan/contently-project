@@ -21,12 +21,12 @@ export class BookdetailsComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.getBookDetails();
-    this.bookFetch.getPurchaseStatus().subscribe(data=>{
+    // this.getBookDetails();
+    // this.bookFetch.getPurchaseStatus().subscribe(data=>{
 
-      console.log(data);
-    });
-  }
+    //   console.log(data);
+    // });
+  } 
 
 
   openSampleChapterDialog(): void{

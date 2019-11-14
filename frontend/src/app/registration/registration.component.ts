@@ -152,6 +152,7 @@ export class RegistrationComponent implements OnInit {
     regUser.addressLine2 = address2;
     regUser.addressLine3 = address3;
     regUser.gender = this.gender;
+    regUser.dob=date;
     this._loginService.updateUser(regUser).subscribe(result => {
       this.returnUser = result;
       if (this.returnUser.id != null) {

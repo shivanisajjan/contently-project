@@ -89,7 +89,6 @@ public class PublicationServiceImpl implements PublicationService {
 
     public List<Publications> findByEditorId(int id) throws InternalServerErrorException
     {
-
         try
         {
             return publicationRepository.findByEditorId((id));
@@ -134,6 +133,16 @@ public class PublicationServiceImpl implements PublicationService {
 
         List<Publications> search = mongo.find(query, Publications.class);
         return search;
+    }
+
+    @Override
+    public Publications findById(int id) throws ContentDoesNotExistException {
+        try{
+            return publicationRepository.findById(id).get();
+        }
+        catch (Exception e){
+            throw new ContentDoesNotExistException();
+        }
     }
 
 }

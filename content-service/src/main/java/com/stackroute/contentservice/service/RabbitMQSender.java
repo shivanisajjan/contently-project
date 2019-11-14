@@ -23,7 +23,6 @@ public class RabbitMQSender {
 
     public void sendContent(Content content) {
         rabbitTemplate.convertAndSend(exchange, routingkey, content);
-        System.out.println("Send msg = " + content.getId());
     }
 
 }

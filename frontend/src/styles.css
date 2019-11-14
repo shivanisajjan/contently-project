@@ -30,4 +30,7 @@ html, body {
     height: 100%;
     font-family: 'Montserrat', sans-serif;
  }
-body { margin: 0;  background-image: url('../src/assets/images/main_bg.jpeg');}
+body { margin: 0; 
+     /* background-image: url('../src/assets/images/main_bg.jpeg'); */
+    
+    }

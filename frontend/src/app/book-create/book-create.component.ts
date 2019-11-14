@@ -325,7 +325,7 @@ export class BookCreateComponent implements OnInit {
       let cond = false;
       // author
       if (localStorage.getItem('role') === 'reader/author') {
-        if (status === 'Writing Phase' || status === 'Editing Done' || status === 'Designing Done') {
+        if (status === 'Writing Phase' || status === 'Editing Done' || status === 'Designing Done' || status === 'Finished') {
           cond = true;
         }
       }

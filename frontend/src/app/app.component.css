@@ -52,7 +52,8 @@ body {
 }
 
 .mat-toolbar{
-  /* background-image: url('../assets/images/trend.jpg') */
+  background-image: url('../assets/images/trend.jpg');
+  color : rgb(19, 19, 19);
 }
 .footer{
   background-color: white;
@@ -67,7 +68,7 @@ body {
 }
 
 .router-outlet{
-  background-image: url('../assets/images/main_bg.jpeg');
+  /* background-image: url('../assets/images/main_bg.jpeg'); */
 }
 .app-footer{
   position: absolute;

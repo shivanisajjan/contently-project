@@ -1,7 +1,7 @@
 <div class="home-container">
   
     <div class="trending-books">
-    <h1 style="margin-left: 4%;">Trending Books</h1>
+    <h3 style="margin-left: 4%;">Trending Books</h3>
     </div>
     <div class="container" id="recbox"
     fxLayout
@@ -14,26 +14,27 @@
     <mat-card (click)="bookDetails(bookvar.bookId)" id="cardhere">
 
         <img mat-card-image src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="card image">
-        <h4>{{bookvar.bookName}}</h4>
+        <h6>{{bookvar.bookName}}</h6>
         <br>
     </mat-card></div>
     <br></div>
     <br>
   <div class="our-programs">
       <div class="trending-books">
-          <h1 style="margin-left: 4%;">Our Programs</h1>
+          <h3 style="margin-left: 60%; ">Our Programs</h3>
           </div><br>
     <div class="our-programs-header">
-        
+        <div class="home-body">
       <h5>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut
         reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut
         reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!
-      </h5><br>
+      </h5><br></div>
       
     </div>
     <div class="our-programs-body">
+      <div class="programs">
       <div class="reader">
         <div class="reader-text">
           <h4>We offer huge varieties of contents to our readers</h4>
@@ -53,7 +54,8 @@
         <img class="user-image" src="https://joansproject.files.wordpress.com/2016/01/wp-14528274073611.jpg?w=1400"
              alt="">
       </div>
-
+    </div>
+      <div class="programs">
       <div class="author">
         <div class="author-text">
           <h4>Lot of authors use our services to write their own content</h4>
@@ -70,7 +72,9 @@
              src="https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
              alt="">
       </div>
+    </div>
 
+      <div class="programs">
       <div class="designer">
         <div class="designer-text">
           <h4>We work with professional designers to make the content look eye catchy</h4>
@@ -87,17 +91,17 @@
              src="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1346&q=80"
              alt="">
       </div>
-
+    </div>
     </div>
   </div>
 
   <div class="our-authors">
       <div class="trending-books">
-          <h1 style="margin-left: 4%;">Testimonies</h1>
+          <h3 style="margin-left: 4%;">Testimonies</h3>
           </div>
     <div class="our-authors-heading">
         <br>     
-            <h5>
+            <h5 style="color: white;">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
         adipisci at provident.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
@@ -105,14 +109,14 @@
       </h5><br>
     </div>
     <div class="our-authors-body">
-      <mat-card>
+      <mat-card class="author-card">
         <mat-card-header></mat-card-header>
         <mat-card-content>
           <img class="author-avatar"
                src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1"
                alt="">
           <mat-card-title>James Hawkins</mat-card-title>
-          <mat-card-subtitle>
+          <mat-card-subtitle class="author-subtitle">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
             adipisci at provident.
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
@@ -121,14 +125,14 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card>
+      <mat-card class="author-card">
         <mat-card-header></mat-card-header>
         <mat-card-content>
           <img class="author-avatar"
                src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1"
                alt="">
           <mat-card-title>James Hawkins</mat-card-title>
-          <mat-card-subtitle>
+          <mat-card-subtitle class="author-subtitle">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
             adipisci at provident.
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
@@ -137,14 +141,14 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card>
+      <mat-card class="author-card">
         <mat-card-header></mat-card-header>
         <mat-card-content>
           <img class="author-avatar"
                src="https://i0.wp.com/zblogged.com/wp-content/uploads/2019/02/FakeDP.jpeg?resize=567%2C580&ssl=1"
                alt="">
           <mat-card-title>James Hawkins</mat-card-title>
-          <mat-card-subtitle>
+          <mat-card-subtitle class="author-subtitle">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,
             adipisci at provident.
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora,

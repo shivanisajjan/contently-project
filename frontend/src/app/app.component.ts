@@ -87,7 +87,6 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      window.location.reload();
     });
   }
 
@@ -116,7 +115,8 @@ export class AppComponent implements OnInit {
           this._snackBar.open(message.body,"close", {
             duration: 2000,
           });
-          this.ngOnInit
+          // tslint:disable-next-line: no-unused-expression
+          this.ngOnInit;
         }
       });
     });

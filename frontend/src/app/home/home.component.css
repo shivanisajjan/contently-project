@@ -61,6 +61,7 @@
   min-height: 100%;
   min-width: 100%;
   margin: 0 auto;
+  border-radius: 25px;
 }
 .reader-text h4, .author-text h4 {
   margin-bottom: 10px;
@@ -126,29 +127,39 @@ mat-card-content{
 
 .container{
   /*margin: auto;*/
-  justify-content: center;
+  /* justify-content: center; */
   width: 100%;
   /* background-image: url('../../assets/images/main_bg.jpeg'); */
 }
 
 .home-container{
-  background-color: #ffffff;
+  /* background-color: #1a1a1a; */
+  /* background-color: #0a0927; */
+/* background-color: #f35445; */
+  background-image: url('../../assets/images/side_bg.jpg');
+  
 }
 #cardhere
 {
   border: 2px solid rgb(190, 175, 147);
-  border-radius: 20px;
+  /* border-radius: 20px; */
   height: 390px;
   width: 200px;
   overflow: visible;
   animation: mymove 5s infinite;
+  background-color: #ffc5c8;
 
 }
 
+#cardhere img{
+  /* margin: auto; */
+}
+
 #cardhere:hover{
-  margin-top: -10px;
-  background-color: rgba(0,0,0,0.7);
+  /* margin-top: -10px; */
+  background-color: #ff656d;
   opacity: 0.9;
+  color: white;
 
 }
 #recbox
@@ -169,14 +180,47 @@ mat-card-content{
   to {left: 100%;}
 }
 .trending-books{
-  padding: 2%;
-  color: black;
+  padding: 3%;
+  color: rgb(15, 15, 15);
   /* text-shadow: 4px 4px #333333; */
-  /* background-image: url('../../assets/images/trend.jpg'); */
+  background-image: url('../../assets/images/trend.jpg');
   background-repeat: initial;
   font-weight: bold;
+  text-transform: uppercase;
+  outline: 1px solid rgb(26, 26, 26);
+  outline-offset: -15px;
+  letter-spacing: 20px;
+
 
 }
 
-.home-container{
+.home-body{
+  color: white;
+  font-family: 'Quicksand', sans-serif ;
 }
+
+ h3{
+  font-family: 'Quicksand', sans-serif ;
+  
+ }
+
+ .programs{
+   padding: 3%;
+ }
+
+ .author-card{
+  background-image: url('../../assets/images/trend1.jpg');
+  color: black;
+ }
+ 
+
+ .author-subtitle{
+   color: black;
+
+ }
+ 
+
+ /* .author{
+  outline: 5px solid white;
+  outline-offset: -30px;
+ } */

@@ -22,7 +22,7 @@ export class BookdetailsComponent implements OnInit {
 
   ngOnInit() {
     // this.getBookDetails();
-    // this.bookFetch.getPurchaseStatus().subscribe(data=>{
+    // this.bookFetch.getPurchaseStatus(this.bookDetails.id,).subscribe(data=>{
 
     //   console.log(data);
     // });

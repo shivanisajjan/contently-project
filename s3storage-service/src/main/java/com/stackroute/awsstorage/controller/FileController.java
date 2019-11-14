@@ -1,7 +1,6 @@
 package com.stackroute.awsstorage.controller;
 
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.stackroute.awsstorage.model.Html;
 import com.stackroute.awsstorage.service.AmazonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
 
 
 @CrossOrigin
@@ -34,6 +32,11 @@ public class FileController {
     @PostMapping("/file/{filename}")
     public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file,@PathVariable String filename) {
         return new ResponseEntity<String>(this.amazonClient.uploadFile(file,filename), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/text/{filename}")
+    public void uploadText(@PathVariable String filename, @RequestPart(value = "file") MultipartFile file) throws IOException {
+         this.amazonClient.generatePDFFromHTML(filename,file);
     }
 
 

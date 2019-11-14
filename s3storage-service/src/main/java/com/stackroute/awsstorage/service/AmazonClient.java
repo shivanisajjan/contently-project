@@ -7,6 +7,9 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.stackroute.awsstorage.model.Html;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -17,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Date;
 
 @Service
@@ -47,11 +47,10 @@ public class AmazonClient {
                 .build();
     }
 
-    public String uploadFile(MultipartFile multipartFile,String filename) {
+    public String uploadFile(MultipartFile multipartFile,String filename) {  //for images
         String fileUrl = "";
         try {
             File file = convertMultiPartToFile(multipartFile);
-//            String fileName = generateFileName(multipartFile);
             fileUrl = endpointUrl + "/" + bucketName + "/" + filename;
             uploadFileTos3bucket(filename, file);
             file.delete();
@@ -88,12 +87,52 @@ public class AmazonClient {
         S3Object s3Object=s3client.getObject(bucketName,filename);
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
         return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_PDF)
                 .cacheControl(CacheControl.noCache())
-                .header("Content-Disposition", "attachment; filename=" + "testing.pdf")
+                .header("Content-Disposition", "attachment; filename=" + filename)
                 .body(new InputStreamResource(inputStream));
 
 
     }
+
+//    public  void generatePDFFromHTML(String filename, Html html) throws IOException{
+//     File f = new File("input.html");
+//
+//        if (f.createNewFile())
+//        {
+//            System.out.println("File is created!");
+//        } else {
+//            System.out.println("File already exists.");
+//        }
+//
+//        FileWriter writerr = new FileWriter(f);
+//        writerr.write(html.getHtml());
+//        writerr.close();
+//
+//
+//        File htmlSource = new File("input.html");
+//        File pdfDest = new File("output.pdf");
+//        ConverterProperties converterProperties = new ConverterProperties();
+//        HtmlConverter.convertToPdf(new FileInputStream(htmlSource),
+//                new FileOutputStream(pdfDest), converterProperties);
+//        uploadFileTos3bucket(filename,pdfDest);
+//
+//    }
+
+
+    public  void generatePDFFromHTML(String filename, MultipartFile multipartFile) throws IOException{
+
+            File f = convertMultiPartToFile(multipartFile);
+
+
+
+        File pdfDest = new File("output.pdf");
+        ConverterProperties converterProperties = new ConverterProperties();
+        HtmlConverter.convertToPdf(new FileInputStream(f),
+                new FileOutputStream(pdfDest), converterProperties);
+        uploadFileTos3bucket(filename,pdfDest);
+
+    }
+
 }
 

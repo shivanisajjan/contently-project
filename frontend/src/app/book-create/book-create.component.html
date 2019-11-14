@@ -7,76 +7,77 @@
   </mat-card>
   <br>
   <div *ngIf="ifAuthor()">
-  <mat-card *ngIf="isSelectHelper()" class="editor-illustrator">
-    <mat-grid-list cols="2" rowHeight="175px">
-      <mat-grid-tile class="choose-editor-tile">
-        <div class="select-editor-header">
-          <mat-grid-tile-header *ngIf="!bookDetails.editorName" matRipple [matRippleColor]="myColor" class=""
-                                (click)="openSelectEditorDialog()">
-            <h2>Choose an Editor</h2>
-          </mat-grid-tile-header>
-          <mat-grid-tile-header *ngIf="bookDetails.editorStatus == 'rejected'" matRipple [matRippleColor]="myColor"
-                                class=""
-                                (click)="openSelectEditorDialog()">
-            <h2>Choose an Editor</h2>
-          </mat-grid-tile-header>
-          <mat-grid-tile-header *ngIf="bookDetails.editorName && bookDetails.editorStatus != 'rejected'">
-            <h2>Editor Selected</h2>
-          </mat-grid-tile-header>
-        </div>
-        <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
-        <mat-grid-tile-footer *ngIf="bookDetails.editorStatus">
-          <h4>{{bookDetails.editorStatus | uppercase }}</h4>
-        </mat-grid-tile-footer>
-      </mat-grid-tile>
-
-      <mat-grid-tile class="choose-editor-tile">
-        <div class="select-editor-header">
-          <mat-grid-tile-header *ngIf="!bookDetails.designerName" matRipple [matRippleColor]="myColor"
-                                (click)="openSelectIllustratorDialog()">
-            <h2>Choose an Illustrator</h2>
-          </mat-grid-tile-header>
-          <mat-grid-tile-header *ngIf="bookDetails.designerStatus == 'rejected' || bookDetails.designerStatus == null"
-                                matRipple [matRippleColor]="myColor" (click)="openSelectIllustratorDialog()">
-            <h2>Choose an Illustrator</h2>
-          </mat-grid-tile-header>
-          <mat-grid-tile-header *ngIf="bookDetails.designerName && bookDetails.designerStatus != 'rejected'">
-            <h2>Illustrator Selected</h2>
-          </mat-grid-tile-header>
-        </div>
-        <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
-        <mat-grid-tile-footer *ngIf="bookDetails.designerStatus">
-          <h4>{{bookDetails.designerStatus | uppercase }}</h4>
-        </mat-grid-tile-footer>
-      </mat-grid-tile>
-    </mat-grid-list>
-
-  </mat-card>
-  <br>
-
-  <div *ngIf="!isSelectHelper()">
-    <mat-card *ngIf="!isSelectHelper()" class="editor-illustrator">
-      <mat-grid-list *ngIf="bookDetails.editorName" cols="2" rowHeight="175px">
+    <mat-card *ngIf="isSelectHelper()" class="editor-illustrator">
+      <mat-grid-list cols="2" rowHeight="175px">
         <mat-grid-tile class="choose-editor-tile">
           <div class="select-editor-header">
-            <mat-grid-tile-header>
+            <mat-grid-tile-header *ngIf="!bookDetails.editorName" matRipple [matRippleColor]="myColor" class=""
+                                  (click)="openSelectEditorDialog()">
+              <h2>Choose an Editor</h2>
+            </mat-grid-tile-header>
+            <mat-grid-tile-header *ngIf="bookDetails.editorStatus == 'rejected'" matRipple [matRippleColor]="myColor"
+                                  class=""
+                                  (click)="openSelectEditorDialog()">
+              <h2>Choose an Editor</h2>
+            </mat-grid-tile-header>
+            <mat-grid-tile-header *ngIf="bookDetails.editorName && bookDetails.editorStatus != 'rejected'">
               <h2>Editor Selected</h2>
             </mat-grid-tile-header>
           </div>
           <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
+          <mat-grid-tile-footer *ngIf="bookDetails.editorStatus">
+            <h4>{{bookDetails.editorStatus | uppercase }}</h4>
+          </mat-grid-tile-footer>
         </mat-grid-tile>
 
-        <mat-grid-tile>
-
+        <mat-grid-tile class="choose-editor-tile">
           <div class="select-editor-header">
-            <mat-grid-tile-header>
+            <mat-grid-tile-header *ngIf="!bookDetails.designerName" matRipple [matRippleColor]="myColor"
+                                  (click)="openSelectIllustratorDialog()">
+              <h2>Choose an Illustrator</h2>
+            </mat-grid-tile-header>
+            <mat-grid-tile-header *ngIf="bookDetails.designerStatus == 'rejected' || bookDetails.designerStatus == null"
+                                  matRipple [matRippleColor]="myColor" (click)="openSelectIllustratorDialog()">
+              <h2>Choose an Illustrator</h2>
+            </mat-grid-tile-header>
+            <mat-grid-tile-header *ngIf="bookDetails.designerName && bookDetails.designerStatus != 'rejected'">
               <h2>Illustrator Selected</h2>
             </mat-grid-tile-header>
           </div>
           <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
+          <mat-grid-tile-footer *ngIf="bookDetails.designerStatus">
+            <h4>{{bookDetails.designerStatus | uppercase }}</h4>
+          </mat-grid-tile-footer>
         </mat-grid-tile>
       </mat-grid-list>
-    </mat-card><br></div>
+
+    </mat-card>
+    <br>
+
+    <div *ngIf="!isSelectHelper()">
+      <mat-card *ngIf="!isSelectHelper()" class="editor-illustrator">
+        <mat-grid-list *ngIf="bookDetails.editorName" cols="2" rowHeight="175px">
+          <mat-grid-tile class="choose-editor-tile">
+            <div class="select-editor-header">
+              <mat-grid-tile-header>
+                <h2>Editor Selected</h2>
+              </mat-grid-tile-header>
+            </div>
+            <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+
+            <div class="select-editor-header">
+              <mat-grid-tile-header>
+                <h2>Illustrator Selected</h2>
+              </mat-grid-tile-header>
+            </div>
+            <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+      <br></div>
   </div>
 
   <div class="section-list">
@@ -88,9 +89,9 @@
       <mat-divider></mat-divider>
 
       <mat-card-content>
-        <mat-list class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)" >
+        <mat-list class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)">
           <mat-list-item class="drag-list-item" cdkDrag *ngFor="let chapter of bookDetails.status;index as i">
-<!--            <mat-divider></mat-divider>-->
+            <!--            <mat-divider></mat-divider>-->
             <div *cdkDragPreview><h5 mat-line>{{chapter.chapterName}}</h5></div>
 
             <div class="chapter-title">
@@ -100,7 +101,8 @@
             </div>
 
             <div class="status">
-              <button mat-raised-button style="margin-right: 10px;" [matMenuTriggerFor]="menu">{{chapter.status}}</button>
+              <button mat-raised-button style="margin-right: 10px;"
+                      [matMenuTriggerFor]="menu" [disabled]="!getShowEditButton(i)">{{chapter.status}}</button>
               <mat-menu #menu="matMenu">
                 <button *ngFor="let status of chapterStatus" mat-menu-item
                         (click)="changeChapterStatus(status,i)">{{status}}</button>
@@ -108,17 +110,27 @@
             </div>
 
             <div class="buttons-actions">
-              <button class="hover-btn" mat-raised-button color="primary" *ngIf="getShowEditButton(i)"
+              <button mat-raised-button color="primary" *ngIf="getShowEditButton(i)"
                       (click)="editFile(chapter.chapterName)" style="margin-right: 10px">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button class="hover-btn"  mat-raised-button color="primary" (click)="preview(chapter.chapterName)"
+              <button mat-raised-button color="primary" (click)="preview(chapter.chapterName)"
                       style="margin-right: 10px">
                 <mat-icon class="mat_icon">remove_red_eye</mat-icon>
               </button>
+              <button mat-raised-button (click)="commits(chapter.chapterName)" [matMenuTriggerFor]="commitMenu">
+                <mat-icon>update</mat-icon>
+              </button>
+              <mat-menu #commitMenu="matMenu" xPosition="before">
+                <div *ngIf="commitListLoaded">
+                  <button style="width: 400px" mat-menu-item *ngFor="let commit of commitList"
+                          (click)="singleCommit(chapter.chapterName, commit.sha)">{{commit.commit.author.name}} - {{commit.commit.message}}</button>
+                </div>
+                <div style="width: 400px" *ngIf="!commitListLoaded">
+                  <mat-spinner></mat-spinner>
+                </div>
+              </mat-menu>
             </div>
-
-
 
 
           </mat-list-item>
@@ -135,12 +147,12 @@
 <input type='file' (change)="onSelectFile($event)">
       </mat-card-actions>
 
-    </mat-card> 
+    </mat-card>
 
     <div id="got"></div>
 
 
-  </div> 
+  </div>
   <br>
 
 </div>

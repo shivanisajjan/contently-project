@@ -5,6 +5,7 @@ import {GithubService} from "../github.service";
 import {BookFetchService} from '../bookFetch.service';
 import {Book} from "../book-create/book";
 import {Commit} from "../book-create/commit";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-edit',
@@ -14,7 +15,7 @@ import {Commit} from "../book-create/commit";
 export class EditComponent implements OnInit {
 
   private book: Book;
-  private fileName: String;
+  private fileName: string;
   private editorForm: FormGroup;
   private editorStyle = {
     height: '400px',
@@ -56,7 +57,8 @@ export class EditComponent implements OnInit {
   onSubmit() {
     console.log(this.editorForm.get('editor').value);
     let content = btoa(this.editorForm.get('editor').value);
-    let commit = new Commit("", localStorage.getItem('fullName'), localStorage.getItem('email'), this.book.sha, content);
+    let commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en'),
+      localStorage.getItem('fullName'), localStorage.getItem('email'), this.book.sha, content);
     this.bookFetch.createFile(this.fileName, commit)
       .subscribe(
         data => {

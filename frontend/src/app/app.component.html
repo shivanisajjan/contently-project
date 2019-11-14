@@ -20,7 +20,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="navbar">
-    <mat-toolbar color="primary" style="justify-content: space-between;">
+    <mat-toolbar color="primary" style="justify-content: space-between; position: fixed;">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -60,8 +60,8 @@
               <a mat-menu-item (click)="onLogout()">Logout</a>
             </mat-menu>
             <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">notifications_none</i></button>
-            <mat-menu class="notificaiton-menu" #notification="matMenu">
-                <mat-card *ngIf="ifNotifications()">No new notificaitons</mat-card>
+            <mat-menu class="notification-menu" #notification="matMenu">
+                <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
                 <div class="notifications" *ngIf="!ifNotifications()" >
                 <div *ngFor = "let notification of notificationList;index as i">
                   <div *ngIf="isAuthor()">
@@ -73,8 +73,8 @@
                     <mat-card *ngIf="!notification.status">
                         <p>{{notification.message}}</p>
                     </mat-card>
-                  
-                  
+
+
                   </div>
                   <div *ngIf="!isAuthor()">
                   <mat-card *ngIf="notification.status" style="background-color: #c0d5f0;" >
@@ -102,7 +102,7 @@
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
-    <div class="parallax">
+    <div class="parallax" style="margin-top: 64px;">
       <div class="router-component-wrapper">
         <router-outlet></router-outlet>
           <div class="push"></div>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-page-after-login',
@@ -8,26 +8,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./page-after-login.component.css']
 })
 export class PageAfterLoginComponent implements OnInit {
-  public bookVar:[];
-  public bookRec : [];
+  public bookVar: [];
+  public bookRec: [];
+
   constructor(
-    private _bookFetch :BookFetchService,
-    private router : Router) {
+    private _bookFetch: BookFetchService,
+    private router: Router) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
-   }
+  }
 
   ngOnInit() {
     this._bookFetch.getRecommendation()
-    .subscribe(data => {console.log(data) ;this.bookVar=data;}); 
+      .subscribe(data => {
+        console.log(data);
+        this.bookVar = data;
+      });
     this._bookFetch.getRecommendedBooks(localStorage.getItem('username')).subscribe(
       data => this.bookRec = data
     );
   }
 
-  bookDetails(id){
-    this.router.navigate(['/book-details',id]);
+  bookDetails(id) {
+    this.router.navigate(['/book-details', id]);
   }
 
 }

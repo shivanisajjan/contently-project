@@ -15,12 +15,17 @@ export class BookdetailsComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private contentService : ContentService
+    private contentService : ContentService,
+    private bookFetch: BookFetchService
     ) {     
     }
 
   ngOnInit() {
     this.getBookDetails();
+    this.bookFetch.getPurchaseStatus().subscribe(data=>{
+
+      console.log(data);
+    });
   }
 
 

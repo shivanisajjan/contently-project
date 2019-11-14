@@ -40,6 +40,7 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
 import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { DownloadComponent } from './download/download.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     PageAfterLoginComponent,
     EditProfileComponent,
     PaymentComponent,
-    LoadingComponent
+    LoadingComponent,
+    DownloadComponent
   ],
 
   imports: [

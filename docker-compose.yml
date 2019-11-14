@@ -137,6 +137,14 @@ services:
         - eureka-server
       ports:
         - 8082:8082
+  
+  s3storage-service:
+      build: s3storage-service
+      container_name: s3storage-service
+      restart: always
+      ports:
+        - 8081:8081
+ 
 
   notification:
      build: notification

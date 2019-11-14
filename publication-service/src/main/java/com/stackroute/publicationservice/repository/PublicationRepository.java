@@ -19,4 +19,6 @@ public interface PublicationRepository extends MongoRepository<Publications, Int
     @Query("{'editorIds' : { $all: [ ?0 ] } }")
     List<Publications> findByEditorId(int id);
 
+
+
 }

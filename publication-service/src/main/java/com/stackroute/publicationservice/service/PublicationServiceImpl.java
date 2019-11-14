@@ -1,7 +1,7 @@
 package com.stackroute.publicationservice.service;
 
 
-//import com.stackroute.publicationservice.Sequence.Custom;
+import com.stackroute.publicationservice.Sequence.Custom;
 import com.stackroute.publicationservice.exceptions.ContentAlreadyExistsExceptions;
 import com.stackroute.publicationservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.publicationservice.exceptions.InternalServerErrorException;
@@ -9,8 +9,13 @@ import com.stackroute.publicationservice.exceptions.NullValueFieldException;
 import com.stackroute.publicationservice.model.Publications;
 import com.stackroute.publicationservice.repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoOperations;
-//import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.mongodb.core.query.TextQuery;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +29,14 @@ public class PublicationServiceImpl implements PublicationService {
 
     private PublicationRepository publicationRepository;
     private MongoOperations mongo;
+    private MongoTemplate mongoTemplate;
 
     @Autowired
-    public PublicationServiceImpl(PublicationRepository publicationRepository, MongoOperations mongo) {
+    public PublicationServiceImpl(PublicationRepository publicationRepository, MongoOperations mongo,MongoTemplate mongoTemplate) {
         this.publicationRepository = publicationRepository;
         this.mongo = mongo;
+        this.mongoTemplate=mongoTemplate;
+
     }
 
     public Publications saveContent(Publications publications) throws ContentAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
@@ -96,14 +104,36 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
 
-//    public int getNextSequence(String seqName)
-//        {
-//            Custom counter = mongo.findAndModify(
-//                    query(where("_id").is(seqName)),
-//                    new Update().inc("seq",1),
-//                    options().returnNew(true).upsert(true),
-//                    Custom.class);
-//            return counter.getSeq();
-//        }
+    public int getNextSequence(String seqName)
+        {
+            Custom counter = mongo.findAndModify(
+                    query(where("_id").is(seqName)),
+                    new Update().inc("seq",1),
+                    options().returnNew(true).upsert(true),
+                    Custom.class);
+            return counter.getSeq();
+        }
+
+    public List<Publications> findAllByTitle(String searchValue) {
+        //TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingAny(searchValue);
+        TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingPhrase("title").matchingPhrase(String.valueOf(searchValue));
+        Query query = TextQuery.queryText(criteria).sortByScore();
+
+        List<Publications> publications =mongo.find(query, Publications.class);
+        return publications;
+    }
+
+    public List<Publications> searchQuery(String searchQuery)
+    {
+        TextCriteria criteria = TextCriteria.forDefaultLanguage()
+                .matchingAny(searchQuery);
+
+        Query query = TextQuery.queryText(criteria)
+                .sortByScore()
+                .with(new PageRequest(0, 5));
+
+        List<Publications> search = mongo.find(query, Publications.class);
+        return search;
+    }
 
 }

@@ -33,6 +33,7 @@ export interface EditorDialogData {
 export class BookCreateComponent implements OnInit { 
 
 
+  
   gotFile:any; 
   private editor;
   private illustrator;
@@ -363,34 +364,28 @@ export class BookCreateComponent implements OnInit {
 
   uploadFile(file) {
      
-    console.log("s3 upload called");
-    const bucket = new S3(
-          {
-              accessKeyId: 'AKIASD2RRW35M5E63FFP ',
-              secretAccessKey: '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',
-              region: 'us-east-2'
-          }
-      );
-      const params = {
 
-        
-          Bucket: 'convertedbooks',  
-          Key: file.name, 
-          Body: file,  
-          ACL: 'public-read', 
-          ContentType: file.type,
-      };
-      bucket.upload(params, function (err, data) {
-          if (err) {
-              console.log('There was an error uploading your file: ', err);
-              return false;
-          }
-          console.log('Successfully uploaded file.', data);
-          return true;
-      });
+    this.bookFetch.uploadToAws(file,this.bookDetails.id).subscribe(data=>{
+console.log(data);
+
+    });
+    
 
   
-}  
+}
+
+
+onSelectFile(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      
+
+    
+      this.bookFetch.uploadToAws(event.target.files[0],event.target.files[0].name).subscribe(data=>{
+        console.log(data);
+      });
+      
+    }
+}
 
   publishFile()
   {

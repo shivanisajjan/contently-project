@@ -131,6 +131,8 @@
         </button>
         <button (click)="publishFile()" mat-raised-button color="primary">Publish</button>
         <button (click)="downloadFile()" mat-raised-button color="primary">download</button>
+        
+<input type='file' (change)="onSelectFile($event)">
       </mat-card-actions>
 
     </mat-card> 

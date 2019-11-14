@@ -19,6 +19,7 @@ export class PaymentComponent implements OnInit {
   private invalidfeedback: string;
 
   chargeCreditCard(num,exp,cvv) {
+    this.router.navigate(['/loading']).then();
     // let form = document.getElementsByTagName("form")[0];
     let arr = exp.split('/',2);
     (<any>window).Stripe.card.createToken({
@@ -31,7 +32,7 @@ export class PaymentComponent implements OnInit {
         let token = response.id;
         console.log(token);
         this.invalidfeedback = "";
-        this.router.navigate(['/loading']).then();
+        // this.router.navigate(['/loading']).then();
 
 
 

@@ -36,6 +36,7 @@
         <module>recommendation-service</module>
         <module>notification</module>
         <module>publication-service</module>
+        <module>purchasing-service</module>
     </modules>
 
     <dependencies>

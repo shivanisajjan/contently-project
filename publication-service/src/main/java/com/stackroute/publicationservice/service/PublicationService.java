@@ -23,6 +23,12 @@ public interface PublicationService {
 
     List<Publications> findByEditorId(int id) throws InternalServerErrorException;
 
+    public List<Publications> searchQuery(String searchQuery);
 
-//    int getNextSequence(String seq);
+
+    int getNextSequence(String seq);
+
+    public List<Publications> findAllByTitle(String searchValue);
+
+
 }

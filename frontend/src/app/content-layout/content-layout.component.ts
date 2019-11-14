@@ -21,7 +21,7 @@ export class ContentLayoutComponent implements OnInit {
                 if (!localStorage.getItem('token')) {
                   this.router.navigate(['/home']).then();
                 }
-            } 
+            }
 
   ngOnInit() {
   }
@@ -42,7 +42,7 @@ export class ContentLayoutComponent implements OnInit {
       authorName: localStorage.getItem('username'),
       typeName: input.value.type,
       genres,
-      createdAt: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      createdAt: formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en'),
       selectHelper:input.value.selectHelper
     };
     localStorage.setItem('selectHelper',input.value.selectHelper);

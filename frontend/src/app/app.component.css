@@ -48,7 +48,6 @@ mat-sidenav-content{
 
 body {
   flex: 1;
-  background-color: aquamarine;
   font-family: 'Dosis', sans-serif;
 }
 
@@ -61,7 +60,7 @@ body {
   padding-top: 10px;
 }
 
-.notificaiton-menu{
+.notification-menu{
   width: 80%;
 }
 .test-menu{

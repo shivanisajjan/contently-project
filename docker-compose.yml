@@ -137,6 +137,14 @@ services:
         - eureka-server
       ports:
         - 8082:8082
+  
+  s3storage-service:
+      build: s3storage-service
+      container_name: s3storage-service
+      restart: always
+      ports:
+        - 8081:8081
+ 
 
   notification:
      build: notification
@@ -172,6 +180,23 @@ services:
         - eureka-server
       ports:
         - 8083:8083
+
+  purchasing-service:
+    build: purchasing-service
+    image: purchasing-service
+    container_name: purchasing-service
+    restart: always
+    depends_on:
+      - mongo
+      - config-server
+      - eureka-server
+    links:
+      - mongo
+      - config-server
+      - eureka-server
+    ports:
+      - 8181:8181
+
   contently-frontend:
       build: frontend
       restart: always

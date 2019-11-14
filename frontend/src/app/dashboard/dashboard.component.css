@@ -1,9 +1,9 @@
-.profile-details, .contents-under-development, .books-published, .purchases-made{
+.profile-details, .contents-under-development, .books-published, .purchases-made {
   width: 80%;
   margin: 10px auto;
 }
 
-.info-label > ::ng-deep figure{
+.info-label > ::ng-deep figure {
   justify-content: flex-end;
   padding: 0 5px;
 }
@@ -12,9 +12,9 @@
   padding: 5px;
   justify-content: flex-start;
   position: absolute;
-  /*background-color: #0d95e8;*/
 }
-.info-value-textarea{
+
+.info-value-textarea {
   height: 100%;
   width: 100%;
   resize: none;
@@ -25,34 +25,16 @@
   vertical-align: center;
 }
 mat-icon {
-  color: grey;
-  font-size: 18px;
+  color: darkslategray;
+  font-size: 20px;
   margin-right: 10px;
 }
-.info-value-last > ::ng-deep figure {
-  padding: 5px;
-  justify-content: flex-start;
-  bottom: 20px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-}
-.list-item-entry > mat-grid-tile{
-  /*background-color: blue;*/
-}
-.list-item-entry:hover{
+.list-item-entry:hover {
   background-color: lightgrey;
 }
-.content-list-last{
-  margin-bottom: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: lightslategrey;
-}
-
-
-.dashboard-wrapper{
+.dashboard-wrapper {
   background-image: url('../../assets/images/main_bg.jpeg');
 }
-.content-title{
+.content-title {
   font-size: 2em;
 }

@@ -12,6 +12,7 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
+import { DownloadComponent } from './download/download.component';
 
 
 
@@ -21,14 +22,17 @@ const  routes: Routes = [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'register', component: RegistrationComponent},
     {path: 'edit/:fileName', component: EditComponent},
-    {path: 'book-details/:id', component: BookdetailsComponent},
+    {path: 'book-details:/id', component: BookdetailsComponent},
     {path:'contentLayout',component:ContentLayoutComponent},
     {path:'bookCreate',component:BookCreateComponent},
     {path:'conversion',component:ConversionComponent},
     {path:'afterLogin',component:PageAfterLoginComponent},
     {path:'editProfile',component:EditProfileComponent},
     {path:'pay',component:PaymentComponent},
-    {path:'loading',component:LoadingComponent}
+    {path:'loading',component:LoadingComponent},
+    {path:'download',component:DownloadComponent}
+    
+
 
 ];
 

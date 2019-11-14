@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 
 
@@ -10,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.router.navigate(['book-details']);
+  }, 2000);
   }
 
 }

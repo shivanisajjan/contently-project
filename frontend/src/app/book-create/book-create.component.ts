@@ -1,51 +1,45 @@
-import {Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
-import {BookFetchService} from '../bookFetch.service';
-import {Book} from './book';
+import{Component, OnInit, Inject, Output, EventEmitter}from '@angular/core';
+import {BookFetchService}from '../bookFetch.service';
+import {Book}from './book';
 import {Router, ActivatedRoute} from '@angular/router';
-import {Commit} from './commit';
-import {AddNewSectionComponent} from './add-new-section/add-new-section.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Commit}from './commit';
+import {AddNewSectionComponent}from './add-new-section/add-new-section.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA}from '@angular/material/dialog';
 import {PreviewComponent} from './preview/preview.component';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
-import {ContentService} from '../content.service';
-import {notification} from '../notification';
-import {NotificationService} from '../notification.service';
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {FormControl}from '@angular/forms';
+import {Observable}from 'rxjs';
+import {startWith, map}from 'rxjs/operators';
+import {ContentService}from '../content.service';
+import {notification}from '../notification';
+import {NotificationService}from '../notification.service';
+import {CdkDragDrop, moveItemInArray}from "@angular/cdk/drag-drop";
 import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
-import { FileSaverService } from 'ngx-filesaver';
+import {FileSaverService}from 'ngx-filesaver';
 import * as jsPDF from 'jspdf';
-
-export interface EditorDialogData {
-  name: string;
-  price: string;
-}
-
+import {PublishingBookComponent} from '../publishing-book/publishing-book.component'
 
 @Component({
-  selector: 'app-book-create',
-  templateUrl: './book-create.component.html',
-  styleUrls: ['./book-create.component.css']
+selector: 'app-book-create',
+templateUrl: './book-create.component.html',
+styleUrls: ['./book-create.component.css']
 })
 
-export class BookCreateComponent implements OnInit { 
+export class BookCreateComponent implements OnInit {
 
 
-  gotFile:any; 
-  private editor;
-  private illustrator;
-  private bookDetails;
-  private chapterStatus = [];
-  private showEditButton: boolean[] = [];
-  private canPublish:boolean;
-  // private selectHelper = true;
+gotFile:any;
+private editor;
+private illustrator;
+private bookDetails;
+private chapterStatus = [];
+private showEditButton: boolean[] = [];
+// private selectHelper = true;
 
-  options: string[] = ['Editor1', 'Editor2', 'Editor3'];
-  private chapterNames;
+options: string[] = ['Editor1', 'Editor2', 'Editor3'];
+private chapterNames;
 
-  constructor(private bookFetch: BookFetchService,
+constructor(private bookFetch: BookFetchService,
               private router: Router,
               private dialog: MatDialog,
               private contentService: ContentService,
@@ -86,7 +80,7 @@ export class BookCreateComponent implements OnInit {
   document.getElementById('got').innerHTML=objectData;
   console.log("working"+objectData+"not working"+this.gotFile);
 
- 
+
 });
 
     if (localStorage.getItem('role') == 'editor') {
@@ -306,11 +300,48 @@ export class BookCreateComponent implements OnInit {
           cond = true;
         }
       }
-      console.log(chapter, status, cond);
       this.showEditButton[i] = cond;
     }
   }
 
+  isPublish():boolean{
+      if(this.bookDetails.status === null) {
+        return;
+      }
+      for (let i = 0; i < this.bookDetails.status.length; i++) {
+        const chapter = this.bookDetails.status[i].chapterName;
+        const status = this.bookDetails.status[i].status;
+         if(this.bookDetails.status[i].status!='Finished'){
+            return false;
+         }
+      }
+      return true;
+  }
+
+  onPublish(){
+       const dialogRef = this.dialog.open(PublishingBookComponent, {
+             width:'50%',
+             data: {
+//              id: this.bookDetails.id,
+//              title: this.bookDetails.title,
+//              description: this.bookDetails.description,
+//              authorName: this.bookDetails.authorName,
+//              editorName: this.bookDetails.editorName,
+//              designerName: this.bookDetails.designerName,
+//              typeName: this.bookDetails.typeName,
+//              genre: this.bookDetails.genre
+                book:this.bookDetails
+             }
+           });
+
+           dialogRef.afterClosed()
+           .subscribe(
+           result => {
+           console.log('Dialog was closed');
+           }
+           );
+
+  }
   getShowEditButton(index: number) {
     // console.log('returning: ', this.bookDetails.status[index].chapterName, this.showEditButton[index]);
     return this.showEditButton[index];
@@ -352,17 +383,14 @@ export class BookCreateComponent implements OnInit {
     newNotification.sender = localStorage.getItem('username');
     newNotification.bookId = bookId;
     newNotification.receiver = receiver;
-    newNotification.message = message; 
+    newNotification.message = message;
     newNotification.status = true;
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 
-  getHelperStatus() {
-
-  }
 
   uploadFile(file) {
-     
+
     console.log("s3 upload called");
     const bucket = new S3(
           {
@@ -373,11 +401,11 @@ export class BookCreateComponent implements OnInit {
       );
       const params = {
 
-        
-          Bucket: 'convertedbooks',  
-          Key: file.name, 
-          Body: file,  
-          ACL: 'public-read', 
+
+          Bucket: 'convertedbooks',
+          Key: file.name,
+          Body: file,
+          ACL: 'public-read',
           ContentType: file.type,
       };
       bucket.upload(params, function (err, data) {
@@ -389,12 +417,12 @@ export class BookCreateComponent implements OnInit {
           return true;
       });
 
-  
-}  
+
+}
 
   publishFile()
   {
-    
+
     const fileName = `save.docx`;
 
     const len = this.bookDetails.status.length;
@@ -429,16 +457,16 @@ export class BookCreateComponent implements OnInit {
 
             this.bookFetch.saveToPublication(this.bookDetails).subscribe(
               data=>{
-                console.log(data); 
+                console.log(data);
               }
             );
-            
+
           }
         }
       );
     }
-    
-    
+
+
 
 
    }
@@ -447,13 +475,13 @@ export class BookCreateComponent implements OnInit {
    {
 
    const fileName ='save.docx' ;
-  const fileType = this._FileSaverService.genType(fileName); 
+  const fileType = this._FileSaverService.genType(fileName);
 
- 
+
   const txtBlob = new Blob([document.getElementById('got').innerHTML], { type: fileType });
   console.log(txtBlob);
   this._FileSaverService.save(txtBlob, fileName);
- 
+
 }}
 
 @Component({
@@ -613,6 +641,6 @@ export class SetStatusDialog {
     this.dialogRef.close();
   }
 
-  
+
 
 }

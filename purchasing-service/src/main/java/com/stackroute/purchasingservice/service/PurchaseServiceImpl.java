@@ -37,27 +37,27 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
    public List<Purchase> findByUsername(String username) throws InternalServerErrorException {
-
         try {
             return purchaseRepository.findByUsername(username);
         }
         catch(Exception ex){
             throw new InternalServerErrorException();
         }
-
-
-
-
     }
 
-
-
-    public List<Purchase> findByBookId(int id) throws InternalServerErrorException
+    public boolean findByBookId(int id,String username) throws InternalServerErrorException
     {
-
         try
         {
-            return purchaseRepository.findByBookId((id));
+            List<Purchase> purchaseList= purchaseRepository.findByBookId((id));
+            if(purchaseList!=null){
+                for (Purchase purchase:purchaseList){
+                    if(purchase.getUsername().equals(username)){
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         catch (Exception e)
         {

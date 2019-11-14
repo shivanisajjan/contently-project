@@ -40,6 +40,7 @@ import { PageAfterLoginComponent } from './page-after-login/page-after-login.com
 import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { PublishingBookComponent } from './publishing-book/publishing-book.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     PageAfterLoginComponent,
     EditProfileComponent,
     PaymentComponent,
-    LoadingComponent
+    LoadingComponent,
+    PublishingBookComponent
   ],
 
   imports: [
@@ -110,11 +112,13 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SampleChapterDialog
+    SampleChapterDialog,
+    PublishingBookComponent
   ],
   providers: [
     LoginService,
-    ContentService
+    ContentService,
+    PublishingBookComponent
   ],
   bootstrap: [AppComponent]
 })

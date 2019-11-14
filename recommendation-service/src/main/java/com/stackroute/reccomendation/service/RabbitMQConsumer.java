@@ -29,9 +29,6 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "registry_queue")
     public void recievedMessage(UserDto userDto) {
-        System.out.println("got username is"+userDto.getUsername());
-
-
         user.setAgeGroup("t");
         user.setNationality("i");
         user.setName("m");

@@ -79,8 +79,8 @@ export class BookFetchService {
     console.log("saving to publication");
     return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save',bookDetails,httpOptions);
 
-  } 
-  
+  }
+
   getRecommendedBooks(username){
     const httpOptions = {
       headers: new HttpHeaders({
@@ -88,7 +88,7 @@ export class BookFetchService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/books/rec3/${username}`;
+    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/books/rec2/${username}`;
     return this.http.get<any>(postUrl, httpOptions);
 
   }

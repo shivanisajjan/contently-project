@@ -37,9 +37,6 @@ public class PurchaseController {
         this.stripeClient = stripeClient;
     }
 
-
-
-
     @ApiOperation(value = "payment gateway")
     @PostMapping(value = "/payment")
     public Charge chargeCard(HttpServletRequest request) throws Exception {
@@ -74,12 +71,10 @@ public class PurchaseController {
     }
 
     @ApiOperation(value = "get the existing purchases by book id")
-    @GetMapping(value = "/book/{id}")
-    public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException
+    @GetMapping(value = "/book/{id}/{username}")
+    public ResponseEntity<?> getByEditorId(@PathVariable("id") int id,@PathVariable("username") String username) throws InternalServerErrorException
     {
-
-
-        responseEntity=new ResponseEntity<>(purchaseService.findByBookId(id),HttpStatus.OK);
+        responseEntity=new ResponseEntity<>(purchaseService.findByBookId(id,username),HttpStatus.OK);
         return responseEntity;
     }
 }

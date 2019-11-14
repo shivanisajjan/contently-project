@@ -14,7 +14,7 @@ public interface PurchaseService {
     List<Purchase> findByUsername(String username) throws InternalServerErrorException;
 
 
-    List<Purchase> findByBookId(int id) throws InternalServerErrorException;
+    boolean findByBookId(int id,String username) throws InternalServerErrorException;
 
 
     int getNextSequence(String seq);

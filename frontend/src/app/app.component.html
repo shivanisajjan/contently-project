@@ -20,7 +20,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="navbar">
-    <mat-toolbar color="primary" style="justify-content: space-between;">
+    <mat-toolbar color="primary" style="justify-content: space-between; position: fixed;">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -102,7 +102,7 @@
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
-    <div class="parallax">
+    <div class="parallax" style="margin-top: 64px;">
       <div class="router-component-wrapper">
         <router-outlet></router-outlet>
           <div class="push"></div>

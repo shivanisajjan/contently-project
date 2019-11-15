@@ -109,6 +109,9 @@ export class BookCreateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       result => {
+        if (result === undefined) {
+          return;
+        }
         console.log('New Section Name: ', result);
         const commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en') + ' - Created',
           localStorage.getItem('fullName'), localStorage.getItem('email'), '', '');
@@ -128,6 +131,12 @@ export class BookCreateComponent implements OnInit {
               this.setShowEditButton();
               localStorage.setItem('book', JSON.stringify(this.bookDetails));
               console.log(this.bookDetails);
+              this.bookFetch.createFile('chat-files/' + result, commit)
+                .subscribe(
+                  data2 => {
+                    console.log('chat-file created: ', data2);
+                  }
+                );
               this.contentService.saveContent(this.bookDetails)
                 .subscribe(
                   data2 => {
@@ -394,28 +403,30 @@ export class BookCreateComponent implements OnInit {
   uploadFile(file) {
 
 
-    this.bookFetch.uploadToAws(file,this.bookDetails.id).subscribe(data=>{
-console.log(data);
+    this.bookFetch.uploadToAws(file, this.bookDetails.id).subscribe(data => {
+      console.log(data);
 
     });
 
 
+  }
 
-}
 
-
-onSelectFile(event) { // called each time file input changes
+  onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
 
 
+<<<<<<< HEAD
 
       this.bookFetch.uploadToAwsImage(event.target.files[0],event.target.files[0].name).subscribe(data=>{
+=======
+      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name).subscribe(data => {
+>>>>>>> 212917aea5117ea1a3e115c50b6cf6c06cffe3a0
         console.log(data);
       });
 
     }
-}
-
+  }
 
 
   publishFile() {
@@ -466,7 +477,7 @@ onSelectFile(event) { // called each time file input changes
 
   }
 
-  downloadFile(){
+  downloadFile() {
 
     const fileName = 'save.docx';
     const fileType = this._FileSaverService.genType(fileName);
@@ -532,7 +543,7 @@ export class SelectEditorDialog implements OnInit {
       });
   }
 
-  search(): void {
+  search() {
     const term = this.searchTerm;
     console.log(term);
     this.editorListFiltered = this.editorList.filter(function (tag) {

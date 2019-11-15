@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Headers, RequestOptions } from '@angular/http'
+import {Headers, RequestOptions} from '@angular/http'
 import {Observable} from 'rxjs';
 import {Commit} from './book-create/commit';
 
@@ -17,7 +17,7 @@ export class BookFetchService {
   private headers = {
     Authorization: 'Token 38082b67020bce12020e9587f5b0cae858228b0d'
   };
- 
+
 
   // httpOption for github api request
   private httpOptions = {
@@ -119,15 +119,14 @@ export class BookFetchService {
 
   }
 
-  uploadToAws(file,id):Observable<any>
-  {
-    
-  console.log("save to aws called");
+  uploadToAws(file, id): Observable<any> {
 
-  let testData = new FormData();
-  testData.append('file', file); 
+    console.log("save to aws called");
 
-return  this.http.post('http://localhost:8081/api/v1/file/'+id, testData); 
+    let testData = new FormData();
+    testData.append('file', file);
+
+    return this.http.post('http://localhost:8081/api/v1/file/' + id, testData);
   }
 
 }

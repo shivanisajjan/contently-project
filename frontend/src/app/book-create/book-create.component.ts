@@ -11,7 +11,7 @@ import {NotificationService} from '../notification.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as S3 from 'aws-sdk/clients/s3';
 import {FileSaverService} from 'ngx-filesaver';
-import {formatDate} from "@angular/common";
+import {formatDate} from '@angular/common';
 
 export interface EditorDialogData {
   name: string;
@@ -143,6 +143,9 @@ export class BookCreateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       result => {
+        if (result === undefined) {
+          return;
+        }
         console.log('New Section Name: ', result);
         const commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en') + ' - Created',
           localStorage.getItem('fullName'), localStorage.getItem('email'), '', '');
@@ -162,6 +165,12 @@ export class BookCreateComponent implements OnInit {
               this.setShowEditButton();
               localStorage.setItem('book', JSON.stringify(this.bookDetails));
               console.log(this.bookDetails);
+              this.bookFetch.createFile('chat-files/' + result, commit)
+                .subscribe(
+                  data2 => {
+                    console.log('chat-file created: ', data2);
+                  }
+                );
               this.contentService.saveContent(this.bookDetails)
                 .subscribe(
                   data2 => {
@@ -396,27 +405,27 @@ export class BookCreateComponent implements OnInit {
   }
 
   uploadFile(file) {
-     
+
 
     this.bookFetch.uploadToAws(file,this.bookDetails.id).subscribe(data=>{
 console.log(data);
 
     });
-    
 
-  
+
+
 }
 
 
 onSelectFile(event) { // called each time file input changes
-    if (event.target.files && event.target.files[0]) { 
-      
+    if (event.target.files && event.target.files[0]) {
 
-    
+
+
       this.bookFetch.uploadToAws(event.target.files[0],event.target.files[0].name).subscribe(data=>{
         console.log(data);
       });
-      
+
     }
 }
 

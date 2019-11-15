@@ -42,6 +42,8 @@ import { PaymentComponent } from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { DownloadComponent } from './download/download.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { NewIssueComponent } from './edit/new-issue/new-issue.component';
+import { ReplyComponent } from './edit/reply/reply.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     EditProfileComponent,
     PaymentComponent,
     LoadingComponent,
-    DownloadComponent
+    DownloadComponent,
+    NewIssueComponent,
+    ReplyComponent
   ],
 
   imports: [
@@ -114,7 +118,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SampleChapterDialog
+    SampleChapterDialog,
+    NewIssueComponent,
+    ReplyComponent
   ],
   providers: [
     LoginService,

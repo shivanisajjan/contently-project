@@ -12,6 +12,8 @@ import { BookFetchService } from '../bookFetch.service';
 export class BookdetailsComponent implements OnInit {
 
   private bookDetails: any;
+  private book;
+  private checkPurchase;
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -20,15 +22,30 @@ export class BookdetailsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    // this.getBookDetails();
-    // this.bookFetch.getPurchaseStatus(this.bookDetails.id,).subscribe(data=>{
+      this.book = this.route.snapshot.paramMap.get('id');
+      console.log(this.book);
+      this.contentService.getBookDetails(this.book).subscribe(
+              result => {this.bookDetails = result;
+              console.log(this.bookDetails);})
+  }
+  isPurchase():boolean{
+    this.contentService.getPurchaseStatus(this.bookDetails.id).subscribe(result=>{this.checkPurchase=result;});
+    return this.checkPurchase;
+  }
 
+<<<<<<< HEAD
     //   console.log(data);
     // });
   }
 
 
   openSampleChapterDialog(): void{ 
+=======
+
+
+  openSampleChapterDialog(): void{
+
+>>>>>>> 4f2e7c44ca5ffb8e84e8956bea404565374cfc35
     const dialogRef = this.dialog.open(SampleChapterDialog, {
       width: '80%',
       autoFocus: false,
@@ -43,14 +60,11 @@ export class BookdetailsComponent implements OnInit {
 
   }
 
-  getBookDetails(){
+  getBookDetails(id){
 
-  }
+    }
 
 }
-
-
-
 @Component({
   selector: 'sample-chapter-dialog',
   templateUrl: 'sample-chapter-dialog.html',
@@ -64,13 +78,13 @@ export class SampleChapterDialog implements OnInit{
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _contentService : ContentService,
     private bookFetch: BookFetchService) {}
-    
+
 
   ngOnInit(): void {
       console.log("Fetching Sample Chapter of  " + this.data.bookId)
       this.getSampleChapter();
     }
-      
+
   onNoClick(): void {
     this.dialogRef.close();
   }

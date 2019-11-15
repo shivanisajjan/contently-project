@@ -13,9 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1")
@@ -34,33 +31,26 @@ public class ContentController {
     public ResponseEntity<Content> saveBook(@RequestBody Content content) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
         rabbitMQSender.sendContent(content);
         content.setId(contentService.getNextSequence("customSequences"));
-        return new ResponseEntity<Content> (contentService.saveContent(content), HttpStatus.CREATED);
+        return new ResponseEntity<> (contentService.saveContent(content), HttpStatus.CREATED);
     }
     @DeleteMapping(value = "/delete/{title}")
-    public ResponseEntity<?> delete(@PathVariable String title) throws InternalServerErrorException, ContentDoesNotExistException {
-        Content deletedContent=contentService.deleteContent(title);
-        return new ResponseEntity<Content>(deletedContent, HttpStatus.OK);
+    public ResponseEntity<Content> delete(@PathVariable String title) throws InternalServerErrorException, ContentDoesNotExistException {
+        return new ResponseEntity<>(contentService.deleteContent(title), HttpStatus.OK);
     }
     @PutMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody Content content) throws InternalServerErrorException, ContentDoesNotExistException {
+    public ResponseEntity<Content> update(@RequestBody Content content) throws InternalServerErrorException, ContentDoesNotExistException {
         contentService.updateContent(content);
-        return new ResponseEntity<Content>(content, HttpStatus.OK);
+        return new ResponseEntity<>(content, HttpStatus.OK);
     }
     @GetMapping(value = "/contents/{name}")
-    public ResponseEntity<?> getByName(@PathVariable String name) throws InternalServerErrorException
+    public ResponseEntity<Content> getByName(@PathVariable String name) throws InternalServerErrorException
     {
         responseEntity=new ResponseEntity<>(contentService.findByName(name),HttpStatus.OK);
         return responseEntity;
     }
     @GetMapping(value = "/content/id/{id}")
-    public ResponseEntity<?> getTitleById(@PathVariable int id) throws InternalServerErrorException, ContentDoesNotExistException {
+    public ResponseEntity<Content> getTitleById(@PathVariable int id) throws InternalServerErrorException, ContentDoesNotExistException {
         responseEntity=new ResponseEntity<>(contentService.findTitleById(id),HttpStatus.OK);
         return responseEntity;
     }
-//    @PostMapping(value = "/update/chapter")
-//    public ResponseEntity<?> saveChapter(@RequestBody Content content) throws InternalServerErrorException
-//    {
-//        responseEntity=new ResponseEntity<>(contentService.saveChapters(content),HttpStatus.OK);
-//        return responseEntity;
-//    }
 }

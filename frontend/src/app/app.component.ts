@@ -14,6 +14,7 @@ import { notification } from './notification';
 import { NotificationService } from './notification.service';
 import { ContentService } from './content.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
   private notificationCount;
   private notificationStatusList: notification[] = new Array();;
   private book:any;
+  private searchValue;
   //private role=true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -46,7 +48,7 @@ export class AppComponent implements OnInit {
               private notificationService : NotificationService,
               private contentService : ContentService) {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
-    
+
   }
 
   ngOnInit() {
@@ -63,7 +65,9 @@ export class AppComponent implements OnInit {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
   }
 
-  search() {
+  search(searchValue) {
+  this.searchValue=searchValue;
+  this.router.navigate(['/searchResults',this.searchValue]).then();
   }
 
 
@@ -129,7 +133,7 @@ export class AppComponent implements OnInit {
               this.notificationCount = this.notificationCount + 1
             }
           }
-        
+
           console.log("New Notifications : ", this.notificationCount)
         });
   }
@@ -148,7 +152,7 @@ export class AppComponent implements OnInit {
     if(localStorage.getItem('role') == 'reader/author')
       return true;
     else
-      return false;  
+      return false;
   }
 
   acceptRequest(notification, index){
@@ -193,7 +197,7 @@ export class AppComponent implements OnInit {
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
     newNotification.receiver = receiver;
-    newNotification.message = message; 
+    newNotification.message = message;
     newNotification.bookId = bookId;
     newNotification.status =true
     this.notificationService.sendNotification(newNotification).subscribe();
@@ -204,8 +208,8 @@ export class AppComponent implements OnInit {
     if(this.notificationList){
     if(Object.keys(this.notificationList).length == 0)
       return true
-    else  
-      return false  
+    else
+      return false
   }
 }
 }

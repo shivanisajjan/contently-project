@@ -37,6 +37,7 @@
         <module>notification</module>
         <module>publication-service</module>
         <module>purchasing-service</module>
+        <module>s3storage-service</module>
     </modules>
 
     <dependencies>
@@ -83,8 +84,6 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>

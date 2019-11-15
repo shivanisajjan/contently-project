@@ -14,11 +14,9 @@ import {FileSaverService} from 'ngx-filesaver';
 import {formatDate} from "@angular/common";
 import { MatPaginator } from '@angular/material';
 
-export interface EditorDialogData {
-  name: string;
-  price: string;
-}
 
+
+import {PublicationBookComponent} from '../publication-book/publication-book.component'
 
 @Component({
   selector: 'app-book-create',
@@ -38,7 +36,11 @@ export class BookCreateComponent implements OnInit {
   private commitList = [];
   private commitListLoaded = false;
   private canPublish: boolean;
+<<<<<<< HEAD
   private helperColour = '#676767';
+=======
+
+>>>>>>> 4f2e7c44ca5ffb8e84e8956bea404565374cfc35
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
 
@@ -380,6 +382,34 @@ export class BookCreateComponent implements OnInit {
       }
     );
   }
+  onPublish(){
+        const dialogRef = this.dialog.open(PublicationBookComponent, {
+              width:'50%',
+              data: {
+                 book:this.bookDetails
+              }
+            });
+            dialogRef.afterClosed()
+            .subscribe(
+            result => {
+            console.log('Dialog was closed');
+            }
+            );
+   }
+
+  isPublish():boolean{
+       if(this.bookDetails.status === null) {
+         return;
+       }
+       for (let i = 0; i < this.bookDetails.status.length; i++) {
+         const chapter = this.bookDetails.status[i].chapterName;
+         const status = this.bookDetails.status[i].status;
+          if(this.bookDetails.status[i].status!='Finished'){
+             return false;
+          }
+       }
+       return true;
+   }
 
   sendNotification(receiver, bookId, message) {
     const newNotification: notification = new notification();
@@ -396,27 +426,27 @@ export class BookCreateComponent implements OnInit {
   }
 
   uploadFile(file) {
-     
+
 
     this.bookFetch.uploadToAws(file,this.bookDetails.id).subscribe(data=>{
 console.log(data);
 
     });
-    
 
-  
+
+
 }
 
 
 onSelectFile(event) { // called each time file input changes
-    if (event.target.files && event.target.files[0]) { 
-      
+    if (event.target.files && event.target.files[0]) {
 
-    
+
+
       this.bookFetch.uploadToAws(event.target.files[0],event.target.files[0].name).subscribe(data=>{
         console.log(data);
       });
-      
+
     }
 }
 

@@ -71,9 +71,13 @@ public class PublicationController {
 
     @GetMapping(value = "/book/{id}")
     public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException {
-
-
         responseEntity = new ResponseEntity<>(publicationService.findByEditorId(id), HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @GetMapping(value = "/book/id/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") int id) throws ContentDoesNotExistException {
+        responseEntity = new ResponseEntity<>(publicationService.findById(id), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -87,8 +91,6 @@ public class PublicationController {
 
     @GetMapping("publications/search/{title}")
     public ResponseEntity<?> searchQuery(@PathVariable("title") String title) throws InternalServerErrorException {
-
-
         responseEntity = new ResponseEntity<List<Publications>>(publicationService.searchQuery(title), HttpStatus.OK);
         return responseEntity;
     }

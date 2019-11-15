@@ -1,7 +1,7 @@
 package com.stackroute.contentservice.service;
 
 
-import com.stackroute.contentservice.Sequence.Custom;
+import com.stackroute.contentservice.sequence.Custom;
 import com.stackroute.contentservice.exceptions.ContentAlreadyExistsExceptions;
 import com.stackroute.contentservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.contentservice.exceptions.InternalServerErrorException;
@@ -29,15 +29,12 @@ public class ContentServiceImpl implements ContentService {
     private MongoOperations mongo;
 
     public Content saveContent(Content content) throws ContentAlreadyExistsExceptions,NullValueFieldException,InternalServerErrorException {
-
         try {
-            Content u = contentRepository.save(content);
-            return u;
+            return contentRepository.save(content);
         }
         catch (Exception e){
             throw new InternalServerErrorException();
         }
-
     }
 
    public Content findByTitle(String title) throws InternalServerErrorException {
@@ -108,29 +105,9 @@ public class ContentServiceImpl implements ContentService {
         }
     }
 
-//    @Override
-//    public Content saveChapters(Content content) throws InternalServerErrorException {
-//        Content saveChapter = content;
-//        try{
-//            List<Content> authorList=findByName(content.getAuthorName());
-//            for (Content temp : authorList) {
-//                if(temp.getTitle().equals(content.getTitle())){
-//                    temp.setStatus(content.getStatus());
-//                    saveChapter=contentRepository.save(temp);
-//                }
-//            }
-//        }
-//        catch (Exception e){
-//            throw new InternalServerErrorException();
-//        }
-//        System.out.println("save:"+saveChapter.toString());
-//        return saveChapter;
-//    }
-
     @Override
     public Content findTitleById(int id) throws ContentDoesNotExistException {
         Content content=contentRepository.findById(id).get();
-        System.out.println(content.toString());
         if(content==null){
             throw new ContentDoesNotExistException();
         }

@@ -17,7 +17,7 @@ export class BookFetchService {
   private headers = {
     Authorization: 'Token 38082b67020bce12020e9587f5b0cae858228b0d'
   };
- 
+
 
   // httpOption for github api request
   private httpOptions = {
@@ -62,6 +62,15 @@ export class BookFetchService {
     });
   }
 
+  searchBooks(searchValue):Observable<any>{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Batman ' + localStorage.getItem('token')
+        })
+      };
+  return this.http.get<any>('http://13.126.150.171:8080/publication-service/api/v1/publications/search/'+searchValue,httpOptions);
+  }
   // get single commit content
   getSingleCommit(repoName, fileName, sha) {
     console.log('getCommit(): ', repoName, fileName, sha);
@@ -121,13 +130,13 @@ export class BookFetchService {
 
   uploadToAws(file,id):Observable<any>
   {
-    
+
   console.log("save to aws called");
 
   let testData = new FormData();
-  testData.append('file', file); 
+  testData.append('file', file);
 
-return  this.http.post('http://localhost:8081/api/v1/file/'+id, testData); 
+return  this.http.post('http://localhost:8081/api/v1/file/'+id, testData);
   }
 
 }

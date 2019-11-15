@@ -9,9 +9,8 @@ import {ContentService} from '../content.service';
 import {notification} from '../notification';
 import {NotificationService} from '../notification.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import * as S3 from 'aws-sdk/clients/s3';
 import {FileSaverService} from 'ngx-filesaver';
-import {formatDate} from "@angular/common";
+import {formatDate} from '@angular/common';
 import {PublicationBookComponent} from '../publication-book/publication-book.component';
 
 @Component({
@@ -22,8 +21,6 @@ import {PublicationBookComponent} from '../publication-book/publication-book.com
 
 export class BookCreateComponent implements OnInit {
 
-
-  gotFile: any;
   private editor;
   private illustrator;
   private bookDetails;
@@ -31,10 +28,8 @@ export class BookCreateComponent implements OnInit {
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
-  private canPublish: boolean;
 
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
-  private chapterNames;
 
   constructor(private bookFetch: BookFetchService,
               private router: Router,
@@ -345,16 +340,16 @@ export class BookCreateComponent implements OnInit {
     }
   }
 
-  getBookDetails(id) {
-    console.log('fetching book details');
-    this.contentService.getBookDetails(id).subscribe(
-      result => {
-        this.bookDetails = result;
-        this.chapterNames = Array.from(this.bookDetails.status.keys());
-        console.log(this.chapterNames);
-      }
-    );
-  }
+  // getBookDetails(id) {
+  //   console.log('fetching book details');
+  //   this.contentService.getBookDetails(id).subscribe(
+  //     result => {
+  //       this.bookDetails = result;
+  //       this.chapterNames = Array.from(this.bookDetails.status.keys());
+  //       console.log(this.chapterNames);
+  //     }
+  //   );
+  // }
 
   onPublish() {
     this.publishFile();
@@ -365,12 +360,12 @@ export class BookCreateComponent implements OnInit {
         book: this.bookDetails
       }
     });
-    dialogRef.afterClosed()
-      .subscribe(
-        result => {
-          console.log('Dialog was closed');
-        }
-      );
+    // dialogRef.afterClosed()
+    //   .subscribe(
+    //     result => {
+    //       console.log('Dialog was closed');
+    //     }
+    //   );
   }
 
   isPublish(): boolean {
@@ -378,9 +373,7 @@ export class BookCreateComponent implements OnInit {
       return;
     }
     for (let i = 0; i < this.bookDetails.status.length; i++) {
-      const chapter = this.bookDetails.status[i].chapterName;
-      const status = this.bookDetails.status[i].status;
-      if (this.bookDetails.status[i].status != 'Finished') {
+      if (this.bookDetails.status[i].status !== 'Finished') {
         return false;
       }
     }
@@ -397,39 +390,23 @@ export class BookCreateComponent implements OnInit {
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 
-  getHelperStatus() {
-
-  }
-
   uploadFile(file) {
-
-
     this.bookFetch.uploadToAws(file, this.bookDetails.id).subscribe(data => {
       console.log(data);
-
     });
-
-
   }
-
 
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
-
-
       this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name)
         .subscribe(data => {
           console.log(data);
         });
-
     }
   }
 
-
   publishFile() {
-
     const fileName = `save.html`;
-
     const len = this.bookDetails.status.length;
     let count = 0;
     const fileType = this._FileSaverService.genType(fileName);
@@ -471,20 +448,8 @@ export class BookCreateComponent implements OnInit {
         );
     }
 
-
   }
 
-  downloadFile() {
-
-    const fileName = 'save.docx';
-    const fileType = this._FileSaverService.genType(fileName);
-
-
-    const txtBlob = new Blob([document.getElementById('got').innerHTML], {type: fileType});
-    console.log(txtBlob);
-    this._FileSaverService.save(txtBlob, fileName);
-
-  }
 }
 
 @Component({

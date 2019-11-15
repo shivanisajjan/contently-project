@@ -69,7 +69,7 @@ export class ContentService {
       })
     };
     console.log("in");
-    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/book/id/${id}`;
+    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/id/${id}`;
     return this.http.get(postUrl, httpOptions);
   }
 

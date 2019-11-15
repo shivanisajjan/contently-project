@@ -138,7 +138,7 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     SelectEditorDialog,
     SelectIllustratorDialog,
     SampleChapterDialog,
-    PublicationBookComponent
+    PublicationBookComponent,
     NewIssueComponent,
     ReplyComponent
   ],

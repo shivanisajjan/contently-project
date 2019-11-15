@@ -9,7 +9,6 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ContentLayoutComponent } from './content-layout/content-layout.component';
 import { BookCreateComponent, SelectEditorDialog, SelectIllustratorDialog, SetStatusDialog } from './book-create/book-create.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -42,6 +41,8 @@ import { PaymentComponent } from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { DownloadComponent } from './download/download.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { PublicationBookComponent } from './publication-book/publication-book.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     EditProfileComponent,
     PaymentComponent,
     LoadingComponent,
-    DownloadComponent
+    DownloadComponent,
+    PublicationBookComponent,
+    SearchResultsComponent
   ],
 
   imports: [
@@ -114,7 +117,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SampleChapterDialog
+    SampleChapterDialog,
+    PublicationBookComponent
   ],
   providers: [
     LoginService,

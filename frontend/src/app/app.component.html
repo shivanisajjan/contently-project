@@ -31,7 +31,7 @@
       </button>
       <!--   Nav bar brand name and logo   -->
       <nav class="navbar navbar-dark ">
-        <a class="navbar-brand" routerLink="/home">
+        <a class="navbar-brand" routerLink="/home" style="color: rgb(31, 31, 31);">
           <img src="https://www.logolynx.com/images/logolynx/36/362087235008be84086f892df697f50d.png" width="30"
                height="30" class="d-inline-block align-top" alt="">
           ontently
@@ -40,9 +40,9 @@
       <div>
         <mat-nav-list *ngIf="showNavigationBarLinks">
           <mat-form-field class="search-form" color="accent">
-            <input matInput type="search" placeholder="Search">
+            <input matInput type="search" #searchValue placeholder="Search">
           </mat-form-field>
-          <button mat-icon-button (click)="search()">
+          <button mat-icon-button (click)="search(searchValue.value)">
             <mat-icon>search</mat-icon>
           </button>
 

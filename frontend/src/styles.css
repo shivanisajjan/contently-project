@@ -16,15 +16,21 @@
 /* @import "css/style_new.css"; */
 
 
-* {
-  font-family: 'SF Display', 'Montserrat', sans-serif;
-}
+
+
+html, body { 
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+ }
+body { 
+  margin: 0; 
+     
+  /* background-image: url('../src/assets/images/main_bg.jpeg'); */
+    
+    }
 @font-face {
   font-family: "SF Display";
   font-weight: 400;
   src: url("https://sf.abarba.me/SF-UI-Display-Regular.otf");
 }
-body {
-  margin: 0;
-  background-image: url('../src/assets/images/main_bg.jpeg');
-}
+

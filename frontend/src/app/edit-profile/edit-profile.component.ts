@@ -62,7 +62,8 @@ export class EditProfileComponent implements OnInit {
     this.$profile.interest.push(this.$interest);
   }
 
-  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, email, contact){
+  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, email, contact, date){
+    console.log(date)
     const regUser: userReg = new userReg();
     regUser.username = this.profileData.username;
     regUser.email = email;
@@ -74,6 +75,7 @@ export class EditProfileComponent implements OnInit {
     regUser.addressLine2 = address2;
     regUser.addressLine3 = address3;
     regUser.gender = this.gender;
+    regUser.dob = date;
     this._loginService.updateUser(regUser).subscribe(result => {
       let returnUser = result;
       if (returnUser.id != null) {

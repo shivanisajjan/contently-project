@@ -29,9 +29,6 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "registry_queue")
     public void recievedMessage(UserDto userDto) {
-        System.out.println("got username is"+userDto.getUsername());
-
-
         user.setAgeGroup("t");
         user.setNationality("i");
         user.setName("m");
@@ -78,6 +75,8 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "publication_queue")
     public void recievedMessage2(PublicationsDto publicationsDto) {
+
+        userService.savePublication(publicationsDto.getTitle(),publicationsDto.getAuthorName());
         System.out.println("message received="+publicationsDto.getTitle());
     }
 

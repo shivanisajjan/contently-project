@@ -1,4 +1,5 @@
-package com.stackroute.contentservice.Sequence;
+package com.stackroute.purchasingservice.model;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +12,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "customSequences")
-public class Custom {
+@Document
+public class Purchase {
+
+
     @Id
-    private String id;
-    private int seq;
+    int id;
+    int book_id;
+    String username;
 
 }

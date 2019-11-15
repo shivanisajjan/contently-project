@@ -2,13 +2,13 @@
   <br>
 <mat-card class="book-details">
   <img mat-card-image src="../../assets/images/book_cover.jpg" alt="Photo of a Shiba Inu">
-<h2>Book Title</h2>
 <h2>{{bookDetails.title}}</h2>
 <h2 ></h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec nibh sed urna viverra blandit. Curabitur non faucibus tortor, quis scelerisque odio. Donec laoreet lacus a finibus imperdiet. Praesent maximus ultrices est sit amet molestie. Aliquam posuere quam dui, nec placerat magna pretium non. Fusce pulvinar, eros et mollis fringilla, neque est luctus lacus, eget ultrices ligula enim id nisi. Aenean egestas tortor orci, eu tristique ante sodales sit amet. Donec varius ac ligula ac faucibus. Praesent a turpis sed ipsum dapibus mattis ut et enim. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed lacinia fermentum ipsum, ut commodo mauris sodales quis. Duis fringilla ut orci vitae convallis.</p>
 <p>{{bookDetails.description}}</p>
 <button mat-raised-button color="primary" (click)="openSampleChapterDialog()">Show Sample Chapter</button>
-<button mat-raised-button color="primary" routerLink="/pay" >Purchase</button>
+<button mat-raised-button color="primary" *ngIf=isPurchase() routerLink="/pay" >Purchase</button>
+  <button mat-raised-button color="primary" *ngIf=!isPurchase() routerLink="/download" >Download</button>
+
 
 </mat-card>
  <!-- <section id="book">
@@ -18,7 +18,7 @@
 				<div class="book-preview">
 					<img src="../../assets/images/book_cover.jpg" class="background-device" alt="">
 					<div class="owl-book">
-					
+
 					</div>
 				</div>
 			</div>

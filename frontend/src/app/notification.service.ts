@@ -16,7 +16,7 @@ export class NotificationService {
       headers: header
     };
     const postUrl = `http://13.126.150.171:8080/notification/api/send`;
-        return this.http.post(postUrl,notification, httpOptions);
+    return this.http.post(postUrl, notification, httpOptions);
 
   }
 

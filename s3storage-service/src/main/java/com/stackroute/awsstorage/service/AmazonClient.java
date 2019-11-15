@@ -84,6 +84,7 @@ public class AmazonClient {
 
     public ResponseEntity<InputStreamResource> getFile(String filename)
     {
+        System.out.println("getfilecalled");
         S3Object s3Object=s3client.getObject(bucketName,filename);
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
         return ResponseEntity.ok()
@@ -95,33 +96,12 @@ public class AmazonClient {
 
     }
 
-//    public  void generatePDFFromHTML(String filename, Html html) throws IOException{
-//     File f = new File("input.html");
-//
-//        if (f.createNewFile())
-//        {
-//            System.out.println("File is created!");
-//        } else {
-//            System.out.println("File already exists.");
-//        }
-//
-//        FileWriter writerr = new FileWriter(f);
-//        writerr.write(html.getHtml());
-//        writerr.close();
-//
-//
-//        File htmlSource = new File("input.html");
-//        File pdfDest = new File("output.pdf");
-//        ConverterProperties converterProperties = new ConverterProperties();
-//        HtmlConverter.convertToPdf(new FileInputStream(htmlSource),
-//                new FileOutputStream(pdfDest), converterProperties);
-//        uploadFileTos3bucket(filename,pdfDest);
-//
-//    }
+
 
 
     public  void generatePDFFromHTML(String filename, MultipartFile multipartFile) throws IOException{
 
+        System.out.println("store file called");
             File f = convertMultiPartToFile(multipartFile);
 
 

@@ -22,8 +22,6 @@ public interface ContentService {
 
     List<Content> findByName(String name) throws InternalServerErrorException;
 
-//    Content saveChapters(Content content) throws InternalServerErrorException;
-
     Content findTitleById(int id) throws ContentDoesNotExistException;
 
     int getNextSequence(String seq);

@@ -6,8 +6,8 @@
 <h2 ></h2>
 <p>{{bookDetails.description}}</p>
 <button mat-raised-button color="primary" (click)="openSampleChapterDialog()">Show Sample Chapter</button>
-<button mat-raised-button color="primary" *ngIf=isPurchase() routerLink="/pay" >Purchase</button>
-  <button mat-raised-button color="primary" *ngIf=!isPurchase() routerLink="/download" >Download</button>
+<button mat-raised-button color="primary" *ngIf=!isPurchase() routerLink="/pay" >Purchase</button>
+  <button mat-raised-button color="primary" *ngIf=isPurchase() routerLink="/download" >Download</button>
 
 
 </mat-card>

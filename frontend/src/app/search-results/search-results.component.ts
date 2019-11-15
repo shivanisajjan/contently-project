@@ -11,14 +11,17 @@ import {Router} from '@angular/router';
 })
 export class SearchResultsComponent implements OnInit {
   private search;
-  private searchBooks:any;
+  private searchBooks: any;
   constructor(
     private route : ActivatedRoute,private bookFetch:BookFetchService, private router: Router
   ) { }
 
   ngOnInit() {
     this.search = this.route.snapshot.paramMap.get('search');
-    this.bookFetch.searchBooks(this.search).subscribe(result=>{this.searchBooks=result});
+    this.bookFetch.searchBooks(this.search).subscribe(result => {
+      this.searchBooks = result;
+       });
+    console.log(this.searchBooks);
   }
     bookDetails(id) {
       this.router.navigate(['/book-details', id]);

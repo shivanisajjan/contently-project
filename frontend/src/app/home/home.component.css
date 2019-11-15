@@ -35,11 +35,11 @@
   background-color: rgba(0,0,0,0.7);
   opacity: 1;
 }
-.card img{
+/* .card img{
   margin: 0 auto;
   height: 300px;
   width: 100%;
-}
+} */
 .card-title, .card-text{
   color: black;
 }
@@ -116,9 +116,9 @@ mat-card{
   border-style: solid;
 }
 mat-card:hover{
-  box-shadow: 0 0 20px 0 lightslategrey;
+  box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.568);
   transition: 0.2s;
-  margin-top: -10px;
+  /* margin-top: -6px; */
 }
 mat-card-content{
   text-align: center;
@@ -177,9 +177,17 @@ mat-card-content{
   width: 0;
   color: transparent;
 }
+
 @keyframes mymove {
-  from {left: 0px;}
-  to {left: 100%;}
+  from {
+    /* left: 0%; */
+    right: 100%;
+  }
+
+  to {
+    /* left: 100%; */
+    right: 0%;
+  }
 }
 .trending-books{
   padding: 3%;
@@ -216,9 +224,36 @@ mat-card-content{
 
  .author-subtitle{
    color: black;
-
  }
- 
+
+ .content-card{
+  margin: 1%;
+  background-color: rgb(26, 26, 26);
+  height: 100%;
+  animation: mymove 10s infinite;
+}
+
+.content-card img{
+  width: 100%;
+  height: 100%;
+}
+
+.content-card h6{
+  width: 200px;
+}
+
+.card-width{
+  width: 200px;
+}
+
+.content-cards{
+  display: flex;
+  overflow-x: scroll;
+}
+
+ .our-programs-body{
+   color:black;
+ }
 
  /* .author{
   outline: 5px solid white;

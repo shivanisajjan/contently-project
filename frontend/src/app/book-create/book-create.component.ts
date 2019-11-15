@@ -36,11 +36,7 @@ export class BookCreateComponent implements OnInit {
   private commitList = [];
   private commitListLoaded = false;
   private canPublish: boolean;
-<<<<<<< HEAD
   private helperColour = '#676767';
-=======
-
->>>>>>> 4f2e7c44ca5ffb8e84e8956bea404565374cfc35
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
 
@@ -535,6 +531,7 @@ export class SelectEditorDialog implements OnInit {
 
   ngOnInit(): void {
     this.getRecommendedEditors();
+    this.getAllEditors();
     console.log(this.data);
   }
 
@@ -610,6 +607,7 @@ export class SelectIllustratorDialog implements OnDestroy, OnInit{
 
   ngOnInit(): void {
     this.getRecommendedIllustrators();
+    this.getAllIllustrators();
     console.log(this.data);
     // this.changeDetectorRef.detectChanges();
     // this.dataSource.paginator = this.paginator;
@@ -646,7 +644,6 @@ export class SelectIllustratorDialog implements OnDestroy, OnInit{
 
   search(): void {
     const term = this.searchTerm;
-    console.log(term);
     this.illustratorListFiltered = this.illustratorList.filter(function (tag) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });

@@ -66,7 +66,7 @@
                 <div *ngFor = "let notification of notificationList;index as i">
                   <div *ngIf="isAuthor()">
 
-                    <mat-card *ngIf="notification.status" style="background-color: #c79fec;">
+                    <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
                         <p>{{notification.message}}</p>
                     </mat-card>
 

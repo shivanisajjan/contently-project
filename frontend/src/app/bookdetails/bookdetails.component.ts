@@ -33,19 +33,10 @@ export class BookdetailsComponent implements OnInit {
     return this.checkPurchase;
   }
 
-<<<<<<< HEAD
-    //   console.log(data);
-    // });
-  }
-
-
-  openSampleChapterDialog(): void{ 
-=======
 
 
   openSampleChapterDialog(): void{
 
->>>>>>> 4f2e7c44ca5ffb8e84e8956bea404565374cfc35
     const dialogRef = this.dialog.open(SampleChapterDialog, {
       width: '80%',
       autoFocus: false,

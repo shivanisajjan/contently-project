@@ -29,8 +29,8 @@ const  routes: Routes = [
     {path:'conversion',component:ConversionComponent},
     {path:'afterLogin',component:PageAfterLoginComponent},
     {path:'editProfile',component:EditProfileComponent},
-    {path:'pay',component:PaymentComponent},
-    {path:'loading',component:LoadingComponent},
+    {path:'pay/:id',component:PaymentComponent},
+    {path:'loading/:id',component:LoadingComponent},
     {path:'download',component:DownloadComponent},
     {path:'searchResults/:search',component: SearchResultsComponent}
 

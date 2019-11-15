@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog ,MAT_DIALOG_DATA} from '@angular/material';
+import {Router} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ContentService } from '../content.service';
 import { BookFetchService } from '../bookFetch.service';
@@ -18,22 +19,26 @@ export class BookdetailsComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private contentService : ContentService,
-    private bookFetch: BookFetchService
+    private bookFetch: BookFetchService,
+    private router: Router
     ) {
     }
 
   ngOnInit() {
       this.book = this.route.snapshot.paramMap.get('id');
-      console.log(this.book);
       this.contentService.getBookDetails(this.book).subscribe(
               result => {this.bookDetails = result;
-              console.log(this.bookDetails);})
+              console.log(this.bookDetails);});
+        
   }
   isPurchase():boolean{
     this.contentService.getPurchaseStatus(this.bookDetails.id).subscribe(result=>{this.checkPurchase=result;});
     return this.checkPurchase;
   }
 
+  purchase(){
+        this.router.navigate(['/pay']);
+  }
 
 
   openSampleChapterDialog(): void{

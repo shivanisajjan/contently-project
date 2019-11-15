@@ -80,7 +80,7 @@ export class ContentService {
           Authorization: 'Batman ' + localStorage.getItem('token')
         })
       };
-       const postUrl = `http://13.126.150.171:8080/purchasing-service/book/${id}/${localStorage.getItem('username')}`;
+       const postUrl = `http://13.126.150.171:8080/purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
       return this.http.get(postUrl, httpOptions);
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -11,15 +13,15 @@ export class PaymentComponent implements OnInit {
 
 
   handler: any;
+  private id;
 
-
-  constructor(private http: HttpClient,private router: Router) { }
+  constructor(private http: HttpClient,private router: Router,private route: ActivatedRoute) { }
 
 
   private invalidfeedback: string;
 
   chargeCreditCard(num,exp,cvv) {
-    this.router.navigate(['/loading']).then();
+    this.router.navigate(['/loading',this.id]).then();
     // let form = document.getElementsByTagName("form")[0];
     let arr = exp.split('/',2);
     (<any>window).Stripe.card.createToken({
@@ -68,7 +70,7 @@ export class PaymentComponent implements OnInit {
 
 
   ngOnInit() {
-
+      this.id = this.route.snapshot.paramMap.get('id');
     this.loadStripe();
 
   }

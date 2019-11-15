@@ -8,8 +8,8 @@
   <br>
   <div *ngIf="ifAuthor()">
     <mat-card *ngIf="isSelectHelper()" class="editor-illustrator">
-      <mat-grid-list cols="2" rowHeight="175px">
-        <mat-grid-tile class="choose-editor-tile">
+      <mat-grid-list cols="2" rowHeight="150px">
+        <mat-grid-tile class="choose-editor-tile" [style.background]="helperColour">
           <div class="select-editor-header">
             <mat-grid-tile-header *ngIf="!bookDetails.editorName" matRipple [matRippleColor]="myColor" class=""
                                   (click)="openSelectEditorDialog()">
@@ -30,7 +30,7 @@
           </mat-grid-tile-footer>
         </mat-grid-tile>
 
-        <mat-grid-tile class="choose-editor-tile">
+        <mat-grid-tile class="choose-editor-tile" [style.background]="helperColour">
           <div class="select-editor-header">
             <mat-grid-tile-header *ngIf="!bookDetails.designerName" matRipple [matRippleColor]="myColor"
                                   (click)="openSelectIllustratorDialog()">
@@ -143,10 +143,8 @@
         </button>
         <button (click)="publishFile()" mat-raised-button color="primary">Publish</button>
         <button (click)="downloadFile()" mat-raised-button color="primary">download</button>
-        
-<input type='file' (change)="onSelectFile($event)">
+        <input type='file' (change)="onSelectFile($event)">
       </mat-card-actions>
-
     </mat-card>
 
     <div id="got"></div>

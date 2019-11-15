@@ -18,3 +18,21 @@ textarea{
   resize: none;
 }
 /*material css*/
+
+
+.trending-books{
+  padding: 3%;
+  color: rgb(15, 15, 15);
+  /* text-shadow: 4px 4px #333333; */
+  background-image: url('../../assets/images/trend.jpg');
+  background-repeat: initial;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: 1px solid rgb(26, 26, 26);
+  outline-offset: -15px;
+  letter-spacing: 20px;
+}
+
+.create-content-component{
+  background-image: url('../../assets/images/side_bg.jpg');
+}

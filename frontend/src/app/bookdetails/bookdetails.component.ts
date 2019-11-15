@@ -17,8 +17,7 @@ export class BookdetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private contentService : ContentService,
     private bookFetch: BookFetchService
-    ) {     
-    }
+    ) { }
 
   ngOnInit() {
     // this.getBookDetails();
@@ -26,11 +25,10 @@ export class BookdetailsComponent implements OnInit {
 
     //   console.log(data);
     // });
-  } 
+  }
 
 
-  openSampleChapterDialog(): void{
-   
+  openSampleChapterDialog(): void{ 
     const dialogRef = this.dialog.open(SampleChapterDialog, {
       width: '80%',
       autoFocus: false,

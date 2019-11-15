@@ -148,6 +148,8 @@ mat-card-content{
   overflow: visible;
   animation: mymove 5s infinite;
   background-color: #ffc5c8;
+  text-transform: uppercase;
+
 
 }
 
@@ -190,8 +192,6 @@ mat-card-content{
   outline: 1px solid rgb(26, 26, 26);
   outline-offset: -15px;
   letter-spacing: 20px;
-
-
 }
 
 .home-body{

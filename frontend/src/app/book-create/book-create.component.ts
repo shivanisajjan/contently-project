@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Inject, Output, EventEmitter, ViewChild, OnDestroy} from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Commit} from './commit';
@@ -12,6 +12,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as S3 from 'aws-sdk/clients/s3';
 import {FileSaverService} from 'ngx-filesaver';
 import {formatDate} from "@angular/common";
+import { MatPaginator } from '@angular/material';
 
 export interface EditorDialogData {
   name: string;
@@ -37,8 +38,7 @@ export class BookCreateComponent implements OnInit {
   private commitList = [];
   private commitListLoaded = false;
   private canPublish: boolean;
-  // private selectHelper = true;
-
+  private helperColour = '#676767';
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
   private chapterNames;
 
@@ -554,24 +554,36 @@ export class SelectEditorDialog implements OnInit {
   templateUrl: 'select-illustrator-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
-export class SelectIllustratorDialog implements OnInit {
+export class SelectIllustratorDialog implements OnDestroy, OnInit{
   public illustratorList;
   public illustratorListFiltered;
   public searchTerm;
   public allIllustratorList;
   public allIllustratorListFiltered;
-
+  // private selectHelper = true;
+  // MatPaginator Inputs
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  // obs: Observable<any>;
+  // @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(this.illustratorListFiltered);
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<SelectIllustratorDialog>,
     @Inject(MAT_DIALOG_DATA) public data: String,
-    private contentService: ContentService) {
+    private contentService: ContentService,
+    // private changeDetectorRef: ChangeDetectorRef
+    ) {
   }
 
   ngOnInit(): void {
     this.getRecommendedIllustrators();
     console.log(this.data);
+    // this.changeDetectorRef.detectChanges();
+    // this.dataSource.paginator = this.paginator;
+    // this.obs = this.dataSource.connect();
   }
 
   onNoClick(): void {
@@ -611,6 +623,12 @@ export class SelectIllustratorDialog implements OnInit {
     this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
+  }
+
+  ngOnDestroy() {
+    // if (this.dataSource) { 
+    //   this.dataSource.disconnect(); 
+    // }
   }
 
 }

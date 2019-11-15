@@ -1,6 +1,6 @@
 /*material css*/
 .continer {
-  background-image: url('../../assets/images/main_bg.jpeg');
+  background-image: url('../../assets/images/side_bg.jpg');
   height: 100%;
 }
 
@@ -133,9 +133,10 @@ mat-grid-tile {
 }
 
 .editor-card {
-  background-color: rgb(16, 14, 110);
+  background-color: rgba(240, 84, 84, 0.692);
   color: white;
   cursor: pointer;
+  border-radius: 25px;
 }
 
 .choose-editor-tile {
@@ -158,3 +159,11 @@ mat-grid-tile {
 }
 
 /*material css*/
+.list-editors mat-card{
+  margin: 1%;
+  
+}
+
+.select-editor-dialog{
+  /* background-image: url('../../assets/images/side_bg.jpg'); */
+}

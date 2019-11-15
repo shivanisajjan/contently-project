@@ -15,7 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { QuillModule } from 'ngx-quill';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule, MatSnackBarModule, MatBadgeModule} from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatIconModule, MatNativeDateModule, MatTreeModule, MatCheckboxModule, MatSnackBarModule, MatBadgeModule, MAT_DATE_LOCALE, MatPaginatorModule} from '@angular/material';
 import { MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -106,7 +106,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatSnackBarModule,
     MatBadgeModule,
     DragDropModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatPaginatorModule
   ],
   entryComponents: [
     LoginComponent,
@@ -118,7 +120,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   ],
   providers: [
     LoginService,
-    ContentService
+    ContentService,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })

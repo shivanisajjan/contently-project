@@ -1,7 +1,9 @@
 <div class="dashboard-wrapper">
-
+  <div class="trending-books">
+    <h3 style="margin-left: 4%;">Your Dashboard</h3>
+    </div>
   <br>
-  <mat-expansion-panel class="profile-details" expanded="true">
+  <mat-expansion-panel class="profile-details" >
     <mat-expansion-panel-header>
       <mat-panel-title>Profile Details</mat-panel-title>
       <mat-panel-description>{{profileData.username}}</mat-panel-description>
@@ -42,9 +44,11 @@
   <mat-expansion-panel class="contents-under-development">
     <mat-expansion-panel-header>
       Current Projects
+      <button mat-button  class="new-content-button" routerLink="/contentLayout">New Content</button>
     </mat-expansion-panel-header>
     <mat-grid-list rowHeight="40px" cols="3">
-      <div class="content-list" *ngFor="let content of contentsList, index as i">
+      <div *ngFor="let content of contentsList, index as i">
+      <div class="content-list" >
         <mat-grid-tile class="info-value content-title" colspan="3" rowspan="1">
           <mat-icon>book</mat-icon>
           {{content.title | titlecase}}
@@ -77,12 +81,10 @@
         <mat-grid-tile class="info-value" colspan="3" rowspan="1">
           <button mat-raised-button color="primary" (click)="edit(i)">Edit</button>
         </mat-grid-tile>
-
-        <mat-grid-tile colspan='3'>
-          <mat-divider style="width: 100%;"></mat-divider>
-        </mat-grid-tile>
-
+        <br>
       </div>
+      <br>
+    </div>
     </mat-grid-list>
     <mat-action-row style="justify-content: center" *ngIf="ifAuthor()">
       <a mat-raised-button color="primary" routerLink="/contentLayout">New Content</a>
@@ -119,6 +121,37 @@
     <mat-expansion-panel-header>
       Purchases
     </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="testing">
+      <mat-expansion-panel-header>
+          Current Projects
+          <button mat-button  class="new-content-button" routerLink="/contentLayout">New Content</button>
+        </mat-expansion-panel-header>
+        <div class="content-cards">
+        <mat-card class="content-card" *ngFor="let content of contentsList, index as i">
+            <mat-card-header>
+                <mat-card-title>  {{content.title}}</mat-card-title>
+                <mat-card-subtitle>{{content.authorName}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="card-item">
+                <mat-icon>local_offer</mat-icon><p>{{content.typeName }} ,&nbsp; {{content.genres}}</p>
+                <mat-icon>date_range</mat-icon><p>{{content.createdAt}}</p>
+              </div>
+                <div class="card-e-d">
+             <div class="card-item" *ngIf="ifConfirmed(content.editorStatus)">
+                <mat-icon>border_color</mat-icon><p>{{content.editorName}}</p>
+              </div>
+              <div class="card-item" *ngIf="ifConfirmed(content.designerStatus)">
+                <mat-icon>format_paint</mat-icon><p>{{content.designerName}}</p>
+                </div>
+              </div>
+              <div *ngIf="!ifConfirmed(content.editorStatus) && !ifConfirmed(content.designerStatus)" style="height: 55px;"></div>
+                <textarea class="info-value-textarea" disabled>{{content.description}}</textarea>
+            </mat-card-content>
+                <button mat-raised-button color="primary"  (click)="edit(i)" >Edit</button>
+        </mat-card>
+      </div>
   </mat-expansion-panel>
   <div style="height: 170px;"></div>
 </div>

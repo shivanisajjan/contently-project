@@ -13,6 +13,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PaymentComponent } from './payment/payment.component';
 import { DownloadComponent } from './download/download.component';
+import {SearchResultsComponent } from './search-results/search-results.component';
 
 
 
@@ -22,7 +23,7 @@ const  routes: Routes = [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'register', component: RegistrationComponent},
     {path: 'edit/:fileName', component: EditComponent},
-    {path: 'book-details:/id', component: BookdetailsComponent},
+    {path: 'book-details/:id', component: BookdetailsComponent},
     {path:'contentLayout',component:ContentLayoutComponent},
     {path:'bookCreate',component:BookCreateComponent},
     {path:'conversion',component:ConversionComponent},
@@ -30,8 +31,8 @@ const  routes: Routes = [
     {path:'editProfile',component:EditProfileComponent},
     {path:'pay',component:PaymentComponent},
     {path:'loading',component:LoadingComponent},
-    {path:'download',component:DownloadComponent}
-    
+    {path:'download',component:DownloadComponent},
+    {path:'searchResults/:search',component: SearchResultsComponent}
 
 
 ];
@@ -42,4 +43,4 @@ const  routes: Routes = [
 })
 export class AppRoutingModule {}
 
-export const routingComponents = [HomeComponent,DashboardComponent,RegistrationComponent];
+export const routingComponents = [HomeComponent,DashboardComponent,RegistrationComponent,SearchResultsComponent];

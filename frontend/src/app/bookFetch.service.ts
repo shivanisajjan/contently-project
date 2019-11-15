@@ -62,6 +62,16 @@ export class BookFetchService {
     });
   }
 
+  searchBooks(searchValue): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    return this.http.get<any>('http://13.126.150.171:8080/publication-service/api/v1/publications/search/' + searchValue, httpOptions);
+  }
+
   // get single commit content
   getSingleCommit(repoName, fileName, sha) {
     console.log('getCommit(): ', repoName, fileName, sha);
@@ -118,6 +128,7 @@ export class BookFetchService {
     return this.http.get<any>(postUrl, httpOptions);
 
   }
+
 
   uploadToAws(file, id): Observable<any> {
 

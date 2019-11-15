@@ -68,8 +68,20 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/id/${id}`;
+    console.log("in");
+    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/book/id/${id}`;
     return this.http.get(postUrl, httpOptions);
+  }
+
+  getPurchaseStatus(id){
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Batman ' + localStorage.getItem('token')
+        })
+      };
+       const postUrl = `http://13.126.150.171:8080/purchasing-service/book/${id}/${localStorage.getItem('username')}`;
+      return this.http.get(postUrl, httpOptions);
   }
 
   // used to get all contents of 'username'

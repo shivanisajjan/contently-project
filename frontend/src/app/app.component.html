@@ -40,9 +40,9 @@
       <div>
         <mat-nav-list *ngIf="showNavigationBarLinks">
           <mat-form-field class="search-form" color="accent">
-            <input matInput type="search" placeholder="Search">
+            <input matInput type="search" #searchValue placeholder="Search">
           </mat-form-field>
-          <button mat-icon-button (click)="search()">
+          <button mat-icon-button (click)="search(searchValue.value)">
             <mat-icon>search</mat-icon>
           </button>
 

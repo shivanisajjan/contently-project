@@ -1,14 +1,14 @@
 #recbox
 {
-  margin-top:5%;  
-  width: 100%; 
+  margin-top:5%;
+  width: 100%;
   overflow-x: scroll;
 
 }
 #recbox::-webkit-scrollbar{
 
   height: 0;
-  width: 0; 
+  width: 0;
   color: transparent;
 }
 @keyframes mymove {
@@ -23,12 +23,11 @@
   margin-top: -10px;
   background-color: rgba(0,0,0,0.7);
   opacity: 0.9;
-  
 }
 
 h1,h2,h3,h4{
   margin: 2% 2% 2% 2%;
-  text-align: center; 
+  text-align: center;
   word-wrap: break-word;
 }
 
@@ -40,7 +39,7 @@ h1,h2,h3,h4{
   width: 200px;
   overflow: visible;
   animation: mymove 5s infinite;
-  
+
 }
 
 #cardheret
@@ -50,6 +49,6 @@ h1,h2,h3,h4{
   height: 390px;
   width: 200px;
   overflow: visible;
-  animation: mymovee 5s infinite; 
-  
+  animation: mymovee 5s infinite;
+
 }

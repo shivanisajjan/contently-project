@@ -23,13 +23,12 @@ public class Publications {
     String title;
     String description;
     @TextIndexed String  authorName;
-    List<String>  editorName; // list of userId of editors
-    List<String> designerName; // list of userId of designer
+    String  editorName; // list of userId of editors
+    String designerName; // list of userId of designer
     @TextIndexed String typeName;
     @TextIndexed List<String> genres;
     String  createdAt;
     double price;
-    String gitUrl;
     String publishedAt;
     int noOfViews;
     int noOfPurchases;

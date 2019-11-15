@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Headers, RequestOptions} from '@angular/http'
-import {Observable} from 'rxjs';
-import {Commit} from './book-create/commit';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Headers, RequestOptions, ResponseContentType } from '@angular/http';
+import { Observable } from 'rxjs';
+import { Commit } from './book-create/commit';
 
 
 @Injectable({
@@ -129,15 +129,37 @@ export class BookFetchService {
 
   }
 
+  uploadToAwsImage(file, id): Observable<any> {
 
-  uploadToAws(file, id): Observable<any> {
-
-    console.log("save to aws called");
+    console.log('save to aws called');
 
     let testData = new FormData();
     testData.append('file', file);
 
     return this.http.post('http://localhost:8081/api/v1/file/' + id, testData);
   }
+
+  uploadToAws(file, id): Observable<any> {
+
+    console.log('save to aws called');
+
+    let testData = new FormData();
+    testData.append('file', file);
+
+    return this.http.post('http://localhost:8081/api/v1/text/' + id, testData);
+  }
+
+  getFromAws(id): Observable<any> {
+    console.log('get from aws called');
+    return this.http.get('http://localhost:8081/api/v1/file/' + id,
+      {
+        responseType: 'blob',
+        headers: {
+          accept: 'application/pdf'
+        },
+      }
+    );
+  }
+
 
 }

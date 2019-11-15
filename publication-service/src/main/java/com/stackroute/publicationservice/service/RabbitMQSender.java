@@ -15,15 +15,16 @@ public class RabbitMQSender {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    @Value("${publication.rabbitmq.exchange}")
+    @Value("publication_exchange")
     private String exchange;
 
-    @Value("${publication.rabbitmq.routingkey}")
+    @Value("publication_routingkey")
     private String routingkey;
 
 
     public void sendRegistry(PublicationsDto publications) {
         rabbitTemplate.convertAndSend(exchange, routingkey, publications);
+        System.out.println("msg senr-----------------------------------------");
         System.out.println("Send msg = " + publications);
     }
 

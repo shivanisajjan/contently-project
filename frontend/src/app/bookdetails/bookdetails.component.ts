@@ -10,7 +10,7 @@ import { BookFetchService } from '../bookFetch.service';
   styleUrls: ['./bookdetails.component.css']
 })
 export class BookdetailsComponent implements OnInit {
-
+  private bookId;s
   private bookDetails: any;
   private book;
   private checkPurchase;
@@ -23,11 +23,14 @@ export class BookdetailsComponent implements OnInit {
     }
 
   ngOnInit() {
-      this.book = this.route.snapshot.paramMap.get('id');
-      console.log(this.book);
-      this.contentService.getBookDetails(this.book).subscribe(
-              result => {this.bookDetails = result;
-              console.log(this.bookDetails);})
+      // this.book = this.route.snapshot.paramMap.get('id');
+      // console.log(this.book);
+      // this.contentService.getBookDetails(this.book).subscribe(
+      //         result => {this.bookDetails = result;
+      //         console.log(this.bookDetails);})
+      this.bookId = localStorage.getItem('bookId');
+      console.log("jhjghghloplop"+this.bookId);
+
   }
   isPurchase():boolean{
     this.contentService.getPurchaseStatus(this.bookDetails.id).subscribe(result=>{this.checkPurchase=result;});

@@ -12,7 +12,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as S3 from 'aws-sdk/clients/s3';
 import {FileSaverService} from 'ngx-filesaver';
 import {formatDate} from "@angular/common";
-import {PublicationBookComponent} from '../publication-book/publication-book.component'
+import {PublicationBookComponent} from '../publication-book/publication-book.component';
 
 @Component({
   selector: 'app-book-create',
@@ -51,34 +51,6 @@ export class BookCreateComponent implements OnInit {
 
   ngOnInit() {
 
-    const bucket = new S3(
-      {
-        accessKeyId: 'AKIASD2RRW35M5E63FFP ',
-        secretAccessKey: 'T6fN6pn/VnCMNMC3NwYc87h6IlvILJRfRlSjiHV5',
-        region: 'us-east-2'
-      }
-    );
-    const params = {
-      Bucket: 'convertedbooks', // your bucket name,
-      Key: '' + this.bookDetails.id
-    };
-
-    bucket.getObject(params, function (err, data) {
-      // Handle any error and exit
-      if (err) {
-        console.log(err);
-        return err;
-      }
-
-      // No error happened
-      // Convert Body from a Buffer to a String
-
-      const objectData = data.Body.toString('utf-8'); // Use the encoding necessary
-      document.getElementById('got').innerHTML = objectData;
-      console.log('working' + objectData + 'not working' + this.gotFile);
-
-
-    });
 
     if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
@@ -383,35 +355,36 @@ export class BookCreateComponent implements OnInit {
       }
     );
   }
+  onPublish(){
+    this.publishFile();
 
-  onPublish() {
-    const dialogRef = this.dialog.open(PublicationBookComponent, {
-      width: '50%',
-      data: {
-        book: this.bookDetails
-      }
-    });
-    dialogRef.afterClosed()
-      .subscribe(
-        result => {
-          console.log('Dialog was closed');
-        }
-      );
-  }
+        const dialogRef = this.dialog.open(PublicationBookComponent, {
+              width:'50%',
+              data: {
+                 book:this.bookDetails
+              }
+            });
+            dialogRef.afterClosed()
+            .subscribe(
+            result => {
+            console.log('Dialog was closed');
+            }
+            );
+   }
 
-  isPublish(): boolean {
-    if (this.bookDetails.status === null) {
-      return;
-    }
-    for (let i = 0; i < this.bookDetails.status.length; i++) {
-      const chapter = this.bookDetails.status[i].chapterName;
-      const status = this.bookDetails.status[i].status;
-      if (this.bookDetails.status[i].status != 'Finished') {
-        return false;
-      }
-    }
-    return true;
-  }
+  isPublish():boolean{
+       if(this.bookDetails.status === null) {
+         return;
+       }
+       for (let i = 0; i < this.bookDetails.status.length; i++) {
+         const chapter = this.bookDetails.status[i].chapterName;
+         const status = this.bookDetails.status[i].status;
+          if(this.bookDetails.status[i].status!='Finished'){
+             return false;
+          }
+       }
+       return true;
+   }
 
   sendNotification(receiver, bookId, message) {
     const newNotification: notification = new notification();
@@ -443,7 +416,12 @@ export class BookCreateComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
 
 
+<<<<<<< HEAD
+
+      this.bookFetch.uploadToAwsImage(event.target.files[0],event.target.files[0].name).subscribe(data=>{
+=======
       this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name).subscribe(data => {
+>>>>>>> 212917aea5117ea1a3e115c50b6cf6c06cffe3a0
         console.log(data);
       });
 
@@ -453,7 +431,7 @@ export class BookCreateComponent implements OnInit {
 
   publishFile() {
 
-    const fileName = `save.docx`;
+    const fileName = `save.html`;
 
     const len = this.bookDetails.status.length;
     let count = 0;

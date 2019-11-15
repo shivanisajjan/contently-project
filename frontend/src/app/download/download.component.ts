@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileSaverService } from 'ngx-filesaver';
+import { BookFetchService } from '../bookFetch.service';
+
 
 @Component({
   selector: 'app-download',
@@ -7,22 +9,31 @@ import { FileSaverService } from 'ngx-filesaver';
   styleUrls: ['./download.component.css']
 })
 export class DownloadComponent implements OnInit {
+  public test;
+  public blob;
 
-  constructor(private _fileSaverService: FileSaverService) { }
+  constructor(private _fileSaverService: FileSaverService, private bookFetch: BookFetchService) { }
 
   ngOnInit() {
-    
+    this.test = localStorage.getItem('bookId');
   }
 
 
-  download()
-  {
-    const fileName ='save.docx' ;
-    const fileType = this._fileSaverService.genType(fileName); 
+  download() {
+
   
-   
-    const txtBlob = new Blob([document.getElementById('got').innerHTML], { type: fileType });
-    console.log(txtBlob);
-    this._fileSaverService.save(txtBlob, fileName);
+
+
+
+    this.bookFetch.getFromAws(this.test)
+      .subscribe(
+        data => {
+          console.log(data);
+          this._fileSaverService.save(data, this.test);
+        },
+        error => {
+          console.log(error);
+        }
+    );
   }
 }

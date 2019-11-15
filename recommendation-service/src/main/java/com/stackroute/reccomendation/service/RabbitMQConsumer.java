@@ -75,6 +75,8 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "publication_queue")
     public void recievedMessage2(PublicationsDto publicationsDto) {
+
+        userService.savePublication(publicationsDto.getTitle(),publicationsDto.getAuthorName());
         System.out.println("message received="+publicationsDto.getTitle());
     }
 

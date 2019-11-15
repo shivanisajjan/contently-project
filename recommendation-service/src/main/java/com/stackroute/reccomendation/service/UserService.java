@@ -81,6 +81,12 @@ public Collection<User> getIllustratorRec(String genre)
         return price;
     }
 
+    public void savePublication(String title,String author)
+    {
+        userRepository.savePublication(title,author);
+
+    }
+
 
 
 

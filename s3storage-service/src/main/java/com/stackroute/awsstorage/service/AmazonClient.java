@@ -60,7 +60,7 @@ public class AmazonClient {
         return fileUrl;
     }
 
-    private File convertMultiPartToFile(MultipartFile file) throws IOException {
+    public File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
@@ -102,7 +102,9 @@ public class AmazonClient {
     public  void generatePDFFromHTML(String filename, MultipartFile multipartFile) throws IOException{
 
         System.out.println("store file called");
-            File f = convertMultiPartToFile(multipartFile);
+        File f = convertMultiPartToFile(multipartFile);
+
+
 
 
 

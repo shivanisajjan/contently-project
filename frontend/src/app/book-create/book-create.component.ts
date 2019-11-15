@@ -12,7 +12,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as S3 from 'aws-sdk/clients/s3';
 import {FileSaverService} from 'ngx-filesaver';
 import {formatDate} from "@angular/common";
-import {PublicationBookComponent} from '../publication-book/publication-book.component'
+import {PublicationBookComponent} from '../publication-book/publication-book.component';
 
 @Component({
   selector: 'app-book-create',
@@ -51,34 +51,6 @@ export class BookCreateComponent implements OnInit {
 
   ngOnInit() {
 
-    const bucket = new S3(
-      {
-        accessKeyId: 'AKIASD2RRW35M5E63FFP ',
-        secretAccessKey: 'T6fN6pn/VnCMNMC3NwYc87h6IlvILJRfRlSjiHV5',
-        region: 'us-east-2'
-      }
-    );
-    const params = {
-      Bucket: 'convertedbooks', // your bucket name,
-      Key: '' + this.bookDetails.id
-    };
-
-    bucket.getObject(params, function (err, data) {
-      // Handle any error and exit
-      if (err) {
-        console.log(err);
-        return err;
-      }
-
-      // No error happened
-      // Convert Body from a Buffer to a String
-
-      const objectData = data.Body.toString('utf-8'); // Use the encoding necessary
-      document.getElementById('got').innerHTML = objectData;
-      console.log('working' + objectData + 'not working' + this.gotFile);
-
-
-    });
 
     if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
@@ -137,6 +109,9 @@ export class BookCreateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       result => {
+        if (result === undefined) {
+          return;
+        }
         console.log('New Section Name: ', result);
         const commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en') + ' - Created',
           localStorage.getItem('fullName'), localStorage.getItem('email'), '', '');
@@ -156,6 +131,12 @@ export class BookCreateComponent implements OnInit {
               this.setShowEditButton();
               localStorage.setItem('book', JSON.stringify(this.bookDetails));
               console.log(this.bookDetails);
+              this.bookFetch.createFile('chat-files/' + result, commit)
+                .subscribe(
+                  data2 => {
+                    console.log('chat-file created: ', data2);
+                  }
+                );
               this.contentService.saveContent(this.bookDetails)
                 .subscribe(
                   data2 => {
@@ -375,6 +356,8 @@ export class BookCreateComponent implements OnInit {
     );
   }
   onPublish(){
+    this.publishFile();
+
         const dialogRef = this.dialog.open(PublicationBookComponent, {
               width:'50%',
               data: {
@@ -420,33 +403,35 @@ export class BookCreateComponent implements OnInit {
   uploadFile(file) {
 
 
-    this.bookFetch.uploadToAws(file,this.bookDetails.id).subscribe(data=>{
-console.log(data);
+    this.bookFetch.uploadToAws(file, this.bookDetails.id).subscribe(data => {
+      console.log(data);
 
     });
 
 
+  }
 
-}
 
-
-onSelectFile(event) { // called each time file input changes
+  onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
 
 
+<<<<<<< HEAD
 
-      this.bookFetch.uploadToAws(event.target.files[0],event.target.files[0].name).subscribe(data=>{
+      this.bookFetch.uploadToAwsImage(event.target.files[0],event.target.files[0].name).subscribe(data=>{
+=======
+      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name).subscribe(data => {
+>>>>>>> 212917aea5117ea1a3e115c50b6cf6c06cffe3a0
         console.log(data);
       });
 
     }
-}
-
+  }
 
 
   publishFile() {
 
-    const fileName = `save.docx`;
+    const fileName = `save.html`;
 
     const len = this.bookDetails.status.length;
     let count = 0;
@@ -492,7 +477,7 @@ onSelectFile(event) { // called each time file input changes
 
   }
 
-  downloadFile(){
+  downloadFile() {
 
     const fileName = 'save.docx';
     const fileType = this._FileSaverService.genType(fileName);
@@ -558,7 +543,7 @@ export class SelectEditorDialog implements OnInit {
       });
   }
 
-  search(): void {
+  search() {
     const term = this.searchTerm;
     console.log(term);
     this.editorListFiltered = this.editorList.filter(function (tag) {

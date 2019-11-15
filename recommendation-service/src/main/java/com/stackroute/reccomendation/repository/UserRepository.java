@@ -30,6 +30,9 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match(u:User),(r:Role{name:'i'}),(s:Status{name:'f'}) where (u)-[:has_status]->(s) and (u)-[:has_role]->(r) return u")
     Collection<User> getIllustratorRec(@Param("genre") String genre);   //illustrator recc
 
+    @Query("match(u:User{name:{author}})\n"+"create(b:Book{name:{title}})\n"+"create (u)-[:has_wrote]->(b)")
+    void savePublication(@Param("title") String title,@Param("author") String author);
+
     @Query("match(b:Book) Return b" +
             "Order by b.created_at desc" +
             ",b.timesPurchased desc  Limit 15  ")

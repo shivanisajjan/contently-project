@@ -6,7 +6,7 @@
   <mat-expansion-panel class="profile-details" >
     <mat-expansion-panel-header>
       <mat-panel-title>Profile Details</mat-panel-title>
-      <mat-panel-description>{{profileData.username}}</mat-panel-description>
+      <!-- <mat-panel-description>{{profileData.username}}</mat-panel-description> -->
     </mat-expansion-panel-header>
     <mat-grid-list *ngIf="profileLoaded" cols="4" rowHeight="2em">
       <mat-grid-tile [colspan]="1" class="info-label"><strong>First Name: </strong></mat-grid-tile>
@@ -51,7 +51,7 @@
       <div class="content-list" >
         <mat-grid-tile class="info-value content-title" colspan="3" rowspan="1">
           <mat-icon>book</mat-icon>
-          {{content.title | titlecase}}
+          {{content.title}}
         </mat-grid-tile>
 
         <mat-grid-tile class="info-value" colspan="2" rowspan="1">
@@ -59,7 +59,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile class="info-value" colspan="1" rowspan="1">
-          <mat-icon>local_offer</mat-icon>{{content.typeName | titlecase}} ,&nbsp; {{content.genres | titlecase}}
+          <mat-icon>local_offer</mat-icon>{{content.typeName }} ,&nbsp; {{content.genres}}
         </mat-grid-tile>
 
         <mat-grid-tile *ngIf="ifConfirmed(content.editorStatus)" class="info-value" colspan="1" rowspan="1">

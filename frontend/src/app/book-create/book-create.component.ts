@@ -16,7 +16,7 @@ import { MatPaginator } from '@angular/material';
 
 import {formatDate} from '@angular/common';
 import {PublicationBookComponent} from '../publication-book/publication-book.component';
-// import {IssuesComponent} from '../issues/issues.component';
+import {IssuesComponent} from '../issues/issues.component';
 import {Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 
@@ -541,7 +541,7 @@ export class SelectEditorDialog implements OnInit {
   templateUrl: 'select-illustrator-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
-export class SelectIllustratorDialog implements OnDestroy, OnInit{
+export class SelectIllustratorDialog implements  OnInit{
   public illustratorList;
   public illustratorListFiltered;
   public searchTerm;

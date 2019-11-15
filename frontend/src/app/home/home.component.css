@@ -171,7 +171,7 @@ mat-card-content{
   overflow-x: scroll;
 
 }
-#recbox::-webkit-scrollbar{
+.content-cards::-webkit-scrollbar{
 
   height: 0;
   width: 0;

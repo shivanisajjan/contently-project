@@ -34,13 +34,13 @@
 }
 .drag-list-item{
   border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgb(255, 255, 255);
   /*display: flex;*/
   /*flex-direction: row;*/
   /*align-items: center;*/
   /*justify-content: space-between;*/
   box-sizing: border-box;
-  background: white;
+  background: rgb(56, 56, 56);
 }
 .cdk-drag-handle{
   cursor: move;
@@ -142,6 +142,7 @@ mat-grid-tile {
 
 .choose-editor-tile {
   display: block;
+  background-color: rgb(100, 100, 100);
 }
 
 .select-editor-header {

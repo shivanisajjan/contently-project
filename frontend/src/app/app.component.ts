@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
   private notificationStatusList: notification[] = new Array();;
   private book:any;
   private searchValue;
-  //private role=true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

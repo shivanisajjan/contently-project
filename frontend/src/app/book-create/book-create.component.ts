@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Inject, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef} from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Commit} from './commit';
@@ -12,6 +12,9 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {FileSaverService} from 'ngx-filesaver';
 import {formatDate} from '@angular/common';
 import {PublicationBookComponent} from '../publication-book/publication-book.component';
+import {IssuesComponent} from '../issues/issues.component';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-create',
@@ -28,7 +31,8 @@ export class BookCreateComponent implements OnInit {
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
-
+  fileName: string;
+  @ViewChild( IssuesComponent, {static: true}) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
   constructor(private bookFetch: BookFetchService,
@@ -37,7 +41,8 @@ export class BookCreateComponent implements OnInit {
               private contentService: ContentService,
               private route: ActivatedRoute,
               private _FileSaverService: FileSaverService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -47,9 +52,9 @@ export class BookCreateComponent implements OnInit {
   ngOnInit() {
 
 
-    if (localStorage.getItem('role') == 'editor') {
+    if (localStorage.getItem('role') === 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
-    } else if (localStorage.getItem('role') == 'designer') {
+    } else if (localStorage.getItem('role') === 'designer') {
       this.chapterStatus = ['Designing Phase', 'Designing Done'];
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
@@ -70,7 +75,7 @@ export class BookCreateComponent implements OnInit {
     return this.bookDetails.selectHelper;
   }
 
-  drop(event: CdkDragDrop<String[]>) {
+  drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.bookDetails.status, event.previousIndex, event.currentIndex);
     localStorage.setItem('book', JSON.stringify(this.bookDetails));
     console.log('drop: ', event.previousIndex, event.currentIndex);
@@ -96,6 +101,14 @@ export class BookCreateComponent implements OnInit {
   editFile(fileName: String) {
     console.log('editFile(): ', fileName);
     this.router.navigate(['/edit/' + fileName]).then();
+  }
+
+  openIssuesComponent(fileName: string) {
+    this.fileName = fileName;
+    console.log(fileName);
+    localStorage.setItem('fileName', fileName);
+    this.issueComponent.fileName = this.fileName;
+    this.issueComponent.ngOnInit();
   }
 
   addNewSection() {

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Headers, RequestOptions } from '@angular/http'
-import {Observable} from 'rxjs';
-import {Commit} from './book-create/commit';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Headers, RequestOptions, ResponseContentType } from '@angular/http';
+import { Observable } from 'rxjs';
+import { Commit } from './book-create/commit';
 
 
 @Injectable({
@@ -62,15 +62,16 @@ export class BookFetchService {
     });
   }
 
-  searchBooks(searchValue):Observable<any>{
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'Batman ' + localStorage.getItem('token')
-        })
-      };
-    return this.http.get<any>('http://13.126.150.171:8080/publication-service/api/v1/publications/search/' +searchValue,httpOptions);
+  searchBooks(searchValue): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    return this.http.get<any>('http://13.126.150.171:8080/publication-service/api/v1/publications/search/' + searchValue, httpOptions);
   }
+
   // get single commit content
   getSingleCommit(repoName, fileName, sha) {
     console.log('getCommit(): ', repoName, fileName, sha);
@@ -128,15 +129,37 @@ export class BookFetchService {
 
   }
 
-  uploadToAws(file,id):Observable<any>
-  {
+  uploadToAwsImage(file, id): Observable<any> {
 
-  console.log("save to aws called");
+    console.log('save to aws called');
 
-  let testData = new FormData();
-  testData.append('file', file);
+    let testData = new FormData();
+    testData.append('file', file);
 
-return  this.http.post('http://localhost:8081/api/v1/file/'+id, testData);
+    return this.http.post('http://localhost:8081/api/v1/file/' + id, testData);
   }
+
+  uploadToAws(file, id): Observable<any> {
+
+    console.log('save to aws called');
+
+    let testData = new FormData();
+    testData.append('file', file);
+
+    return this.http.post('http://localhost:8081/api/v1/text/' + id, testData);
+  }
+
+  getFromAws(id): Observable<any> {
+    console.log('get from aws called');
+    return this.http.get('http://localhost:8081/api/v1/file/' + id,
+      {
+        responseType: 'blob',
+        headers: {
+          accept: 'application/pdf'
+        },
+      }
+    );
+  }
+
 
 }

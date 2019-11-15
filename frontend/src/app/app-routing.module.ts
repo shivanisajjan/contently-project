@@ -23,14 +23,14 @@ const  routes: Routes = [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'register', component: RegistrationComponent},
     {path: 'edit/:fileName', component: EditComponent},
-    {path: 'book-details/:id', component: BookdetailsComponent},
+    {path: 'book-details', component: BookdetailsComponent},
     {path:'contentLayout',component:ContentLayoutComponent},
     {path:'bookCreate',component:BookCreateComponent},
     {path:'conversion',component:ConversionComponent},
     {path:'afterLogin',component:PageAfterLoginComponent},
     {path:'editProfile',component:EditProfileComponent},
-    {path:'pay',component:PaymentComponent},
-    {path:'loading',component:LoadingComponent},
+    {path:'pay/:id',component:PaymentComponent},
+    {path:'loading/:id',component:LoadingComponent},
     {path:'download',component:DownloadComponent},
     {path:'searchResults/:search',component: SearchResultsComponent}
 

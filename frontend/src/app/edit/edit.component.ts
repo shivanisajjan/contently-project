@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
-import {GithubService} from "../github.service";
+import {GithubService} from '../github.service';
 import {BookFetchService} from '../bookFetch.service';
-import {Book} from "../book-create/book";
-import {Commit} from "../book-create/commit";
-import {formatDate} from "@angular/common";
+import {Book} from '../book-create/book';
+import {Commit} from '../book-create/commit';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-edit',
@@ -21,15 +21,15 @@ export class EditComponent implements OnInit {
     height: '400px',
     backgroundColor: 'white',
   };
-  str: any;
 
   constructor(private service: GithubService,
               private router: Router,
               private bookFetch: BookFetchService,
-              private route: ActivatedRoute) {
-                if (!localStorage.getItem('token')) {
-                  this.router.navigate(['/home']).then();
-                }
+              private route: ActivatedRoute,
+  ) {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/home']).then();
+    }
     this.route.params.subscribe(params => {
       this.fileName = params['fileName'];
     });
@@ -40,7 +40,7 @@ export class EditComponent implements OnInit {
       editor: new FormControl()
     });
     console.log('editing filename: ', this.fileName);
-    this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id,this.fileName)
+    this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id, this.fileName)
       .subscribe(
         data => {
           this.book = new Book(data.name, data.sha, atob(data.content));
@@ -48,16 +48,15 @@ export class EditComponent implements OnInit {
           this.editorForm = new FormGroup({
             editor: new FormControl(this.book.content)
           });
-        },
-        error => {
         }
       );
+
   }
 
   onSubmit() {
     console.log(this.editorForm.get('editor').value);
-    let content = btoa(this.editorForm.get('editor').value);
-    let commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en'),
+    const content = btoa(this.editorForm.get('editor').value);
+    const commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en'),
       localStorage.getItem('fullName'), localStorage.getItem('email'), this.book.sha, content);
     this.bookFetch.createFile(this.fileName, commit)
       .subscribe(
@@ -70,9 +69,9 @@ export class EditComponent implements OnInit {
         }
       );
   }
-  back(){
+
+  back() {
     this.router.navigate(['/bookCreate']).then();
   }
-
-
 }
+

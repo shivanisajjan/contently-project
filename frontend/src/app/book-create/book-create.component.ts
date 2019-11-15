@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, Output, EventEmitter, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, Inject, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef} from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Commit} from './commit';
@@ -9,14 +9,16 @@ import {ContentService} from '../content.service';
 import {notification} from '../notification';
 import {NotificationService} from '../notification.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import * as S3 from 'aws-sdk/clients/s3';
 import {FileSaverService} from 'ngx-filesaver';
-import {formatDate} from "@angular/common";
 import { MatPaginator } from '@angular/material';
 
 
 
-import {PublicationBookComponent} from '../publication-book/publication-book.component'
+import {formatDate} from '@angular/common';
+import {PublicationBookComponent} from '../publication-book/publication-book.component';
+// import {IssuesComponent} from '../issues/issues.component';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-create',
@@ -26,8 +28,6 @@ import {PublicationBookComponent} from '../publication-book/publication-book.com
 
 export class BookCreateComponent implements OnInit {
 
-
-  gotFile: any;
   private editor;
   private illustrator;
   private bookDetails;
@@ -35,10 +35,9 @@ export class BookCreateComponent implements OnInit {
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
-  private canPublish: boolean;
-  private helperColour = '#676767';
+  fileName: string;
+  @ViewChild( IssuesComponent, {static: true}) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
-  private chapterNames;
 
   constructor(private bookFetch: BookFetchService,
               private router: Router,
@@ -46,7 +45,8 @@ export class BookCreateComponent implements OnInit {
               private contentService: ContentService,
               private route: ActivatedRoute,
               private _FileSaverService: FileSaverService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -55,38 +55,10 @@ export class BookCreateComponent implements OnInit {
 
   ngOnInit() {
 
-    const bucket = new S3(
-      {
-        accessKeyId: 'AKIASD2RRW35M5E63FFP ',
-        secretAccessKey: 'T6fN6pn/VnCMNMC3NwYc87h6IlvILJRfRlSjiHV5',
-        region: 'us-east-2'
-      }
-    );
-    const params = {
-      Bucket: 'convertedbooks', // your bucket name,
-      Key: '' + this.bookDetails.id
-    };
 
-    bucket.getObject(params, function (err, data) {
-      // Handle any error and exit
-      if (err) {
-        console.log(err);
-        return err;
-      }
-
-      // No error happened
-      // Convert Body from a Buffer to a String
-
-      const objectData = data.Body.toString('utf-8'); // Use the encoding necessary
-      document.getElementById('got').innerHTML = objectData;
-      console.log('working' + objectData + 'not working' + this.gotFile);
-
-
-    });
-
-    if (localStorage.getItem('role') == 'editor') {
+    if (localStorage.getItem('role') === 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
-    } else if (localStorage.getItem('role') == 'designer') {
+    } else if (localStorage.getItem('role') === 'designer') {
       this.chapterStatus = ['Designing Phase', 'Designing Done'];
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
@@ -107,7 +79,7 @@ export class BookCreateComponent implements OnInit {
     return this.bookDetails.selectHelper;
   }
 
-  drop(event: CdkDragDrop<String[]>) {
+  drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.bookDetails.status, event.previousIndex, event.currentIndex);
     localStorage.setItem('book', JSON.stringify(this.bookDetails));
     console.log('drop: ', event.previousIndex, event.currentIndex);
@@ -135,12 +107,23 @@ export class BookCreateComponent implements OnInit {
     this.router.navigate(['/edit/' + fileName]).then();
   }
 
+  openIssuesComponent(fileName: string) {
+    this.fileName = fileName;
+    console.log(fileName);
+    localStorage.setItem('fileName', fileName);
+    this.issueComponent.fileName = this.fileName;
+    this.issueComponent.ngOnInit();
+  }
+
   addNewSection() {
     console.log('Add new Section');
     const dialogRef = this.dialog.open(AddNewSectionComponent);
 
     dialogRef.afterClosed().subscribe(
       result => {
+        if (result === undefined) {
+          return;
+        }
         console.log('New Section Name: ', result);
         const commit = new Commit(formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en') + ' - Created',
           localStorage.getItem('fullName'), localStorage.getItem('email'), '', '');
@@ -160,6 +143,12 @@ export class BookCreateComponent implements OnInit {
               this.setShowEditButton();
               localStorage.setItem('book', JSON.stringify(this.bookDetails));
               console.log(this.bookDetails);
+              this.bookFetch.createFile('chat-files/' + result, commit)
+                .subscribe(
+                  data2 => {
+                    console.log('chat-file created: ', data2);
+                  }
+                );
               this.contentService.saveContent(this.bookDetails)
                 .subscribe(
                   data2 => {
@@ -368,44 +357,45 @@ export class BookCreateComponent implements OnInit {
     }
   }
 
-  getBookDetails(id) {
-    console.log('fetching book details');
-    this.contentService.getBookDetails(id).subscribe(
-      result => {
-        this.bookDetails = result;
-        this.chapterNames = Array.from(this.bookDetails.status.keys());
-        console.log(this.chapterNames);
-      }
-    );
-  }
-  onPublish(){
-        const dialogRef = this.dialog.open(PublicationBookComponent, {
-              width:'50%',
-              data: {
-                 book:this.bookDetails
-              }
-            });
-            dialogRef.afterClosed()
-            .subscribe(
-            result => {
-            console.log('Dialog was closed');
-            }
-            );
-   }
+  // getBookDetails(id) {
+  //   console.log('fetching book details');
+  //   this.contentService.getBookDetails(id).subscribe(
+  //     result => {
+  //       this.bookDetails = result;
+  //       this.chapterNames = Array.from(this.bookDetails.status.keys());
+  //       console.log(this.chapterNames);
+  //     }
+  //   );
+  // }
 
-  isPublish():boolean{
-       if(this.bookDetails.status === null) {
-         return;
-       }
-       for (let i = 0; i < this.bookDetails.status.length; i++) {
-         const chapter = this.bookDetails.status[i].chapterName;
-         const status = this.bookDetails.status[i].status;
-          if(this.bookDetails.status[i].status!='Finished'){
-             return false;
-          }
-       }
-       return true;
-   }
+  onPublish() {
+    this.publishFile();
+
+    const dialogRef = this.dialog.open(PublicationBookComponent, {
+      width: '50%',
+      data: {
+        book: this.bookDetails
+      }
+    });
+    // dialogRef.afterClosed()
+    //   .subscribe(
+    //     result => {
+    //       console.log('Dialog was closed');
+    //     }
+    //   );
+  }
+
+  isPublish(): boolean {
+    if (this.bookDetails.status === null) {
+      return;
+    }
+    for (let i = 0; i < this.bookDetails.status.length; i++) {
+      if (this.bookDetails.status[i].status !== 'Finished') {
+        return false;
+      }
+    }
+    return true;
+  }
 
   sendNotification(receiver, bookId, message) {
     const newNotification: notification = new notification();
@@ -417,41 +407,23 @@ export class BookCreateComponent implements OnInit {
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 
-  getHelperStatus() {
-
+  uploadFile(file) {
+    this.bookFetch.uploadToAws(file, this.bookDetails.id).subscribe(data => {
+      console.log(data);
+    });
   }
 
-  uploadFile(file) {
-
-
-    this.bookFetch.uploadToAws(file,this.bookDetails.id).subscribe(data=>{
-console.log(data);
-
-    });
-
-
-
-}
-
-
-onSelectFile(event) { // called each time file input changes
+  onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
-
-
-
-      this.bookFetch.uploadToAws(event.target.files[0],event.target.files[0].name).subscribe(data=>{
-        console.log(data);
-      });
-
+      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name)
+        .subscribe(data => {
+          console.log(data);
+        });
     }
-}
-
-
+  }
 
   publishFile() {
-
-    const fileName = `save.docx`;
-
+    const fileName = `save.html`;
     const len = this.bookDetails.status.length;
     let count = 0;
     const fileType = this._FileSaverService.genType(fileName);
@@ -493,20 +465,8 @@ onSelectFile(event) { // called each time file input changes
         );
     }
 
-
   }
 
-  downloadFile(){
-
-    const fileName = 'save.docx';
-    const fileType = this._FileSaverService.genType(fileName);
-
-
-    const txtBlob = new Blob([document.getElementById('got').innerHTML], {type: fileType});
-    console.log(txtBlob);
-    this._FileSaverService.save(txtBlob, fileName);
-
-  }
 }
 
 @Component({
@@ -563,7 +523,7 @@ export class SelectEditorDialog implements OnInit {
       });
   }
 
-  search(): void {
+  search() {
     const term = this.searchTerm;
     console.log(term);
     this.editorListFiltered = this.editorList.filter(function (tag) {

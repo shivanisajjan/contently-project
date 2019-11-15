@@ -8,7 +8,6 @@
   width: 70%;
   margin-left: 24%;
   background-color: red;
-
   box-shadow: 0 0 10px 0 lightslategrey;
 }
 
@@ -17,13 +16,15 @@
   background: rgb(202, 187, 102);
 }
 .chapter-title{
-  width: 50%;
+  width: 55%;
 }
 .buttons-actions{
-  width: 30%;
+  width: 15%;
+  margin: 0 10px;
 }
 .status{
   width: 20%;
+  margin: 0 10px;
 }
 
 /* drag and drop css*/
@@ -157,7 +158,6 @@ mat-grid-tile {
 .select-editor-header:hover {
   background-color: blueviolet;
 }
-
 /*material css*/
 .list-editors mat-card{
   margin: 1%;
@@ -166,4 +166,18 @@ mat-grid-tile {
 
 .select-editor-dialog{
   /* background-image: url('../../assets/images/side_bg.jpg'); */
+}
+/* issue sidenav */
+.chat-sidenav{
+  width: 40%;
+}
+button{
+  margin-right: 10px;
+}
+.disabled {
+  pointer-events:none;
+  opacity:.5;
+}
+mat-spinner{
+  margin: 10px auto;
 }

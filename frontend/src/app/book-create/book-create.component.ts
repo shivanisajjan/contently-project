@@ -355,36 +355,37 @@ export class BookCreateComponent implements OnInit {
       }
     );
   }
-  onPublish(){
+
+  onPublish() {
     this.publishFile();
 
-        const dialogRef = this.dialog.open(PublicationBookComponent, {
-              width:'50%',
-              data: {
-                 book:this.bookDetails
-              }
-            });
-            dialogRef.afterClosed()
-            .subscribe(
-            result => {
-            console.log('Dialog was closed');
-            }
-            );
-   }
+    const dialogRef = this.dialog.open(PublicationBookComponent, {
+      width: '50%',
+      data: {
+        book: this.bookDetails
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(
+        result => {
+          console.log('Dialog was closed');
+        }
+      );
+  }
 
-  isPublish():boolean{
-       if(this.bookDetails.status === null) {
-         return;
-       }
-       for (let i = 0; i < this.bookDetails.status.length; i++) {
-         const chapter = this.bookDetails.status[i].chapterName;
-         const status = this.bookDetails.status[i].status;
-          if(this.bookDetails.status[i].status!='Finished'){
-             return false;
-          }
-       }
-       return true;
-   }
+  isPublish(): boolean {
+    if (this.bookDetails.status === null) {
+      return;
+    }
+    for (let i = 0; i < this.bookDetails.status.length; i++) {
+      const chapter = this.bookDetails.status[i].chapterName;
+      const status = this.bookDetails.status[i].status;
+      if (this.bookDetails.status[i].status != 'Finished') {
+        return false;
+      }
+    }
+    return true;
+  }
 
   sendNotification(receiver, bookId, message) {
     const newNotification: notification = new notification();
@@ -416,14 +417,10 @@ export class BookCreateComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
 
 
-<<<<<<< HEAD
-
-      this.bookFetch.uploadToAwsImage(event.target.files[0],event.target.files[0].name).subscribe(data=>{
-=======
-      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name).subscribe(data => {
->>>>>>> 212917aea5117ea1a3e115c50b6cf6c06cffe3a0
-        console.log(data);
-      });
+      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name)
+        .subscribe(data => {
+          console.log(data);
+        });
 
     }
   }

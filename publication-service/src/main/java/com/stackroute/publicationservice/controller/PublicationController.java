@@ -37,6 +37,7 @@ public class PublicationController {
     @PostMapping(value = "/save")
     public ResponseEntity<Publications> registerUser(@RequestBody Publications content) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
         content.setId(publicationService.getNextSequence("customSequences"));
+        this.publicationsDto.setId(content.getId());
         this.publicationsDto.setAuthorName(content.getAuthorName());
         this.publicationsDto.setDescription(content.getDescription());
         this.publicationsDto.setGenres(content.getGenres());

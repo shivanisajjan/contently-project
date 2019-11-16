@@ -1,6 +1,6 @@
 /*material css*/
 .continer {
-  background-image: url('../../assets/images/main_bg.jpeg');
+  background-image: url('../../assets/images/side_bg.jpg');
   height: 100%;
 }
 
@@ -8,7 +8,6 @@
   width: 70%;
   margin-left: 24%;
   background-color: red;
-
   box-shadow: 0 0 10px 0 lightslategrey;
 }
 
@@ -17,13 +16,15 @@
   background: rgb(202, 187, 102);
 }
 .chapter-title{
-  width: 50%;
+  width: 55%;
 }
 .buttons-actions{
-  width: 30%;
+  width: 15%;
+  margin: 0 10px;
 }
 .status{
   width: 20%;
+  margin: 0 10px;
 }
 
 /* drag and drop css*/
@@ -33,13 +34,13 @@
 }
 .drag-list-item{
   border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgb(255, 255, 255);
   /*display: flex;*/
   /*flex-direction: row;*/
   /*align-items: center;*/
   /*justify-content: space-between;*/
   box-sizing: border-box;
-  background: white;
+  background: rgb(56, 56, 56);
 }
 .cdk-drag-handle{
   cursor: move;
@@ -133,13 +134,15 @@ mat-grid-tile {
 }
 
 .editor-card {
-  background-color: rgb(16, 14, 110);
+  background-color: rgba(240, 84, 84, 0.692);
   color: white;
   cursor: pointer;
+  border-radius: 25px;
 }
 
 .choose-editor-tile {
   display: block;
+  background-color: rgb(100, 100, 100);
 }
 
 .select-editor-header {
@@ -156,5 +159,26 @@ mat-grid-tile {
 .select-editor-header:hover {
   background-color: blueviolet;
 }
-
 /*material css*/
+.list-editors mat-card{
+  margin: 1%;
+  
+}
+
+.select-editor-dialog{
+  /* background-image: url('../../assets/images/side_bg.jpg'); */
+}
+/* issue sidenav */
+.chat-sidenav{
+  width: 40%;
+}
+button{
+  margin-right: 10px;
+}
+.disabled {
+  pointer-events:none;
+  opacity:.5;
+}
+mat-spinner{
+  margin: 10px auto;
+}

@@ -1,12 +1,35 @@
 <div class="book-details-page">
-	<br>
-	<mat-card class="book-details">
-		<img mat-card-image src="../../assets/images/cover_photo.jpg" alt="Photo of a Shiba Inu">
-		<h2>{{bookDetails.title}}</h2>
-		<h2></h2>
-		<p>{{bookDetails.description}}</p>
-		<button mat-raised-button color="primary" (click)="openSampleChapterDialog()">Show Sample Chapter</button>
-		<button mat-raised-button color="primary" *ngIf=!isPurchase() (click)="purchase()">Purchase</button>
-		<button mat-raised-button color="primary" *ngIf=isPurchase() routerLink="/download">Download</button>
-	</mat-card>
+  <br>
+<mat-card class="book-details">
+  <img mat-card-image src="../../assets/images/cover_photo.jpg" alt="Photo of a Shiba Inu">
+<h2>{{bookDetails.title}}</h2>
+<h2 ></h2>
+<p>{{bookDetails.description}}</p>
+<button mat-raised-button color="primary" (click)="openSampleChapterDialog()">Show Sample Chapter</button>
+<button mat-raised-button color="primary" *ngIf=!isPurchase() (click)="purchase()">Purchase</button>
+  <button mat-raised-button color="primary" *ngIf=isPurchase() routerLink="/download" >Download</button>
+</mat-card>
+ <!-- <section id="book">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="book-preview">
+					<img src="../../assets/images/book_cover.jpg" class="background-device" alt="">
+					<div class="owl-book">
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h2 class="heading wow animated fadeInUp">Fruit of the drunken tree</h2>
+				<h4 class="subheading wow animated fadeInUp">This lovely, well-written book is concerned foremost with creating typography and is essential for professionals who regularly work for clients.</h4>
+				<p class="small wow animated fadeInUp">Author writes about designing with the correct typeface; striving for rhythm, proportion, and harmony; choosing and combining type; designing pages; using section heads, subheads, footnotes, and tables; applying kerning and other type adjustments to improve legibility; and adding special characters, including punctuation and diacritical marks. </p>
+				<p class="small wow animated fadeInUp">The Elements of Typographic Style teaches the history of and the artistic and practical perspectives on a variety of type families that are available in Europe and America today.In the vein of Isabel Allende and Gabriel Garcia Marquez, a mesmerizing debut set against the backdrop of the devastating violence of 1990's Colombia about a sheltered young girl and a teenage maid who strike an unlikely friendship that threatens to undo them both.
+
+          The Santiago family lives in a gated community in Bogotá, safe from the political upheaval terrorizing the country. Seven-year-old Chula and her older sister Cassandra enjoy carefree lives thanks to this protective bubble, but the threat of kidnappings, car bombs, and assassinations hover just outside the neighborhood walls, where the godlike drug lord Pablo Escobar continues to elude authorities and capture the attention of the nation.</p>
+			</div>
+    </div>
+	</div>
+</section> -->
+<br><br><br>
 </div>

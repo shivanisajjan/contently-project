@@ -1,4 +1,7 @@
-<h1>You may like</h1>
+<div class="page-after-component">
+<div class="trending-books">
+    <h3 style="margin-left: 4%;">You may like</h3>
+    </div>
     <div class="container" id="recbox"
     fxLayout
     fxLayout.xs="column"
@@ -9,13 +12,14 @@
     <mat-card (click)="bookDetails(bookvar.bookId)" id="cardhere">
         
         <img mat-card-image src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="card image">
-        <h4>{{bookvar.bookName}}</h4>
+        <h6>{{bookvar.bookName}}</h6>
         <br>
     </mat-card></div>
-    <br></div>
+    <br></div><br>
 
-    <h1>TRENDING</h1>
-    <div class="container" id="recbox"
+    <div class="trending-books">
+        <h3 style="margin-left: 4%;">Trending Books</h3>
+        </div>    <div class="container" id="recbox"
     fxLayout
     fxLayout.xs="column"
     fxLayoutAlign="center"
@@ -25,7 +29,8 @@
     <mat-card (click)="bookDetails(bookvar.bookId)" id="cardheret">
         
         <img mat-card-image src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="card image">
-        <h4>{{bookvar.bookName}}</h4>
+        <h6>{{bookvar.bookName}}</h6>
         <br>
     </mat-card></div>
-    <br></div>
+    <br></div><br>
+</div>

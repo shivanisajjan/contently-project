@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ContentService {
     return this.http.put(postUrl, content, this.httpOptions);
   }
 
-  getRecommendedEditorsOrIllustrators(role, genre) {
+  getRecommendedEditorsOrIllustrators(role,genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export class ContentService {
     return this.http.get(postUrl, this.httpOptions);
   }
 
-  updateEditorOrIllustratorStatus(id, role, status) {
+  updateEditorOrIllustratorStatus(id,role,status) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -73,15 +73,15 @@ export class ContentService {
     return this.http.get(postUrl, httpOptions);
   }
 
-  getPurchaseStatus(id) {
+  getPurchaseStatus(id){
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    const postUrl = `http://13.126.150.171:8080/purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
-    return this.http.get(postUrl, httpOptions);
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Batman ' + localStorage.getItem('token')
+        })
+      };
+       const postUrl = `http://13.126.150.171:8080/purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
+      return this.http.get(postUrl, httpOptions);
   }
 
   // used to get all contents of 'username'
@@ -108,18 +108,18 @@ export class ContentService {
     return this.http.post(postUrl, jsonObj, httpOptions);
   }
 
-  getBookDetailPage(id) {
+  getBookDetailPage(id){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/book/id/${id}`;
+    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/content/${id}`;
     return this.http.get(postUrl, httpOptions);
   }
 
-  saveBookDetails(book) {
+  saveBookDetails(book){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -129,29 +129,4 @@ export class ContentService {
     const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
     return this.http.put(postUrl, book, this.httpOptions);
   }
-
-  getPay(editorName){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/username/` +editorName;
-    return this.http.get(postUrl, this.httpOptions);
-  }
-
-  recommendedPrice(editorPay, illustratorPay) {
-    const book = JSON.parse(localStorage.getItem('book'));
-    const myObject = {
-      genre: book.genres[0],
-      editorPay,
-      illustratorPay,
-      base: 50,
-      noOfWords: +localStorage.getItem('wordCount')
-    };
-    console.log(myObject);
-    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/priceRec`;
-    return this.http.post(postUrl, myObject, this.httpOptions);
-}
 }

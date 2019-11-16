@@ -29,7 +29,11 @@ import {
   MatTreeModule,
   MatCheckboxModule,
   MatSnackBarModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MAT_DATE_LOCALE,
+  MatPaginatorModule,
+  MatChipsModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import {MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
@@ -57,10 +61,11 @@ import {PaymentComponent} from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {DownloadComponent} from './download/download.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {NewIssueComponent} from './edit/new-issue/new-issue.component';
-import {ReplyComponent} from './edit/reply/reply.component';
+import {NewIssueComponent} from './issues/new-issue/new-issue.component';
+import {ReplyComponent} from './issues/reply/reply.component';
 import {PublicationBookComponent} from './publication-book/publication-book.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
+import { IssuesComponent } from './issues/issues.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +93,8 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     NewIssueComponent,
     ReplyComponent,
     PublicationBookComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    IssuesComponent
   ],
 
   imports: [
@@ -129,7 +135,11 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     MatSnackBarModule,
     MatBadgeModule,
     DragDropModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     LoginComponent,
@@ -140,11 +150,13 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     SampleChapterDialog,
     PublicationBookComponent,
     NewIssueComponent,
-    ReplyComponent
+    ReplyComponent,
+    IssuesComponent
   ],
   providers: [
     LoginService,
-    ContentService
+    ContentService,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })

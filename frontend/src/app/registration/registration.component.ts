@@ -140,7 +140,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   public addPersonalDetails(username, password, email, contact, firstname, lastname, nationality, address1, address2, address3, date) {
-    console.log(date);
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;

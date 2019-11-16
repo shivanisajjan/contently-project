@@ -20,7 +20,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="navbar">
-    <mat-toolbar color="primary" style="justify-content: space-between; position: fixed; z-index: 1000;">
+    <mat-toolbar color="primary" style="justify-content: space-between; position: fixed;">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -59,14 +59,14 @@
               <a mat-menu-item  routerLink="/dashboard">Profile</a>
               <a mat-menu-item (click)="onLogout()">Logout</a>
             </mat-menu>
-            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" style="margin-right: 10px;"><i class="material-icons">notifications_none</i></button>
+            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">notifications_none</i></button>
             <mat-menu class="notification-menu" #notification="matMenu">
                 <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
                 <div class="notifications" *ngIf="!ifNotifications()" >
                 <div *ngFor = "let notification of notificationList;index as i">
                   <div *ngIf="isAuthor()">
 
-                    <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
+                    <mat-card *ngIf="notification.status" style="background-color: #c79fec;">
                         <p>{{notification.message}}</p>
                     </mat-card>
 

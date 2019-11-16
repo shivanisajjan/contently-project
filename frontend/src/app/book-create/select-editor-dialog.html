@@ -1,29 +1,30 @@
 <div class="select-editor-dialog">
+<mat-card>
+   <mat-card-header>
         <mat-form-field class="example-full-width"  style="width: 80%;">
                 <input  [(ngModel)] = "searchTerm" (ngModelChange) = "search()"  matInput placeholder="Search Editor" value="">
              </mat-form-field>
-
-    <mat-tab-group>
-        <mat-tab label="Recommended Editors">
-                
-        <div *ngFor="let editor of editorListFiltered" class="list-editors">
-                        <mat-card  matRipple  class="editor-card" (click)="selectEditor(editor.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                <h4>{{editor.name}}</h4>
-                        </mat-card>
-                        </div>   
-        <!-- <mat-paginator [length]="illustratorListFiltered.length"
-        [pageSize]="5"
-        [pageSizeOptions]="pageSizeOptions">
-        </mat-paginator>          -->
-        </mat-tab>
-                
-        <mat-tab label="Show All Editors">
-        <div *ngFor="let editor of allEditorListFiltered" class="list-editors">
-                <mat-card  matRipple  class="editor-card" (click)="selectEditor(editor)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                               <h4>{{editor}}</h4>
-                </mat-card>
+    </mat-card-header>
+</mat-card><br>
+<h4 style="color: black;">Recommended Editors</h4>
+<div *ngFor="let editor of editorListFiltered" class="list-editors">
+        <mat-card  matRipple  class="editor-card" (click)="selectEditor(editor.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
+                <mat-card-header>
+                  <div mat-card-avatar class="example-header-image"></div>
+                  <mat-card-title>{{editor.name}}</mat-card-title>
+                  <mat-card-subtitle style="color: white;">Price</mat-card-subtitle>
+                </mat-card-header>
+        </mat-card><br>
         </div>
-        </mat-tab>
-</mat-tab-group>                
+  <button mat-button color="primary" (click)="getAllEditors()"><h4 style="color: black;">Show All Editors</h4></button>
+  <div *ngFor="let editor of allEditorListFiltered" class="list-editors">
+                <mat-card  matRipple  class="editor-card" (click)="selectEditor(editor)" [mat-dialog-close]="editorData" cdkFocusInitial>
+                        <mat-card-header>
+                          <div mat-card-avatar class="example-header-image"></div>
+                          <mat-card-title>{{editor}}</mat-card-title>
+                          <mat-card-subtitle style="color: white;">Price</mat-card-subtitle>
+                        </mat-card-header>
+                </mat-card><br>
+                </div>
 
 </div>

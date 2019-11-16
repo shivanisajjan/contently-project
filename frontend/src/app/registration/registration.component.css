@@ -1,5 +1,5 @@
 .register-component{
-  background-image: url('../../assets/images/side_bg.jpg');
+  
 }
 /*new css*/
 .register-component-heading{
@@ -14,20 +14,10 @@
 .fields{
   width: 60%;
 }
-
-.input-field{
-  padding-left: 3%;
-}
-
-.fields-two{
-  display: inline;
-}
-mat-horizontal-stepper{
+mat-vertical-stepper{
   padding: 0 20px;
   border-radius: 5px;;
   box-shadow: 0 0 10px 0 lightslategrey;
-  height:475px;
-  height: 100%;
 }
 .back-button{
   margin-right: 20px;
@@ -62,31 +52,3 @@ mat-horizontal-stepper{
 input{
   margin-left: 5px;
 }
-
-.trending-books{
-  padding: 3%;
-  color: rgb(15, 15, 15);
-  /* text-shadow: 4px 4px #333333; */
-  background-image: url('../../assets/images/trend.jpg');
-  background-repeat: initial;
-  font-weight: bold;
-  text-transform: uppercase;
-  outline: 1px solid rgb(26, 26, 26);
-  outline-offset: -15px;
-  letter-spacing: 20px;
-  text-align: center;
-}
-
-mat-horizontal-stepper{
-  background-color: rgb(24, 24, 24);
-  color: white;
-}
-/* 
-::ng-deep .mat-form-field-label{
-
-  color:rgb(255, 255, 255) !important;
-}
-
-::ng-deep .mat-form-field-underline .mat-form-field-ripple{
-  background-color:white;
-} */

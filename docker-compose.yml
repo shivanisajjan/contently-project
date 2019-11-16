@@ -120,6 +120,8 @@ services:
       - rabbitmq
       - config-server
       - eureka-server
+    ports:
+      -8005:8005
 
   content-service:
       build: content-service

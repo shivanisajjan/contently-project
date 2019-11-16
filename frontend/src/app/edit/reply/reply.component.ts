@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {BookFetchService} from '../../bookFetch.service';
-import {NgForm} from '@angular/forms';
-import {Commit} from '../../book-create/commit';
-import {formatDate} from '@angular/common';
-import {Issue} from '../issue';
-import {Reply} from '../reply';
+import {Issue, Reply} from '../edit.component';
+import {BookFetchService} from "../../bookFetch.service";
+import {NgForm} from "@angular/forms";
+import {Commit} from "../../book-create/commit";
+import {formatDate} from "@angular/common";
+import {user} from "../../user";
 
 @Component({
   selector: 'app-reply',
@@ -44,7 +44,6 @@ export class ReplyComponent implements OnInit {
     this.issueList[this.data.index] = this.issue;
     this.issueFile.content = btoa(JSON.stringify(this.issueList));
     const commit = new Commit(dateTime, username, email, this.issueFile.sha, this.issueFile.content);
-
     this.bookFetch.createFile(this.issueFile.path, commit)
       .subscribe(
         data => {
@@ -54,7 +53,7 @@ export class ReplyComponent implements OnInit {
         }
       );
   }
-  ifSameUser(commentator: string) {
+  ifSameUser(commentator: string){
     return commentator === localStorage.getItem('username');
   }
 }

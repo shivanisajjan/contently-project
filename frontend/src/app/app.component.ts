@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   private notificationStatusList: notification[] = new Array();;
   private book:any;
   private searchValue;
+  //private role=true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -65,8 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   search(searchValue) {
-  this.searchValue=searchValue;
-  console.log(this.searchValue);
+  this.searchValue = searchValue;
   this.router.navigate(['/searchResults',this.searchValue]).then();
   }
 

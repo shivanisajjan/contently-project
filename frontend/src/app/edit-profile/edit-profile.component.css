@@ -5,7 +5,7 @@ mat-card{
 }
 
 .edit-profile-page{
-    background-image: url('../../assets/images/side_bg.jpg');
+    background-image: url('../../assets/images/main_bg.jpeg');
 }
 
 .genre-radio-group{
@@ -16,29 +16,3 @@ mat-card{
 .genre-radio-buttons{
     margin-left: 10%;
 }
-
-.trending-books{
-    padding: 3%;
-    color: rgb(15, 15, 15);
-    /* text-shadow: 4px 4px #333333; */
-    background-image: url('../../assets/images/trend.jpg');
-    background-repeat: initial;
-    font-weight: bold;
-    text-transform: uppercase;
-    outline: 1px solid rgb(26, 26, 26);
-    outline-offset: -15px;
-    letter-spacing: 20px;
-    text-align: center;
-  }
-
-  .input-field{
-    padding-left: 3%;
-  }
-  
-  .fields-two{
-    display: inline;
-  }
-
-
-
- 

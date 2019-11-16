@@ -1,8 +1,8 @@
-<div class="create-content-component">
-<div class="trending-books">
-    <h3 style="margin-left: 4%;">Create Content</h3>
-    </div>
 <mat-card>
+  <mat-card-header>
+    <h3>Create Content</h3>
+  </mat-card-header>
+  <mat-divider></mat-divider>
   <mat-card-content>
   <form #newContent="ngForm">
 
@@ -52,5 +52,3 @@
     <button mat-raised-button color="primary" (click)="onSubmit(newContent)" >Start Creating</button>
   </mat-card-actions>
 </mat-card>
-<br>
-</div>

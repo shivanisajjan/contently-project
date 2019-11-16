@@ -11,5 +11,6 @@ public interface ProfileService {
     public List<Profile> getallProfile();
     public Profile update(Profile profile);
     public boolean deleteProfile(int id);
+    public double getByname(String name);
     public int getNextSequence(String seqName);
 }

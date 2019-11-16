@@ -1,4 +1,4 @@
-package com.stackroute.reccomendation.domain;
+package com.stackroute.recommendation.domain;
 
 
 import lombok.*;

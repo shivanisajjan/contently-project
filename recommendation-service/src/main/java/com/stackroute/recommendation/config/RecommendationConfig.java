@@ -1,6 +1,6 @@
-package com.stackroute.reccomendation.config;
+package com.stackroute.recommendation.config;
 
-import com.stackroute.reccomendation.domain.User;
+import com.stackroute.recommendation.domain.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

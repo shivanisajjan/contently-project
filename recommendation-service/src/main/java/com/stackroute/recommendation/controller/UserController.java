@@ -1,15 +1,14 @@
-package com.stackroute.reccomendation;
+package com.stackroute.recommendation.controller;
 
-import com.stackroute.reccomendation.domain.*;
-import com.stackroute.reccomendation.service.BookService;
-import com.stackroute.reccomendation.service.EditorService;
-import com.stackroute.reccomendation.service.IllustratorService;
-import com.stackroute.reccomendation.service.UserService;
+import com.stackroute.recommendation.domain.*;
+import com.stackroute.recommendation.service.BookService;
+import com.stackroute.recommendation.service.EditorService;
+import com.stackroute.recommendation.service.IllustratorService;
+import com.stackroute.recommendation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

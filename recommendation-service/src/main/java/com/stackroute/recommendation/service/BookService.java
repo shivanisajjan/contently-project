@@ -1,8 +1,8 @@
-package com.stackroute.reccomendation.service;
+package com.stackroute.recommendation.service;
 
 
-import com.stackroute.reccomendation.domain.Book;
-import com.stackroute.reccomendation.repository.BookRepository;
+import com.stackroute.recommendation.domain.Book;
+import com.stackroute.recommendation.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

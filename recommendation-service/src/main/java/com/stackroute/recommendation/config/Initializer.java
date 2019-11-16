@@ -1,7 +1,7 @@
-package com.stackroute.reccomendation.config;
+package com.stackroute.recommendation.config;
 
-import com.stackroute.reccomendation.domain.User;
-import com.stackroute.reccomendation.service.UserService;
+import com.stackroute.recommendation.domain.User;
+import com.stackroute.recommendation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

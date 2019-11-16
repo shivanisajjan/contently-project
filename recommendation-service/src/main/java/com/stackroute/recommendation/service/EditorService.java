@@ -1,7 +1,7 @@
-package com.stackroute.reccomendation.service;
+package com.stackroute.recommendation.service;
 
-import com.stackroute.reccomendation.domain.Editor;
-import com.stackroute.reccomendation.repository.EditorRepository;
+import com.stackroute.recommendation.domain.Editor;
+import com.stackroute.recommendation.repository.EditorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

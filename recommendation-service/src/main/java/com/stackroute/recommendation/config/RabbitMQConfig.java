@@ -1,7 +1,7 @@
-package com.stackroute.reccomendation.config;
+package com.stackroute.recommendation.config;
 
 
-import com.stackroute.reccomendation.service.RabbitMQConsumer;
+import com.stackroute.recommendation.service.RabbitMQConsumer;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -86,6 +86,31 @@ public class RabbitMQConfig {
     @Bean
     Binding binding2(Queue queue2, DirectExchange exchange2) {
         return BindingBuilder.bind(queue2).to(exchange2).with(routingkey2);
+    }
+
+
+    @Value("${purchasing.rabbitmq.queue}")
+    private String queueName3;
+
+    @Value("${purchasing.rabbitmq.exchange}")
+    private String exchange3;
+
+    @Value("${purchasing.rabbitmq.routingkey}")
+    private String routingkey3;
+
+    @Bean
+    Queue queue3() {
+        return new Queue(queueName3, false);
+    }
+
+    @Bean
+    DirectExchange exchange3() {
+        return new DirectExchange(exchange3);
+    }
+
+    @Bean
+    Binding binding3(Queue queue3, DirectExchange exchange3) {
+        return BindingBuilder.bind(queue3).to(exchange3).with(routingkey3);
     }
 
 

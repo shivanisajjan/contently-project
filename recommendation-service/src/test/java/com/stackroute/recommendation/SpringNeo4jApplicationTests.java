@@ -1,4 +1,4 @@
-package com.stackroute.reccomendation;
+package com.stackroute.recommendation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

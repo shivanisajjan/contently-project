@@ -1,7 +1,7 @@
-package com.stackroute.reccomendation.service;
+package com.stackroute.recommendation.service;
 
-import com.stackroute.reccomendation.domain.Illustrator;
-import com.stackroute.reccomendation.repository.IllustratorRepository;
+import com.stackroute.recommendation.domain.Illustrator;
+import com.stackroute.recommendation.repository.IllustratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,9 @@
-package com.stackroute.reccomendation.service;
+package com.stackroute.recommendation.service;
 
-import com.stackroute.reccomendation.domain.PublicationsDto;
-import com.stackroute.reccomendation.domain.User;
-import com.stackroute.reccomendation.domain.UserDto;
+import com.stackroute.recommendation.domain.PublicationsDto;
+import com.stackroute.recommendation.domain.PurchasingDto;
+import com.stackroute.recommendation.domain.User;
+import com.stackroute.recommendation.domain.UserDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,8 +77,16 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = "publication_queue")
     public void recievedMessage2(PublicationsDto publicationsDto) {
 
-        userService.savePublication(publicationsDto.getTitle(),publicationsDto.getAuthorName());
+        userService.savePublication(publicationsDto.getTitle(),publicationsDto.getAuthorName(),publicationsDto.getId(),publicationsDto.getEditorName(),publicationsDto.getDesignerName(),publicationsDto.getNoOfPurchases(),publicationsDto.getPrice(),publicationsDto.getGenres(),publicationsDto.getTypeName());
+
         System.out.println("message received="+publicationsDto.getTitle());
+    }
+
+    @RabbitListener(queues = "purchasing_queue")
+    public void recievedMessage3(PurchasingDto purchasingDto) {
+
+        userService.savePurchasing(purchasingDto.getBook_id(),purchasingDto.getUsername());
+        System.out.println("message received="+purchasingDto.getUsername());
     }
 
 

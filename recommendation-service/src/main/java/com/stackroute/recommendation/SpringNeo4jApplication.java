@@ -1,4 +1,4 @@
-package com.stackroute.reccomendation;
+package com.stackroute.recommendation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

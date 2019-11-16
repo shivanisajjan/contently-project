@@ -1,8 +1,7 @@
-package com.stackroute.reccomendation.repository;
+package com.stackroute.recommendation.repository;
 
-import com.stackroute.reccomendation.domain.Book;
-import com.stackroute.reccomendation.domain.Editor;
-import com.stackroute.reccomendation.domain.User;
+import com.stackroute.recommendation.domain.Book;
+import com.stackroute.recommendation.domain.User;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
@@ -30,12 +29,16 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match(u:User),(r:Role{name:'i'}),(s:Status{name:'f'}) where (u)-[:has_status]->(s) and (u)-[:has_role]->(r) return u")
     Collection<User> getIllustratorRec(@Param("genre") String genre);   //illustrator recc
 
-    @Query("match(u:User{name:{author}})\n"+"create(b:Book{name:{title}})\n"+"create (u)-[:has_wrote]->(b)")
-    void savePublication(@Param("title") String title,@Param("author") String author);
+    @Query("match(u:User{name:{author}})\n"+"match(e:User{name:{editor}})\n"+"match(d:User{name:{designer}})\n"+"match (g:genre{name:{genre}})\n"+"match (t:Type{name:{type}})\n"+"create(b:Book{bookName:{title},bookId:{bookId},bookPrice:{price},nop:{nop}})\n"+"create (u)-[:has_wrote]->(b)\n"+"create (e)-[:has_edited]->(b)\n"+"create (d)-[:has_designed]->(b)\n"+"create (b)-[:has_genre]->(g)\n"+"create (b)-[:has_type]->(t)")
+    void savePublication(@Param("title") String title,@Param("author") String author,@Param("bookId") int bookId,@Param("editor") String editor,@Param("designer") String designer,@Param("nop") int nop,@Param("price") double price,@Param("genre") String genre,@Param("type") String type);
+
+    @Query("match (u:User{name:{username}}),(b:Book{bookId:{bookId}})\n"+"set b.nop=b.nop+1\n"+
+            "create (u)-[:bought]->(b)")
+    void savePurchasing(@Param("bookId") int bookId,@Param("username") String username);
 
     @Query("match(b:Book) Return b" +
             "Order by b.created_at desc" +
-            ",b.timesPurchased desc  Limit 15  ")
+            ",b.nop desc  Limit 15  ")
     Collection<Book> getTrending();
 
 

@@ -1,8 +1,8 @@
-package com.stackroute.reccomendation.service;
+package com.stackroute.recommendation.service;
 
 
-import com.stackroute.reccomendation.domain.*;
-import com.stackroute.reccomendation.repository.UserRepository;
+import com.stackroute.recommendation.domain.*;
+import com.stackroute.recommendation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,9 +81,15 @@ public Collection<User> getIllustratorRec(String genre)
         return price;
     }
 
-    public void savePublication(String title,String author)
+    public void savePublication(String title,String author,int bookId,String editor,String designer,int nop,double price,String genre,String type)
     {
-        userRepository.savePublication(title,author);
+        userRepository.savePublication(title,author,bookId,editor,designer,nop,price,genre,type);
+
+    }
+
+    public void savePurchasing(int bookId,String user)
+    {
+        userRepository.savePurchasing(bookId,user);
 
     }
 

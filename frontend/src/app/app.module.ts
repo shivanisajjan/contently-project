@@ -8,6 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ContentLayoutComponent} from './content-layout/content-layout.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import {
   BookCreateComponent,
   SelectEditorDialog,
@@ -19,7 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import {QuillModule} from 'ngx-quill';
-import {
+import { 
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
@@ -29,7 +30,11 @@ import {
   MatTreeModule,
   MatCheckboxModule,
   MatSnackBarModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MAT_DATE_LOCALE,
+  MatPaginatorModule,
+  MatChipsModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import {MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
@@ -57,10 +62,12 @@ import {PaymentComponent} from './payment/payment.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {DownloadComponent} from './download/download.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {NewIssueComponent} from './edit/new-issue/new-issue.component';
-import {ReplyComponent} from './edit/reply/reply.component';
+import {NewIssueComponent} from './issues/new-issue/new-issue.component';
+import {ReplyComponent} from './issues/reply/reply.component';
 import {PublicationBookComponent} from './publication-book/publication-book.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
+import { IssuesComponent } from './issues/issues.component';
+import { FailureComponent } from './failure/failure.component';
 
 @NgModule({
   declarations: [
@@ -88,10 +95,13 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     NewIssueComponent,
     ReplyComponent,
     PublicationBookComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    IssuesComponent,
+    FailureComponent
   ],
 
   imports: [
+    NgxSpinnerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -129,7 +139,11 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     MatSnackBarModule,
     MatBadgeModule,
     DragDropModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     LoginComponent,
@@ -138,13 +152,16 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     SelectEditorDialog,
     SelectIllustratorDialog,
     SampleChapterDialog,
-    PublicationBookComponent,
+    PublicationBookComponent, 
     NewIssueComponent,
-    ReplyComponent
+    ReplyComponent,
+    IssuesComponent,
+    FailureComponent
   ],
   providers: [
     LoginService,
-    ContentService
+    ContentService,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })

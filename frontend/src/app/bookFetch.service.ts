@@ -62,6 +62,7 @@ export class BookFetchService {
     });
   }
 
+
   searchBooks(searchValue): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -112,11 +113,20 @@ export class BookFetchService {
       })
     };
 
-    console.log('saving to publication');
+    console.log('saving to publication' + bookDetails);
     return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save', bookDetails, httpOptions);
 
   }
-
+  deleteContent(id) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/delete/${id}`;
+    return this.http.delete<any>(postUrl, httpOptions);
+  }
   getRecommendedBooks(username) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -145,13 +155,14 @@ export class BookFetchService {
 
     let testData = new FormData();
     testData.append('file', file);
+    console.log("After");
 
-    return this.http.post('http://localhost:8081/api/v1/text/' + id, testData);
+    return this.http.post('http://13.126.150.171:8081/api/v1/text/' + id, testData, { responseType: 'text' });
   }
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get('http://localhost:8081/api/v1/file/' + id,
+    return this.http.get('http://13.126.150.171:8081/api/v1/file/' + id,
       {
         responseType: 'blob',
         headers: {
@@ -159,6 +170,17 @@ export class BookFetchService {
         },
       }
     );
+  }
+
+  savePurchase(purchaseObj) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    console.log('get from aws called');
+    return this.http.post<any>("http://13.126.150.171:8181/api/v1/save", purchaseObj, httpOptions);
   }
 
 

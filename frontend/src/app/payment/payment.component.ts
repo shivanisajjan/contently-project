@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PaymentComponent implements OnInit {
 
-
+  public boook
   handler: any;
   constructor(private http: HttpClient,private router: Router,private route: ActivatedRoute) { }
 
@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
   private invalidfeedback: string;
 
   chargeCreditCard(num,exp,cvv) {
-    this.router.navigate(['/loading']).then();
+    this.router.navigateByUrl(`/loading`)
     let arr = exp.split('/',2);
     (<any>window).Stripe.card.createToken({
       number: num,

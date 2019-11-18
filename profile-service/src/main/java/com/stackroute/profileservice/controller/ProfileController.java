@@ -47,7 +47,10 @@ public class ProfileController {
         responseEntity = new ResponseEntity<List<Profile>>(this.profileService.getallProfile(), HttpStatus.OK);
         return responseEntity;
     }
-
+    @GetMapping("/username/{name}")
+    public double getCost(@PathVariable String name) {
+        return profileService.getByname(name);
+    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteMovie(@RequestBody int id){

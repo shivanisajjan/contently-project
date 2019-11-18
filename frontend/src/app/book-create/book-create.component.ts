@@ -1,24 +1,17 @@
-import {Component, OnInit, Inject, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef} from '@angular/core';
-import {BookFetchService} from '../bookFetch.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Commit} from './commit';
-import {AddNewSectionComponent} from './add-new-section/add-new-section.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {PreviewComponent} from './preview/preview.component';
-import {ContentService} from '../content.service';
-import {notification} from '../notification';
-import {NotificationService} from '../notification.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {FileSaverService} from 'ngx-filesaver';
-import { MatPaginator } from '@angular/material';
-
-
-
-import {formatDate} from '@angular/common';
-import {PublicationBookComponent} from '../publication-book/publication-book.component';
-import {IssuesComponent} from '../issues/issues.component';
-import {Observable} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { BookFetchService } from '../bookFetch.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Commit } from './commit';
+import { AddNewSectionComponent } from './add-new-section/add-new-section.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PreviewComponent } from './preview/preview.component';
+import { ContentService } from '../content.service';
+import { notification } from '../notification';
+import { NotificationService } from '../notification.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { FileSaverService } from 'ngx-filesaver';
+import { formatDate } from '@angular/common';
+import { PublicationBookComponent } from '../publication-book/publication-book.component';
 
 @Component({
   selector: 'app-book-create',
@@ -35,18 +28,16 @@ export class BookCreateComponent implements OnInit {
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
-  fileName: string;
-  @ViewChild( IssuesComponent, {static: true}) issueComponent: IssuesComponent;
+
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
   constructor(private bookFetch: BookFetchService,
-              private router: Router,
-              private dialog: MatDialog,
-              private contentService: ContentService,
-              private route: ActivatedRoute,
-              private _FileSaverService: FileSaverService,
-              private notificationService: NotificationService,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+    private router: Router,
+    private dialog: MatDialog,
+    private contentService: ContentService,
+    private route: ActivatedRoute,
+    private _FileSaverService: FileSaverService,
+    private notificationService: NotificationService) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -56,9 +47,9 @@ export class BookCreateComponent implements OnInit {
   ngOnInit() {
 
 
-    if (localStorage.getItem('role') === 'editor') {
+    if (localStorage.getItem('role') == 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
-    } else if (localStorage.getItem('role') === 'designer') {
+    } else if (localStorage.getItem('role') == 'designer') {
       this.chapterStatus = ['Designing Phase', 'Designing Done'];
     } else {
       this.chapterStatus = ['Writing Phase', 'Editing Phase', 'Designing Phase', 'Finished'];
@@ -79,7 +70,7 @@ export class BookCreateComponent implements OnInit {
     return this.bookDetails.selectHelper;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<String[]>) {
     moveItemInArray(this.bookDetails.status, event.previousIndex, event.currentIndex);
     localStorage.setItem('book', JSON.stringify(this.bookDetails));
     console.log('drop: ', event.previousIndex, event.currentIndex);
@@ -105,14 +96,6 @@ export class BookCreateComponent implements OnInit {
   editFile(fileName: String) {
     console.log('editFile(): ', fileName);
     this.router.navigate(['/edit/' + fileName]).then();
-  }
-
-  openIssuesComponent(fileName: string) {
-    this.fileName = fileName;
-    console.log(fileName);
-    localStorage.setItem('fileName', fileName);
-    this.issueComponent.fileName = this.fileName;
-    this.issueComponent.ngOnInit();
   }
 
   addNewSection() {
@@ -372,10 +355,7 @@ export class BookCreateComponent implements OnInit {
     this.publishFile();
 
     const dialogRef = this.dialog.open(PublicationBookComponent, {
-      width: '50%',
-      data: {
-        book: this.bookDetails
-      }
+      width: '50%'
     });
     // dialogRef.afterClosed()
     //   .subscribe(
@@ -448,7 +428,10 @@ export class BookCreateComponent implements OnInit {
                 combined += '<div>' + htmlContent[j].content + '</div>';
               }
               console.log(combined);
-              txtBlob = new Blob([combined], {type: fileType});
+              const spaceCount = (combined.split(' ').length - 1);
+              localStorage.setItem('wordCount',spaceCount.toString());
+              console.log(spaceCount);
+              txtBlob = new Blob([combined], { type: fileType });
               const file = new File([txtBlob], this.bookDetails.id);
 
               console.log(file);
@@ -491,7 +474,6 @@ export class SelectEditorDialog implements OnInit {
 
   ngOnInit(): void {
     this.getRecommendedEditors();
-    this.getAllEditors();
     console.log(this.data);
   }
 
@@ -541,37 +523,24 @@ export class SelectEditorDialog implements OnInit {
   templateUrl: 'select-illustrator-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
-export class SelectIllustratorDialog implements  OnInit{
+export class SelectIllustratorDialog implements OnInit {
   public illustratorList;
   public illustratorListFiltered;
   public searchTerm;
   public allIllustratorList;
   public allIllustratorListFiltered;
-  // private selectHelper = true;
-  // MatPaginator Inputs
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  // obs: Observable<any>;
-  // @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(this.illustratorListFiltered);
+
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<SelectIllustratorDialog>,
     @Inject(MAT_DIALOG_DATA) public data: String,
-    private contentService: ContentService,
-    // private changeDetectorRef: ChangeDetectorRef
-    ) {
+    private contentService: ContentService) {
   }
 
   ngOnInit(): void {
     this.getRecommendedIllustrators();
-    this.getAllIllustrators();
     console.log(this.data);
-    // this.changeDetectorRef.detectChanges();
-    // this.dataSource.paginator = this.paginator;
-    // this.obs = this.dataSource.connect();
   }
 
   onNoClick(): void {
@@ -604,18 +573,13 @@ export class SelectIllustratorDialog implements  OnInit{
 
   search(): void {
     const term = this.searchTerm;
+    console.log(term);
     this.illustratorListFiltered = this.illustratorList.filter(function (tag) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
     this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
-  }
-
-  ngOnDestroy() {
-    // if (this.dataSource) { 
-    //   this.dataSource.disconnect(); 
-    // }
   }
 
 }

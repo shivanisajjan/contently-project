@@ -52,6 +52,13 @@ public class ProfileServiceImpl implements ProfileService {
         this.profileRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public double getByname(String name) {
+       Profile profile= profileRepository.findByName(name);
+       return profile.getCost();
+    }
+
     @Override
     public int getNextSequence(String seqName)
     {

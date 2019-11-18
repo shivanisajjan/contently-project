@@ -13,13 +13,14 @@ import java.util.List;
 @Component
 public class PublicationsDto {
 
+    int id;
     String title;
     String description;
     String  authorName;
-    String  editorName; // list of userId of editors
-    String designerName; // list of userId of designer
+    String  editorName;
+    String designerName;
     String typeName;
-    List<String> genres;
+    String genres;
     double price;
     String publishedAt;
     int noOfPurchases;

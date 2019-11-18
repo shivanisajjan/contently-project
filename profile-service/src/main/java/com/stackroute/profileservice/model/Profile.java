@@ -16,6 +16,5 @@ public class Profile {
     private List<Interest> interest;
     private Long ratings;
     private int experience;
-    private double costPerPage;
-    private double numberOfHoursWorked;
+    private double cost;
 }

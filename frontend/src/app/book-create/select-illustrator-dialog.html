@@ -1,28 +1,30 @@
 <div class="select-editor-dialog">
-       
-                <mat-form-field class="example-full-width"  style="width: 60%;">
+        <mat-card>
+           <mat-card-header>
+                <mat-form-field class="example-full-width"  style="width: 80%;">
                         <input [(ngModel)] = "searchTerm" (ngModelChange) = "search()" matInput placeholder="Search Illustrator">
                      </mat-form-field>
-          <mat-tab-group>
-                <mat-tab label="Recommended Illustrators">
-                 
-                <div *ngFor="let illustrator of illustratorListFiltered " class="list-editors">
-                                <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                       <h4>{{illustrator.name}}</h4>
-                                </mat-card>
-                           </div>   
-                <!-- <mat-paginator [length]="illustratorListFiltered.length"
-                [pageSize]="5"
-               [pageSizeOptions]="pageSizeOptions">
-                </mat-paginator>          -->
-                </mat-tab>
-                      
-                <mat-tab label="Show All Illustrators">
-                        <div *ngFor="let illustrator of allIllustratorListFiltered" class="list-editors">
-                                <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                    <mat-card-title>{{illustrator}}</mat-card-title>
-                                </mat-card>
-                        </div>
-                </mat-tab>
-        </mat-tab-group>
+            </mat-card-header>
+        </mat-card><br>
+        <h4 style="color: black;">Recommended Illustrators</h4>
+        <div *ngFor="let illustrator of illustratorListFiltered" class="list-editors">
+        <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
+                <mat-card-header>
+                  <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                  <mat-card-title>{{illustrator.name}}</mat-card-title>
+                  <!-- <mat-card-subtitle style="color: white;">Price</mat-card-subtitle> -->
+                </mat-card-header>
+        </mat-card><br>
+        </div>
+
+        <button mat-button color="primary" (click)="getAllIllustrators()"><h4 style="color: black;">Show All Illustrators</h4></button>
+        <div *ngFor="let illustrator of allIllustratorListFiltered" class="list-editors">
+                 <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator)" [mat-dialog-close]="editorData" cdkFocusInitial>
+                        <mat-card-header>
+                                  <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                                  <mat-card-title>{{illustrator}}</mat-card-title>
+                                  <!-- <mat-card-subtitle style="color: white;">Price</mat-card-subtitle> -->
+                                </mat-card-header>
+                 </mat-card><br>
+        </div>
         </div>

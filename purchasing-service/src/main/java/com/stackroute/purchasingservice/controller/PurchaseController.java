@@ -55,6 +55,7 @@ public class PurchaseController {
     @PostMapping(value = "/save")
     public ResponseEntity<Purchase> registerUser(@RequestBody Purchase purchase) throws  InternalServerErrorException, NullValueFieldException {
 
+        rabbitMQSender.sendContent(purchase);
         purchase.setId(purchaseService.getNextSequence("customSequences"));
         return new ResponseEntity<Purchase> (purchaseService.savePurchase(purchase), HttpStatus.CREATED);
     }

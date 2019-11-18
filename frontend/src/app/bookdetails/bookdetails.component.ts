@@ -35,7 +35,7 @@ export class BookdetailsComponent implements OnInit {
           console.log('error', error);
         }
       );
-
+    
     // this.book = this.route.snapshot.paramMap.get('id');
     // console.log(this.book);
     // this.contentService.getBookDetails(this.book).subscribe(

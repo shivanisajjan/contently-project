@@ -61,6 +61,8 @@ import {NewIssueComponent} from './edit/new-issue/new-issue.component';
 import {ReplyComponent} from './edit/reply/reply.component';
 import {PublicationBookComponent} from './publication-book/publication-book.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -129,7 +131,9 @@ import {SearchResultsComponent} from './search-results/search-results.component'
     MatSnackBarModule,
     MatBadgeModule,
     DragDropModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     LoginComponent,

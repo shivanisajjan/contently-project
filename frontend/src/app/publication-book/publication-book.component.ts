@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
-=======
 import { ContentService } from '../content.service';
 import { BookFetchService } from '../bookFetch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
->>>>>>> 8246e168a43beeb30867914e97dec9796b9d1a33
 
 @Component({
   selector: 'app-publication-book',

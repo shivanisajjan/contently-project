@@ -70,7 +70,7 @@ export class ContentLayoutComponent implements OnInit {
       description: input.value.desc,
       authorName: localStorage.getItem('username'),
       typeName: input.value.type,
-      genres : this.genres,
+      genres : this.genresSelected,
       createdAt: formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en'),
       selectHelper: input.value.selectHelper
     };

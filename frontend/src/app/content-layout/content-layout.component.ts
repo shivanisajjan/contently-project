@@ -18,6 +18,19 @@ import {map, startWith} from 'rxjs/operators';
 })
 
 export class ContentLayoutComponent implements OnInit {
+  // private genresList = ['horror', 'romance', 'thriller', 'crime', 'drama'];
+  // private genres : string[] = [];
+  // private allGenres : string[] = ['Horror','Thriller','Romance','Comedy'];
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  fruitCtrl = new FormControl();
+ 
+
+  @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  
   private fictionGenres = ['classic', 'comic', 'contemporary', 'crime', 'detective', 'fable', 'fairy tale',
     'fan fiction', 'fantasy', 'folk tale', 'historical fiction', 'horror', 'humor', 'legend', 'magical realism',
     'meta fiction', 'mystery', 'mythology', 'mythopoeia', 'picture book', 'realistic fiction', 'romance', 'science fiction',
@@ -32,7 +45,6 @@ export class ContentLayoutComponent implements OnInit {
   private typeSelected: any;
 
   @ViewChild('genreInput', {static: false}) genreInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -45,6 +57,10 @@ export class ContentLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.filteredGenres = this.fruitCtrl.valueChanges.pipe(
+      startWith(null),
+      map((genre: string | null) => genre ? this._filter(genre) : this.fictionGenres.slice()));
   }
 
   onSubmit(input: NgForm) {
@@ -54,7 +70,7 @@ export class ContentLayoutComponent implements OnInit {
       description: input.value.desc,
       authorName: localStorage.getItem('username'),
       typeName: input.value.type,
-      genres: this.genresSelected,
+      genres : this.genresSelected,
       createdAt: formatDate(new Date(), 'dd/MM/yyyy HH:mm:ss', 'en'),
       selectHelper: input.value.selectHelper
     };
@@ -129,4 +145,50 @@ export class ContentLayoutComponent implements OnInit {
         startWith(null),
         map((genre: string | null) => genre ? this._filter(genre) : this.genresList.slice()));
   }
+
+  // add(event: MatChipInputEvent): void {
+  //   // Add fruit only when MatAutocomplete is not open
+  //   // To make sure this does not conflict with OptionSelected Event
+  //   if (!this.matAutocomplete.isOpen) {
+  //     const input = event.input;
+  //     const value = event.value;
+
+  //     // Add our fruit
+  //     if ((value || '').trim()) {
+  //       this.genres.push(value.trim());
+  //     }
+
+  //     // Reset the input value
+  //     if (input) {
+  //       input.value = '';
+  //     }
+
+  //     this.fruitCtrl.setValue(null);
+  //   }
+  // }
+
+  // remove(fruit: string): void {
+  //   const index = this.genres.indexOf(fruit);
+
+  //   if (index >= 0) {
+  //     this.genres.splice(index, 1);
+  //   }
+  // }
+
+  // selected(event: MatAutocompleteSelectedEvent): void {
+  //   this.genres.push(event.option.viewValue);
+  //   this.fruitInput.nativeElement.value = '';
+  //   this.fruitCtrl.setValue(null);
+  // }
+
+  // saveGenre(){
+  
+  // }
+
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+
+  //   return this.allGenres.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);
+  // }
+
 }

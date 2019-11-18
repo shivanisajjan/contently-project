@@ -81,12 +81,27 @@ mat-horizontal-stepper{
   background-color: rgb(24, 24, 24);
   color: white;
 }
-/* 
-::ng-deep .mat-form-field-label{
 
-  color:rgb(255, 255, 255) !important;
+
+@media only screen and (max-width: 600px) {
+  .trending-books{
+    padding: 4%;
+    color: rgb(15, 15, 15);
+    /* text-shadow: 4px 4px #333333; */
+    background-image: url('../../assets/images/trend.jpg');
+    background-repeat: initial;
+    font-weight: bold;
+    text-transform: uppercase;
+    outline: 1px solid rgb(26, 26, 26);
+    outline-offset: -15px;
+    letter-spacing: 20px;
+    text-align: center;
+  }
+
+  .register-component-body{
+    padding: 10px 10px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
 }
-
-::ng-deep .mat-form-field-underline .mat-form-field-ripple{
-  background-color:white;
-} */

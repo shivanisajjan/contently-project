@@ -26,24 +26,7 @@ export class EditProfileComponent implements OnInit {
   secondFormGroup: FormGroup;
   private genres : string[] = [];
   private allGenres : string[] = ['Horror','Thriller','Romance','Comedy'];
-  private genres1 = [
-                      {
-                        name : 'Horror',
-                        state : false
-                      },
-                      {
-                        name : 'Thriller',
-                        state : false
-                      },
-                      {
-                        name : 'Romance',
-                        state : false
-                      },
-                      {
-                        name : 'Comedy',
-                        state : false
-                      }
-                    ];
+ 
   private $profile = new profile();
   private $interest: interest;
   private $genre: genre;
@@ -67,16 +50,17 @@ export class EditProfileComponent implements OnInit {
     private _loginService: LoginService,
     private _router: Router
     ) {
-      if (!localStorage.getItem('token')) {
-        this._router.navigate(['/home']).then();
-      }
+      // if (!localStorage.getItem('token')) {
+      //   this._router.navigate(['/home']).then();
+      // }
     }
 
   ngOnInit() {
     this.profileData = JSON.parse(localStorage.getItem('editProfile'));
-    this.username = this.profileData.username;
     console.log(this.profileData);
-    this.firstFormGroup = this._formBuilder.group({
+    if(this.profileData){
+      this.username = this.profileData.username;
+      this.firstFormGroup = this._formBuilder.group({
       firstName:[this.profileData.firstName,Validators.required],
       lastName:[this.profileData.lastName],
       email:[this.profileData.email],
@@ -87,9 +71,26 @@ export class EditProfileComponent implements OnInit {
       nationality: [this.profileData.nationality, Validators.required],
       gender: [this.profileData.gender, Validators.required],
       date: ['', Validators.required]    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+      this.secondFormGroup = this._formBuilder.group({
+        secondCtrl: ['', Validators.required]
+       });
+     } else {
+      this.username = localStorage.getItem('username');
+      this.firstFormGroup = this._formBuilder.group({
+        firstName:[],
+        lastName:[],
+        email:[],
+        contact:[],
+        address1:[],
+        address2:[],
+        address3:[],
+        nationality: ['', Validators.required],
+        gender: ['', Validators.required],
+        date: ['', Validators.required]    });
+        this.secondFormGroup = this._formBuilder.group({
+          secondCtrl: ['', Validators.required]
+         });
+   }
 
     this.$profile.interest = new Array();
     this.$interest = new interest();

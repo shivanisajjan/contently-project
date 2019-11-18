@@ -10,7 +10,7 @@ import { notification } from '../notification';
 import { NotificationService } from '../notification.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FileSaverService } from 'ngx-filesaver';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { PublicationBookComponent } from '../publication-book/publication-book.component';
 import { IssuesComponent } from '../issues/issues.component';
@@ -72,6 +72,26 @@ export class BookCreateComponent implements OnInit {
           localStorage.setItem('book', JSON.stringify(this.bookDetails));
           this.setShowEditButton();
           console.log('book details: ', this.bookDetails);
+          if (!this.bookDetails.selectHelper) {
+            console.log("SELECTING HELPERS");
+            if (this.bookDetails.editorStatus != 'confirmed' && this.bookDetails.designerStatus != 'confirmed') {
+              this.contentService.getRecommendedEditorsOrIllustrators('editor', this.bookDetails.genres[0]).subscribe(
+                result => {
+                 this.bookDetails.editorName = result[0].name;
+                 this.bookDetails.editorStatus = 'confirmed';
+                 console.log("SELECTED EDITOR" , this.bookDetails.editorName);
+                 this.contentService.saveBookDetails(this.bookDetails).subscribe();
+                });
+              this.contentService.getRecommendedEditorsOrIllustrators('designer', this.bookDetails.genres[0]).subscribe(
+                  result => {
+                   this.bookDetails.designerName = result[0].name;
+                   this.bookDetails.designerStatus = 'confirmed';
+                   console.log("SELECTED DESIGNER" , this.bookDetails.designerName);
+                   this.contentService.saveBookDetails(this.bookDetails).subscribe();
+                  });
+              console.log(this.bookDetails);    
+            }
+          }
         }
       );
   }
@@ -561,20 +581,16 @@ export class SelectEditorDialog implements OnInit {
   templateUrl: 'select-illustrator-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
-export class SelectIllustratorDialog implements OnInit {
+export class SelectIllustratorDialog implements  OnInit{
   public illustratorList;
   public illustratorListFiltered: any;
   public searchTerm: any;
   public allIllustratorList;
-  public allIllustratorListFiltered: any;
-  // private selectHelper = true;
-  // MatPaginator Inputs
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  // obs: Observable<any>;
-  // @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(this.illustratorListFiltered);
+  public allIllustratorListFiltered;
+
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  obs: Observable<any>;
+  dataSource: MatTableDataSource<Card>;
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
   constructor(
@@ -582,7 +598,7 @@ export class SelectIllustratorDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: String,
     private contentService: ContentService,
     // private changeDetectorRef: ChangeDetectorRef
-  ) {
+    ) {
   }
 
   ngOnInit(): void {
@@ -610,6 +626,9 @@ export class SelectIllustratorDialog implements OnInit {
       result => {
         this.illustratorList = result;
         this.illustratorListFiltered = this.illustratorList;
+        this.dataSource =  new MatTableDataSource<Card>(this.allIllustratorListFiltered);
+        this.dataSource.paginator = this.paginator;
+        this.obs = this.dataSource.connect();
       });
   }
 
@@ -632,11 +651,7 @@ export class SelectIllustratorDialog implements OnInit {
     });
   } 
 
-  ngOnDestroy() {
-    // if (this.dataSource) {
-    //   this.dataSource.disconnect();
-    // }
-  }
+  
 
 }
 

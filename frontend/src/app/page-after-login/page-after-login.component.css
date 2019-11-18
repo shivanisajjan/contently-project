@@ -74,3 +74,28 @@ h1,h2,h3,h4{
   background-image:url('../../assets/images/side_bg.jpg');
 }
 
+.content-card{
+  margin: 1%;
+  background-color: rgb(26, 26, 26);
+  height: 100%;
+  animation: mymove 10s infinite;
+}
+
+.content-card img{
+  width: 100%;
+  height: 100%;
+}
+
+.content-card h6{
+  width: 200px;
+}
+
+.card-width{
+  width: 200px;
+}
+
+.content-cards{
+  display: flex;
+  overflow-x: scroll;
+}
+

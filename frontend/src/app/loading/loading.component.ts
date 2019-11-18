@@ -12,11 +12,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoadingComponent implements OnInit {
 
+private id;
   constructor(private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
+        this.id = this.route.snapshot.paramMap.get('id');
     setTimeout(() => {
-        this.router.navigate(['/book-details']);
+        this.router.navigate(['/book-details', this.id]);
   }, 2000);
   }
 

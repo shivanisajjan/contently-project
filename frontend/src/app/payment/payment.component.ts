@@ -13,6 +13,8 @@ export class PaymentComponent implements OnInit {
 
   public boook
   handler: any;
+  private id;
+
   constructor(private http: HttpClient,private router: Router,private route: ActivatedRoute) { }
 
 
@@ -67,6 +69,7 @@ export class PaymentComponent implements OnInit {
 
 
   ngOnInit() {
+      this.id = this.route.snapshot.paramMap.get('id');
     this.loadStripe();
 
   }

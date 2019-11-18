@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ContentService {
     return this.http.put(postUrl, content, this.httpOptions);
   }
 
-  getRecommendedEditorsOrIllustrators(role, genre) {
+  getRecommendedEditorsOrIllustrators(role,genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export class ContentService {
     return this.http.get(postUrl, this.httpOptions);
   }
 
-  updateEditorOrIllustratorStatus(id, role, status) {
+  updateEditorOrIllustratorStatus(id,role,status) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -73,15 +73,15 @@ export class ContentService {
     return this.http.get(postUrl, httpOptions);
   }
 
-  getPurchaseStatus(id) {
+  getPurchaseStatus(id){
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    const postUrl = `http://13.126.150.171:8080/purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
-    return this.http.get(postUrl, httpOptions);
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Batman ' + localStorage.getItem('token')
+        })
+      };
+       const postUrl = `http://13.126.150.171:8080/purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
+      return this.http.get(postUrl, httpOptions);
   }
 
   // used to get all contents of 'username'

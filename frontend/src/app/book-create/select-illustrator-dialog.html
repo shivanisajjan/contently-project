@@ -8,19 +8,20 @@
                  
                 <div *ngFor="let illustrator of illustratorListFiltered " class="list-editors">
                                 <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                       <h4>{{illustrator.name}}</h4>
+                                       <h5>{{illustrator.name}}</h5>
                                 </mat-card>
                            </div>   
-                <!-- <mat-paginator [length]="illustratorListFiltered.length"
-                [pageSize]="5"
-               [pageSizeOptions]="pageSizeOptions">
-                </mat-paginator>          -->
+                 <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
                 </mat-tab>
                       
                 <mat-tab label="Show All Illustrators">
                         <div *ngFor="let illustrator of allIllustratorListFiltered" class="list-editors">
                                 <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                    <mat-card-title>{{illustrator}}</mat-card-title>
+                                    <h5>{{illustrator}}</h5>
+                                    <div class="price-experiance">
+                                        <h6>Price</h6>
+                                        <h6>Experiance</h6>
+                                    </div>    
                                 </mat-card>
                         </div>
                 </mat-tab>

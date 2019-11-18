@@ -33,6 +33,9 @@ import {
   MatBadgeModule,
   MAT_DATE_LOCALE,
   MatPaginatorModule,
+  MatChipsModule,
+  MatAutocompleteModule,
+  MatTooltipModule
 } from '@angular/material';
 import {MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
@@ -66,8 +69,7 @@ import {PublicationBookComponent} from './publication-book/publication-book.comp
 import {SearchResultsComponent} from './search-results/search-results.component';
 import { IssuesComponent } from './issues/issues.component';
 import { FailureComponent } from './failure/failure.component';
-import {MatChipsModule} from "@angular/material/chips";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
+
 
 @NgModule({
   declarations: [
@@ -144,9 +146,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatPaginatorModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatAutocompleteModule
+    MatTooltipModule
   ],
   entryComponents: [
     LoginComponent,

@@ -33,9 +33,9 @@ public class ContentController {
         content.setId(contentService.getNextSequence("customSequences"));
         return new ResponseEntity<> (contentService.saveContent(content), HttpStatus.CREATED);
     }
-    @DeleteMapping(value = "/delete/{title}")
-    public ResponseEntity<Content> delete(@PathVariable String title) throws InternalServerErrorException, ContentDoesNotExistException {
-        return new ResponseEntity<>(contentService.deleteContent(title), HttpStatus.OK);
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<Content> delete(@PathVariable int id) throws InternalServerErrorException, ContentDoesNotExistException {
+        return new ResponseEntity<>(contentService.deleteContent(id), HttpStatus.OK);
     }
     @PutMapping(value = "/update")
     public ResponseEntity<Content> update(@RequestBody Content content) throws InternalServerErrorException, ContentDoesNotExistException {

@@ -5,7 +5,3 @@ button{
   margin-bottom: 10px;
   margin-right: 10px;
 }
-.disabled {
-  pointer-events:none;
-  opacity:.5;
-}

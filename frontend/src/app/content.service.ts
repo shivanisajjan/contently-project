@@ -107,6 +107,35 @@ export class ContentService {
     const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content`;
     return this.http.post(postUrl, jsonObj, httpOptions);
   }
+  recommendedPrice(editorPay, illustratorPay) {
+    const book = JSON.parse(localStorage.getItem('book'));
+    const myObject = {
+      genre: book.genres[0],
+      editorPay,
+      illustratorPay,
+      base: 50,
+      noOfWords: +localStorage.getItem('wordCount')
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/priceRec`;
+    return this.http.post(postUrl, myObject, this.httpOptions);
+  }
+
+  getPay(editorName) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/username/` + editorName;
+    return this.http.get(postUrl, this.httpOptions);
+  }
 
   getBookDetailPage(id) {
     const httpOptions = {
@@ -115,7 +144,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/book/id/${id}`;
+    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/content/${id}`;
     return this.http.get(postUrl, httpOptions);
   }
 
@@ -129,29 +158,4 @@ export class ContentService {
     const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
     return this.http.put(postUrl, book, this.httpOptions);
   }
-
-  getPay(editorName){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/username/` +editorName;
-    return this.http.get(postUrl, this.httpOptions);
-  }
-
-  recommendedPrice(editorPay, illustratorPay) {
-    const book = JSON.parse(localStorage.getItem('book'));
-    const myObject = {
-      genre: book.genres[0],
-      editorPay,
-      illustratorPay,
-      base: 50,
-      noOfWords: +localStorage.getItem('wordCount')
-    };
-    console.log(myObject);
-    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/priceRec`;
-    return this.http.post(postUrl, myObject, this.httpOptions);
-}
 }

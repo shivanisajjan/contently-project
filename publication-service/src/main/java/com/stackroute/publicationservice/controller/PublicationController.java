@@ -35,20 +35,19 @@ public class PublicationController {
 
 
     @PostMapping(value = "/save")
-    public ResponseEntity<Publications> registerUser(@RequestBody Publications content) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
-        content.setId(publicationService.getNextSequence("customSequences"));
-        this.publicationsDto.setId(content.getId());
-        this.publicationsDto.setAuthorName(content.getAuthorName());
-        this.publicationsDto.setDescription(content.getDescription());
-        this.publicationsDto.setGenres(content.getGenres());
-        this.publicationsDto.setTitle(content.getTitle());
-        this.publicationsDto.setEditorName(content.getEditorName());
-        this.publicationsDto.setDesignerName(content.getDesignerName());
-        this.publicationsDto.setNoOfPurchases(content.getNoOfPurchases());
-        this.publicationsDto.setPrice(content.getPrice());
-        this.publicationsDto.setPublishedAt(content.getPublishedAt());
+    public ResponseEntity<Publications> registerUser(@RequestBody Publications publication) throws ContentAlreadyExistsExceptions, InternalServerErrorException, NullValueFieldException {
+        this.publicationsDto.setId(publication.getId());
+        this.publicationsDto.setAuthorName(publication.getAuthorName());
+        this.publicationsDto.setDescription(publication.getDescription());
+        this.publicationsDto.setGenres(publication.getGenres());
+        this.publicationsDto.setTitle(publication.getTitle());
+        this.publicationsDto.setEditorName(publication.getEditorName());
+        this.publicationsDto.setDesignerName(publication.getDesignerName());
+        this.publicationsDto.setNoOfPurchases(publication.getNoOfPurchases());
+        this.publicationsDto.setPrice(publication.getPrice());
+        this.publicationsDto.setPublishedAt(publication.getPublishedAt());
         this.rabbitMQSender.sendRegistry(this.publicationsDto);
-        return new ResponseEntity<Publications>(publicationService.saveContent(content), HttpStatus.CREATED);
+        return new ResponseEntity<Publications>(publicationService.saveContent(publication), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -58,9 +57,9 @@ public class PublicationController {
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody Publications content) throws InternalServerErrorException, ContentDoesNotExistException {
-        publicationService.updateContent(content);
-        return new ResponseEntity<Publications>(content, HttpStatus.OK);
+    public ResponseEntity<?> update(@RequestBody Publications publication) throws InternalServerErrorException, ContentDoesNotExistException {
+        publicationService.updateContent(publication);
+        return new ResponseEntity<Publications>(publication, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{title}")

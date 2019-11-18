@@ -1,12 +1,12 @@
 <!--<div style="background-image: url('../../assets/images/main_bg.jpeg');" class="register-component" id="contact-section">-->
 <div class="register-component" id="contact-section">
 
-  <div class="register-component-heading">
-    <h3><strong>Register Here</strong></h3>
-  </div>
+  <div class="trending-books">
+    <h3 style="margin-left: 4%;">Register Here</h3>
+    </div>
 
   <div class="register-component-body">
-    <mat-vertical-stepper linear>
+    <mat-horizontal-stepper >
 
       <mat-step [stepControl]="firstFormGroup" [editable]="false">
         <form [formGroup]="firstFormGroup">
@@ -56,24 +56,22 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup" [editable]="false">
+      <!-- <mat-step [stepControl]="secondFormGroup" [editable]="false">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Fill out your details</ng-template>
 
-          <div>
-            <mat-form-field class="fields">
+          <div class="fields-two">
+            <mat-form-field class="input-field">
               <input #firstname matInput placeholder="First Name" class="col">
             </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field class="fields">
+          
+            <mat-form-field class="input-field" >
               <input #lastname matInput placeholder="Last Name" class="col">
             </mat-form-field>
           </div>
-
-          <div>
-            <mat-form-field class="fields">
+          <br>
+          <div class="fields-two">
+            <mat-form-field class="input-field">
               <mat-label>Gender</mat-label>
               <mat-select formControlName="gender" [(value)]="gender">
                 <mat-option value="Female">Female</mat-option>
@@ -81,40 +79,34 @@
                 <mat-option value="Other">Other</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field class="fields">
+         
+            <mat-form-field class="input-field">
               <input formControlName="date" matInput [matDatepicker]="dob" placeholder="Date of birth" #date>
               <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
               <mat-datepicker #dob></mat-datepicker>
             </mat-form-field>
           </div>
-
-          <div>
-            <mat-form-field class="fields">
+          <br>
+          <div class="fields-two">
+            <mat-form-field class="input-field">
               <input formControlName="nationality" #nationality matInput placeholder="Nationality" class="col">
             </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field class="fields">
+        
+            <mat-form-field class="input-field">
               <input #address1 matInput placeholder="Address" class="col">
             </mat-form-field>
           </div>
-
-          <div>
-            <mat-form-field class="fields">
+          <br>
+          <div class="fields-two">
+            <mat-form-field class="input-field">
               <input #address2 matInput placeholder="State" class="col">
             </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field class="fields">
+         
+            <mat-form-field class="input-field">
               <input #address3 matInput placeholder="Country" class="col">
             </mat-form-field>
           </div>
-
+          <br>
           <div>
             <button mat-raised-button color="primary" class="back-button" matStepperPrevious>Back</button>
             <button mat-raised-button color="primary" matStepperNext
@@ -128,13 +120,13 @@
         <form>
 
           <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-            <!-- This is the tree node template for leaf nodes -->
+            This is the tree node template for leaf nodes
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-              <!-- use a disabled button to provide padding for tree leaf -->
+               use a disabled button to provide padding for tree leaf
               <button mat-icon-button disabled></button>
               <mat-checkbox #checkbox (click)="checkValue(node.name,checkbox.checked)">{{node.name}}</mat-checkbox>
             </mat-tree-node>
-            <!-- This is the tree node template for expandable nodes -->
+          This is the tree node template for expandable nodes
             <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
               <button mat-icon-button matTreeNodeToggle
                       [attr.aria-label]="'toggle ' + node.name">
@@ -147,16 +139,16 @@
           </mat-tree>
 
           <ng-template matStepLabel>Done</ng-template>
-
+          <br>
           <div>
             <button mat-raised-button color="primary" class="back-button" matStepperPrevious>Back</button>
             <button mat-raised-button color="primary" (click)="saveInterests(username.value)">Submit</button>
           </div>
         </form>
 
-      </mat-step>
+      </mat-step> -->
 
-    </mat-vertical-stepper>
+    </mat-horizontal-stepper>
   </div>
 
   <h2 *ngIf="registerv" style="color: white">Registered Successfully</h2>

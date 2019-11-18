@@ -54,7 +54,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  public interestsBoolean = false;
+  public interestsBoolean = true;
   public registerv = false;
   public $profile = new profile();
 
@@ -132,6 +132,8 @@ export class RegistrationComponent implements OnInit {
       this.returnUser = result;
       if (this.returnUser.id != null) {
         this.registerv = true;
+        localStorage.setItem('username', username);
+        this._router.navigate(['/editProfile']).then();
       }
       if (this.returnUser.message == "Username Already Exists") {
 
@@ -140,6 +142,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   public addPersonalDetails(username, password, email, contact, firstname, lastname, nationality, address1, address2, address3, date) {
+    console.log(date);
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;

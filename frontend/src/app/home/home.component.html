@@ -3,7 +3,7 @@
     <div class="trending-books">
     <h3 style="margin-left: 4%;">Trending Books</h3>
     </div>
-    <div class="container" id="recbox"
+    <!-- <div class="container" id="recbox"
     fxLayout
     fxLayout.xs="column"
     fxLayoutAlign="center"
@@ -17,11 +17,19 @@
         <h6>{{bookvar.bookName}}</h6>
         <br>
     </mat-card></div>
-    <br></div>
+    <br></div> -->
     <br>
+      <div class="content-cards">
+        <mat-card class="content-card" *ngFor="let bookvar of bookVar, index as i" (click)="bookDetails(bookvar.bookId)">
+            <!-- <h6>{{bookvar.bookName}}</h6> -->
+            <div class="card-width"></div>
+            <img  src="../../assets/images/sample_book_cover_1.jpg" alt="card image">
+        </mat-card>
+      </div>
+  <br>
   <div class="our-programs">
       <div class="trending-books">
-          <h3 style="margin-left: 60%; ">Our Programs</h3>
+          <h3 style="margin-left: 4%; ">Our Programs</h3>
           </div><br>
     <div class="our-programs-header">
         <div class="home-body">
@@ -74,7 +82,7 @@
       </div>
     </div>
 
-      <div class="programs">
+     <div class="programs">
       <div class="designer">
         <div class="designer-text">
           <h4>We work with professional designers to make the content look eye catchy</h4>
@@ -91,13 +99,13 @@
              src="https://images.unsplash.com/3/doctype-hi-res.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1346&q=80"
              alt="">
       </div>
-    </div>
+    </div> 
     </div>
   </div>
 
   <div class="our-authors">
       <div class="trending-books">
-          <h3 style="margin-left: 4%;">Testimonies</h3>
+          <h3 class="testimonies"style="margin-left: 4%;">Testimonies</h3>
           </div>
     <div class="our-authors-heading">
         <br>     

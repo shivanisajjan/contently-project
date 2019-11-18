@@ -22,6 +22,8 @@ export class DashboardComponent implements OnInit {
   private booksLoaded = false;
   private serverUrl = 'http://13.126.150.171:8716/socket'
   private stompClient;
+  private publishedList;
+  private purchaseList;
 
   constructor(
     private router: Router,
@@ -82,6 +84,7 @@ export class DashboardComponent implements OnInit {
           console.log('Content All Books error: ', error);
         }
       );
+
 
   }
 

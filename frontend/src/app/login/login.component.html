@@ -10,7 +10,7 @@
   </div>
 
   <div>
-    <mat-form-field>
+    <mat-form-field  style="width: 100%">
       <input #password matInput placeholder="Password" [type]="hide ? 'password' : 'text'">
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
@@ -20,7 +20,7 @@
   </div>
 
   <div>
-    <button mat-raised-button color="primary" (click)="authenticate(username.value, password.value)">Login</button>
+    <button mat-raised-button  (click)="authenticate(username.value, password.value)">Login</button>
   </div>
 
   <h2 *ngIf="fail"><br>Login failed</h2>

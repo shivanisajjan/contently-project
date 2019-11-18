@@ -15,24 +15,55 @@
       </button>
       <div  *ngIf="!ifToken(); then thenBlock; else elseBlock"></div>
       <ng-template #thenBlock>
-        <a mat-list-item routerLink="/register">Register</a>
-        <a mat-list-item (click)="onLogin()">Login</a>
+        <a mat-button routerLink="/register">Register</a>
+        <a mat-button (click)="onLogin()">Login</a>
       </ng-template>
-
       <ng-template #elseBlock>
-        <a mat-list-item [matMenuTriggerFor]="menu">Menu</a>
-        <a mat-list-item (click)="onLogin()">Login</a>
-      </ng-template>
+          <a mat-button routerLink="/afterLogin">Home</a>
+          <a mat-button routerLink="/dashboard">Profile</a>
+          <a mat-button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" >Notifications</a>
+          <mat-menu class="notification-menu" #notification="matMenu">
+              <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
+              <div class="notifications" *ngIf="!ifNotifications()" >
+              <div *ngFor = "let notification of notificationList;index as i">
+                <div *ngIf="isAuthor()">
 
-      
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
-      <a mat-list-item href="#">Link 4</a>
+                  <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
+                      <p>{{notification.message}}</p>
+                  </mat-card>
+
+                  <mat-card *ngIf="!notification.status">
+                      <p>{{notification.message}}</p>
+                  </mat-card>
+
+
+                </div>
+                <div *ngIf="!isAuthor()">
+                <mat-card *ngIf="notification.status" style="background-color: #c0d5f0;" >
+                    <mat-card-content><p>{{notification.message}}</p></mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button color="primary" (click)="acceptRequest(notification,i)">Accept</button>
+                        <button mat-button color="primary" (click)="deleteRequest(notification,i)">Reject</button>
+                    </mat-card-actions>
+                </mat-card>
+
+                <mat-card *ngIf="!notification.status" >
+                    <mat-card-content><p>{{notification.message}}</p></mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button color="primary" (click)="acceptRequest(notification,i)">Accept</button>
+                        <button mat-button color="primary" (click)="deleteRequest(notification,i)">Reject</button>
+                    </mat-card-actions>
+                </mat-card>
+                </div>
+              </div>
+             </div>
+             </mat-menu>
+          <a mat-button (click)="onLogout()">Logout</a>
+      </ng-template>    
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="navbar">
-    <mat-toolbar color="primary" style="justify-content: space-between; position: fixed;">
+    <mat-toolbar color="primary" style="justify-content: space-between; position: fixed; z-index: 1000;">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -68,17 +99,18 @@
           <ng-template #elseBlock>
             <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
             <mat-menu #menu="matMenu">
+              <a mat-menu-item routerLink="/afterLogin">Home</a>
               <a mat-menu-item  routerLink="/dashboard">Profile</a>
               <a mat-menu-item (click)="onLogout()">Logout</a>
             </mat-menu>
-            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification"><i class="material-icons">notifications_none</i></button>
+            <button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" style="margin-right: 10px;"><i class="material-icons">notifications_none</i></button>
             <mat-menu class="notification-menu" #notification="matMenu">
                 <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
                 <div class="notifications" *ngIf="!ifNotifications()" >
                 <div *ngFor = "let notification of notificationList;index as i">
                   <div *ngIf="isAuthor()">
 
-                    <mat-card *ngIf="notification.status" style="background-color: #c79fec;">
+                    <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
                         <p>{{notification.message}}</p>
                     </mat-card>
 

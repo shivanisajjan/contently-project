@@ -13,13 +13,16 @@ export class PaymentComponent implements OnInit {
 
 
   handler: any;
+  private id;
+
   constructor(private http: HttpClient,private router: Router,private route: ActivatedRoute) { }
 
 
   private invalidfeedback: string;
 
   chargeCreditCard(num,exp,cvv) {
-    this.router.navigate(['/loading']).then();
+    this.router.navigate(['/loading',this.id]).then();
+    // let form = document.getElementsByTagName("form")[0];
     let arr = exp.split('/',2);
     (<any>window).Stripe.card.createToken({
       number: num,
@@ -67,6 +70,7 @@ export class PaymentComponent implements OnInit {
 
 
   ngOnInit() {
+      this.id = this.route.snapshot.paramMap.get('id');
     this.loadStripe();
 
   }

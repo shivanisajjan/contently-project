@@ -1,8 +1,8 @@
+<div class="create-content-component">
+<div class="trending-books">
+    <h3 style="margin-left: 4%;">Create Content</h3>
+    </div>
 <mat-card>
-  <mat-card-header>
-    <h3>Create Content</h3>
-  </mat-card-header>
-  <mat-divider></mat-divider>
   <mat-card-content>
   <form #newContent="ngForm">
 
@@ -24,18 +24,47 @@
 
     <div class="input-group">
       <h5><label>Genre: </label></h5>
-      <mat-checkbox name="horror" ngModel class="input-item">Horror</mat-checkbox>
+      <!-- <mat-checkbox name="horror" ngModel class="input-item">Horror</mat-checkbox>
       <mat-checkbox name="romance" ngModel class="input-item">Romance</mat-checkbox>
       <mat-checkbox name="thriller" ngModel class="input-item">Thriller</mat-checkbox>
       <mat-checkbox name="crime" ngModel class="input-item">Crime</mat-checkbox>
-      <mat-checkbox name="drama" ngModel class="input-item">Drama</mat-checkbox>
+      <mat-checkbox name="drama" ngModel class="input-item">Drama</mat-checkbox> -->
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip
+            *ngFor="let genre of genres"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(genre)">
+            {{genre}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Add Genre"
+            #fruitInput
+            [formControl]="fruitCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+  
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let genre of filteredGenres | async" [value]="genre">
+            {{genre}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     </div>
+
+  
 
     <div class="input-group" >
       <h5><label>Assigning of Editor/Illustrator : </label></h5>
       <mat-radio-group name="selectHelper" ngModel>
-        <mat-radio-button class="input-item" value="true">Self</mat-radio-button>
-        <mat-radio-button class="input-item" value="false">Automated</mat-radio-button>
+        <mat-radio-button class="input-item self" value="true" matTooltip="Choose Editor and Designer yourself." matTooltipPosition="left">Self</mat-radio-button>
+        <mat-radio-button class="input-item" value="false" matTooltip="We will choose Editor and Designer for you." matTooltipPosition="right">Automated</mat-radio-button>
       </mat-radio-group>
     </div>
 
@@ -52,3 +81,5 @@
     <button mat-raised-button color="primary" (click)="onSubmit(newContent)" >Start Creating</button>
   </mat-card-actions>
 </mat-card>
+<br>
+</div>

@@ -1,7 +1,6 @@
 package com.stackroute.publicationservice.service;
 
 
-import com.stackroute.publicationservice.Sequence.Custom;
 import com.stackroute.publicationservice.exceptions.ContentAlreadyExistsExceptions;
 import com.stackroute.publicationservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.publicationservice.exceptions.InternalServerErrorException;
@@ -15,7 +14,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -102,16 +100,6 @@ public class PublicationServiceImpl implements PublicationService {
 
     }
 
-
-    public int getNextSequence(String seqName)
-        {
-            Custom counter = mongo.findAndModify(
-                    query(where("_id").is(seqName)),
-                    new Update().inc("seq",1),
-                    options().returnNew(true).upsert(true),
-                    Custom.class);
-            return counter.getSeq();
-        }
 
     public List<Publications> findAllByTitle(String searchValue) {
         //TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingAny(searchValue);

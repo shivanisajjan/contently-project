@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ContentService } from '../content.service';
 import { BookFetchService } from '../bookFetch.service';
+import {FileSaverService} from 'ngx-filesaver';
 
 @Component({
   selector: 'app-bookdetails',
@@ -11,7 +12,8 @@ import { BookFetchService } from '../bookFetch.service';
   styleUrls: ['./bookdetails.component.css']
 })
 export class BookdetailsComponent implements OnInit {
-  private bookId;s
+  private hasPurchased = true;
+  private bookId;
   private bookDetails: any;
   private book;
   private checkPurchase;
@@ -20,11 +22,30 @@ export class BookdetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private contentService : ContentService,
     private bookFetch: BookFetchService,
+    public fileSaverService: FileSaverService,
     private router: Router
     ) {
     }
 
   ngOnInit() {
+    this.contentService.getBookDetailPage(localStorage.getItem('bookId'))
+      .subscribe(
+        result => {
+          this.bookDetails = result;
+          console.log('book-details: ', this.bookDetails);
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+
+    // this.book = this.route.snapshot.paramMap.get('id');
+    // console.log(this.book);
+    // this.contentService.getBookDetails(this.book).subscribe(
+    //         result => {this.bookDetails = result;
+    //         console.log(this.bookDetails);})
+    // this.bookId = localStorage.getItem('bookId');
+    // console.log("jhjghghloplop" + this.bookId);
       this.book = this.route.snapshot.paramMap.get('id');
       this.contentService.getBookDetails(this.book).subscribe(
               result => {this.bookDetails = result;
@@ -45,7 +66,9 @@ export class BookdetailsComponent implements OnInit {
   }
 
   purchase(){
-        this.router.navigate(['/pay']);
+        this.router.navigateByUrl(`/pay/${this.bookId}`);
+
+
   }
 
 
@@ -66,6 +89,22 @@ export class BookdetailsComponent implements OnInit {
   }
 
   getBookDetails(id){
+
+    }
+
+    downloadIt()
+  {
+    const fileName = `save.pdf`;
+    const fileType = this.fileSaverService.genType(fileName);
+
+    console.log('bookid is '+this.bookId);
+    this.bookFetch.getFromAws(this.bookId).subscribe(data=>{
+      let blob=new Blob([data],{type: fileType});
+      this.fileSaverService.save(blob,this.bookId+'.pdf');
+
+
+
+    });
 
     }
 
@@ -106,5 +145,7 @@ export class SampleChapterDialog implements OnInit{
       result => this.bookDetails = result
     )
   }
+
+
 }
 

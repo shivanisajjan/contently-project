@@ -20,10 +20,20 @@ public class RabbitMQSender {
     @Value("${registry.rabbitmq.routingkey}")
     private String routingkey;
 
+    @Value("${registry1.rabbitmq.exchange}")
+    private String exchange1;
+
+    @Value("${registry1.rabbitmq.routingkey}")
+    private String routingkey1;
+
 
     public void sendRegistry(DTOUser user) {
         System.out.println(user.toString());
         rabbitTemplate.convertAndSend(exchange, routingkey, user);
+    }
+    public void sendRegistry1(DTOUser user) {
+        System.out.println(user.toString());
+        rabbitTemplate.convertAndSend(exchange1, routingkey1, user);
     }
 
 }

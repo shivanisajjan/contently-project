@@ -20,7 +20,7 @@ public class PublicationsDto {
     String  editorName;
     String designerName;
     String typeName;
-    String genres;
+    List<String> genres;
     double price;
     String publishedAt;
     int noOfPurchases;

@@ -56,6 +56,7 @@
             </mat-grid-tile-footer>
           </mat-grid-tile>
         </mat-grid-list>
+
       </mat-card>
       <br>
 
@@ -69,21 +70,18 @@
                 </mat-grid-tile-header>
               </div>
               <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
-              <mat-grid-tile-footer *ngIf="bookDetails.designerStatus">
-                <h4>{{bookDetails.editorStatus | uppercase }}</h4>
-              </mat-grid-tile-footer>
+              <h4>{{bookDetails.editorStatus | uppercase }}</h4>
             </mat-grid-tile>
 
-            <mat-grid-tile class="choose-editor-tile">
+            <mat-grid-tile>
+
               <div class="select-editor-header">
                 <mat-grid-tile-header>
                   <h2>Illustrator Selected</h2>
                 </mat-grid-tile-header>
               </div>
               <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
-              <mat-grid-tile-footer *ngIf="bookDetails.designerStatus">
-                <h4>{{bookDetails.designerStatus | uppercase }}</h4>
-              </mat-grid-tile-footer>
+              <h4>{{bookDetails.designerStatus | uppercase }}</h4>
             </mat-grid-tile>
           </mat-grid-list>
         </mat-card>
@@ -110,7 +108,7 @@
               </div>
 
               <div class="status">
-                <button mat-raised-button 
+                <button mat-raised-button style="margin-right: 10px;"
                         [matMenuTriggerFor]="menu" [disabled]="!getShowEditButton(i)">{{chapter.status}}</button>
                 <mat-menu #menu="matMenu">
                   <button *ngFor="let status of chapterStatus" mat-menu-item
@@ -161,6 +159,11 @@
             <mat-icon>add</mat-icon>
           </button>
           <button *ngIf="isPublish()" (click)="onPublish()" mat-raised-button color="primary">Publish</button>
+          <ngx-spinner
+bdColor = "rgba(51, 51, 51, 0.8)"
+size = "large"
+color = "#934d4d"
+type = "ball-8bits"></ngx-spinner>
 
 
           <input type='file' (change)="onSelectFile($event)">

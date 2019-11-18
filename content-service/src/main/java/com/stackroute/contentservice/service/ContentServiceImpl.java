@@ -49,15 +49,17 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public Content deleteContent(String title) throws ContentDoesNotExistException, InternalServerErrorException {
-        Content content = contentRepository.findByTitle(title);
-        if (content==null){
-            throw new ContentDoesNotExistException();
-        }
-        else {
+    public Content deleteContent(int id) throws ContentDoesNotExistException, InternalServerErrorException {
+        try
+        {
+            Content content = contentRepository.findById(id).get();
             contentRepository.delete(content);
             return content;
         }
+        catch(Exception e)
+        {
+            throw new ContentDoesNotExistException();
+        }    
     }
     @Override
     public Content updateContent(Content content) throws ContentDoesNotExistException,InternalServerErrorException{

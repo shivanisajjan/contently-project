@@ -107,8 +107,37 @@ export class ContentService {
     const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content`;
     return this.http.post(postUrl, jsonObj, httpOptions);
   }
+  recommendedPrice(editorPay, illustratorPay) {
+    const book = JSON.parse(localStorage.getItem('book'));
+    const myObject = {
+      genre: book.genres[0],
+      editorPay,
+      illustratorPay,
+      base: 50,
+      noOfWords: +localStorage.getItem('wordCount')
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/priceRec`;
+    return this.http.post(postUrl, myObject, this.httpOptions);
+  }
 
-  getBookDetailPage(id){
+  getPay(editorName) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/username/` + editorName;
+    return this.http.get(postUrl, this.httpOptions);
+  }
+
+  getBookDetailPage(id) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -119,7 +148,7 @@ export class ContentService {
     return this.http.get(postUrl, httpOptions);
   }
 
-  saveBookDetails(book){
+  saveBookDetails(book) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -128,16 +157,5 @@ export class ContentService {
     };
     const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
     return this.http.put(postUrl, book, this.httpOptions);
-  }
-  
-  getPublishedBooks(){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
-    return this.http.put(postUrl, this.httpOptions);
   }
 }

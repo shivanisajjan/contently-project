@@ -2,12 +2,12 @@
   <br>
 <mat-card class="book-details">
   <img mat-card-image src="../../assets/images/cover_photo.jpg" alt="Photo of a Shiba Inu">
-<h2>{{bookDetails.title}}</h2>
+<!-- <h2>{{bookDetails.title}}</h2> -->
 <h2 ></h2>
-<p>{{bookDetails.description}}</p>
+<!-- <p>{{bookDetails.description}}</p> --> 
 <button mat-raised-button color="primary" (click)="openSampleChapterDialog()">Show Sample Chapter</button>
-<button mat-raised-button color="primary" *ngIf=!isPurchase() (click)="purchase()">Purchase</button>
-  <button mat-raised-button color="primary" *ngIf=isPurchase() routerLink="/download" >Download</button>
+<button mat-raised-button color="primary" *ngIf="hasPurchased" (click)="purchase()">Purchase</button>
+  <button mat-raised-button color="primary" (click)="downloadIt()" >Download</button>
 </mat-card>
  <!-- <section id="book">
 	<div class="container">

@@ -91,10 +91,12 @@ public class FileController {
         String url = "";
         float percentage = 0;
         while ((s = stdInput.readLine()) != null) {
-
+System.out.println("s:"+s);
             String[] result = s.split(" ",-1);
+System.out.println("result"+result);
              url = result[0];
              percentage = Float.parseFloat(result[1]);
+System.out.println("percentage:"+percentage);
 
         }
 

@@ -8,6 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ContentLayoutComponent} from './content-layout/content-layout.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import {
   BookCreateComponent,
   SelectEditorDialog,
@@ -67,6 +68,8 @@ import {ReplyComponent} from './issues/reply/reply.component';
 import {PublicationBookComponent} from './publication-book/publication-book.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
 import { IssuesComponent } from './issues/issues.component';
+import { FailureComponent } from './failure/failure.component';
+
 
 @NgModule({
   declarations: [
@@ -95,10 +98,12 @@ import { IssuesComponent } from './issues/issues.component';
     ReplyComponent,
     PublicationBookComponent,
     SearchResultsComponent,
-    IssuesComponent
+    IssuesComponent,
+    FailureComponent
   ],
 
   imports: [
+    NgxSpinnerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -153,7 +158,8 @@ import { IssuesComponent } from './issues/issues.component';
     PublicationBookComponent,
     NewIssueComponent,
     ReplyComponent,
-    IssuesComponent
+    IssuesComponent,
+    FailureComponent
   ],
   providers: [
     LoginService,

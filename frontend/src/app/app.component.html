@@ -15,13 +15,13 @@
       </button>
       <div  *ngIf="!ifToken(); then thenBlock; else elseBlock"></div>
       <ng-template #thenBlock>
-        <a mat-button routerLink="/register">Register</a>
-        <a mat-button (click)="onLogin()">Login</a>
+        <a mat-list-item mat-button routerLink="/register">Register</a>
+        <a mat-list-item mat-button (click)="onLogin()">Login</a>
       </ng-template>
       <ng-template #elseBlock>
-          <a mat-button routerLink="/afterLogin">Home</a>
-          <a mat-button routerLink="/dashboard">Profile</a>
-          <a mat-button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" >Notifications</a>
+          <a mat-list-item mat-button routerLink="/afterLogin">Home</a>
+          <a mat-list-item mat-button routerLink="/dashboard">Profile</a>
+          <a mat-list-item mat-button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" >Notifications</a>
           <mat-menu class="notification-menu" #notification="matMenu">
               <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
               <div class="notifications" *ngIf="!ifNotifications()" >

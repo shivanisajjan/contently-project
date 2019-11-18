@@ -1,24 +1,23 @@
-import {Component, OnInit, Inject, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef} from '@angular/core';
-import {BookFetchService} from '../bookFetch.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Commit} from './commit';
-import {AddNewSectionComponent} from './add-new-section/add-new-section.component';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {PreviewComponent} from './preview/preview.component';
-import {ContentService} from '../content.service';
-import {notification} from '../notification';
-import {NotificationService} from '../notification.service';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {FileSaverService} from 'ngx-filesaver';
+import { Component, OnInit, Inject, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { BookFetchService } from '../bookFetch.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Commit } from './commit';
+import { AddNewSectionComponent } from './add-new-section/add-new-section.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PreviewComponent } from './preview/preview.component';
+import { ContentService } from '../content.service';
+import { notification } from '../notification';
+import { NotificationService } from '../notification.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { FileSaverService } from 'ngx-filesaver';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-
-
-
-import {formatDate} from '@angular/common';
-import {PublicationBookComponent} from '../publication-book/publication-book.component';
-import {IssuesComponent} from '../issues/issues.component';
-import {Observable} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
+import { formatDate } from '@angular/common';
+import { PublicationBookComponent } from '../publication-book/publication-book.component';
+import { IssuesComponent } from '../issues/issues.component';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { FailureComponent } from '../failure/failure.component';
 
 @Component({
   selector: 'app-book-create',
@@ -28,25 +27,28 @@ import {map, shareReplay} from 'rxjs/operators';
 
 export class BookCreateComponent implements OnInit {
 
-  private editor;
-  private illustrator;
-  private bookDetails;
+  private isPublished = false;
+  private editor: any;
+  private illustrator: any;
+  private bookDetails: any;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
   fileName: string;
-  @ViewChild( IssuesComponent, {static: true}) issueComponent: IssuesComponent;
+  private published: any;
+  @ViewChild(IssuesComponent, { static: true }) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
   constructor(private bookFetch: BookFetchService,
-              private router: Router,
-              private dialog: MatDialog,
-              private contentService: ContentService,
-              private route: ActivatedRoute,
-              private _FileSaverService: FileSaverService,
-              private notificationService: NotificationService,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+    private spinner: NgxSpinnerService,
+    private router: Router,
+    private dialog: MatDialog,
+    private contentService: ContentService,
+    private route: ActivatedRoute,
+    private fileSaverService: FileSaverService,
+    private notificationService: NotificationService,
+    private componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -205,7 +207,7 @@ export class BookCreateComponent implements OnInit {
       );
   }
 
-  commits(filename) {
+  commits(filename: any) {
     this.commitList = [];
     this.commitListLoaded = false;
     this.bookFetch.getCommit(this.bookDetails.id, filename)
@@ -222,7 +224,7 @@ export class BookCreateComponent implements OnInit {
       );
   }
 
-  singleCommit(filename, sha) {
+  singleCommit(filename: any, sha: any) {
     this.bookFetch.getSingleCommit(this.bookDetails.id, filename, sha)
       .subscribe(
         data => {
@@ -263,7 +265,7 @@ export class BookCreateComponent implements OnInit {
     });
 
     const dialogSubmitSubscription = dialogRef.componentInstance.selectEditorEvent.subscribe(
-      result => {
+      (      result: any) => {
         this.editor = result;
         this.bookDetails.editorName = this.editor;
         this.bookDetails.editorStatus = 'pending';
@@ -292,7 +294,7 @@ export class BookCreateComponent implements OnInit {
     });
 
     const dialogSubmitSubscription = dialogRef.componentInstance.selectIllustratorEvent.subscribe(
-      result => {
+      (      result: any) => {
         this.illustrator = result;
         this.bookDetails.designerName = this.illustrator;
         this.bookDetails.designerStatus = 'pending';
@@ -315,7 +317,7 @@ export class BookCreateComponent implements OnInit {
     });
 
     const dialogSubmitSubscription =
-      dialogRef.componentInstance.chapterStatusEvent.subscribe(result => {
+      dialogRef.componentInstance.chapterStatusEvent.subscribe((result: any[]) => {
         console.log(result);
         this.chapterStatus = result;
         dialogSubmitSubscription.unsubscribe();
@@ -389,20 +391,9 @@ export class BookCreateComponent implements OnInit {
   // }
 
   onPublish() {
+    this.spinner.show();
     this.publishFile();
 
-    const dialogRef = this.dialog.open(PublicationBookComponent, {
-      width: '50%',
-      data: {
-        book: this.bookDetails
-      }
-    });
-    // dialogRef.afterClosed()
-    //   .subscribe(
-    //     result => {
-    //       console.log('Dialog was closed');
-    //     }
-    //   );
   }
 
   isPublish(): boolean {
@@ -416,8 +407,7 @@ export class BookCreateComponent implements OnInit {
     }
     return true;
   }
-
-  sendNotification(receiver, bookId, message) {
+  sendNotification(receiver: String, bookId: number, message: string | String) {
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
     newNotification.bookId = bookId;
@@ -427,13 +417,49 @@ export class BookCreateComponent implements OnInit {
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 
-  uploadFile(file) {
-    this.bookFetch.uploadToAws(file, this.bookDetails.id).subscribe(data => {
-      console.log(data);
-    });
+  uploadFile(file: File) {
+    console.log("before");
+    this.bookFetch.uploadToAws(file, this.bookDetails.id)
+      .subscribe(
+        data => {
+
+          if (data == "Success") {
+            const dialogRef = this.dialog.open(PublicationBookComponent, {
+              width: '50%',
+              data: {
+                book: this.bookDetails
+              }
+            });
+            dialogRef.afterClosed().subscribe(
+              () => {
+                console.log('closed');
+                this.spinner.hide().then();
+                this.router.navigate['dashboard'].then();
+              });
+          }
+          else {
+            const dialogRef = this.dialog.open(FailureComponent, {
+              width: '50%',
+              data: {
+                book: this.bookDetails
+              }
+            });
+            this.spinner.hide();
+          }
+        }, err => {
+          const dialogRef = this.dialog.open(FailureComponent, {
+            width: '50%',
+            data: {
+              book: this.bookDetails
+            }
+          });
+          this.spinner.hide();
+
+
+        });
   }
 
-  onSelectFile(event) { // called each time file input changes
+  onSelectFile(event: { target: { files: { name: any; }[]; }; }) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name)
         .subscribe(data => {
@@ -446,8 +472,8 @@ export class BookCreateComponent implements OnInit {
     const fileName = `save.html`;
     const len = this.bookDetails.status.length;
     let count = 0;
-    const fileType = this._FileSaverService.genType(fileName);
-    let txtBlob;
+    const fileType = this.fileSaverService.genType(fileName);
+    let txtBlob: BlobPart;
     const htmlContent = [];
     for (let i = 0; i < this.bookDetails.status.length; i++) {
       htmlContent.push({
@@ -468,17 +494,11 @@ export class BookCreateComponent implements OnInit {
                 combined += '<div>' + htmlContent[j].content + '</div>';
               }
               console.log(combined);
-              txtBlob = new Blob([combined], {type: fileType});
+              txtBlob = new Blob([combined], { type: fileType });
               const file = new File([txtBlob], this.bookDetails.id);
 
               console.log(file);
               this.uploadFile(file);
-
-              this.bookFetch.saveToPublication(this.bookDetails).subscribe(
-                data => {
-                  console.log(data);
-                }
-              );
 
             }
           }
@@ -501,7 +521,7 @@ export class SelectEditorDialog implements OnInit {
   public editorListFiltered;
   public allEditorList;
   public allEditorListFiltered;
-  public searchTerm;
+  public searchTerm; 
 
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
@@ -519,7 +539,7 @@ export class SelectEditorDialog implements OnInit {
     this.dialogRef.close();
   }
 
-  selectEditor(editor) {
+  selectEditor(editor: string) {
     console.log('Selected Editor : ' + editor);
     this.selectEditorEvent.emit(editor);
     this.dialogRef.close();
@@ -546,10 +566,10 @@ export class SelectEditorDialog implements OnInit {
   search() {
     const term = this.searchTerm;
     console.log(term);
-    this.editorListFiltered = this.editorList.filter(function (tag) {
+    this.editorListFiltered = this.editorList.filter(function (tag: { name: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }; }) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
-    this.allEditorListFiltered = this.allEditorList.filter(function (tag) {
+    this.allEditorListFiltered = this.allEditorList.filter(function (tag: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
   }
@@ -563,8 +583,8 @@ export class SelectEditorDialog implements OnInit {
 })
 export class SelectIllustratorDialog implements  OnInit{
   public illustratorList;
-  public illustratorListFiltered;
-  public searchTerm;
+  public illustratorListFiltered: any;
+  public searchTerm: any;
   public allIllustratorList;
   public allIllustratorListFiltered;
 
@@ -594,7 +614,7 @@ export class SelectIllustratorDialog implements  OnInit{
     this.dialogRef.close();
   }
 
-  selectIllustrator(illustrator) {
+  selectIllustrator(illustrator: any) {
     console.log(illustrator);
     this.selectIllustratorEvent.emit(illustrator);
     this.dialogRef.close();
@@ -629,7 +649,7 @@ export class SelectIllustratorDialog implements  OnInit{
     this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
-  }
+  } 
 
   
 

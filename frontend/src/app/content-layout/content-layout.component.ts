@@ -48,7 +48,7 @@ export class ContentLayoutComponent implements OnInit {
   }
 
   onSubmit(input: NgForm) {
-    console.log(input.value);
+    // console.log(input.value);
     const jsonObj: any = {
       title: input.value.title,
       description: input.value.desc,
@@ -60,27 +60,27 @@ export class ContentLayoutComponent implements OnInit {
     };
     localStorage.setItem('selectHelper', input.value.selectHelper);
     console.log('json', jsonObj);
-    // this.contentService.saveBooks(jsonObj)
-    //   .subscribe(
-    //     data => {
-    //       console.log('Save book data:', data);
-    //       const temp: any = data;
-    //       this.bookFetch.createRepo(temp.id, temp.description)
-    //         .subscribe(
-    //           data2 => {
-    //             console.log('Create Repo data: ', data2);
-    //             localStorage.setItem('book', JSON.stringify(data));
-    //             this.router.navigate(['/bookCreate']).then();
-    //           },
-    //           error2 => {
-    //             console.log('Create Repo error', error2);
-    //           }
-    //         );
-    //     },
-    //     error => {
-    //       console.log('Save book error:', error);
-    //     }
-    //   );
+    this.contentService.saveBooks(jsonObj)
+      .subscribe(
+        data => {
+          console.log('Save book data:', data);
+          const temp: any = data;
+          this.bookFetch.createRepo(temp.id, temp.description)
+            .subscribe(
+              data2 => {
+                console.log('Create Repo data: ', data2);
+                localStorage.setItem('book', JSON.stringify(data));
+                this.router.navigate(['/bookCreate']).then();
+              },
+              error2 => {
+                console.log('Create Repo error', error2);
+              }
+            );
+        },
+        error => {
+          console.log('Save book error:', error);
+        }
+      );
   }
 
   removeGenre(genre: string) {

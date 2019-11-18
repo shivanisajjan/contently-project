@@ -27,8 +27,6 @@ public interface PublicationService {
 
     Publications findById(int id) throws ContentDoesNotExistException;
 
-    int getNextSequence(String seq);
-
     public List<Publications> findAllByTitle(String searchValue);
 
 

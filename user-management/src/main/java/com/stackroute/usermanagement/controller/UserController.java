@@ -88,6 +88,7 @@ UserController {
         dtouser.setAddressLine2(user.getAddressLine2());
         dtouser.setAddressLine3(user.getAddressLine3());
         rabbitMQSender.sendRegistry(dtouser);
+        rabbitMQSender.sendRegistry1(dtouser);
         userService.updateUser(user);
         return new ResponseEntity<String>("Updated Successfully", HttpStatus.OK);
     }

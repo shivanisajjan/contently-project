@@ -26,6 +26,7 @@ public class Publications {
     String  editorName; // list of userId of editors
     String designerName; // list of userId of designer
     @TextIndexed String typeName;
+    @TextIndexed
     List<String> genres;
     String  createdAt;
     double price;

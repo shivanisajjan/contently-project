@@ -41,7 +41,7 @@ import {MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule} from 
 import {HttpClientModule} from '@angular/common/http';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {EditComponent} from './edit/edit.component';
-import {BookdetailsComponent, SampleChapterDialog} from './bookdetails/bookdetails.component';
+import {BookdetailsComponent} from './bookdetails/bookdetails.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {ContentService} from './content.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -87,7 +87,6 @@ import {FailureComponent} from './failure/failure.component';
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SampleChapterDialog,
     ConversionComponent,
     PageAfterLoginComponent,
     EditProfileComponent,
@@ -154,7 +153,6 @@ import {FailureComponent} from './failure/failure.component';
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    SampleChapterDialog,
     PublicationBookComponent,
     NewIssueComponent,
     ReplyComponent,

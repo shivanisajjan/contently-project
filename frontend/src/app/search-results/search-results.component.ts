@@ -1,5 +1,5 @@
-import { Component, OnInit ,Input} from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import {Component, OnInit, Input} from '@angular/core';
+import {ActivatedRoute} from '@angular/router'
 import {BookFetchService} from '../bookFetch.service';
 import {Router} from '@angular/router';
 
@@ -12,19 +12,30 @@ import {Router} from '@angular/router';
 export class SearchResultsComponent implements OnInit {
   private search;
   private searchBooks: any;
+
   constructor(
-    private route : ActivatedRoute,private bookFetch:BookFetchService, private router: Router
-  ) { }
+    private route: ActivatedRoute, private bookFetch: BookFetchService, private router: Router
+  ) {
+  }
 
   ngOnInit() {
     this.search = this.route.snapshot.paramMap.get('search');
-    this.bookFetch.searchBooks(this.search).subscribe(result => {
-      this.searchBooks = result;
-       });
-    console.log(this.searchBooks);
+    this.bookFetch.searchBooks(this.search)
+      .subscribe(
+        result => {
+          this.searchBooks = result;
+          console.log(this.searchBooks);
+        },
+        error => {
+          console.log('error: ', error);
+        }
+      );
+
   }
-    bookDetails(id) {
-      this.router.navigate(['/book-details', id]);
-    }
+
+  bookDetails(id) {
+    localStorage.setItem('bookId', id);
+    this.router.navigate(['/book-details']).then();
+  }
 
 }

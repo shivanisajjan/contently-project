@@ -65,8 +65,6 @@ public class PurchaseController {
     @GetMapping(value = "/user/{username}")
     public ResponseEntity<?> getContent(@PathVariable("username") String username) throws InternalServerErrorException
     {
-
-
         responseEntity=new ResponseEntity<>(purchaseService.findByUsername(username),HttpStatus.OK);
         return responseEntity;
     }

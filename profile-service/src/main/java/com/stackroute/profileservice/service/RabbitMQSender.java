@@ -1,10 +1,14 @@
 package com.stackroute.profileservice.service;
 
+import com.stackroute.profileservice.model.Genre;
+import com.stackroute.profileservice.model.Interest;
 import com.stackroute.profileservice.model.Profile;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -20,8 +24,26 @@ public class RabbitMQSender {
     private String routingkey;
 
 
-    public void sendProfile(Profile profile) {
-        rabbitTemplate.convertAndSend(exchange, routingkey, profile);
+    public void sendProfile(Profile profile)
+    {
+
+        String toSendGenre="";
+        List<Interest> interest= profile.getInterest();
+        for (int i=0;i<interest.size();i++)
+        {
+            List<Genre> genreList=interest.get(i).getGenre();
+            for (int j=0;j<genreList.size();j++)
+            {
+                toSendGenre=toSendGenre+"/"+genreList.get(j).getName();
+            }
+        }
+
+
+        toSendGenre=toSendGenre+"pop"+profile.getUsername()+"pop"+profile.getExperience()+"pop"+profile.getExperience();
+
+        rabbitTemplate.convertAndSend(exchange, routingkey, toSendGenre);
+
+
     }
 
 }

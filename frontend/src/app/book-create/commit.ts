@@ -1,17 +1,19 @@
-export class Commit{
-  public message: String = 'Custom commit msg';
+export class Commit {
+  public message = 'Custom commit msg';
   public committer: any = {
     name: String,
     email: String
   };
-  sha: String;
-  content: String;
+  sha: string;
+  content: string;
 
-  constructor(message: String,
+  constructor(message: string,
+              // tslint:disable-next-line: ban-types
               committerName: String,
+              // tslint:disable-next-line: ban-types
               committerEmail: String,
-              sha: String,
-              content: String){
+              sha: string,
+              content: string) {
     this.message = message;
     this.committer = {
       name: committerName,

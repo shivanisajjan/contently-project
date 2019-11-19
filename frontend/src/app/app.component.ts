@@ -1,11 +1,11 @@
-import {Component, HostListener, Inject, OnInit} from "@angular/core";
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
@@ -22,15 +22,14 @@ import {ContentService} from './content.service';
 })
 export class AppComponent implements OnInit {
   title = 'contently';
-  private showNavigationBarLinks: boolean = true;
+  private showNavigationBarLinks = true;
   private TABLET = 768;
   private loggedIn = false;
-  private serverUrl = 'http://localhost:8716/socket'
+  private serverUrl = 'http://13.126.150.171:8716/socket';
   private stompClient;
   private notificationList: any;
   private notificationCount;
   private notificationStatusList: notification[] = new Array();
-;
   private book: any;
   private searchValue;
 
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
               private dialog: MatDialog,
               private authService: AuthService,
               private router: Router,
-              private _snackBar: MatSnackBar,
+              private snackBar: MatSnackBar,
               private notificationService: NotificationService,
               private contentService: ContentService) {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
@@ -52,7 +51,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authService.isLoggedIn == true) {
+    if (this.authService.isLoggedIn === true) {
       console.log('LOGGED IN');
       this.loggedIn = true;
     }
@@ -78,10 +77,10 @@ export class AppComponent implements OnInit {
 
   loadStripe() {
     if (!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement("script");
-      s.id = "stripe-script";
-      s.type = "text/javascript";
-      s.src = "https://checkout.stripe.com/checkout.js";
+      const s = window.document.createElement('script');
+      s.id = 'stripe-script';
+      s.type = 'text/javascript';
+      s.src = 'https://checkout.stripe.com/checkout.js';
       window.document.body.appendChild(s);
     }
   }
@@ -104,18 +103,20 @@ export class AppComponent implements OnInit {
   ifToken() {
     if (localStorage.getItem('token')) {
       return true;
-    } else return false;
+    } else {
+      return false;
+    }
   }
 
   initializeWebSocketConnection() {
-    let ws = new SockJS(this.serverUrl);
+    const ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
-    let that = this;
+    const that = this;
     this.stompClient.connect({}, (frame) => {
-      that.stompClient.subscribe("/user/" + localStorage.getItem('username') + "/notif", (message) => {
+      that.stompClient.subscribe('/user/' + localStorage.getItem('username') + '/notif', (message) => {
         if (message.body) {
-          console.log("New Notification");
-          this._snackBar.open(message.body, "close", {
+          // console.log('New Notification');
+          this.snackBar.open(message.body, 'close', {
             duration: 2000,
           });
           // tslint:disable-next-line: no-unused-expression
@@ -128,66 +129,73 @@ export class AppComponent implements OnInit {
 
   getNotifications() {
     this.notificationService.getNotification(localStorage.getItem('username')).subscribe(
-      result => {
-        this.notificationList = result;
-        this.notificationCount = 0;
-        for (let n of this.notificationList) {
-          if (n.status == true) {
-            this.notificationCount = this.notificationCount + 1
+        result => {
+          this.notificationList = result;
+          this.notificationCount = 0;
+          // tslint:disable-next-line: prefer-const
+          for (let n of this.notificationList) {
+            if (n.status === true) {
+              this.notificationCount = this.notificationCount + 1;
+            }
           }
-        }
-
-        console.log("New Notifications : ", this.notificationCount)
-      });
+          // console.log('New Notifications : ', this.notificationCount);
+        });
   }
 
   removeNewNotifications() {
+    // tslint:disable-next-line: prefer-const
     for (let n of this.notificationList) {
-      console.log(n.status)
-      if (n.status == true) {
-        this.notificationStatusList.push(n)
+      // console.log(n.status);
+      if ( n.status === true) {
+        this.notificationStatusList.push(n);
       }
     }
     this.notificationService.updateNotifications(this.notificationStatusList).subscribe(this.ngOnInit);
   }
 
   isAuthor() {
-    if (localStorage.getItem('role') == 'reader/author')
+    // tslint:disable-next-line: triple-equals
+    if (localStorage.getItem('role') == 'reader/author') {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
-  acceptRequest(notification, index) {
-    this.contentService.getBookDetails(notification.bookId).subscribe(
+  // tslint:disable-next-line: no-shadowed-variable
+  acceptRequest( notification , index) {
+      this.contentService.getBookDetails(notification.bookId).subscribe(
       result => {
-        this.book = result;
-        this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + " has accepted your request to edit your book  " + this.book.title);
-        if (localStorage.getItem('role') == 'editor') {
-          this.book.editorStatus = 'confirmed';
-        } else {
-          this.book.designerStatus = 'confirmed';
-        }
-        console.log("UPDATED BOOK : ", this.book)
-        this.contentService.saveBookDetails(this.book).subscribe()
+      this.book = result;
+      // tslint:disable-next-line: max-line-length
+      this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + ' has accepted your request to edit your book  ' + this.book.title);
+      if (localStorage.getItem('role') === 'editor') {
+        this.book.editorStatus = 'confirmed';
+      } else {
+        this.book.designerStatus = 'confirmed';
+      }
+      console.log('UPDATED BOOK : ', this.book);
+      this.contentService.saveBookDetails(this.book).subscribe();
       });
-    this.notificationService.deleteNotification(notification.id).subscribe(
+      this.notificationService.deleteNotification(notification.id).subscribe(
       (result) => this.ngOnInit(),
       (error) => this.ngOnInit()
     );
   }
 
-  deleteRequest(notification, index) {
-    this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + " has rejected your request to edit your book of id : " + this.book.title);
+  // tslint:disable-next-line: no-shadowed-variable
+  deleteRequest(notification , index) {
+    // tslint:disable-next-line: max-line-length
+    this.sendNotification(notification.sender, notification.bookId, localStorage.getItem('username') + ' has rejected your request to edit your book of id : ' + this.book.title);
     this.contentService.getBookDetails(notification.bookId).subscribe(
       result => {
         this.book = result;
-        if (localStorage.getItem('role') == 'editor') {
+        if (localStorage.getItem('role') === 'editor') {
           this.book.editorStatus = 'rejected';
         } else {
           this.book.designerStatus = 'rejected';
         }
-        console.log("UPDATED BOOK : ", this.book)
+        console.log('UPDATED BOOK : ', this.book);
         this.contentService.saveBookDetails(this.book).subscribe();
       });
     this.notificationService.deleteNotification(notification.id).subscribe(
@@ -202,18 +210,20 @@ export class AppComponent implements OnInit {
     newNotification.receiver = receiver;
     newNotification.message = message;
     newNotification.bookId = bookId;
-    newNotification.status = true
+    newNotification.status = true;
     this.notificationService.sendNotification(newNotification).subscribe();
   }
 
 
   ifNotifications() {
     if (this.notificationList) {
-      if (Object.keys(this.notificationList).length == 0)
-        return true;
-      else
-        return false
+    if (Object.keys(this.notificationList).length === 0) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
 
+
+}

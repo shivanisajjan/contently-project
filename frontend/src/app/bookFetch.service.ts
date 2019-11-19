@@ -159,12 +159,12 @@ export class BookFetchService {
     testData.append('file', file);
     console.log('After');
 
-    return this.http.post(environment.backBaseUrl + 'awsstorage-service/api/v1/text/' + id, testData, {responseType: 'text'});
+    return this.http.post('http://13.126.150.171:8081/' + 'api/v1/text/' + id, testData, {responseType: 'text'});
   }
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get(`${environment.backBaseUrl}awsstorage-service/api/v1/file/${id}`,
+    return this.http.get(`http://13.126.150.171:8081/api/v1/file/${id}`,
       {
         responseType: 'blob',
         headers: {
@@ -173,16 +173,5 @@ export class BookFetchService {
         },
       }
     );
-  }
-
-  savePurchase(purchaseObj) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    console.log('get from aws called');
-    return this.http.post<any>(environment.backBaseUrl + 'purchasing-service/api/v1/save', purchaseObj, httpOptions);
   }
 }

@@ -1,13 +1,13 @@
 export class Book {
-    public name: String;
+    public name: string;
     // public description: string;
     // public id:Number;
     // public show:Boolean;
-    public sha: String;
-    public content: String;
+    public sha: string;
+    public content: string;
 
 
-  constructor(name: String, sha: String, content: String){
+  constructor(name: string, sha: string, content: string) {
     this.name = name;
     this.sha = sha;
     this.content = content;

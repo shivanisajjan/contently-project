@@ -155,10 +155,10 @@
         </mat-card-content>
 
         <mat-card-actions *ngIf="ifAuthor()">
-          <button mat-raised-button color="primary" (click)="addNewSection()">
+          <button mat-raised-button class="style-button" (click)="addNewSection()">
             <mat-icon>add</mat-icon>
           </button>
-          <button *ngIf="isPublish()" (click)="onPublish()" mat-raised-button color="primary">Publish</button>
+          <button *ngIf="isPublish()" (click)="onPublish()" mat-raised-button  class="style-button">Publish</button>
           <ngx-spinner
 bdColor = "rgba(51, 51, 51, 0.8)"
 size = "large"
@@ -166,7 +166,7 @@ color = "#934d4d"
 type = "ball-8bits"></ngx-spinner>
 
 
-          <input type='file' (change)="onSelectFile($event)">
+          <!-- <input type='file' (change)="onSelectFile($event)"> -->
         </mat-card-actions>
 
       </mat-card>

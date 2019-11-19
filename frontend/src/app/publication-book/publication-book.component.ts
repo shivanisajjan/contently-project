@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ContentService } from '../content.service';
-import { BookFetchService } from '../bookFetch.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {ContentService} from '../content.service';
+import {BookFetchService} from '../bookFetch.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {formatDate} from '@angular/common';
-
 
 
 @Component({
@@ -14,18 +13,15 @@ import {formatDate} from '@angular/common';
 })
 export class PublicationBookComponent implements OnInit {
 
+  // tslint:disable-next-line: variable-name
   private recommended_price;
   private editorPay;
   private illustratorPay;
   private book;
 
-
-
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
-    public dialogRef: MatDialogRef<PublicationBookComponent>
-  ) {
-
-   }
+              public dialogRef: MatDialogRef<PublicationBookComponent>
+  ) { }
 
   ngOnInit() {
     this.book = JSON.parse(localStorage.getItem('book'));
@@ -53,9 +49,21 @@ export class PublicationBookComponent implements OnInit {
   }
 
   savePublication(price) {
+    const chapters = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.book.status.length; i++) {
+      chapters.push(this.book.status[i].chapterName);
+    }
+    delete this.book.status;
+    delete this.book.selectHelper;
+    delete this.book.editorStatus;
+    delete this.book.designerStatus;
+    delete this.book.createdAt;
+    this.book.publishedAt = formatDate(new Date(), 'dd/MM/yyyy', 'en');
     this.book.price = price;
-    this.book.publishedAt=  formatDate(new Date(), 'dd/MM/yyyy', 'en');
-    console.log('hello:', this.book);
+    this.book.chapterName = chapters;
+
+    console.log('Object to be saved to publication service: ', this.book);
 
     this.bookFetch.saveToPublication(this.book).subscribe(
       data => {
@@ -64,29 +72,12 @@ export class PublicationBookComponent implements OnInit {
           .subscribe(
             data => {
               this.dialogRef.close();
+              this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
+              this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
+              this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
             }
           );
-          const myObject = {
-            book_id: this.book.id,
-            username : localStorage.getItem("username")
-
-          };
-          const myObject1 = {
-            book_id: this.book.id,
-            username : this.book.editorName
-
-          };
-          const myObject2 = {
-            book_id: this.book.id,
-            username : this.book.designerName
-
-          };
-          this.bookFetch.savePurchase(myObject).subscribe();
-          this.bookFetch.savePurchase(myObject1).subscribe();
-          this.bookFetch.savePurchase(myObject2).subscribe();
       }
     );
-    
   }
-
 }

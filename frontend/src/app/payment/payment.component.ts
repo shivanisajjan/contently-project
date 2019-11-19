@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ContentService} from "../content.service";
-import {Router} from "@angular/router";
+import {ContentService} from '../content.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -9,20 +9,21 @@ import {Router} from "@angular/router";
 })
 export class PaymentComponent implements OnInit {
 
+  constructor(private contentService: ContentService,
+              private router: Router) {
+  }
+
+  public boook;
   private handler: any;
   private id;
   private price;
 
-  constructor(private contentService: ContentService,
-              private router: Router) {
-  }
+  private invalidFeedback: string;
 
   ngOnInit() {
     this.price = localStorage.getItem('price');
     this.loadStripe();
   }
-
-  private invalidFeedback: string;
 
   chargeCreditCard(num, exp, cvv) {
 
@@ -51,13 +52,14 @@ export class PaymentComponent implements OnInit {
 
 
   chargeCard(token: string) {
+    // tslint:disable-next-line: radix
     this.contentService.saveToPurchase(parseInt(localStorage.getItem('bookId')), localStorage.getItem('username'))
       .subscribe(
         data => {
           console.log('data from purchase service save: ', data);
           this.router.navigate(['/book-details']).then();
         },
-        error=> {
+        error => {
           console.log('error from purchase service save: ', error);
         }
       );

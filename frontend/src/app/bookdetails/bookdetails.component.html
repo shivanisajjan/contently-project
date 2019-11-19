@@ -11,7 +11,7 @@
           </tr>
           <tr>
             <td><mat-card-subtitle><mat-icon>person</mat-icon>{{bookDetails.authorName | titlecase}}</mat-card-subtitle></td>
-            <td><mat-card-subtitle><mat-icon>schedule</mat-icon>{{bookDetails.createdAt}}</mat-card-subtitle></td>
+            <td><mat-card-subtitle><mat-icon>schedule</mat-icon>{{bookDetails.publishedAt}}</mat-card-subtitle></td>
           </tr>
           <tr>
             <td><mat-card-subtitle>
@@ -38,8 +38,8 @@
         </div>
         <div class="action-buttons-purchased" *ngIf="!getHasPurchased()">
           <button mat-raised-button color="primary" (click)="goToPayment()">Purchase</button>
-          <button mat-raised-button color="primary">Preview</button>
-          <button mat-raised-button color="primary">Request Next Chapter</button>
+          <button mat-raised-button color="primary" (click)="preview()">{{bookDetails.chapterName[chapterIndex]}}</button>
+          <button mat-raised-button color="primary" (click)="requestNext()" [disabled]="getReleaseNext()">Request Next Chapter</button>
         </div>
         <div class="action-buttons-not-purchased" *ngIf="getHasPurchased()">
           <button mat-raised-button [matMenuTriggerFor]="menu" color="primary">Download</button>

@@ -19,13 +19,13 @@
         <a  mat-button (click)="onLogin()">Login</a>
       </ng-template>
       <ng-template #elseBlock>
-          <a  mat-button routerLink="/afterLogin">Home</a>
-          <a  mat-button routerLink="/dashboard">Profile</a>
-          <a  mat-button (click)="removeNewNotifications()" mat-button matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" >Notifications</a>
+          <a  mat-list-item routerLink="/afterLogin">Home</a>
+          <a  mat-list-item routerLink="/dashboard">Profile</a>
+          <a  mat-list-item (click)="removeNewNotifications()"  matBadge="{{notificationCount}}"  matBadgeColor="accent"  [matMenuTriggerFor]="notification" >Notifications</a>
           <mat-menu class="notification-menu" #notification="matMenu">
               <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
               <div class="notifications" *ngIf="!ifNotifications()" >
-              <div *ngFor = "let notification of notificationList;index as i">
+              <div *ngFor = "let notification of notificationList.slice().reverse();index as i">
                 <div *ngIf="isAuthor()">
 
                   <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
@@ -107,21 +107,21 @@
             <mat-menu class="notification-menu" #notification="matMenu">
                 <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
                 <div class="notifications" *ngIf="!ifNotifications()" >
-                <div *ngFor = "let notification of notificationList;index as i">
+                <div *ngFor = "let notification of notificationList.slice().reverse();index as i">
                   <div *ngIf="isAuthor()">
 
-                    <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
+                    <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;" class="notification">
                         <p>{{notification.message}}</p>
                     </mat-card>
 
-                    <mat-card *ngIf="!notification.status">
+                    <mat-card *ngIf="!notification.status" class="notification">
                         <p>{{notification.message}}</p>
                     </mat-card>
 
 
                   </div>
                   <div *ngIf="!isAuthor()">
-                  <mat-card *ngIf="notification.status" style="background-color: #c0d5f0;" >
+                  <mat-card *ngIf="notification.status" style="background-color: #c0d5f0;" class="notification">
                       <mat-card-content><p>{{notification.message}}</p></mat-card-content>
                       <mat-card-actions>
                           <button mat-button color="primary" (click)="acceptRequest(notification,i)">Accept</button>
@@ -129,7 +129,7 @@
                       </mat-card-actions>
                   </mat-card>
 
-                  <mat-card *ngIf="!notification.status" >
+                  <mat-card *ngIf="!notification.status" class="notification">
                       <mat-card-content><p>{{notification.message}}</p></mat-card-content>
                       <mat-card-actions>
                           <button mat-button color="primary" (click)="acceptRequest(notification,i)">Accept</button>

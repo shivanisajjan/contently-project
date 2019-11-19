@@ -50,9 +50,9 @@ export class LoginComponent implements OnInit {
               }
             );
           this.dialogRef.close();
-          if(result.body.role == 'reader/author'){
+          if (result.body.role === 'reader/author') {
             this.router.navigate(['/afterLogin']).then();
-          }else{
+          } else {
           this.router.navigate(['/dashboard']).then();
         }
         },

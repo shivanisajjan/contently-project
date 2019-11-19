@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../environments/environment';
+import {Observable} from "rxjs";
 
 
 @Injectable({
@@ -161,7 +162,7 @@ export class ContentService {
     return this.http.put(postUrl, book, httpOptions);
   }
 
-  saveToPurchase(bookId: number, username: string){
+  saveToPurchase(bookId: number, username: string): Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -174,5 +175,49 @@ export class ContentService {
       username
     };
     return this.http.post(postUrl, jsonObject, httpOptions);
+  }
+
+  getChapterFromProfile(username, bookId): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/chapter/${username}/${bookId}`;
+    return this.http.get(postUrl, httpOptions);
+  }
+
+  requestChapterFromProfile(username, bookId){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/release/${username}/${bookId}`;
+    return this.http.post(postUrl, {},  httpOptions);
+  }
+
+  getPurchasedBooks() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/name/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
+  }
+
+  getPublishedBooks() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/name/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
   }
 }

@@ -30,6 +30,7 @@ mat-sidenav-content{
 .parallax{
   /* The image used */
   background-color: white;
+  background-image: url('../assets/images/side_bg.jpg');
   /*background-image: url("https://parade.com/wp-content/uploads/2018/08/book-stack-library-club-reading-ftr.jpg");*/
 
   /* Set a specific height */
@@ -40,9 +41,7 @@ mat-sidenav-content{
   background-repeat: no-repeat;
   background-size: cover;
 }
-.router-component-wrapper{
-  background: rgba(255,255,255,0.5);
-}
+
 
 /* new landing page */
 

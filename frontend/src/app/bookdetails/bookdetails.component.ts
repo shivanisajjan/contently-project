@@ -75,4 +75,8 @@ export class BookdetailsComponent implements OnInit {
     localStorage.setItem('price', this.bookDetails.price);
     this.router.navigate(['/pay']).then();
   }
+
+  preview(){
+
+  }
 }

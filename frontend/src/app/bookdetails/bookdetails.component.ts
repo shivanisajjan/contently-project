@@ -1,5 +1,5 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {MatDialogRef, MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {ContentService} from '../content.service';
@@ -46,8 +46,8 @@ export class BookdetailsComponent implements OnInit {
       .subscribe(
         data => {
           console.log('IsPurchased data:', data);
-          // this.hasPurchased = data;
-          this.hasPurchased = false;
+          this.hasPurchased = data;
+          // this.hasPurchased = false;
         },
         error => {
           console.log('IsPurchased error', error);

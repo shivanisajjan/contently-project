@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -81,10 +84,15 @@ public Collection<User> getIllustratorRec(String genre)
         return price;
     }
 
-    public void savePublication(String title,String author,int bookId,String editor,String designer,int nop,double price,String genre,String type)
+    void savePublication(String title,String author,int bookId,String editor,String designer,int nop,double price,String type)
     {
-        userRepository.savePublication(title,author,bookId,editor,designer,nop,price,genre,type);
+        userRepository.savePublication(title,author,bookId,editor,designer,nop,price,type);
 
+    }
+
+    public void saveBookGenre(String genre,int id)
+    {
+        userRepository.saveBookGenre(genre,id);
     }
 
     public void savePurchasing(int bookId,String user)
@@ -93,6 +101,61 @@ public Collection<User> getIllustratorRec(String genre)
 
     }
 
+    public void saveGenre(String genre,String username)
+    {
+        userRepository.saveGenre(genre,username);
+
+    }
+
+    public Genre saveThisGenre(String genre)
+    {
+        return userRepository.saveThisGenre(genre);
+    }
+
+    public List<Genre> getGenre(String genre)
+    {
+        return  userRepository.getGenre(genre);
+    }
+
+    List<Type> getType(String type)
+    {
+        return userRepository.getType(type);
+
+    }
+    void createType(String type)
+    {
+        userRepository.createType(type);
+
+    }
+    public Collection<Book> getBooksRecommendation(String username)
+    {
+        Collection<Book> recListOne =userRepository.getRecAccAuth(username);
+        Collection<Book> recListTwo =userRepository.getRecAccLikes(username);
+        Collection<Book> recListThree=userRepository.getRecAccProfile(username);
+        Collection<Book> recListFour=userRepository.bookReccomendation(username);
+
+        recListOne.addAll(recListTwo);
+        recListOne.addAll(recListTwo);
+        recListOne.addAll(recListThree);
+
+
+        Set<Book> set = new HashSet<>(recListOne);
+        recListOne.clear();
+        recListOne.addAll(set);
+
+        return recListOne;
+
+    }
+
+    public void createEditor(String username)
+    {
+        userRepository.createEditor(username);
+    }
+
+    public void createDesigner(String username)
+    {
+        userRepository.createDesigner(username);
+    }
 
 
 
@@ -105,6 +168,9 @@ public Collection<User> getIllustratorRec(String genre)
     }
     public void bob() {
         userRepository.bob();
+    }
+    public void top() {
+        userRepository.top();
     }
 
 }

@@ -9,23 +9,13 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @NodeEntity
-public class Book {
-
-
-
-    @Id@GeneratedValue
-    private Long id;
-    private Long bookId;
-    private String bookName;
-    private double bookPrice;
-    private int nop;
-
-
-
-
-
+public class Genre {
+    @Id
+    @GeneratedValue
+    Long id;
+    String name;
 }

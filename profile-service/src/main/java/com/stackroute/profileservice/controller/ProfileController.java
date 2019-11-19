@@ -1,5 +1,6 @@
 package com.stackroute.profileservice.controller;
 
+import com.stackroute.profileservice.model.Chapter;
 import com.stackroute.profileservice.model.Profile;
 import com.stackroute.profileservice.service.ProfileService;
 import com.stackroute.profileservice.service.ProfileServiceImpl;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -22,15 +24,14 @@ public class ProfileController {
 
 
     @Autowired
-    public ProfileController(ProfileService profileService,RabbitMQSender rabbitMQSender) {
+    public ProfileController(ProfileService profileService, RabbitMQSender rabbitMQSender) {
         this.profileService = profileService;
-        this.rabbitMQSender=rabbitMQSender;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
 
     @PostMapping
-    public ResponseEntity<?> saveProfile(@RequestBody Profile profile)  {
-        profile.setId(profileService.getNextSequence("customSequences"));
+    public ResponseEntity<?> saveProfile(@RequestBody Profile profile) {
         responseEntity = new ResponseEntity<Profile>(this.profileService.saveProfile(profile), HttpStatus.CREATED);
         rabbitMQSender.sendProfile(profile);
         return responseEntity;
@@ -47,16 +48,43 @@ public class ProfileController {
         responseEntity = new ResponseEntity<List<Profile>>(this.profileService.getallProfile(), HttpStatus.OK);
         return responseEntity;
     }
+
     @GetMapping("/username/{name}")
     public double getCost(@PathVariable String name) {
         return profileService.getByname(name);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteMovie(@RequestBody int id){
+    public ResponseEntity<?> deleteMovie(@RequestBody int id) {
         profileService.deleteProfile(id);
         responseEntity = new ResponseEntity<String>("Successfully deleted", HttpStatus.OK);
         return responseEntity;
     }
+
+    @GetMapping("/role/{role}")
+    public ResponseEntity<?> getByRole(@PathVariable String role) {
+        profileService.getByRole(role);
+        responseEntity = new ResponseEntity<List<Profile>>(profileService.getByRole(role), HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateProfile(@RequestBody Profile profile) {
+        responseEntity = new ResponseEntity<Profile>(profileService.update(profile), HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @GetMapping("/chapter/{username}/{id}")
+    public ResponseEntity<?> chapterRelease(@PathVariable("username") String username, @PathVariable("id") int id) throws ParseException {
+        responseEntity = new ResponseEntity<Chapter>(profileService.getCurrentChapter(username, id), HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @PostMapping("/release/{username}/{id}")
+    public ResponseEntity<?> releaseNext(@PathVariable("username") String username, @PathVariable("id") int id) {
+        responseEntity = new ResponseEntity<Chapter>(profileService.updateReleaseNext(username, id), HttpStatus.OK);
+        return responseEntity;
+    }
+
 
 }

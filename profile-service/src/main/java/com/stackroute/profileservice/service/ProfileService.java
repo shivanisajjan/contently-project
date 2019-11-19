@@ -2,7 +2,10 @@ package com.stackroute.profileservice.service;
 
 //import com.stackroute.profileservice.exceptions.MovieExistsByIdGlobalException;
 //import com.stackroute.profileservice.exceptions.MovieNotFoundGlobalException;
+import com.stackroute.profileservice.model.Chapter;
 import com.stackroute.profileservice.model.Profile;
+
+import java.text.ParseException;
 import java.util.List;
 
 public interface ProfileService {
@@ -12,5 +15,7 @@ public interface ProfileService {
     public Profile update(Profile profile);
     public boolean deleteProfile(int id);
     public double getByname(String name);
-    public int getNextSequence(String seqName);
+    public Chapter getCurrentChapter(String username,int bookId) throws ParseException;
+    public Chapter updateReleaseNext(String username,int bookId);
+    public List<Profile> getByRole(String role);
 }

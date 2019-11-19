@@ -2,8 +2,6 @@ package com.stackroute.recommendation.controller;
 
 import com.stackroute.recommendation.domain.*;
 import com.stackroute.recommendation.service.BookService;
-import com.stackroute.recommendation.service.EditorService;
-import com.stackroute.recommendation.service.IllustratorService;
 import com.stackroute.recommendation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +21,7 @@ public class UserController {
     UserService userService;
     @Autowired
     BookService bookService;
-    @Autowired
-    EditorService editorService;
-    @Autowired
-    IllustratorService illustratorService;
+
 
 
 
@@ -35,6 +30,9 @@ public class UserController {
 
     @GetMapping("books/rec1/{name}")
     public Collection<Book> getBookRec(@PathVariable String name){return userService.bookReccomendation(name);}
+
+    @GetMapping("books/recommendation/{name}")
+    public Collection<Book> getBooksRecommendation(@PathVariable String name){return userService.getBooksRecommendation(name);}
 
     @GetMapping("books/trending")
     public Collection<Book> getTrending(@PathVariable String name){return userService.getTrending();}

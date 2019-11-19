@@ -74,7 +74,8 @@ UserController {
         User uname=userService.getByUsername(user.getUsername());
         user.setPassword(uname.getPassword());
         DTOUser dtouser=new DTOUser();
-        dtouser.setId(user.getId());
+        dtouser.setId(uname.getId());
+        System.out.println(uname.getId());
         dtouser.setUsername(user.getUsername());
         dtouser.setRole(user.getRole());
         dtouser.setPhoneNumber(user.getPhoneNumber());

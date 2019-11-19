@@ -75,6 +75,9 @@ body {
   bottom: 0;
 }
 
+mat-nav-list{
+  display: block;
+}
 /* .push{
   height: 170px;
 } */

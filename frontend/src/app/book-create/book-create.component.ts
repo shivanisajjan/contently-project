@@ -1,23 +1,32 @@
-import { Component, OnInit, Inject, Output, EventEmitter, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
-import { BookFetchService } from '../bookFetch.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Commit } from './commit';
-import { AddNewSectionComponent } from './add-new-section/add-new-section.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PreviewComponent } from './preview/preview.component';
-import { ContentService } from '../content.service';
-import { notification } from '../notification';
-import { NotificationService } from '../notification.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { FileSaverService } from 'ngx-filesaver';
-import { MatPaginator } from '@angular/material';
-import { formatDate } from '@angular/common';
-import { PublicationBookComponent } from '../publication-book/publication-book.component';
-import { IssuesComponent } from '../issues/issues.component';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { FailureComponent } from '../failure/failure.component';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Output,
+  EventEmitter,
+  ComponentFactoryResolver,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
+import {BookFetchService} from '../bookFetch.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import {Commit} from './commit';
+import {AddNewSectionComponent} from './add-new-section/add-new-section.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {PreviewComponent} from './preview/preview.component';
+import {ContentService} from '../content.service';
+import {notification} from '../notification';
+import {NotificationService} from '../notification.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {FileSaverService} from 'ngx-filesaver';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {formatDate} from '@angular/common';
+import {PublicationBookComponent} from '../publication-book/publication-book.component';
+import {IssuesComponent} from '../issues/issues.component';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {FailureComponent} from '../failure/failure.component';
 
 @Component({
   selector: 'app-book-create',
@@ -37,18 +46,18 @@ export class BookCreateComponent implements OnInit {
   private commitListLoaded = false;
   fileName: string;
   private published: any;
-  @ViewChild(IssuesComponent, { static: true }) issueComponent: IssuesComponent;
+  @ViewChild(IssuesComponent, {static: true}) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
   constructor(private bookFetch: BookFetchService,
-    private spinner: NgxSpinnerService,
-    private router: Router,
-    private dialog: MatDialog,
-    private contentService: ContentService,
-    private route: ActivatedRoute,
-    private fileSaverService: FileSaverService,
-    private notificationService: NotificationService,
-    private componentFactoryResolver: ComponentFactoryResolver) {
+              private spinner: NgxSpinnerService,
+              private router: Router,
+              private dialog: MatDialog,
+              private contentService: ContentService,
+              private route: ActivatedRoute,
+              private fileSaverService: FileSaverService,
+              private notificationService: NotificationService,
+              private componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -72,6 +81,26 @@ export class BookCreateComponent implements OnInit {
           localStorage.setItem('book', JSON.stringify(this.bookDetails));
           this.setShowEditButton();
           console.log('book details: ', this.bookDetails);
+          if (!this.bookDetails.selectHelper) {
+            console.log("SELECTING HELPERS");
+            if (this.bookDetails.editorStatus != 'confirmed' && this.bookDetails.designerStatus != 'confirmed') {
+              this.contentService.getRecommendedEditorsOrIllustrators('editor', this.bookDetails.genres[0]).subscribe(
+                result => {
+                  this.bookDetails.editorName = result[0].name;
+                  this.bookDetails.editorStatus = 'confirmed';
+                  console.log("SELECTED EDITOR", this.bookDetails.editorName);
+                  this.contentService.saveBookDetails(this.bookDetails).subscribe();
+                });
+              this.contentService.getRecommendedEditorsOrIllustrators('designer', this.bookDetails.genres[0]).subscribe(
+                result => {
+                  this.bookDetails.designerName = result[0].name;
+                  this.bookDetails.designerStatus = 'confirmed';
+                  console.log("SELECTED DESIGNER", this.bookDetails.designerName);
+                  this.contentService.saveBookDetails(this.bookDetails).subscribe();
+                });
+              console.log(this.bookDetails);
+            }
+          }
         }
       );
   }
@@ -245,7 +274,7 @@ export class BookCreateComponent implements OnInit {
     });
 
     const dialogSubmitSubscription = dialogRef.componentInstance.selectEditorEvent.subscribe(
-      (      result: any) => {
+      (result: any) => {
         this.editor = result;
         this.bookDetails.editorName = this.editor;
         this.bookDetails.editorStatus = 'pending';
@@ -274,7 +303,7 @@ export class BookCreateComponent implements OnInit {
     });
 
     const dialogSubmitSubscription = dialogRef.componentInstance.selectIllustratorEvent.subscribe(
-      (      result: any) => {
+      (result: any) => {
         this.illustrator = result;
         this.bookDetails.designerName = this.illustrator;
         this.bookDetails.designerStatus = 'pending';
@@ -387,6 +416,7 @@ export class BookCreateComponent implements OnInit {
     }
     return true;
   }
+
   sendNotification(receiver: String, bookId: number, message: string | String) {
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
@@ -416,8 +446,7 @@ export class BookCreateComponent implements OnInit {
                 this.spinner.hide().then();
                 this.router.navigate['dashboard'].then();
               });
-          }
-          else {
+          } else {
             const dialogRef = this.dialog.open(FailureComponent, {
               width: '50%',
               data: {
@@ -474,7 +503,7 @@ export class BookCreateComponent implements OnInit {
                 combined += '<div>' + htmlContent[j].content + '</div>';
               }
               console.log(combined);
-              txtBlob = new Blob([combined], { type: fileType });
+              txtBlob = new Blob([combined], {type: fileType});
               const file = new File([txtBlob], this.bookDetails.id);
 
               console.log(file);
@@ -501,7 +530,7 @@ export class SelectEditorDialog implements OnInit {
   public editorListFiltered;
   public allEditorList;
   public allEditorListFiltered;
-  public searchTerm; 
+  public searchTerm;
 
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
@@ -566,15 +595,11 @@ export class SelectIllustratorDialog implements OnInit {
   public illustratorListFiltered: any;
   public searchTerm: any;
   public allIllustratorList;
-  public allIllustratorListFiltered: any;
-  // private selectHelper = true;
-  // MatPaginator Inputs
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  // obs: Observable<any>;
-  // @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  // dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(this.illustratorListFiltered);
+  public allIllustratorListFiltered;
+
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  obs: Observable<any>;
+  // dataSource: MatTableDataSource<Card>;
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
   constructor(
@@ -610,6 +635,9 @@ export class SelectIllustratorDialog implements OnInit {
       result => {
         this.illustratorList = result;
         this.illustratorListFiltered = this.illustratorList;
+        // this.dataSource = new MatTableDataSource<Card>(this.allIllustratorListFiltered);
+        // this.dataSource.paginator = this.paginator;
+        // this.obs = this.dataSource.connect();
       });
   }
 
@@ -630,13 +658,8 @@ export class SelectIllustratorDialog implements OnInit {
     this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
-  } 
-
-  ngOnDestroy() {
-    // if (this.dataSource) {
-    //   this.dataSource.disconnect();
-    // }
   }
+
 
 }
 

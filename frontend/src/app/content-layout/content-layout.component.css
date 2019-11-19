@@ -36,3 +36,13 @@ textarea{
 .create-content-component{
   background-image: url('../../assets/images/side_bg.jpg');
 }
+
+
+
+@media only screen and (max-width: 600px) {
+  .trending-books{
+    padding: 4%;
+ 
+  }
+ 
+}

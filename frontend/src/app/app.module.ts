@@ -8,7 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ContentLayoutComponent} from './content-layout/content-layout.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import {NgxSpinnerModule} from 'ngx-spinner';
 import {
   BookCreateComponent,
   SelectEditorDialog,
@@ -20,7 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import {QuillModule} from 'ngx-quill';
-import { 
+import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
@@ -34,14 +34,15 @@ import {
   MAT_DATE_LOCALE,
   MatPaginatorModule,
   MatChipsModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatTooltipModule
 } from '@angular/material';
 import {MatCardModule, MatDialogModule, MatStepperModule, MatSelectModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {EditComponent} from './edit/edit.component';
-import {BookdetailsComponent, SampleChapterDialog} from "./bookdetails/bookdetails.component";
-import {MatTabsModule} from "@angular/material/tabs";
+import {BookdetailsComponent, SampleChapterDialog} from './bookdetails/bookdetails.component';
+import {MatTabsModule} from '@angular/material/tabs';
 import {ContentService} from './content.service';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -59,15 +60,16 @@ import {ConversionComponent} from './conversion/conversion.component';
 import {PageAfterLoginComponent} from './page-after-login/page-after-login.component';
 import {LoadingComponent} from './loading/loading.component';
 import {PaymentComponent} from './payment/payment.component';
-import {DragDropModule} from "@angular/cdk/drag-drop";
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {DownloadComponent} from './download/download.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NewIssueComponent} from './issues/new-issue/new-issue.component';
 import {ReplyComponent} from './issues/reply/reply.component';
 import {PublicationBookComponent} from './publication-book/publication-book.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
-import { IssuesComponent } from './issues/issues.component';
-import { FailureComponent } from './failure/failure.component';
+import {IssuesComponent} from './issues/issues.component';
+import {FailureComponent} from './failure/failure.component';
+
 
 @NgModule({
   declarations: [
@@ -143,7 +145,8 @@ import { FailureComponent } from './failure/failure.component';
     MatTabsModule,
     MatPaginatorModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTooltipModule
   ],
   entryComponents: [
     LoginComponent,
@@ -152,7 +155,7 @@ import { FailureComponent } from './failure/failure.component';
     SelectEditorDialog,
     SelectIllustratorDialog,
     SampleChapterDialog,
-    PublicationBookComponent, 
+    PublicationBookComponent,
     NewIssueComponent,
     ReplyComponent,
     IssuesComponent,

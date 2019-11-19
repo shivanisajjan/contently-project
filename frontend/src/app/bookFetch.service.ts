@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Headers, RequestOptions, ResponseContentType } from '@angular/http';
-import { Observable } from 'rxjs';
-import { Commit } from './book-create/commit';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Commit} from './book-create/commit';
+import {environment} from '../environments/environment';
 
 
 @Injectable({
@@ -32,28 +32,28 @@ export class BookFetchService {
       auto_init: true
     };
     console.log('Creating repo: ', repoName);
-    return this.http.post<any>('https://api.github.com/user/repos', postObject, this.httpOptions);
+    return this.http.post<any>(environment.gitBaseUrl + 'user/repos', postObject, this.httpOptions);
   }
 
   // creates/modifies file: fileName
   createFile(fileName: string, commit: Commit): Observable<any> {
     console.log('create/modify: ', commit);
     const repoName = JSON.parse(localStorage.getItem('book')).id;
-    return this.http.put<any>('https://api.github.com/repos/contently-books/' +
+    return this.http.put<any>(environment.gitBaseUrl + 'repos/contently-books/' +
       repoName + '/contents/' + fileName, commit, this.httpOptions);
   }
 
   // get contents of the file : fileName
   getGit(repoName, fileName): Observable<any> {
     console.log('get contents of file: ', fileName);
-    return this.http.get<any>('https://api.github.com/repos/contently-books/' +
+    return this.http.get<any>(environment.gitBaseUrl + 'repos/contently-books/' +
       repoName + '/contents/' + fileName, this.httpOptions);
   }
 
   // get list of commits
   getCommit(repoName, fileName): Observable<any> {
     console.log('getCommit(): ', repoName, fileName);
-    return this.http.get<any>('https://api.github.com/repos/contently-books/' +
+    return this.http.get<any>(environment.gitBaseUrl + 'repos/contently-books/' +
       repoName + '/commits', {
       headers: this.headers,
       params: {
@@ -70,13 +70,13 @@ export class BookFetchService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    return this.http.get<any>('http://13.126.150.171:8080/publication-service/api/v1/publications/search/' + searchValue, httpOptions);
+    return this.http.get<any>(environment.backBaseUrl + 'publication-service/api/v1/publications/search/' + searchValue, httpOptions);
   }
 
   // get single commit content
   getSingleCommit(repoName, fileName, sha) {
     console.log('getCommit(): ', repoName, fileName, sha);
-    return this.http.get<any>('https://api.github.com/repos/contently-books/' +
+    return this.http.get<any>(environment.gitBaseUrl + 'repos/contently-books/' +
       repoName + '/contents/' + fileName, {
       headers: this.headers,
       params: {
@@ -88,7 +88,7 @@ export class BookFetchService {
   // returns all the files in specified github repository
   // getAllFiles(): Observable<any> {
   //   console.log('getAllFiles(): ');
-  //   return this.http.get<any>('https://api.github.com/repos/contently-books/' +
+  //   return this.http.get<any>(environment.gitBaseUrl + 'repos/contently-books/' +
   //     this.repository + "/contents", this.httpOptions);
   //
   // }
@@ -101,7 +101,7 @@ export class BookFetchService {
       })
     };
     console.log('recommending..');
-    return this.http.get<any>('http://13.126.150.171:8080/recommendation-service/api/v1/books', httpOptions);
+    return this.http.get<any>(environment.backBaseUrl + 'recommendation-service/api/v1/books', httpOptions);
   }
 
   saveToPublication(bookDetails): Observable<any> {
@@ -114,9 +114,10 @@ export class BookFetchService {
     };
 
     console.log('saving to publication' + bookDetails);
-    return this.http.post<any>('http://13.126.150.171:8080/publication-service/api/v1/save', bookDetails, httpOptions);
+    return this.http.post<any>(environment.backBaseUrl + 'publication-service/api/v1/save', bookDetails, httpOptions);
 
   }
+
   deleteContent(id) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -124,9 +125,10 @@ export class BookFetchService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/delete/${id}`;
+    const postUrl = `${environment.backBaseUrl}content-service/api/v1/delete/${id}`;
     return this.http.delete<any>(postUrl, httpOptions);
   }
+
   getRecommendedBooks(username) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -134,7 +136,7 @@ export class BookFetchService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/books/rec3/${username}`;
+    const postUrl = `${environment.gitBaseUrl}recommendation-service/api/v1/books/rec3/${username}`;
     return this.http.get<any>(postUrl, httpOptions);
 
   }
@@ -143,7 +145,7 @@ export class BookFetchService {
 
     console.log('save to aws called');
 
-    let testData = new FormData();
+    const testData = new FormData();
     testData.append('file', file);
 
     return this.http.post('http://localhost:8081/api/v1/file/' + id, testData);
@@ -153,16 +155,16 @@ export class BookFetchService {
 
     console.log('save to aws called');
 
-    let testData = new FormData();
+    const testData = new FormData();
     testData.append('file', file);
-    console.log("After");
+    console.log('After');
 
-    return this.http.post('http://13.126.150.171:8081/api/v1/text/' + id, testData, { responseType: 'text' });
+    return this.http.post(environment.backBaseUrl + 'awsstorage-service/api/v1/text/' + id, testData, {responseType: 'text'});
   }
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get('http://13.126.150.171:8081/api/v1/file/' + id,
+    return this.http.get(`${environment.backBaseUrl}awsstorage-service/api/v1/file/${id}`,
       {
         responseType: 'blob',
         headers: {
@@ -180,8 +182,6 @@ export class BookFetchService {
       })
     };
     console.log('get from aws called');
-    return this.http.post<any>("http://13.126.150.171:8181/api/v1/save", purchaseObj, httpOptions);
+    return this.http.post<any>(environment.backBaseUrl + 'purchasing-service/api/v1/save', purchaseObj, httpOptions);
   }
-
-
 }

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup} from '@angular/forms';
-import {GithubService} from '../github.service';
 import {BookFetchService} from '../bookFetch.service';
 import {Book} from '../book-create/book';
 import {Commit} from '../book-create/commit';
@@ -22,8 +21,7 @@ export class EditComponent implements OnInit {
     backgroundColor: 'white',
   };
 
-  constructor(private service: GithubService,
-              private router: Router,
+  constructor(private router: Router,
               private bookFetch: BookFetchService,
               private route: ActivatedRoute,
   ) {

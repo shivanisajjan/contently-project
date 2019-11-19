@@ -12,7 +12,7 @@ import {FileSaverService} from 'ngx-filesaver';
   styleUrls: ['./bookdetails.component.css']
 })
 export class BookdetailsComponent implements OnInit {
-  private hasPurchased= true;
+  private hasPurchased = true;
   private bookId;
   private bookDetails: any;
   private book;
@@ -28,6 +28,24 @@ export class BookdetailsComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.contentService.getBookDetailPage(localStorage.getItem('bookId'))
+      .subscribe(
+        result => {
+          this.bookDetails = result;
+          console.log('book-details: ', this.bookDetails);
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+
+    // this.book = this.route.snapshot.paramMap.get('id');
+    // console.log(this.book);
+    // this.contentService.getBookDetails(this.book).subscribe(
+    //         result => {this.bookDetails = result;
+    //         console.log(this.bookDetails);})
+    // this.bookId = localStorage.getItem('bookId');
+    // console.log("jhjghghloplop" + this.bookId);
       this.book = this.route.snapshot.paramMap.get('id');
       this.contentService.getBookDetails(this.book).subscribe(
               result => {this.bookDetails = result;
@@ -47,10 +65,10 @@ export class BookdetailsComponent implements OnInit {
     return this.checkPurchase;
   }
 
-  purchase(){ 
+  purchase(){
         this.router.navigateByUrl(`/pay/${this.bookId}`);
-        
-    
+
+
   }
 
 
@@ -82,13 +100,13 @@ export class BookdetailsComponent implements OnInit {
     console.log('bookid is '+this.bookId);
     this.bookFetch.getFromAws(this.bookId).subscribe(data=>{
       let blob=new Blob([data],{type: fileType});
-      this.fileSaverService.save(blob,this.bookId+'.pdf'); 
-      
+      this.fileSaverService.save(blob,this.bookId+'.pdf');
+
 
 
     });
 
-  }
+    }
 
 }
 @Component({
@@ -128,6 +146,6 @@ export class SampleChapterDialog implements OnInit{
     )
   }
 
-  
+
 }
 

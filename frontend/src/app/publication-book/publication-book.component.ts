@@ -76,6 +76,36 @@ export class PublicationBookComponent implements OnInit {
     //   }
     // );
 
+    // this.bookFetch.saveToPublication(this.book).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.bookFetch.deleteContent(this.book.id)
+    //       .subscribe(
+    //         data => {
+    //           this.dialogRef.close();
+    //         }
+    //       );
+    //       const myObject = {
+    //         book_id: this.book.id,
+    //         username : localStorage.getItem("username")
+    //
+    //       };
+    //       const myObject1 = {
+    //         book_id: this.book.id,
+    //         username : this.book.editorName
+    //
+    //       };
+    //       const myObject2 = {
+    //         book_id: this.book.id,
+    //         username : this.book.designerName
+    //
+    //       };
+    //       this.bookFetch.savePurchase(myObject).subscribe();
+    //       this.bookFetch.savePurchase(myObject1).subscribe();
+    //       this.bookFetch.savePurchase(myObject2).subscribe();
+    //   }
+    // );
+
   }
 
 }

@@ -57,6 +57,7 @@ services:
       - notification
       - publication-service
       - purchasing-service
+      - s3storage-service
     ports:
       - 8080:8080
     links:
@@ -68,6 +69,7 @@ services:
       - notification
       - publication-service
       - purchasing-service
+      - s3storage-service
 
 
   rabbitmq:
@@ -145,6 +147,12 @@ services:
       build: s3storage-service
       container_name: s3storage-service
       restart: always
+      depends_on:
+        - config-server
+        - eureka-server
+      links:
+        - config-server
+        - eureka-server
       ports:
         - 8081:8081
  

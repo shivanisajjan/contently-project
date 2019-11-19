@@ -3,7 +3,7 @@ import {ContentService} from '../content.service';
 import {BookFetchService} from '../bookFetch.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {formatDate} from "@angular/common";
+import {formatDate} from '@angular/common';
 
 
 @Component({
@@ -13,6 +13,7 @@ import {formatDate} from "@angular/common";
 })
 export class PublicationBookComponent implements OnInit {
 
+  // tslint:disable-next-line: variable-name
   private recommended_price;
   private editorPay;
   private illustratorPay;
@@ -20,8 +21,7 @@ export class PublicationBookComponent implements OnInit {
 
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
               public dialogRef: MatDialogRef<PublicationBookComponent>
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.book = JSON.parse(localStorage.getItem('book'));
@@ -49,7 +49,8 @@ export class PublicationBookComponent implements OnInit {
   }
 
   savePublication(price) {
-    let chapters = [];
+    const chapters = [];
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.book.status.length; i++) {
       chapters.push(this.book.status[i].chapterName);
     }

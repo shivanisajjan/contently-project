@@ -29,6 +29,7 @@ export class EditComponent implements OnInit {
       this.router.navigate(['/home']).then();
     }
     this.route.params.subscribe(params => {
+      // tslint:disable-next-line: no-string-literal
       this.fileName = params['fileName'];
     });
   }

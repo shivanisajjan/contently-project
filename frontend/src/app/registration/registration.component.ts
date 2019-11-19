@@ -5,7 +5,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlattener, MatTreeFlatDataSource} from '@angular/material';
+import {MatTreeFlattener, MatTreeFlatDataSource, MatSnackBar} from '@angular/material';
 import {profile} from '../profile';
 import {interest} from '../interest';
 import {genre} from '../genre';
@@ -66,7 +66,10 @@ export class RegistrationComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   public remove;
   public gender = 'Female';
-
+  private usernameAlreadyExists = false;
+  // tslint:disable-next-line: max-line-length
+  emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  MOBILE_PATTERN:RegExp = /^[6-9]\d{9}$/;
 
   private _transformer = (node: FoodNode, level: number) => {
     return {
@@ -87,7 +90,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private _loginService: LoginService,
     private _formBuilder: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.dataSource.data = TREE_DATA;
 
@@ -98,18 +102,13 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
     this.registerv = false;
     this.firstFormGroup = this._formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.pattern(this.emailregex), Validators.required]],
       username: ['', Validators.required],
-      contact: ['', Validators.required],
+      contact: ['', [Validators.pattern(this.MOBILE_PATTERN),Validators.minLength(10), Validators.maxLength(10), Validators.required]],
       password: ['', [Validators.required]],
       confirmPassword: [''],
     }, {validator: this.checkPasswords});
-    this.secondFormGroup = this._formBuilder.group({
-      nationality: ['', Validators.required],
-      gender: ['', Validators.required],
-      date: ['', Validators.required]
-
-    });
+   
 
     this.$profile.interest = new Array();
     this.$interest = new interest();
@@ -127,7 +126,6 @@ export class RegistrationComponent implements OnInit {
     regUser.password = password;
     regUser.email = email;
     regUser.phoneNumber = contact;
-    console.log(regUser.username);
     this._loginService.registerUser(regUser).subscribe(result => {
       this.returnUser = result;
       if (this.returnUser.id != null) {
@@ -135,10 +133,18 @@ export class RegistrationComponent implements OnInit {
         localStorage.setItem('username', username);
         this._router.navigate(['/editProfile']).then();
       }
-      if (this.returnUser.message == "Username Already Exists") {
+   },
+   (error) => {
+     if(error.error == "Username Already Exists"){
+       console.log(error.error);
+       this.usernameAlreadyExists = true;
+       this._snackBar.open("Username Already Exists", "close", {
+        duration: 2000,
+      });
+     }
 
-      }
-    });
+   }
+   );
   }
 
   public addPersonalDetails(username, password, email, contact, firstname, lastname, nationality, address1, address2, address3, date) {
@@ -224,9 +230,25 @@ export class RegistrationComponent implements OnInit {
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
     let pass = group.controls.password.value;
     let confirmPass = group.controls.confirmPassword.value;
-
     return pass === confirmPass ? null : {notSame: true};
   }
 
+  getErrorPhone() {
+    return this.firstFormGroup.get('contact').hasError('pattern') ? 'Not a valid phone Number' :
+      this.firstFormGroup.get('contact').hasError('minLength') ? 'Must be 10 chars' :
+      this.firstFormGroup.get('contact').hasError('maxLength') ? 'Not more than 10 chars' : '';
+  }
+
+  getErrorEmail() {
+    return this.firstFormGroup.get('email').hasError('pattern') ? 'Not a valid email address' : '';
+  }
+
+  // getUsernameAlreadyExists(){
+  //   if (this.usernameAlreadyExists) {
+  //     return 'Username Already Exists';
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
 }

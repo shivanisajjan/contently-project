@@ -83,7 +83,7 @@ export class BookdetailsComponent implements OnInit {
     this.bookFetch.getFromAws(fileName)
       .subscribe(
         data => {
-          let blob = new Blob([data], {type: fileType});
+          const blob = new Blob([data], {type: fileType});
           this.fileSaverService.save(blob, fileName);
         }
       );

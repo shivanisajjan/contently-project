@@ -29,9 +29,7 @@
 
 /* drag and drop css*/
 
-.drag-list{
-  /*overflow: hidden;*/
-}
+
 .drag-list-item{
   border-bottom: solid 1px #ccc;
   color: rgb(255, 255, 255);
@@ -136,7 +134,11 @@ mat-grid-tile {
   color: white;
   cursor: pointer;
   border-radius: 25px;
-  width: 60%;
+  width: 100%;
+}
+
+.helper-tab{
+  display: flex;
 }
 
 .choose-editor-tile {
@@ -162,16 +164,11 @@ mat-grid-tile {
 .list-editors mat-card{
   margin: 1%;
   border-radius: 25px;
-  
 }
 
-.list-editors{
-  display: flex;
-}
 
-.select-editor-dialog{
-  /* background-image: url('../../assets/images/side_bg.jpg'); */
-}
+
+
 /* issue sidenav */
 .chat-sidenav{
   width: 40%;
@@ -191,6 +188,9 @@ mat-spinner{
   float: right;
 }
 
+.style-button{
+  background-color: rgb(250, 104, 104);
+}
 
 @media only screen and (max-width: 600px) {
   .book-details img {

@@ -12,6 +12,7 @@ export class PageAfterLoginComponent implements OnInit {
   public bookRec: [];
 
   constructor(
+    // tslint:disable-next-line: variable-name
     private _bookFetch: BookFetchService,
     private router: Router) {
     if (!localStorage.getItem('token')) {

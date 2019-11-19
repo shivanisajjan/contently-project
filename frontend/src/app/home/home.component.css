@@ -51,16 +51,17 @@
   padding: 10px 100px;
 }
 .reader, .author, .editor, .designer{
-  height: 600px;
+  height: auto;
   position: relative;
+  margin: 2%;
   /*padding: 20px;*/
-  overflow: hidden;
 }
 .user-image{
   flex-shrink: 0;
-  min-height: 100%;
-  min-width: 100%;
+  height: auto;
+  width: 100%;
   margin: 0 auto;
+  border: 5px solid rgb(246, 141, 141);
   border-radius: 25px;
 }
 .reader-text h4, .author-text h4 {
@@ -68,22 +69,29 @@
 }
 .reader-text{
   position: absolute;
-  top: 60px;
-  left: 100px;
-  width: 40%;
+ top: 60px;
+ left: -50px;
+ width: 60%;
+ background-color: #ff656d;
+ padding: 3%;
+ /* outline: 3px solid rgb(255, 255, 255);
+  outline-offset: -15px; */
 }
 .author-text{
   position: absolute;
   top: 60px;
-  right: 100px;
-  width: 40%;
-  color: white;
+  right: -50px;
+  width: 60%;
+  background-color: #ff656d;
+ padding: 3%;
 }
 .designer-text{
   position: absolute;
   top: 260px;
-  right: 100px;
-  width: 40%;
+  right: -50px;
+  width: 60%;
+  background-color: #ff656d;
+  padding: 3%;
 }
 /*end our programs*/
 
@@ -213,7 +221,7 @@ mat-card-content{
  }
 
  .programs{
-   padding: 3%;
+   margin: 3%;
  }
 
  .author-card{

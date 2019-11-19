@@ -34,11 +34,22 @@ mat-card{
   .input-field{
     padding-left: 3%;
   }
+
+  .genre-input{
+    width: 100%;
+  }
   
   .fields-two{
     display: inline;
   }
 
+  .input-item{
+    margin-left: 1%;
+  }
+
+  .input-group{
+    width: 80%;
+  }
 
 
  

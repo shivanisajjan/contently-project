@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private login: LoginService,
+    // tslint:disable-next-line: variable-name
     private _snackBar: MatSnackBar,
     private contentService: ContentService) {
     if (!localStorage.getItem('token')) {
@@ -86,6 +87,9 @@ export class DashboardComponent implements OnInit {
         }
       );
 
+    this.getPublishedBooks();
+    this.getPurchasedBooks();
+
 
   }
 
@@ -103,7 +107,19 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('editProfile', JSON.stringify(this.profileData));
     this.router.navigate(['/editProfile']).then();
   }
-  ifConfirmed(status: String): boolean {
+  ifConfirmed(status: string): boolean {
     return status === 'confirmed';
+  }
+
+  getPublishedBooks() {
+    this.contentService.getPublishedBooks().subscribe(
+      result => this.publishedList = result
+    );
+  }
+
+  getPurchasedBooks() {
+    this.contentService.getPurchasedBooks().subscribe(
+      result => this.purchaseList = result
+    );
   }
 }

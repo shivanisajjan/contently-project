@@ -22,13 +22,13 @@
 .fields-two{
   display: inline;
 }
-mat-horizontal-stepper{
+/* mat-horizontal-stepper{
   padding: 0 20px;
   border-radius: 5px;;
   box-shadow: 0 0 10px 0 lightslategrey;
   height:475px;
   height: 100%;
-}
+} */
 .back-button{
   margin-right: 20px;
 }
@@ -77,10 +77,10 @@ input{
   text-align: center;
 }
 
-mat-horizontal-stepper{
+/* mat-horizontal-stepper{
   background-color: rgb(24, 24, 24);
   color: white;
-}
+} */
 
 
 @media only screen and (max-width: 600px) {

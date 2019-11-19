@@ -198,4 +198,26 @@ export class ContentService {
     const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/release/${username}/${bookId}`;
     return this.http.post(postUrl, {},  httpOptions);
   }
+
+  getPurchasedBooks() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/name/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
+  }
+
+  getPublishedBooks() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/name/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
+  }
 }

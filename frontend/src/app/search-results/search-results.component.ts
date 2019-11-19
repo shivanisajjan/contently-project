@@ -1,5 +1,5 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import { Component, OnInit , Input} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {BookFetchService} from '../bookFetch.service';
 import {Router} from '@angular/router';
 
@@ -15,8 +15,7 @@ export class SearchResultsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, private bookFetch: BookFetchService, private router: Router
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.search = this.route.snapshot.paramMap.get('search');

@@ -1,5 +1,6 @@
 package com.stackroute.profileservice.service;
 
+import com.stackroute.profileservice.model.Chapter;
 import com.stackroute.profileservice.model.Custom;
 import com.stackroute.profileservice.model.Profile;
 import com.stackroute.profileservice.repository.ProfileRepository;
@@ -12,6 +13,8 @@ import static org.springframework.data.mongodb.core.FindAndModifyOptions.options
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Query.query;
@@ -58,6 +61,39 @@ public class ProfileServiceImpl implements ProfileService {
        Profile profile= profileRepository.findByName(name);
        return profile.getCost();
     }
+
+//    @Override
+//    public Profile updateChapter(String username,Chapter chapter) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        Date date = new Date();
+//        chapter.setDate(date);
+//        Profile profile=profileRepository.findByName(username);
+//        System.out.println(dateFormat.format(date));
+//        boolean flag=false;
+//        for(Chapter chapter1:profile.getChapterRelease()){
+//            if(chapter1.getBookId()==chapter.getBookId()){
+//                long diff = chapter1.getDate().getTime() - chapter.getDate().getTime();
+//                if(diff>7){
+//                    chapter1.setBookId(chapter.getBookId());
+//                    chapter1.setChapterIndex(chapter.getChapterIndex());
+//                    flag=true;
+//                    return chapter;
+//                }
+//            }
+//            else{
+//                return chapter;
+//            }
+//        }
+//        if(flag==false){
+//            List<Chapter> chapterList=profile.getChapterRelease();
+//            chapterList.add(chapter);
+//            profile.setChapterRelease(chapterList);
+//            return chapter;
+//        }
+//        else {
+//            return chapter;
+//        }
+//    }
 
     @Override
     public int getNextSequence(String seqName)

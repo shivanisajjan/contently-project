@@ -18,7 +18,7 @@ export class BookdetailsComponent implements OnInit {
   private bookDetailsLoaded;
   private book;
   private checkPurchase;
-  
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -41,36 +41,7 @@ export class BookdetailsComponent implements OnInit {
           console.log('error', error);
         }
       );
-
-    // this.book = this.route.snapshot.paramMap.get('id');
-    // console.log(this.book);
-    // this.contentService.getBookDetails(this.book).subscribe(
-    //         result => {this.bookDetails = result;
-    //         console.log(this.bookDetails);})
-    // this.bookId = localStorage.getItem('bookId');
-    // console.log("jhjghghloplop" + this.bookId);
-    this.book = this.route.snapshot.paramMap.get('id');
-    this.contentService.getBookDetails(this.book).subscribe(
-              result => {this.bookDetails = result;
-                         console.log(this.bookDetails); });
-
-      // this.book = this.route.snapshot.paramMap.get('id');
-      // console.log(this.book);
-      // this.contentService.getBookDetails(this.book).subscribe(
-      //         result => {this.bookDetails = result;
-      //         console.log(this.bookDetails);})
-    this.bookId = localStorage.getItem('bookId');
-    // console.log('jhjghghloplop' + this.bookId);
-
-  }
-  isPurchase(): boolean {
-    this.contentService.getPurchaseStatus(this.bookDetails.id).subscribe(result => {this.checkPurchase = result; });
-    return this.checkPurchase;
-  }
-
-  purchase() {
-        this.router.navigateByUrl(`/pay`);
-        this.contentService.getPurchaseStatus(localStorage.getItem('bookId'))
+    this.contentService.getPurchaseStatus(localStorage.getItem('bookId'))
       .subscribe(
         data => {
           console.log('IsPurchased data:', data);
@@ -105,5 +76,9 @@ export class BookdetailsComponent implements OnInit {
   goToPayment() {
     localStorage.setItem('price', this.bookDetails.price);
     this.router.navigate(['/pay']).then();
+  }
+
+  preview(){
+
   }
 }

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ContentService } from '../content.service';
-import { BookFetchService } from '../bookFetch.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {ContentService} from '../content.service';
+import {BookFetchService} from '../bookFetch.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {formatDate} from '@angular/common';
-
 
 
 @Component({
@@ -19,8 +18,6 @@ export class PublicationBookComponent implements OnInit {
   private editorPay;
   private illustratorPay;
   private book;
-
-
 
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
               public dialogRef: MatDialogRef<PublicationBookComponent>
@@ -52,9 +49,19 @@ export class PublicationBookComponent implements OnInit {
   }
 
   savePublication(price) {
+    const chapters = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.book.status.length; i++) {
+      chapters.push(this.book.status[i].chapterName);
+    }
+    delete this.book.status;
+    delete this.book.selectHelper;
+    delete this.book.editorStatus;
+    delete this.book.designerStatus;
+    delete this.book.createdAt;
+    this.book.publishedAt = formatDate(new Date(), 'dd/MM/YYYY', 'en');
     this.book.price = price;
-    this.book.publishedAt=  formatDate(new Date(), 'dd/MM/yyyy', 'en');
-    console.log('hello:', this.book);
+    this.book.chapterName = chapters;
 
     this.bookFetch.saveToPublication(this.book).subscribe(
       data => {
@@ -66,24 +73,56 @@ export class PublicationBookComponent implements OnInit {
               this.dialogRef.close();
             }
           );
-          const myObject = {
+        const myObject = {
             book_id: this.book.id,
-            username : localStorage.getItem("username")
+            username : localStorage.getItem('username')
+
+    // this.bookFetch.saveToPublication(this.book).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.bookFetch.deleteContent(this.book.id)
+    //       .subscribe(
+    //         data => {
+    //           this.dialogRef.close();
+    //         }
+    //       );
+    //   }
+    // );
+
+    // this.bookFetch.saveToPublication(this.book).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.bookFetch.deleteContent(this.book.id)
+    //       .subscribe(
+    //         data => {
+    //           this.dialogRef.close();
+    //         }
+    //       );
+    //       const myObject = {
+    //         book_id: this.book.id,
+    //         username : localStorage.getItem("username")
+    //
+    //       };
+    //       const myObject1 = {
+    //         book_id: this.book.id,
+    //         username : this.book.editorName
+    //
+    //       };
+    //       const myObject2 = {
+    //         book_id: this.book.id,
+    //         username : this.book.designerName
+    //
+    //       };
+    //       this.bookFetch.savePurchase(myObject).subscribe();
+    //       this.bookFetch.savePurchase(myObject1).subscribe();
+    //       this.bookFetch.savePurchase(myObject2).subscribe();
+    //   }
+    // );
 
           };
-          const myObject1 = {
-            book_id: this.book.id,
-            username : this.book.editorName
-
-          };
-          const myObject2 = {
-            book_id: this.book.id,
-            username : this.book.designerName
-
-          };
-          this.bookFetch.savePurchase(myObject).subscribe();
-          this.bookFetch.savePurchase(myObject1).subscribe();
-          this.bookFetch.savePurchase(myObject2).subscribe();
+        // this.bookFetch.savePurchase(myObject).subscribe();
+        // this.bookFetch.savePurchase(myObject1).subscribe();
+        // this.bookFetch.savePurchase(myObject2).subscribe();
       }
     );
 

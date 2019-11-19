@@ -25,7 +25,7 @@
           <mat-menu class="notification-menu" #notification="matMenu">
               <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
               <div class="notifications" *ngIf="!ifNotifications()" >
-              <div *ngFor = "let notification of notificationList;index as i">
+              <div *ngFor = "let notification of notificationList.slice().reverse();index as i">
                 <div *ngIf="isAuthor()">
 
                   <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;">
@@ -107,7 +107,7 @@
             <mat-menu class="notification-menu" #notification="matMenu">
                 <mat-card *ngIf="ifNotifications()">No new notifications</mat-card>
                 <div class="notifications" *ngIf="!ifNotifications()" >
-                <div *ngFor = "let notification of notificationList;index as i">
+                <div *ngFor = "let notification of notificationList.slice().reverse();index as i">
                   <div *ngIf="isAuthor()">
 
                     <mat-card *ngIf="notification.status" style="background-color: #fd7f7fc5; color: black;" class="notification">

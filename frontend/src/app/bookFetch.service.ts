@@ -168,6 +168,7 @@ export class BookFetchService {
       {
         responseType: 'blob',
         headers: {
+          Authorization: localStorage.getItem('token'),
           accept: 'application/pdf'
         },
       }

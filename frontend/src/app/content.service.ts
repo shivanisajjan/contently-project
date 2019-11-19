@@ -146,7 +146,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/content/${id}`;
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/book/id/${id}`;
     return this.http.get(postUrl, httpOptions);
   }
 
@@ -159,5 +159,20 @@ export class ContentService {
     };
     const postUrl = `${environment.backBaseUrl}content-service/api/v1/update`;
     return this.http.put(postUrl, book, httpOptions);
+  }
+
+  saveToPurchase(bookId: number, username: string){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}purchasing-service/api/v1/save`;
+    const jsonObject = {
+      book_id: bookId,
+      username
+    };
+    return this.http.post(postUrl, jsonObject, httpOptions);
   }
 }

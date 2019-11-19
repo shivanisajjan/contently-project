@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {FormControl, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {ActivatedRoute} from '@angular/router';
-import {environment} from '../../environments/environment';
+import {ContentService} from "../content.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-payment',
@@ -12,70 +9,62 @@ import {environment} from '../../environments/environment';
 })
 export class PaymentComponent implements OnInit {
 
-  public boook;
-  handler: any;
+  private handler: any;
   private id;
+  private price;
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(private contentService: ContentService,
+              private router: Router) {
   }
 
+  ngOnInit() {
+    this.price = localStorage.getItem('price');
+    this.loadStripe();
+  }
 
-  private invalidfeedback: string;
+  private invalidFeedback: string;
 
   chargeCreditCard(num, exp, cvv) {
-    this.router.navigateByUrl(`/loading`);
+
     const arr = exp.split('/', 2);
-    (window as any).Stripe.card.createToken({
-      number: num,
-      exp_month: arr[0],
-      exp_year: arr[1],
-      cvc: cvv
-    }, (status: number, response: any) => {
-      if (status === 200) {
-        const token = response.id;
-        console.log(token);
-        this.invalidfeedback = '';
-        // this.router.navigate(['/loading']).then();
 
-
-        this.chargeCard(token);
-      } else {
-        console.log(response.error.message);
-        this.invalidfeedback = response.error.message;
-
-      }
-    });
-  }
-
-
-  chargeCard(token: string) {
-    const header = {
-      token,
-      amount: '20000'
-
-    };
-    const httpOptions = {
-      headers: header
-    };
-    const headers = new Headers({token, amount: '100'});
-    this.http.post(environment.backBaseUrl + 'purchasing-service/api/v1/payment', {}, httpOptions)
-      .subscribe(resp => {
-
-        console.log('RESP = ', resp);
-
+    (window as any).Stripe.card.createToken(
+      {
+        clientId: undefined,
+        clientSecret: undefined,
+        deviceCode: undefined,
+        grantType: undefined,
+        number: num,
+        exp_month: arr[0],
+        exp_year: arr[1],
+        cvc: cvv
+      }, (status, response) => {
+        if (status === 200) {
+          const token = response.id;
+          this.chargeCard(token);
+        } else {
+          console.log(response.error.message);
+          this.invalidFeedback = response.error.message;
+        }
       });
   }
 
 
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.loadStripe();
-
+  chargeCard(token: string) {
+    this.contentService.saveToPurchase(parseInt(localStorage.getItem('bookId')), localStorage.getItem('username'))
+      .subscribe(
+        data => {
+          console.log('data from purchase service save: ', data);
+          this.router.navigate(['/book-details']).then();
+        },
+        error=> {
+          console.log('error from purchase service save: ', error);
+        }
+      );
   }
 
 
   loadStripe() {
-
     if (!window.document.getElementById('stripe-script')) {
       const s = window.document.createElement('script');
       s.id = 'stripe-script';
@@ -93,7 +82,6 @@ export class PaymentComponent implements OnInit {
           }
         });
       };
-
       window.document.body.appendChild(s);
     }
   }

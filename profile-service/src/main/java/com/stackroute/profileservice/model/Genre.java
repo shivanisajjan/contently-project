@@ -1,16 +1,13 @@
 package com.stackroute.profileservice.model;
 
-import jdk.jfr.MemoryAddress;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Interest {
+public class Genre{
     private String name;
-    private List<Genre> genre;
+    private int experience=0;
 }

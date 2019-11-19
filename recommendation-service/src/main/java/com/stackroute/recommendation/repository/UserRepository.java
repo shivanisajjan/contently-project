@@ -28,10 +28,10 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     Collection<Book> getRecAccAuth(@Param("username") String username);
 
 
-    @Query("match(u:User),(r:Role{name:'e'}) where (u)-[:has_role]->(r) return u")
+    @Query("match(u:User),(r:Role{name:'editor'}),(g:Genre{name:{genre}}) where (u)-[:has_role]->(r) and (u)-[:likes]->(g) return u Order by u.cost,u.exp DESC")
     Collection<User> getEditorRec(@Param("genre") String genre);   //editor recc
 
-    @Query("match(u:User),(r:Role{name:'i'}) where (u)-[:has_role]->(r) return u")
+    @Query("match(u:User),(r:Role{name:'designer'}),(g:Genre{name:{genre}}) where (u)-[:has_role]->(r) and (u)-[:likes]->(g) return u Order by u.cost,u.exp DESC")
     Collection<User> getIllustratorRec(@Param("genre") String genre);   //illustrator recc
 
     @Query("match(u:User{name:{author}}),(e:User{name:{editor}}),(d:User{name:{designer}}),(t:Type{name:{type}}) create(b:Book{bookName:{title},bookId:{bookId},bookPrice:{price},nop:{nop}}) ,(u)-[:has_wrote]->(b),(e)-[:has_edited]->(b) , (d)-[:has_designed]->(b), (b)-[:has_type]->(t) return b")
@@ -71,7 +71,17 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match(u:User{name:{username}}),(r:Role{name:'designer'}) create (u)-[:has_role]->[r]")
     void createDesigner(@Param("username") String username);
 
+    @Query("match(u:User{name:{username}}) set u.cost={cost},u.exp={exp}")
+    void  saveExpCost(@Param("exp") int exp,@Param("cost") double cost,@Param("username") String username);
 
+    @Query("match(u:User{name:{username}}),(a:ageGroup:{name:{ageGroup}}) create (u)-[:has_ageGroup]->(a) ")
+    void setAgeGroup(@Param("ageGroup") String ageGroup,@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}),(g:Gender:{name:{gender}}) create (u)-[:has_gender]->(g)")
+    void setGender(@Param("gender") String ageGroup,@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}),(n:nationality:{name:{nationality}}) create (u)-[:has_nationality]->(n)")
+    void setNationality(@Param("nationality") String ageGroup,@Param("username") String username);
 
 
 
@@ -108,7 +118,8 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
             "CREATE (u)-[:bought]->(b)")
     void bob();
 
-    @Query("create (r:Role{name:'editor'}),(r:Role{name:'designer'})")
+    @Query("create (r:Role{name:'editor'}),(r:Role{name:'designer'}),(g:Gender{name:'male'}),(g:Gender{name:'female'})" +
+            "(n:nationality{name:'indian'}),(a:ageGroup{name:'k'}),(a:ageGroup{name:'t'}),(a:ageGroup{name:'a'}),(a:ageGroup{name:'o'})")
     void top();
 
 

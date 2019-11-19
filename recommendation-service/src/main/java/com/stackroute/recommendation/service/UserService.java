@@ -15,7 +15,7 @@ import java.util.Set;
 public class UserService {
 
     @Autowired
-UserRepository userRepository;
+    UserRepository userRepository;
 
 
     public UserService(UserRepository userRepository) {
@@ -28,15 +28,15 @@ UserRepository userRepository;
         return user;
     }
     public Collection<User> getAll(String name)
-{
+    {
 
-    return (Collection<User>) userRepository.findAll();
-}
+        return (Collection<User>) userRepository.findAll();
+    }
 
-public Collection<Book> bookReccomendation(String name)
-{
-    return userRepository.bookReccomendation(name);
-}
+    public Collection<Book> bookReccomendation(String name)
+    {
+        return userRepository.bookReccomendation(name);
+    }
 
 
 
@@ -47,25 +47,25 @@ public Collection<Book> bookReccomendation(String name)
     }
 
 
-public Collection<Book> getRecAccProfile(String name)
-{
-    return userRepository.getRecAccProfile(name);
-}
+    public Collection<Book> getRecAccProfile(String name)
+    {
+        return userRepository.getRecAccProfile(name);
+    }
 
-public Collection<Book> getRecAccAuth(String name)
-{
-    return userRepository.getRecAccAuth(name);
-}
+    public Collection<Book> getRecAccAuth(String name)
+    {
+        return userRepository.getRecAccAuth(name);
+    }
 
-public Collection<Book> getTrending()
-{
-    return userRepository.getTrending();
-}
+    public Collection<Book> getTrending()
+    {
+        return userRepository.getTrending();
+    }
 
-public Collection<User> getIllustratorRec(String genre)
-{
-    return userRepository.getIllustratorRec(genre);
-}
+    public Collection<User> getIllustratorRec(String genre)
+    {
+        return userRepository.getIllustratorRec(genre);
+    }
 
     public Collection<User> getEditorRec(String genre)
     {
@@ -75,9 +75,9 @@ public Collection<User> getIllustratorRec(String genre)
     public int getPriceRec(PriceRec priceRec)
     {
         int count=1;
-         count=userRepository.getPriceRec(priceRec.getGenre()).size();
-         if(count<=0)
-             count=1;
+        count=userRepository.getPriceRec(priceRec.getGenre()).size();
+        if(count<=0)
+            count=1;
 
         int price=priceRec.getEditorPay()+priceRec.getIllustratorPay()+priceRec.getBase()+count/10+priceRec.getNoOfWords()/1000;
         System.out.println("price="+price);
@@ -127,6 +127,19 @@ public Collection<User> getIllustratorRec(String genre)
         userRepository.createType(type);
 
     }
+
+    void setAgeGroup(String ageGroup,String username)
+    {
+        userRepository.setAgeGroup(ageGroup,username);
+    }
+    void setGender(String gender,String username)
+    {
+        userRepository.setGender(gender,username);
+    }
+    void setNationality(String nationality,String username)
+    {
+        userRepository.setNationality(nationality,username);
+    }
     public Collection<Book> getBooksRecommendation(String username)
     {
         Collection<Book> recListOne =userRepository.getRecAccAuth(username);
@@ -157,7 +170,10 @@ public Collection<User> getIllustratorRec(String genre)
         userRepository.createDesigner(username);
     }
 
-
+    public  void  saveExpCost(int exp,double cost,String username)
+    {
+        userRepository.saveExpCost(exp,cost,username);
+    }
 
 
     public void dop() {

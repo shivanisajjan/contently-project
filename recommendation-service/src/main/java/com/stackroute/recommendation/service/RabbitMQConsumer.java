@@ -28,42 +28,46 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "registry_queue")
     public void recievedMessage(UserDto userDto) {
-        System.out.println(userDto.getRole());
-        user.setAgeGroup("t");
-        user.setNationality("i");
-        user.setName("m");
-            if(userDto.getUsername()!=null)
-                user.setName(userDto.getUsername());
-        if(userDto.getGender()!=null)
-     user.setGender(userDto.getGender());
-        if(userDto.getNationality()!=null)
-     user.setNationality(userDto.getNationality());
+
+        user.setName(userDto.getUsername());
+        user.setCost(0);
+        user.setExp(0);
+
+        if(userDto.getGender().equals("M"))
+            userService.setGender("male",userDto.getUsername());
+
+        if(userDto.getGender().equals("F"))
+            userService.setGender("female",userDto.getUsername());
+
+
+
+
+        userService.saveUser(this.user);
+        userService.setAgeGroup("a",userDto.getUsername());
         if(userDto.getDob()!=null)
         {
+
+
+
             int dobYear=0;
             String temp[]=userDto.getDob().split("/");
             dobYear=Integer.parseInt(temp[temp.length-1]);
             int year = Calendar.getInstance().get(Calendar.YEAR);//agegroup -10-k  -20-t  -30-a 40-o
             int decideValue=year-dobYear;
             if(decideValue<15)
-                user.setAgeGroup("k");
+                userService.setAgeGroup("k",userDto.getUsername());
             else
             if(decideValue<25)
-            user.setAgeGroup("t");
+                userService.setAgeGroup("t",userDto.getUsername());
             else
             if(decideValue<45)
-                user.setAgeGroup("a");
+                userService.setAgeGroup("a",userDto.getUsername());
             else
-                user.setAgeGroup("o");
+                userService.setAgeGroup("o",userDto.getUsername());
 
         }
 
 
-
-
-
-
-        userService.saveUser(this.user);
 
         if(userDto.getRole().equals("editor"))
             userService.createEditor(userDto.getUsername());
@@ -80,6 +84,11 @@ public class RabbitMQConsumer {
         String temp[]=message.split("pop");
         String username= temp[1];
         String genres=temp[0];
+        int experience=Integer.parseInt((temp[2]));
+        double cost=Double.parseDouble((temp[3]));
+
+
+
 
 
         String temp2[]=genres.split("/");
@@ -98,7 +107,7 @@ public class RabbitMQConsumer {
 
         }
 
-
+        userService.saveExpCost(experience,cost,username);
 
 
     }
@@ -112,11 +121,11 @@ public class RabbitMQConsumer {
         if(userService.getType(publicationsDto.getTypeName()).isEmpty())
         {
             userService.createType(publicationsDto.getTypeName());
-            System.out.println("in type checking");
+
         }
 
 
-       userService.savePublication(publicationsDto.getTitle(),publicationsDto.getAuthorName(),publicationsDto.getId(),publicationsDto.getEditorName(),publicationsDto.getDesignerName(),publicationsDto.getNoOfPurchases(),publicationsDto.getPrice(),publicationsDto.getTypeName());
+        userService.savePublication(publicationsDto.getTitle(),publicationsDto.getAuthorName(),publicationsDto.getId(),publicationsDto.getEditorName(),publicationsDto.getDesignerName(),publicationsDto.getNoOfPurchases(),publicationsDto.getPrice(),publicationsDto.getTypeName());
 
         for(int i=0;i<publicationsDto.getGenres().size();i++)
         {

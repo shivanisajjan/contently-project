@@ -28,7 +28,6 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "registry_queue")
     public void recievedMessage(UserDto userDto) {
-        System.out.println(userDto.getRole());
 
         user.setName(userDto.getUsername());
         user.setCost(0);
@@ -44,6 +43,7 @@ public class RabbitMQConsumer {
 
 
         userService.saveUser(this.user);
+        userService.setAgeGroup("a",userDto.getUsername());
         if(userDto.getDob()!=null)
         {
 
@@ -85,7 +85,7 @@ public class RabbitMQConsumer {
         String username= temp[1];
         String genres=temp[0];
         int experience=Integer.parseInt((temp[2]));
-        double cost=Integer.parseInt((temp[3]));
+        double cost=Double.parseDouble((temp[3]));
 
 
 
@@ -121,7 +121,7 @@ public class RabbitMQConsumer {
         if(userService.getType(publicationsDto.getTypeName()).isEmpty())
         {
             userService.createType(publicationsDto.getTypeName());
-            System.out.println("in type checking");
+
         }
 
 

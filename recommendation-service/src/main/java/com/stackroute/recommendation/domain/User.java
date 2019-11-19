@@ -16,7 +16,6 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class User {
     @Id @GeneratedValue
     private Long id;
-    int idd;
     private String name;
     double cost;
     int exp;

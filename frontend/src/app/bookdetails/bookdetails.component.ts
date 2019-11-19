@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog , MAT_DIALOG_DATA} from '@angular/material';
 import {Router} from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { ContentService } from '../content.service';
-import { BookFetchService } from '../bookFetch.service';
+import {ActivatedRoute} from '@angular/router';
+import {ContentService} from '../content.service';
+import {BookFetchService} from '../bookFetch.service';
 import {FileSaverService} from 'ngx-filesaver';
 
 @Component({
@@ -12,11 +12,13 @@ import {FileSaverService} from 'ngx-filesaver';
   styleUrls: ['./bookdetails.component.css']
 })
 export class BookdetailsComponent implements OnInit {
-  private hasPurchased = true;
+  private hasPurchased;
   private bookId;
   private bookDetails: any;
+  private bookDetailsLoaded;
   private book;
   private checkPurchase;
+  
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -24,8 +26,8 @@ export class BookdetailsComponent implements OnInit {
     private bookFetch: BookFetchService,
     public fileSaverService: FileSaverService,
     private router: Router
-    ) {
-    }
+  ) {
+  }
 
   ngOnInit() {
     this.contentService.getBookDetailPage(localStorage.getItem('bookId'))
@@ -33,6 +35,7 @@ export class BookdetailsComponent implements OnInit {
         result => {
           this.bookDetails = result;
           console.log('book-details: ', this.bookDetails);
+          this.bookDetailsLoaded = true;
         },
         error => {
           console.log('error', error);
@@ -66,90 +69,41 @@ export class BookdetailsComponent implements OnInit {
   }
 
   purchase() {
-        this.router.navigateByUrl(`/pay/${this.bookId}`);
-
-
-  }
-
-
-  openSampleChapterDialog(): void {
-
-    // tslint:disable-next-line: no-use-before-declare
-    const dialogRef = this.dialog.open(SampleChapterDialog, {
-      width: '80%',
-      autoFocus: false,
-      maxHeight: '90vh',
-      data: {
-        // tslint:disable-next-line: radix
-        bookId: parseInt(this.route.snapshot.paramMap.get('id'))
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-
-  }
-
-  getBookDetails(id) {
-
-    }
-
-    downloadIt() {
-    const fileName = `save.pdf`;
-    const fileType = this.fileSaverService.genType(fileName);
-
-    console.log('bookid is ' + this.bookId);
-    this.bookFetch.getFromAws(this.bookId).subscribe(data => {
-      const blob = new Blob([data], {type: fileType});
-      this.fileSaverService.save(blob, this.bookId + '.pdf');
-
-
-
-    });
-
-    }
-
-}
-@Component({
-  // tslint:disable-next-line: component-selector
-  selector: 'sample-chapter-dialog',
-  templateUrl: 'sample-chapter-dialog.html',
-  styleUrls: ['./bookdetails.component.css']
-})
-// tslint:disable-next-line: component-class-suffix
-export class SampleChapterDialog implements OnInit {
-  private sampleChapter;
-  private bookDetails;
-  constructor(
-    public dialogRef: MatDialogRef<SampleChapterDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    // tslint:disable-next-line: variable-name
-    private _contentService: ContentService,
-    private bookFetch: BookFetchService) {}
-
-
-  ngOnInit(): void {
-      console.log('Fetching Sample Chapter of  ' + this.data.bookId);
-      this.getSampleChapter();
-    }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  getSampleChapter() {
-    this.bookFetch.getGit(JSON.parse(localStorage.getItem('book')).id, JSON.parse(localStorage.getItem('book')).status[0].chapterName)
+        this.router.navigateByUrl(`/pay`);
+        this.contentService.getPurchaseStatus(localStorage.getItem('bookId'))
       .subscribe(
-        result => this.sampleChapter = result
+        data => {
+          console.log('IsPurchased data:', data);
+          // this.hasPurchased = data;
+          this.hasPurchased = false;
+        },
+        error => {
+          console.log('IsPurchased error', error);
+        }
       );
   }
 
-  getBookDetails(id) {
-    this._contentService.getBookDetailPage(id).subscribe(
-      result => this.bookDetails = result
-    );
+  getHasPurchased(): boolean {
+    return this.hasPurchased;
   }
 
+  downloadPdf() {
+    // const bookId = 'sample';
+    const bookId = localStorage.getItem('bookId');
+    const fileName = bookId + '.pdf';
+    const fileType = this.fileSaverService.genType(fileName);
+    console.log('book id is ' + bookId);
+    this.bookFetch.getFromAws(fileName)
+      .subscribe(
+        data => {
+          const blob = new Blob([data], {type: fileType});
+          this.fileSaverService.save(blob, fileName);
+        }
+      );
+  }
 
+  goToPayment() {
+    localStorage.setItem('price', this.bookDetails.price);
+    this.router.navigate(['/pay']).then();
+  }
 }
-

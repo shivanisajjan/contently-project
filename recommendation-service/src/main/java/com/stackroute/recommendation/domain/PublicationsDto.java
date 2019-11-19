@@ -13,10 +13,10 @@ public class PublicationsDto {
     String title;
     String description;
     String  authorName;
-    String editorName; // list of userId of editors
+    String editorName;   // list of userId of editors
     String designerName; // list of userId of designer
     String typeName;
-    String genres;
+    List<String> genres;
     double price;
     String publishedAt;
     int noOfPurchases;

@@ -1,6 +1,8 @@
 package com.stackroute.recommendation.repository;
 
 import com.stackroute.recommendation.domain.Book;
+import com.stackroute.recommendation.domain.Genre;
+import com.stackroute.recommendation.domain.Type;
 import com.stackroute.recommendation.domain.User;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
@@ -13,24 +15,27 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
 
 
-    @Query("match (g:Genre),(a:User{name:{username}})-[:bought]->(v:Book)<-[:bought]-(b:User)-[:bought]->(k:Book) where (v)-[:has_genre]->(g)<-[:has_genre]-(k) return distinct k")
+    @Query("match (g:Genre),(u:User{name:{username}}),(b:User),(v:Book),(k:Book) where (u)-[:bought]->(v)<-[:bought]-(b)-[:bought]->(k:Book)  return distinct k")
     Collection<Book> bookReccomendation(@Param("username") String name);                // book recommendation
-
-
-
 
     @Query("match(u:User),(uu:User),(b:Book),(g:Gender),(a:AgeGroup) where u.name= {username} and (u)-[:has_gender]->(g)<-[:has_gender]-(uu) and  (u)-[:has_agegroup]->(a)<-[:has_agegroup]-(uu) and (uu)-[:bought]->(b) return b")
     Collection<Book> getRecAccProfile(@Param("username") String username); //working
 
+    @Query("match(u:User{name:{username}}),(b:Book),(g:Genre) where (u)-[:likes]->(g)<-[:has_genre]-(b) return distinct b")
+    Collection<Book> getRecAccLikes(@Param("username") String username);
 
-    @Query("match(u:User),(r:Role{name:'e'}),(s:Status{name:'f'}) where (u)-[:has_status]->(s) and (u)-[:has_role]->(r) return u")
+    @Query("match(u:User{name: {username} }),(b:Book),(c:Book),(a:User) where (u)-[:bought]->(b)<-[:has_authored]-(a)-[:has_authored]->(c) return distinct c")
+    Collection<Book> getRecAccAuth(@Param("username") String username);
+
+
+    @Query("match(u:User),(r:Role{name:'editor'}),(g:Genre{name:{genre}}) where (u)-[:has_role]->(r) and (u)-[:likes]->(g) return u Order by u.cost,u.exp DESC")
     Collection<User> getEditorRec(@Param("genre") String genre);   //editor recc
 
-    @Query("match(u:User),(r:Role{name:'i'}),(s:Status{name:'f'}) where (u)-[:has_status]->(s) and (u)-[:has_role]->(r) return u")
+    @Query("match(u:User),(r:Role{name:'designer'}),(g:Genre{name:{genre}}) where (u)-[:has_role]->(r) and (u)-[:likes]->(g) return u Order by u.cost,u.exp DESC")
     Collection<User> getIllustratorRec(@Param("genre") String genre);   //illustrator recc
 
-    @Query("match(u:User{name:{author}})\n"+"match(e:User{name:{editor}})\n"+"match(d:User{name:{designer}})\n"+"match (g:genre{name:{genre}})\n"+"match (t:Type{name:{type}})\n"+"create(b:Book{bookName:{title},bookId:{bookId},bookPrice:{price},nop:{nop}})\n"+"create (u)-[:has_wrote]->(b)\n"+"create (e)-[:has_edited]->(b)\n"+"create (d)-[:has_designed]->(b)\n"+"create (b)-[:has_genre]->(g)\n"+"create (b)-[:has_type]->(t)")
-    void savePublication(@Param("title") String title,@Param("author") String author,@Param("bookId") int bookId,@Param("editor") String editor,@Param("designer") String designer,@Param("nop") int nop,@Param("price") double price,@Param("genre") String genre,@Param("type") String type);
+    @Query("match(u:User{name:{author}}),(e:User{name:{editor}}),(d:User{name:{designer}}),(t:Type{name:{type}}) create(b:Book{bookName:{title},bookId:{bookId},bookPrice:{price},nop:{nop}}) ,(u)-[:has_wrote]->(b),(e)-[:has_edited]->(b) , (d)-[:has_designed]->(b), (b)-[:has_type]->(t) return b")
+    void savePublication(@Param("title") String title,@Param("author") String author,@Param("bookId") int bookId,@Param("editor") String editor,@Param("designer") String designer,@Param("nop") int nop,@Param("price") double price,@Param("type") String type);
 
     @Query("match (u:User{name:{username}}),(b:Book{bookId:{bookId}})\n"+"set b.nop=b.nop+1\n"+
             "create (u)-[:bought]->(b)")
@@ -41,9 +46,45 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
             ",b.nop desc  Limit 15  ")
     Collection<Book> getTrending();
 
+    @Query("match(u:User{name:{username}}),(g:Genre{name:{genre}}) create (u)-[:likes]->(g)")
+    void saveGenre(@Param("genre") String genre,@Param("username") String username);
 
-    @Query("match(u:User{name: {username} }),(b:Book),(c:Book),(a:User) where (u)-[:bought]->(b)<-[:has_authored]-(a)-[:has_authored]->(c) return c")
-    Collection<Book> getRecAccAuth(@Param("username") String username);
+
+    @Query("match (g:Genre{name:{genre}}) return g")
+    List<Genre> getGenre(@Param("genre") String genre);
+
+    @Query("create (g:Genre{name:{genre}}) return g")
+    Genre saveThisGenre(@Param("genre") String genre);
+
+    @Query("create (t:Type{name:{type}}) return t")
+    Type createType(@Param("type") String type);
+
+    @Query("match (t:Type{name:{type}}) return t")
+    List<Type> getType(@Param("type") String type);
+
+    @Query("match (b:Book{bookId:{bookId}}),(g:Genre{name:{genre}}) create (b)-[:has_genre]->(g)")
+    void saveBookGenre(@Param("genre") String genre,@Param("bookId") int bookId);
+
+    @Query("match(u:User{name:{username}}),(r:Role{name:'editor'}) create (u)-[:has_role]->[r]")
+    void createEditor(@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}),(r:Role{name:'designer'}) create (u)-[:has_role]->[r]")
+    void createDesigner(@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}) set u.cost={cost},u.exp={exp}")
+    void  saveExpCost(@Param("exp") int exp,@Param("cost") double cost,@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}),(a:ageGroup:{name:{ageGroup}}) create (u)-[:has_ageGroup]->(a) ")
+    void setAgeGroup(@Param("ageGroup") String ageGroup,@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}),(g:Gender:{name:{gender}}) create (u)-[:has_gender]->(g)")
+    void setGender(@Param("gender") String ageGroup,@Param("username") String username);
+
+    @Query("match(u:User{name:{username}}),(n:nationality:{name:{nationality}}) create (u)-[:has_nationality]->(n)")
+    void setNationality(@Param("nationality") String ageGroup,@Param("username") String username);
+
+
+
 
     @Query("match(g:Genre{name:{genre}})<-[:has_genre]-(b:Book)<-[r:bought]-(u:User) Return u  Order by r.created_at desc  Limit 1000")
     List<User> getPriceRec(@Param("genre") String genre);
@@ -76,6 +117,10 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
             "MATCH (u:User {idd: toInteger(csvLine.uid)}),(b:Book {idd: toInteger(csvLine.mid)})\n" +
             "CREATE (u)-[:bought]->(b)")
     void bob();
+
+    @Query("create (r:Role{name:'editor'}),(r:Role{name:'designer'}),(g:Gender{name:'male'}),(g:Gender{name:'female'})" +
+            "(n:nationality{name:'indian'}),(a:ageGroup{name:'k'}),(a:ageGroup{name:'t'}),(a:ageGroup{name:'a'}),(a:ageGroup{name:'o'})")
+    void top();
 
 
 

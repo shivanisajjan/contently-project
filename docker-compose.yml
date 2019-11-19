@@ -56,6 +56,8 @@ services:
       - recommendation-service
       - notification
       - publication-service
+      - purchasing-service
+      - s3storage-service
     ports:
       - 8080:8080
     links:
@@ -66,6 +68,9 @@ services:
       - recommendation-service
       - notification
       - publication-service
+      - purchasing-service
+      - s3storage-service
+
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -120,8 +125,6 @@ services:
       - rabbitmq
       - config-server
       - eureka-server
-    ports:
-      -8005:8005
 
   content-service:
       build: content-service
@@ -144,6 +147,12 @@ services:
       build: s3storage-service
       container_name: s3storage-service
       restart: always
+      depends_on:
+        - config-server
+        - eureka-server
+      links:
+        - config-server
+        - eureka-server
       ports:
         - 8081:8081
  
@@ -190,10 +199,12 @@ services:
     restart: always
     depends_on:
       - mongo
+      - rabbitmq
       - config-server
       - eureka-server
     links:
       - mongo
+      - rabbitmq
       - config-server
       - eureka-server
     ports:

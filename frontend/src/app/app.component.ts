@@ -9,10 +9,10 @@ import {Router} from '@angular/router';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
-import { MatSnackBar } from '@angular/material';
-import { notification } from './notification';
-import { NotificationService } from './notification.service';
-import { ContentService } from './content.service';
+import {MatSnackBar} from '@angular/material';
+import {notification} from './notification';
+import {NotificationService} from './notification.service';
+import {ContentService} from './content.service';
 
 
 @Component({
@@ -65,9 +65,13 @@ export class AppComponent implements OnInit {
   }
 
   search(searchValue) {
-  this.searchValue = searchValue;
-  console.log(this.searchValue);
-  this.router.navigate(['/searchResults', this.searchValue]).then();
+    this.searchValue = searchValue;
+    console.log(this.searchValue);
+    this.router.navigate(['/home'])
+      .then( () =>
+        this.router.navigate(['/searchResults', this.searchValue])
+      );
+
   }
 
 
@@ -174,9 +178,9 @@ export class AppComponent implements OnInit {
       this.contentService.saveBookDetails(this.book).subscribe();
       });
       this.notificationService.deleteNotification(notification.id).subscribe(
-        (result) => this.ngOnInit(),
-        (error) => this.ngOnInit()
-      );
+      (result) => this.ngOnInit(),
+      (error) => this.ngOnInit()
+    );
   }
 
   // tslint:disable-next-line: no-shadowed-variable
@@ -196,7 +200,7 @@ export class AppComponent implements OnInit {
       });
     this.notificationService.deleteNotification(notification.id).subscribe(
       (result) => this.ngOnInit(),
-        (error) => this.ngOnInit()
+      (error) => this.ngOnInit()
     );
   }
 
@@ -221,4 +225,3 @@ export class AppComponent implements OnInit {
   }
 }
 }
-

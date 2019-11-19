@@ -7,6 +7,7 @@ import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {bool} from 'aws-sdk/clients/signer';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
   private profileLoaded = false;
   private contentsLoaded = false;
   private booksLoaded = false;
-  private serverUrl = 'http://13.126.150.171:8716/socket';
+  private serverUrl = environment.backBaseUrl + 'socket';
   private stompClient;
   private publishedList;
   private purchaseList;
@@ -86,6 +87,9 @@ export class DashboardComponent implements OnInit {
         }
       );
 
+    this.getPublishedBooks();
+    this.getPurchasedBooks();
+
 
   }
 
@@ -105,5 +109,17 @@ export class DashboardComponent implements OnInit {
   }
   ifConfirmed(status: string): boolean {
     return status === 'confirmed';
+  }
+
+  getPublishedBooks() {
+    this.contentService.getPublishedBooks().subscribe(
+      result => this.publishedList = result
+    );
+  }
+
+  getPurchasedBooks() {
+    this.contentService.getPurchasedBooks().subscribe(
+      result => this.purchaseList = result
+    );
   }
 }

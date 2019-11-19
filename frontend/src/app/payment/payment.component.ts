@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {FormControl, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {ContentService} from '../content.service';
 import {Router} from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -11,82 +9,71 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PaymentComponent implements OnInit {
 
-  public boook;
-  handler: any;
-  private id;
-
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
-
-
-  private invalidfeedback: string;
-
-  chargeCreditCard(num, exp, cvv) {
-    this.router.navigateByUrl(`/loading`);
-    const arr = exp.split('/', 2);
-    ( window as any).Stripe.card.createToken({
-      number: num,
-      exp_month: arr[0],
-      exp_year: arr[1],
-      cvc: cvv
-    }, (status: number, response: any) => {
-      if (status === 200) {
-        const token = response.id;
-        console.log(token);
-        this.invalidfeedback = '';
-        // this.router.navigate(['/loading']).then();
-
-
-
-        this.chargeCard(token);
-      } else {
-        console.log(response.error.message);
-        this.invalidfeedback = response.error.message;
-
-      }
-    });
+  constructor(private contentService: ContentService,
+              private router: Router) {
   }
 
+  public boook;
+  private handler: any;
+  private id;
+  private price;
 
-  chargeCard(token: string) {
-    const header = {
-      // tslint:disable-next-line: object-literal-key-quotes
-      'token': token,
-      // tslint:disable-next-line: object-literal-key-quotes
-      'amount': '20000'
+  private invalidFeedback: string;
 
-    };
-    const httpOptions = {
-      headers: header
-    };
-    // tslint:disable-next-line: object-literal-shorthand
-    const headers = new Headers({token: token, amount: '100'});
-    this.http.post('http://13.126.150.171:8080/purchasing-service/api/v1/payment', {}, httpOptions)
-      .subscribe(resp => {
+  ngOnInit() {
+    this.price = localStorage.getItem('price');
+    this.loadStripe();
+  }
 
-        console.log('RESP = ', resp);
+  chargeCreditCard(num, exp, cvv) {
 
+    const arr = exp.split('/', 2);
+
+    (window as any).Stripe.card.createToken(
+      {
+        clientId: undefined,
+        clientSecret: undefined,
+        deviceCode: undefined,
+        grantType: undefined,
+        number: num,
+        exp_month: arr[0],
+        exp_year: arr[1],
+        cvc: cvv
+      }, (status, response) => {
+        if (status === 200) {
+          const token = response.id;
+          this.chargeCard(token);
+        } else {
+          console.log(response.error.message);
+          this.invalidFeedback = response.error.message;
+        }
       });
   }
 
 
-
-
-  ngOnInit() {
-      this.id = this.route.snapshot.paramMap.get('id');
-      this.loadStripe();
-
+  chargeCard(token: string) {
+    // tslint:disable-next-line: radix
+    this.contentService.saveToPurchase(parseInt(localStorage.getItem('bookId')), localStorage.getItem('username'))
+      .subscribe(
+        data => {
+          console.log('data from purchase service save: ', data);
+          this.router.navigate(['/book-details']).then();
+        },
+        error => {
+          console.log('error from purchase service save: ', error);
+        }
+      );
   }
 
 
   loadStripe() {
-
     if (!window.document.getElementById('stripe-script')) {
       const s = window.document.createElement('script');
       s.id = 'stripe-script';
       s.type = 'text/javascript';
       s.src = 'https://checkout.stripe.com/checkout.js';
       s.onload = () => {
-        this.handler = ( window as any).StripeCheckout.configure({
+        this.handler = (window as any).StripeCheckout.configure({
           key: 'pk_test_aeUUjYYcx4XNfKVW60pmHTtI',
           locale: 'auto',
           token(token: any) {
@@ -97,7 +84,6 @@ export class PaymentComponent implements OnInit {
           }
         });
       };
-
       window.document.body.appendChild(s);
     }
   }

@@ -3,6 +3,8 @@ import { ContentService } from '../content.service';
 import { BookFetchService } from '../bookFetch.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {formatDate} from '@angular/common';
+
 
 
 @Component({
@@ -17,6 +19,9 @@ export class PublicationBookComponent implements OnInit {
   private editorPay;
   private illustratorPay;
   private book;
+
+
+
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
               public dialogRef: MatDialogRef<PublicationBookComponent>
   ) { }
@@ -48,6 +53,7 @@ export class PublicationBookComponent implements OnInit {
 
   savePublication(price) {
     this.book.price = price;
+    this.book.publishedAt=  formatDate(new Date(), 'dd/MM/yyyy', 'en');
     console.log('hello:', this.book);
 
     this.bookFetch.saveToPublication(this.book).subscribe(
@@ -60,6 +66,24 @@ export class PublicationBookComponent implements OnInit {
               this.dialogRef.close();
             }
           );
+          const myObject = {
+            book_id: this.book.id,
+            username : localStorage.getItem("username")
+
+          };
+          const myObject1 = {
+            book_id: this.book.id,
+            username : this.book.editorName
+
+          };
+          const myObject2 = {
+            book_id: this.book.id,
+            username : this.book.designerName
+
+          };
+          this.bookFetch.savePurchase(myObject).subscribe();
+          this.bookFetch.savePurchase(myObject1).subscribe();
+          this.bookFetch.savePurchase(myObject2).subscribe();
       }
     );
 

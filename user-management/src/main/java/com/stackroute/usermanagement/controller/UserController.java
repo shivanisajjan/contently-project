@@ -74,7 +74,8 @@ UserController {
         User uname=userService.getByUsername(user.getUsername());
         user.setPassword(uname.getPassword());
         DTOUser dtouser=new DTOUser();
-        dtouser.setId(user.getId());
+        dtouser.setId(uname.getId());
+        System.out.println(uname.getId());
         dtouser.setUsername(user.getUsername());
         dtouser.setRole(user.getRole());
         dtouser.setPhoneNumber(user.getPhoneNumber());
@@ -95,9 +96,6 @@ UserController {
 
     @GetMapping(value = "{username}")
     public ResponseEntity<User> getByUsername(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
-        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.add("Access-Control-Allow-Origin","http://localhost:4200");
-//        responseHeaders.add("Content-Type","application/json");
         return new ResponseEntity<User>(userService.getByUsername(username) ,HttpStatus.OK);
     }
     @GetMapping(value = "/role/{role}")

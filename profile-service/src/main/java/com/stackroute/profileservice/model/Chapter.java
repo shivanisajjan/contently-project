@@ -1,10 +1,8 @@
 package com.stackroute.profileservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Data
@@ -14,5 +12,6 @@ import java.util.Date;
 public class Chapter {
     private int bookId;
     private int chapterIndex;
+    private boolean releaseNext = false;
     private Date date;
 }

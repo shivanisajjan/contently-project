@@ -64,7 +64,7 @@ export class ContentLayoutComponent implements OnInit {
   }
 
   onSubmit(input: NgForm) {
-    console.log(input.value);
+    // console.log(input.value);
     const jsonObj: any = {
       title: input.value.title,
       description: input.value.desc,

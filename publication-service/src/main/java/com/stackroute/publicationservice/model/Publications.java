@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +28,7 @@ public class Publications {
     String designerName; // list of userId of designer
     @TextIndexed String typeName;
     @TextIndexed List<String> genres;
+    List<Status> status;
     String  createdAt;
     double price;
     String publishedAt;

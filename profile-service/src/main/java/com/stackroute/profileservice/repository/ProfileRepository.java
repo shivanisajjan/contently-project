@@ -13,4 +13,7 @@ public interface ProfileRepository extends MongoRepository<Profile,Integer> {
     @Query("{'username' : ?0}")
     Profile findByName(String title);
 
+    @Query("{'role' : ?0}")
+    List<Profile> findByRole(String role);
+
 }

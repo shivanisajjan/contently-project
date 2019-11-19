@@ -12,12 +12,13 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 })
 export class PublicationBookComponent implements OnInit {
 
+  // tslint:disable-next-line: variable-name
   private recommended_price;
   private editorPay;
   private illustratorPay;
   private book;
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
-    public dialogRef: MatDialogRef<PublicationBookComponent>
+              public dialogRef: MatDialogRef<PublicationBookComponent>
   ) { }
 
   ngOnInit() {
@@ -54,13 +55,14 @@ export class PublicationBookComponent implements OnInit {
         console.log(data);
         this.bookFetch.deleteContent(this.book.id)
           .subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
             data => {
               this.dialogRef.close();
             }
           );
       }
     );
-    
+
   }
 
 }

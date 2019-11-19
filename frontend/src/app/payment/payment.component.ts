@@ -11,28 +11,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PaymentComponent implements OnInit {
 
-  public boook
+  public boook;
   handler: any;
   private id;
 
-  constructor(private http: HttpClient,private router: Router,private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
 
   private invalidfeedback: string;
 
-  chargeCreditCard(num,exp,cvv) {
-    this.router.navigateByUrl(`/loading`)
-    let arr = exp.split('/',2);
-    (<any>window).Stripe.card.createToken({
+  chargeCreditCard(num, exp, cvv) {
+    this.router.navigateByUrl(`/loading`);
+    const arr = exp.split('/', 2);
+    ( window as any).Stripe.card.createToken({
       number: num,
       exp_month: arr[0],
       exp_year: arr[1],
       cvc: cvv
     }, (status: number, response: any) => {
       if (status === 200) {
-        let token = response.id;
+        const token = response.id;
         console.log(token);
-        this.invalidfeedback = "";
+        this.invalidfeedback = '';
         // this.router.navigate(['/loading']).then();
 
 
@@ -49,20 +49,23 @@ export class PaymentComponent implements OnInit {
 
   chargeCard(token: string) {
     const header = {
-      "token": token,
-      "amount": "20000"
+      // tslint:disable-next-line: object-literal-key-quotes
+      'token': token,
+      // tslint:disable-next-line: object-literal-key-quotes
+      'amount': '20000'
 
     };
     const httpOptions = {
       headers: header
     };
-    const headers = new Headers({'token': token, 'amount': "100"});
+    // tslint:disable-next-line: object-literal-shorthand
+    const headers = new Headers({token: token, amount: '100'});
     this.http.post('http://13.126.150.171:8080/purchasing-service/api/v1/payment', {}, httpOptions)
       .subscribe(resp => {
 
-        console.log("RESP = ",resp);
+        console.log('RESP = ', resp);
 
-      })
+      });
   }
 
 
@@ -70,30 +73,30 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
-    this.loadStripe();
+      this.loadStripe();
 
   }
 
 
   loadStripe() {
 
-    if(!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement("script");
-      s.id = "stripe-script";
-      s.type = "text/javascript";
-      s.src = "https://checkout.stripe.com/checkout.js";
+    if (!window.document.getElementById('stripe-script')) {
+      const s = window.document.createElement('script');
+      s.id = 'stripe-script';
+      s.type = 'text/javascript';
+      s.src = 'https://checkout.stripe.com/checkout.js';
       s.onload = () => {
-        this.handler = (<any>window).StripeCheckout.configure({
+        this.handler = ( window as any).StripeCheckout.configure({
           key: 'pk_test_aeUUjYYcx4XNfKVW60pmHTtI',
           locale: 'auto',
-          token: function (token: any) {
+          token(token: any) {
             // You can access the token ID with `token.id`.
             // Get the token ID to your server-side code for use.
-            console.log(token)
+            console.log(token);
             console.log('Payment Success!!');
           }
         });
-      }
+      };
 
       window.document.body.appendChild(s);
     }

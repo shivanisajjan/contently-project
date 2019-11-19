@@ -8,24 +8,30 @@
   <div class="register-component-body">
     <mat-horizontal-stepper >
 
-      <mat-step [stepControl]="firstFormGroup" [editable]="false">
+      <mat-step  [editable]="false">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Fill out your details</ng-template>
           <div>
-            <mat-form-field class="fields">
+            <mat-form-field class="fields" >
               <input formControlName="email" #email matInput placeholder="Email" class="col">
+              <mat-error *ngIf="!firstFormGroup.controls['email'].valid && firstFormGroup.controls['email'].touched">
+                {{ getErrorEmail() }}
+              </mat-error>
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field class="fields">
               <input formControlName="username" #username matInput placeholder="Username" class="col">
+              <mat-error *ngIf="usernameAlreadyExists">
+                Username Already Exists
+              </mat-error>
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field class="fields">
-              <input formControlName="password" #password matInput placeholder="New password" formControlName="password"
+              <input formControlName="password" #password matInput placeholder="New password" 
                      required>
               <mat-error *ngIf="firstFormGroup.hasError('required', 'password')">
                 Please enter your new password
@@ -46,6 +52,9 @@
           <div>
             <mat-form-field class="fields">
               <input formControlName="contact" #contact matInput placeholder="Contact Number" class="col">
+              <mat-error *ngIf="!firstFormGroup.controls['contact'].valid && firstFormGroup.controls['contact'].touched">
+                {{ getErrorPhone() }}
+              </mat-error>
             </mat-form-field>
           </div>
 

@@ -41,14 +41,14 @@ export class BookCreateComponent implements OnInit {
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
   constructor(private bookFetch: BookFetchService,
-    private spinner: NgxSpinnerService,
-    private router: Router,
-    private dialog: MatDialog,
-    private contentService: ContentService,
-    private route: ActivatedRoute,
-    private fileSaverService: FileSaverService,
-    private notificationService: NotificationService,
-    private componentFactoryResolver: ComponentFactoryResolver) {
+              private spinner: NgxSpinnerService,
+              private router: Router,
+              private dialog: MatDialog,
+              private contentService: ContentService,
+              private route: ActivatedRoute,
+              private fileSaverService: FileSaverService,
+              private notificationService: NotificationService,
+              private componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -71,25 +71,20 @@ export class BookCreateComponent implements OnInit {
           this.bookDetails = data;
           localStorage.setItem('book', JSON.stringify(this.bookDetails));
           this.setShowEditButton();
-          console.log('book details: ', this.bookDetails);
           if (!this.bookDetails.selectHelper) {
-            console.log("SELECTING HELPERS");
-            if (this.bookDetails.editorStatus != 'confirmed' && this.bookDetails.designerStatus != 'confirmed') {
+            if (this.bookDetails.editorStatus !== 'confirmed' && this.bookDetails.designerStatus !== 'confirmed') {
               this.contentService.getRecommendedEditorsOrIllustrators('editor', this.bookDetails.genres[0]).subscribe(
                 result => {
                  this.bookDetails.editorName = result[0].name;
                  this.bookDetails.editorStatus = 'confirmed';
-                 console.log("SELECTED EDITOR" , this.bookDetails.editorName);
                  this.contentService.saveBookDetails(this.bookDetails).subscribe();
                 });
               this.contentService.getRecommendedEditorsOrIllustrators('designer', this.bookDetails.genres[0]).subscribe(
                   result => {
                    this.bookDetails.designerName = result[0].name;
                    this.bookDetails.designerStatus = 'confirmed';
-                   console.log("SELECTED DESIGNER" , this.bookDetails.designerName);
                    this.contentService.saveBookDetails(this.bookDetails).subscribe();
                   });
-              console.log(this.bookDetails);    
             }
           }
         }
@@ -124,7 +119,7 @@ export class BookCreateComponent implements OnInit {
     return localStorage.getItem('role') === 'reader/author';
   }
 
-  editFile(fileName: String) {
+  editFile(fileName: string) {
     console.log('editFile(): ', fileName);
     this.router.navigate(['/edit/' + fileName]).then();
   }
@@ -188,7 +183,7 @@ export class BookCreateComponent implements OnInit {
       });
   }
 
-  preview(sectionName: String) {
+  preview(sectionName: string) {
     console.log('section name', sectionName);
     this.bookFetch.getGit(this.bookDetails.id, sectionName)
       .subscribe(
@@ -251,8 +246,9 @@ export class BookCreateComponent implements OnInit {
   }
 
   openSelectEditorDialog(): void {
+    // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(SelectEditorDialog, {
-      width: '70%',
+      width: '40%',
       autoFocus: false,
       maxHeight: '90vh',
       height: '60%',
@@ -271,6 +267,7 @@ export class BookCreateComponent implements OnInit {
         this.bookDetails.editorStatus = 'pending';
         this.contentService.saveBookDetails(this.bookDetails).subscribe();
         localStorage.setItem('book', JSON.stringify(this.bookDetails));
+        // tslint:disable-next-line: max-line-length
         this.sendNotification(this.editor, this.bookDetails.id, localStorage.getItem('username') + ' has requested you to edit ' + this.bookDetails.title + '.');
         dialogSubmitSubscription.unsubscribe();
       }
@@ -280,8 +277,9 @@ export class BookCreateComponent implements OnInit {
 
 
   openSelectIllustratorDialog(): void {
+    // tslint:disable-next-line: no-use-before-declare
     const dialogRef = this.dialog.open(SelectIllustratorDialog, {
-      width: '70%',
+      width: '40%',
       autoFocus: false,
       maxHeight: '90vh',
       height: '60%',
@@ -300,29 +298,30 @@ export class BookCreateComponent implements OnInit {
         this.bookDetails.designerStatus = 'pending';
         this.contentService.saveBookDetails(this.bookDetails).subscribe();
         localStorage.setItem('book', JSON.stringify(this.bookDetails));
+        // tslint:disable-next-line: max-line-length
         this.sendNotification(this.illustrator, this.bookDetails.id, localStorage.getItem('username') + ' has requested you to illustrate ' + this.bookDetails.title + '.');
         dialogSubmitSubscription.unsubscribe();
       }
     );
   }
 
-  openSetStatusDialog(): void {
-    const dialogRef = this.dialog.open(SetStatusDialog, {
-      width: '50%',
-      autoFocus: false,
-      maxHeight: '90vh',
-    });
+  // openSetStatusDialog(): void {
+  //   const dialogRef = this.dialog.open(SetStatusDialog, {
+  //     width: '50%',
+  //     autoFocus: false,
+  //     maxHeight: '90vh',
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-    });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //   });
 
-    const dialogSubmitSubscription =
-      dialogRef.componentInstance.chapterStatusEvent.subscribe((result: any[]) => {
-        console.log(result);
-        this.chapterStatus = result;
-        dialogSubmitSubscription.unsubscribe();
-      });
-  }
+  //   const dialogSubmitSubscription =
+  //     dialogRef.componentInstance.chapterStatusEvent.subscribe((result: any[]) => {
+  //       console.log(result);
+  //       this.chapterStatus = result;
+  //       dialogSubmitSubscription.unsubscribe();
+  //     });
+  // }
 
   setShowEditButton() {
     if (this.bookDetails.status === null) {
@@ -360,7 +359,7 @@ export class BookCreateComponent implements OnInit {
     return this.showEditButton[index];
   }
 
-  changeChapterStatus(status: String, i: number) {
+  changeChapterStatus(status: string, i: number) {
     if (window.confirm('Change the Status of chapter' + this.bookDetails.status[i].chapterName + ' to :' + status)) {
       console.log(status, i);
       this.bookDetails.status[i].status = status;
@@ -400,6 +399,7 @@ export class BookCreateComponent implements OnInit {
     if (this.bookDetails.status === null) {
       return;
     }
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.bookDetails.status.length; i++) {
       if (this.bookDetails.status[i].status !== 'Finished') {
         return false;
@@ -407,7 +407,7 @@ export class BookCreateComponent implements OnInit {
     }
     return true;
   }
-  sendNotification(receiver: String, bookId: number, message: string | String) {
+  sendNotification(receiver: string, bookId: number, message: string | string) {
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
     newNotification.bookId = bookId;
@@ -418,12 +418,11 @@ export class BookCreateComponent implements OnInit {
   }
 
   uploadFile(file: File) {
-    console.log("before");
     this.bookFetch.uploadToAws(file, this.bookDetails.id)
       .subscribe(
         data => {
 
-          if (data == "Success") {
+          if (data === 'Success') {
             const dialogRef = this.dialog.open(PublicationBookComponent, {
               width: '50%',
               data: {
@@ -434,10 +433,10 @@ export class BookCreateComponent implements OnInit {
               () => {
                 console.log('closed');
                 this.spinner.hide().then();
+                // tslint:disable-next-line: no-string-literal
                 this.router.navigate['dashboard'].then();
               });
-          }
-          else {
+          } else {
             const dialogRef = this.dialog.open(FailureComponent, {
               width: '50%',
               data: {
@@ -475,6 +474,7 @@ export class BookCreateComponent implements OnInit {
     const fileType = this.fileSaverService.genType(fileName);
     let txtBlob: BlobPart;
     const htmlContent = [];
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.bookDetails.status.length; i++) {
       htmlContent.push({
         chapterName: this.bookDetails.status[i].chapterName,
@@ -509,11 +509,17 @@ export class BookCreateComponent implements OnInit {
 
 }
 
+export interface Card {
+  name: string;
+}
+
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'select-editor-dialog',
   templateUrl: 'select-editor-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
+// tslint:disable-next-line: component-class-suffix
 export class SelectEditorDialog implements OnInit {
 
   @Output() selectEditorEvent = new EventEmitter<any>();
@@ -521,7 +527,7 @@ export class SelectEditorDialog implements OnInit {
   public editorListFiltered;
   public allEditorList;
   public allEditorListFiltered;
-  public searchTerm; 
+  public searchTerm;
 
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
@@ -566,10 +572,13 @@ export class SelectEditorDialog implements OnInit {
   search() {
     const term = this.searchTerm;
     console.log(term);
-    this.editorListFiltered = this.editorList.filter(function (tag: { name: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }; }) {
+    // tslint:disable-next-line: max-line-length
+    // tslint:disable-next-line: only-arrow-functions
+    this.editorListFiltered = this.editorList.filter(function(tag: { name: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }; }) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
-    this.allEditorListFiltered = this.allEditorList.filter(function (tag: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }) {
+    // tslint:disable-next-line: only-arrow-functions
+    this.allEditorListFiltered = this.allEditorList.filter(function(tag: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
   }
@@ -577,24 +586,27 @@ export class SelectEditorDialog implements OnInit {
 
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'select-illustrator-dialog',
   templateUrl: 'select-illustrator-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
-export class SelectIllustratorDialog implements  OnInit{
+// tslint:disable-next-line: component-class-suffix
+export class SelectIllustratorDialog implements  OnInit {
   public illustratorList;
   public illustratorListFiltered: any;
   public searchTerm: any;
   public allIllustratorList;
   public allIllustratorListFiltered;
 
-  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   obs: Observable<any>;
   dataSource: MatTableDataSource<Card>;
   @Output() selectIllustratorEvent = new EventEmitter<any>();
 
   constructor(
     public dialogRef: MatDialogRef<SelectIllustratorDialog>,
+    // tslint:disable-next-line: ban-types
     @Inject(MAT_DIALOG_DATA) public data: String,
     private contentService: ContentService,
     // private changeDetectorRef: ChangeDetectorRef
@@ -626,9 +638,9 @@ export class SelectIllustratorDialog implements  OnInit{
       result => {
         this.illustratorList = result;
         this.illustratorListFiltered = this.illustratorList;
-        this.dataSource =  new MatTableDataSource<Card>(this.allIllustratorListFiltered);
-        this.dataSource.paginator = this.paginator;
-        this.obs = this.dataSource.connect();
+        // this.dataSource =  new MatTableDataSource<Card>(this.allIllustratorListFiltered);
+        // this.dataSource.paginator = this.paginator;
+        // this.obs = this.dataSource.connect();
       });
   }
 
@@ -643,30 +655,34 @@ export class SelectIllustratorDialog implements  OnInit{
 
   search(): void {
     const term = this.searchTerm;
-    this.illustratorListFiltered = this.illustratorList.filter(function (tag) {
+    // tslint:disable-next-line: only-arrow-functions
+    this.illustratorListFiltered = this.illustratorList.filter(function(tag) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
-    this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
+    // tslint:disable-next-line: only-arrow-functions
+    this.allIllustratorListFiltered = this.allIllustratorList.filter(function(tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
-  } 
+  }
 
-  
+
 
 }
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'set-status-dialog',
   templateUrl: 'set-status-dialog.html',
   styleUrls: ['./book-create.component.css']
 })
+// tslint:disable-next-line: component-class-suffix
 export class SetStatusDialog {
   @Output() chapterStatusEvent = new EventEmitter<any>();
   private chapterStatus = 'Status';
 
   constructor(
     public dialogRef: MatDialogRef<SetStatusDialog>,
-    @Inject(MAT_DIALOG_DATA) public statusData: String) {
+    @Inject(MAT_DIALOG_DATA) public statusData: string) {
   }
 
   onNoClick(): void {

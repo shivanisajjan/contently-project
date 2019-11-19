@@ -12,6 +12,7 @@ export class DownloadComponent implements OnInit {
   public test;
   public blob;
 
+  // tslint:disable-next-line: variable-name
   constructor(private _fileSaverService: FileSaverService, private bookFetch: BookFetchService) { }
 
   ngOnInit() {
@@ -21,7 +22,7 @@ export class DownloadComponent implements OnInit {
 
   download() {
 
-  
+
 
 
 

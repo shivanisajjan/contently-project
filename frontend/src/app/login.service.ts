@@ -46,7 +46,7 @@ export class LoginService {
     const httpOptions = {
       headers: header
     };
-    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile`;
+    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/update`;
     return this.http.post(postUrl, saveProfile, httpOptions);
   }
 

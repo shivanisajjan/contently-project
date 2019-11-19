@@ -56,7 +56,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/user-management/api/v1/user/role/${role}`;
+    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/role/${role}`;
     return this.http.get(postUrl, this.httpOptions);
   }
 

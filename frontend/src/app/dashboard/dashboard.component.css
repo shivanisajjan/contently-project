@@ -61,7 +61,10 @@ mat-icon {
 .new-content-button{
   margin-left: 70%;
   background-color: rgb(250, 104, 104);
+}
 
+.edit-button{
+  background-color: rgb(250, 104, 104);
 }
 
 .contents-under-development mat-grid-tile{

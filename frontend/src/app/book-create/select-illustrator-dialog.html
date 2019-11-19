@@ -4,23 +4,27 @@
                         <input [(ngModel)] = "searchTerm" (ngModelChange) = "search()" matInput placeholder="Search Illustrator">
                      </mat-form-field>
           <mat-tab-group>
-                <mat-tab label="Recommended Illustrators">
+                <mat-tab class="helper-tab" label="Recommended Illustrators">
                  
                 <div *ngFor="let illustrator of illustratorListFiltered " class="list-editors">
                                 <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
                                        <h5>{{illustrator.name}}</h5>
+                                       <div class="price-experiance">
+                                        <h6>{{illustrator.price}}</h6>
+                                        <h6>{{illustrator.experience}}</h6>
+                                    </div> 
                                 </mat-card>
                            </div>   
                  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
                 </mat-tab>
                       
-                <mat-tab label="Show All Illustrators">
+                <mat-tab class="helper-tab" label="Show All Illustrators">
                         <div *ngFor="let illustrator of allIllustratorListFiltered" class="list-editors">
-                                <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                    <h5>{{illustrator}}</h5>
+                                <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
+                                    <h5>{{illustrator.name}}</h5>
                                     <div class="price-experiance">
-                                        <h6>Price</h6>
-                                        <h6>Experiance</h6>
+                                        <h6>{{illustrator.price}}</h6>
+                                        <h6>{{illustrator.experience}}</h6>
                                     </div>    
                                 </mat-card>
                         </div>

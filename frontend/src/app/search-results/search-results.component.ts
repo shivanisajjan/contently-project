@@ -1,5 +1,5 @@
-import { Component, OnInit ,Input} from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { Component, OnInit , Input} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {BookFetchService} from '../bookFetch.service';
 import {Router} from '@angular/router';
 
@@ -13,7 +13,7 @@ export class SearchResultsComponent implements OnInit {
   private search;
   private searchBooks: any;
   constructor(
-    private route : ActivatedRoute,private bookFetch:BookFetchService, private router: Router
+    private route: ActivatedRoute, private bookFetch: BookFetchService, private router: Router
   ) { }
 
   ngOnInit() {

@@ -67,6 +67,12 @@ body {
   width: 100%;
 }
 
+.notification{
+  background-color: rgb(27, 27, 27);
+  margin: 2%;
+  font-size: 75%;
+}
+
 .router-outlet{
   /* background-image: url('../assets/images/main_bg.jpeg'); */
 }

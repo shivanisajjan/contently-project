@@ -26,11 +26,11 @@ export class ContentLayoutComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   fruitCtrl = new FormControl();
- 
+
 
   @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
-  
+
   private fictionGenres = ['classic', 'comic', 'contemporary', 'crime', 'detective', 'fable', 'fairy tale',
     'fan fiction', 'fantasy', 'folk tale', 'historical fiction', 'horror', 'humor', 'legend', 'magical realism',
     'meta fiction', 'mystery', 'mythology', 'mythopoeia', 'picture book', 'realistic fiction', 'romance', 'science fiction',
@@ -60,7 +60,7 @@ export class ContentLayoutComponent implements OnInit {
 
     this.filteredGenres = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
-      map((genre: string | null) => genre ? this._filter(genre) : this.fictionGenres.slice()));
+      map((genre: string | null) => genre ? this._filter(genre) : this.genresList.slice()));
   }
 
   onSubmit(input: NgForm) {
@@ -76,27 +76,27 @@ export class ContentLayoutComponent implements OnInit {
     };
     localStorage.setItem('selectHelper', input.value.selectHelper);
     console.log('json', jsonObj);
-    // this.contentService.saveBooks(jsonObj)
-    //   .subscribe(
-    //     data => {
-    //       console.log('Save book data:', data);
-    //       const temp: any = data;
-    //       this.bookFetch.createRepo(temp.id, temp.description)
-    //         .subscribe(
-    //           data2 => {
-    //             console.log('Create Repo data: ', data2);
-    //             localStorage.setItem('book', JSON.stringify(data));
-    //             this.router.navigate(['/bookCreate']).then();
-    //           },
-    //           error2 => {
-    //             console.log('Create Repo error', error2);
-    //           }
-    //         );
-    //     },
-    //     error => {
-    //       console.log('Save book error:', error);
-    //     }
-    //   );
+    this.contentService.saveBooks(jsonObj)
+      .subscribe(
+        data => {
+          console.log('Save book data:', data);
+          const temp: any = data;
+          this.bookFetch.createRepo(temp.id, temp.description)
+            .subscribe(
+              data2 => {
+                console.log('Create Repo data: ', data2);
+                localStorage.setItem('book', JSON.stringify(data));
+                this.router.navigate(['/bookCreate']).then();
+              },
+              error2 => {
+                console.log('Create Repo error', error2);
+              }
+            );
+        },
+        error => {
+          console.log('Save book error:', error);
+        }
+      );
   }
 
   removeGenre(genre: string) {
@@ -182,7 +182,7 @@ export class ContentLayoutComponent implements OnInit {
   // }
 
   // saveGenre(){
-  
+
   // }
 
   // private _filter(value: string): string[] {

@@ -66,7 +66,7 @@ export class BookdetailsComponent implements OnInit {
   }
 
   purchase(){
-        this.router.navigateByUrl(`/pay/${this.bookId}`);
+        this.router.navigateByUrl(`/pay`);
 
 
   }

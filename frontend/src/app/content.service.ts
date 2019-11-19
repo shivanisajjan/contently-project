@@ -1,20 +1,22 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Batman ' + localStorage.getItem('token')
-    })
-  };
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     Authorization: 'Batman ' + localStorage.getItem('token')
+  //   })
+  // };
 
   constructor(private http: HttpClient) {
   }
+
   // used to update item inside content
   saveContent(content) {
     const httpOptions = {
@@ -23,30 +25,30 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
-    return this.http.put(postUrl, content, this.httpOptions);
+    const postUrl = environment.backBaseUrl + 'content-service/api/v1/update';
+    return this.http.put(postUrl, content, httpOptions);
   }
 
-  getRecommendedEditorsOrIllustrators(role,genre) {
+  getRecommendedEditorsOrIllustrators(role, genre) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/${role}/${genre}`;
-    return this.http.get(postUrl, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}recommendation-service/api/v1/${role}/${genre}`;
+    return this.http.get(postUrl, httpOptions);
   }
 
-  updateEditorOrIllustratorStatus(id,role,status) {
+  updateEditorOrIllustratorStatus(id, role, status) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/${id}/${role}/${status}`;
-    return this.http.put(postUrl, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}content-service/api/v1/content/${id}/${role}/${status}`;
+    return this.http.put(postUrl, httpOptions);
   }
 
   getEditorsOrIllustrators(role) {
@@ -56,8 +58,8 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/user-management/api/v1/user/role/${role}`;
-    return this.http.get(postUrl, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}user-management/api/v1/user/role/${role}`;
+    return this.http.get(postUrl, httpOptions);
   }
 
   // used get details of one content by id
@@ -68,20 +70,19 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    console.log("in");
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content/id/${id}`;
+    const postUrl = `${environment.backBaseUrl}content-service/api/v1/content/id/${id}`;
     return this.http.get(postUrl, httpOptions);
   }
 
-  getPurchaseStatus(id){
+  getPurchaseStatus(id) {
     const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'Batman ' + localStorage.getItem('token')
-        })
-      };
-       const postUrl = `http://13.126.150.171:8080/purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
-      return this.http.get(postUrl, httpOptions);
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}purchasing-service/api/v1/book/${id}/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
   }
 
   // used to get all contents of 'username'
@@ -92,8 +93,8 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/contents/${localStorage.getItem('username')}`;
-    return this.http.get(postUrl, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}content-service/api/v1/contents/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
   }
 
   // used to save new content
@@ -104,9 +105,10 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/content`;
+    const postUrl = `${environment.backBaseUrl}content-service/api/v1/content`;
     return this.http.post(postUrl, jsonObj, httpOptions);
   }
+
   recommendedPrice(editorPay, illustratorPay) {
     const book = JSON.parse(localStorage.getItem('book'));
     const myObject = {
@@ -122,8 +124,8 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/recommendation-service/api/v1/priceRec`;
-    return this.http.post(postUrl, myObject, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}recommendation-service/api/v1/priceRec`;
+    return this.http.post(postUrl, myObject, httpOptions);
   }
 
   getPay(editorName) {
@@ -133,8 +135,8 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/profile-service/api/v1/profile/username/` + editorName;
-    return this.http.get(postUrl, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/username/${editorName}`;
+    return this.http.get(postUrl, httpOptions);
   }
 
   getBookDetailPage(id) {
@@ -144,7 +146,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/publication-service/api/v1/content/${id}`;
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/content/${id}`;
     return this.http.get(postUrl, httpOptions);
   }
 
@@ -155,7 +157,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `http://13.126.150.171:8080/content-service/api/v1/update`;
-    return this.http.put(postUrl, book, this.httpOptions);
+    const postUrl = `${environment.backBaseUrl}content-service/api/v1/update`;
+    return this.http.put(postUrl, book, httpOptions);
   }
 }

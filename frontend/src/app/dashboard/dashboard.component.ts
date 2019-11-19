@@ -6,7 +6,8 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {bool} from "aws-sdk/clients/signer";
+import {bool} from 'aws-sdk/clients/signer';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
   private profileLoaded = false;
   private contentsLoaded = false;
   private booksLoaded = false;
-  private serverUrl = 'http://13.126.150.171:8716/socket'
+  private serverUrl = environment.backBaseUrl + 'socket';
   private stompClient;
   private publishedList;
   private purchaseList;
@@ -37,13 +38,13 @@ export class DashboardComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    let ws = new SockJS(this.serverUrl);
+    const ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
-    let that = this;
+    const that = this;
     this.stompClient.connect({}, (frame) => {
-      that.stompClient.subscribe("/user/" + localStorage.getItem('username') + "/notif", (message) => {
+      that.stompClient.subscribe('/user/' + localStorage.getItem('username') + '/notif', (message) => {
         if (message.body) {
-          this._snackBar.open(message.body, "close", {
+          this._snackBar.open(message.body, 'close', {
             duration: 3000,
           });
 

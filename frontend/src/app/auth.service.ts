@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 export class AuthService {
   private loggedInStatus = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
-  constructor(private http: HttpClient) {
+  constructor() {
   }
 
   setLoggedIn(value: boolean) {

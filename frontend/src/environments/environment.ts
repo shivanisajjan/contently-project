@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  gitBaseUrl: 'https://api.github.com/',
+  backBaseUrl: 'http://13.126.150.171:8080/'
 };
 
 /*

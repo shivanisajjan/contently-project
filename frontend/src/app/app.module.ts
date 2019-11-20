@@ -71,6 +71,7 @@ import {IssuesComponent} from './issues/issues.component';
 import {FailureComponent} from './failure/failure.component';
 import { BrowseComponent } from './browse/browse.component';
 import {DatePipe} from '@angular/common';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -148,7 +149,8 @@ import {DatePipe} from '@angular/common';
     MatPaginatorModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     LoginComponent,

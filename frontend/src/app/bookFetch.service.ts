@@ -136,7 +136,7 @@ export class BookFetchService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `${environment.gitBaseUrl}recommendation-service/api/v1/books/rec3/${username}`;
+    const postUrl = `${environment.backBaseUrl}recommendation-service/api/v1/books/rec3/${username}`;
     return this.http.get<any>(postUrl, httpOptions);
 
   }

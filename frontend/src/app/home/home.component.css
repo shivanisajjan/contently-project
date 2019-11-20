@@ -72,7 +72,7 @@
  top: 60px;
  left: -50px;
  width: 60%;
- background-color: #ff656d;
+ background-color: #f1797f;
  padding: 3%;
  /* outline: 3px solid rgb(255, 255, 255);
   outline-offset: -15px; */
@@ -82,7 +82,7 @@
   top: 60px;
   right: -50px;
   width: 60%;
-  background-color: #ff656d;
+  background-color: #f1797f;
  padding: 3%;
 }
 .designer-text{
@@ -90,7 +90,7 @@
   top: 260px;
   right: -50px;
   width: 60%;
-  background-color: #ff656d;
+  background-color: #f1797f;
   padding: 3%;
 }
 /*end our programs*/
@@ -101,7 +101,10 @@
 }
 .our-authors-heading{
   text-align: center;
-  padding: 10px 100px;
+  padding: 4%;
+  background-color: #f1797f;
+  width: 85%;
+  margin: auto;
 }
 .our-authors-body{
   display: flex;
@@ -119,9 +122,7 @@ mat-card{
   justify-content: center;
   flex-basis: 33%;
   margin: 0 10px;
-  border-color: #d3dbda;
-  border-width: 1px;
-  border-style: solid;
+ 
 }
 mat-card:hover{
   box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.568);
@@ -198,7 +199,7 @@ mat-card-content{
   }
 }
 .trending-books{
-  padding: 3%;
+  padding: 5%;
   color: rgb(15, 15, 15);
   /* text-shadow: 4px 4px #333333; */
   background-image: url('../../assets/images/trend.jpg');
@@ -210,9 +211,55 @@ mat-card-content{
   letter-spacing: 20px;
 }
 
+.landing{
+  background-image: url('../../assets/images/landing.jpg');
+  height: 550px;
+  
+  /* background-size: cover; */
+}
+
+.landing-content{
+  color: white;
+  /* background-color: #f1797f; */
+  
+  border-radius: 25px;
+  width: 65%;
+  margin: auto;  
+  display: flex;
+  height: 100%;
+  
+}
+
+.landing-body{
+  margin-top: 15px;
+  padding-left: 3%;
+  font-family: 'Abril Fatface', cursive;
+  line-height: 80%;
+  font-size: 100px;
+  height: 520px;
+  width: 53%;
+  color: rgb(255, 255, 255);
+  background-color: #f1797f;
+  outline: 1px solid #ffffff;
+  outline-offset: -15px;
+  padding-top: 12%;
+  text-shadow: 2px 0 0 #000000, -2px 0 0 #000000, 0 2px 0 #000000, 0 -2px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
+}
+
+.landing-content img{
+  width: 40%;
+  margin: auto;
+}
+
+
+
+
+
 .home-body{
   color: white;
   font-family: 'Quicksand', sans-serif ;
+  background-color: #f1797f;
+  padding: 5%;
 }
 
  h3{
@@ -225,8 +272,8 @@ mat-card-content{
  }
 
  .author-card{
-  background-image: url('../../assets/images/trend1.jpg');
   color: black;
+  background-color: #f1797f;
  }
  
 
@@ -316,4 +363,36 @@ mat-card-content{
   .user-image{
     display: none;
   }
+
+  .landing-content{
+    color: white;
+    /* background-color: #f1797f; */
+    
+    border-radius: 25px;
+    width: 80%;
+    margin: auto;  
+    display: flex;
+    
+  }
+  
+  .landing-body{
+    margin-top: 15px;
+    padding-left: 5%;
+    font-family: 'Abril Fatface', cursive;
+    line-height: 80%;
+    font-size: 62px;
+    height: 420px;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: #f1797f;
+    outline: 1px solid #ffffff;
+    outline-offset: -15px;
+    padding-top: 12%;
+    text-shadow: 2px 0 0 #000000, -2px 0 0 #000000, 0 2px 0 #000000, 0 -2px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
+  }
+  
+  .landing-content img{
+    display: none;
+  }
+  
 }

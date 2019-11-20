@@ -44,7 +44,7 @@
   <mat-expansion-panel class="testing">
     <mat-expansion-panel-header>
         Current Projects
-        <button mat-button  class="new-content-button" routerLink="/contentLayout">New Content</button>
+        <button mat-button  class="new-content-button" routerLink="/contentLayout" *ngIf="ifAuthor()">New Content</button>
       </mat-expansion-panel-header>
       <div class="content-cards">
       <mat-card class="content-card" *ngFor="let content of contentsList, index as i">

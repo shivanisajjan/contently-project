@@ -186,7 +186,9 @@ mat-spinner{
 .style-button{
   background-color: rgb(250, 104, 104);
 }
-
+mat-card-actions> div{
+  margin: 10px;
+}
 @media only screen and (max-width: 600px) {
   .book-details img {
     width: 100%;
@@ -220,6 +222,4 @@ mat-spinner{
     .chat-sidenav{
       width: 70%;
     }
-
-
 }

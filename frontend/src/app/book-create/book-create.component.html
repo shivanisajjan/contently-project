@@ -168,29 +168,31 @@
         </mat-card-content>
 
         <mat-card-actions *ngIf="ifAuthor()">
-          <button style="margin-right: 10px;" mat-raised-button class="style-button" (click)="addNewSection()">
-            <mat-icon>add</mat-icon>
-          </button>
-          <span [matTooltipDisabled]="isPublish()"
-                matTooltip="Status of all chapters should be 'Finished'">
+          <div class="plagiarism">
+            <button mat-raised-button class="style-button" (click)="compileFile()">Check Plagiarism</button>
+            <span *ngIf="!bookDetails.plagarismCheckDone && !bookDetails.plagarised"> Your never checked for plagiarism. Press button to check</span>
+            <span *ngIf="!bookDetails.plagarismCheckDone && bookDetails.plagarised"> Plagiarism checking under process. Check back later</span>
+            <span *ngIf="bookDetails.plagarismCheckDone && !bookDetails.plagarised"> Your content is not plagiarised</span>
+            <span *ngIf="bookDetails.plagarismCheckDone && bookDetails.plagarised"> Your content is plagiarised. Please modify and check</span>
+          </div>
+          <div *ngIf="!bookDetails.plagarismCheckDone && bookDetails.plagarised">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+          <div>
+            <button style="margin-right: 10px;" mat-raised-button class="style-button" (click)="addNewSection()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <span [matTooltipDisabled]="isPublish()"
+                  matTooltip="Please check for plagiarism and mark all chapters as 'Finished'">
             <button [disabled]="!isPublish()" (click)="onPublish()" mat-raised-button
                     class="style-button">Publish
             </button>
           </span>
+            <input class="style-button" type='file' (change)="onSelectFile($event)">
+          </div>
 
-          <ngx-spinner
-            bdColor="rgba(51, 51, 51, 0.8)"
-            size="large"
-            color="#934d4d"
-            type="ball-8bits"></ngx-spinner>
-
-           <input  class="style-button" type='file' (change)="onSelectFile($event)">
         </mat-card-actions>
-
       </mat-card>
-
-      <div id="got"></div>
-
 
     </div>
     <br>

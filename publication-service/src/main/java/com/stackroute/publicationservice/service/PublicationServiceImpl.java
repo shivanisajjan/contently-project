@@ -59,6 +59,12 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public List<Publications> findByName(String username) {
+        List<Publications> publications=publicationRepository.findByName(username);
+        return publications;
+    }
+
+    @Override
     public void deleteContent(int id) throws ContentDoesNotExistException, InternalServerErrorException {
         try {
             publicationRepository.deleteById(id);
@@ -83,22 +89,6 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
 
-
-
-    public List<Publications> findByEditorId(int id) throws InternalServerErrorException
-    {
-        try
-        {
-            return publicationRepository.findByEditorId((id));
-        }
-        catch (Exception e)
-        {
-            throw new InternalServerErrorException();
-        }
-
-
-
-    }
 
 
     public List<Publications> findAllByTitle(String searchValue) {

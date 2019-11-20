@@ -14,9 +14,6 @@ public interface PurchaseRepository extends MongoRepository<Purchase, Integer> {
     @Query("{'username' : ?0}")
     List<Purchase> findByUsername(String username);
 
-
-
-//    @Query("{'editorIds' : { $all: [ ?0 ] } }")
     @Query("{'book_id' : ?0}")
     List<Purchase> findByBookId(int id);
 

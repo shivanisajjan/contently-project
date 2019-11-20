@@ -59,73 +59,29 @@ export class PublicationBookComponent implements OnInit {
     delete this.book.editorStatus;
     delete this.book.designerStatus;
     delete this.book.createdAt;
-    this.book.publishedAt = formatDate(new Date(), 'dd/MM/YYYY', 'en');
+    this.book.publishedAt = formatDate(new Date(), 'dd/MM/yyyy', 'en');
     this.book.price = price;
     this.book.chapterName = chapters;
+
+    console.log('Object to be saved to publication service: ', this.book);
 
     this.bookFetch.saveToPublication(this.book).subscribe(
       data => {
         console.log(data);
         this.bookFetch.deleteContent(this.book.id)
           .subscribe(
-            // tslint:disable-next-line: no-shadowed-variable
             data => {
               this.dialogRef.close();
+              this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
+              if(this.book.editorName !== undefined){
+                this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
+              }
+              if(this.book.designerName !== undefined){
+                this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
+              }
             }
           );
-        const myObject = {
-            book_id: this.book.id,
-            username : localStorage.getItem('username')
-
-    // this.bookFetch.saveToPublication(this.book).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this.bookFetch.deleteContent(this.book.id)
-    //       .subscribe(
-    //         data => {
-    //           this.dialogRef.close();
-    //         }
-    //       );
-    //   }
-    // );
-
-    // this.bookFetch.saveToPublication(this.book).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this.bookFetch.deleteContent(this.book.id)
-    //       .subscribe(
-    //         data => {
-    //           this.dialogRef.close();
-    //         }
-    //       );
-    //       const myObject = {
-    //         book_id: this.book.id,
-    //         username : localStorage.getItem("username")
-    //
-    //       };
-    //       const myObject1 = {
-    //         book_id: this.book.id,
-    //         username : this.book.editorName
-    //
-    //       };
-    //       const myObject2 = {
-    //         book_id: this.book.id,
-    //         username : this.book.designerName
-    //
-    //       };
-    //       this.bookFetch.savePurchase(myObject).subscribe();
-    //       this.bookFetch.savePurchase(myObject1).subscribe();
-    //       this.bookFetch.savePurchase(myObject2).subscribe();
-    //   }
-    // );
-
-          };
-        // this.bookFetch.savePurchase(myObject).subscribe();
-        // this.bookFetch.savePurchase(myObject1).subscribe();
-        // this.bookFetch.savePurchase(myObject2).subscribe();
       }
     );
-
   }
-
 }

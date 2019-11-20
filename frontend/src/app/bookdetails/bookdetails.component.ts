@@ -1,10 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatDialog , MAT_DIALOG_DATA} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {ContentService} from '../content.service';
 import {BookFetchService} from '../bookFetch.service';
 import {FileSaverService} from 'ngx-filesaver';
+import {PreviewComponent} from "../book-create/preview/preview.component";
 
 @Component({
   selector: 'app-bookdetails',
@@ -16,8 +17,8 @@ export class BookdetailsComponent implements OnInit {
   private bookId;
   private bookDetails: any;
   private bookDetailsLoaded;
-  private book;
-  private checkPurchase;
+  private releaseNext;
+  private chapterIndex;
 
   constructor(
     private dialog: MatDialog,
@@ -45,17 +46,32 @@ export class BookdetailsComponent implements OnInit {
       .subscribe(
         data => {
           console.log('IsPurchased data:', data);
-          // this.hasPurchased = data;
-          this.hasPurchased = false;
+          this.hasPurchased = data;
+          // this.hasPurchased = false;
         },
         error => {
           console.log('IsPurchased error', error);
+        }
+      );
+    this.contentService.getChapterFromProfile(localStorage.getItem('username'), localStorage.getItem('bookId'))
+      .subscribe(
+        data => {
+          console.log('Chapter data: ', data);
+          this.releaseNext = data.releaseNext;
+          this.chapterIndex = data.chapterIndex-1;
+        },
+        error => {
+          console.log('Chapter error: ', error);
         }
       );
   }
 
   getHasPurchased(): boolean {
     return this.hasPurchased;
+  }
+
+  getReleaseNext(): boolean {
+    return this.releaseNext;
   }
 
   downloadPdf() {
@@ -78,7 +94,32 @@ export class BookdetailsComponent implements OnInit {
     this.router.navigate(['/pay']).then();
   }
 
-  preview(){
+  preview() {
+    this.bookFetch.getGit(this.bookDetails.id, this.bookDetails.chapterName[this.chapterIndex])
+      .subscribe(
+        data => {
+          const dialogRef = this.dialog.open(
+            PreviewComponent,
+            {
+              data: atob(data.content),
+              height: '80%',
+              width: '80%'
+            }
+          );
+        }
+      );
+  }
 
+  requestNext() {
+    this.contentService.requestChapterFromProfile(localStorage.getItem('username'), localStorage.getItem('bookId'))
+      .subscribe(
+        data => {
+          console.log('Chapter data: ', data);
+          this.releaseNext = data.releaseNext;
+        },
+        error => {
+          console.log('Chapter error: ', error);
+        }
+      );
   }
 }

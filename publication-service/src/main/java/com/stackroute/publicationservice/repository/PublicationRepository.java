@@ -16,8 +16,10 @@ public interface PublicationRepository extends MongoRepository<Publications, Int
 
 
 
-    @Query("{'editorIds' : { $all: [ ?0 ] } }")
-    List<Publications> findByEditorId(int id);
+    @Query("{ $or: [ {'authorName' :  ?0 }, {'editorName' :  ?0 },{'designerName' :  ?0 } ] }")
+    List<Publications> findByName(String authorName);
+
+
 
 
 

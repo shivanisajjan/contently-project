@@ -174,15 +174,4 @@ export class BookFetchService {
       }
     );
   }
-
-  savePurchase(purchaseObj) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
-      })
-    };
-    console.log('get from aws called');
-    return this.http.post<any>(environment.backBaseUrl + 'purchasing-service/api/v1/save', purchaseObj, httpOptions);
-  }
 }

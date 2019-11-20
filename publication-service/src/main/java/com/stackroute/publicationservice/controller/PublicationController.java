@@ -69,9 +69,9 @@ public class PublicationController {
         return responseEntity;
     }
 
-    @GetMapping(value = "/book/{id}")
-    public ResponseEntity<?> getByEditorId(@PathVariable("id") int id) throws InternalServerErrorException {
-        responseEntity = new ResponseEntity<>(publicationService.findByEditorId(id), HttpStatus.OK);
+    @GetMapping(value = "/name/{username}")
+    public ResponseEntity<?> getByUsername(@PathVariable("username") String username) {
+        responseEntity = new ResponseEntity<List<Publications>>(publicationService.findByName(username), HttpStatus.OK);
         return responseEntity;
     }
 

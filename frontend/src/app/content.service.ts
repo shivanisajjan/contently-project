@@ -188,7 +188,7 @@ export class ContentService {
     return this.http.get(postUrl, httpOptions);
   }
 
-  requestChapterFromProfile(username, bookId){
+  requestChapterFromProfile(username, bookId): Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

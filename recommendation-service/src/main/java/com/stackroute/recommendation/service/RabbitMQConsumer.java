@@ -29,11 +29,11 @@ public class RabbitMQConsumer {
     @RabbitListener(queues = "registry_queue")
     public void recievedMessage(UserDto userDto) {
 
-        user.setName(userDto.getUsername());
-        
+
        userService.createUser(userDto.getUsername(),0,0);
 
-        if(userDto.getGender().equals("Male"))
+
+       if(userDto.getGender().equals("Male"))
             userService.setGender("male",userDto.getUsername());
 
         if(userDto.getGender().equals("Female"))
@@ -41,8 +41,18 @@ public class RabbitMQConsumer {
 
 
 
+        if(userService.getAgeGroup("a").isEmpty())
+            userService.createAgeGroup("a");
 
-        
+        if(userService.getAgeGroup("k").isEmpty())
+            userService.createAgeGroup("k");
+        if(userService.getAgeGroup("t").isEmpty())
+            userService.createAgeGroup("t");
+        if(userService.getAgeGroup("o").isEmpty())
+            userService.createAgeGroup("o");
+
+
+
         userService.setAgeGroup("a",userDto.getUsername());
         if(userDto.getDob()!=null)
         {
@@ -69,11 +79,17 @@ public class RabbitMQConsumer {
 
 
 
-        if(userDto.getRole().equals("editor"))
-            userService.createEditor(userDto.getUsername());
+        if(userService.getRole(userDto.getRole()).isEmpty())
+        {
+            userService.createRole(userDto.getRole());
+        }
+
+
 
         if(userDto.getRole().equals("designer"))
             userService.createDesigner(userDto.getUsername());
+        else
+            userService.createEditor(userDto.getUsername());
 
     }
 

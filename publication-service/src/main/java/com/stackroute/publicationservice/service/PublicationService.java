@@ -14,6 +14,8 @@ public interface PublicationService {
 
     Publications saveContent(Publications publications) throws ContentAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException;
 
+    List<Publications> getAllPublications() throws InternalServerErrorException;
+
    List<Publications> findByTitle(String title);
 
     List<Publications> findByName(String username);

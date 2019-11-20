@@ -50,6 +50,11 @@ public class PublicationController {
         return new ResponseEntity<Publications>(publicationService.saveContent(publication), HttpStatus.CREATED);
     }
 
+    @GetMapping(value = "/publications")
+    public ResponseEntity<?> getAllPublications() throws InternalServerErrorException {
+        return new ResponseEntity<List<Publications>>(publicationService.getAllPublications(), HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) throws InternalServerErrorException, ContentDoesNotExistException {
         publicationService.deleteContent(id);
@@ -60,13 +65,6 @@ public class PublicationController {
     public ResponseEntity<?> update(@RequestBody Publications publication) throws InternalServerErrorException, ContentDoesNotExistException {
         publicationService.updateContent(publication);
         return new ResponseEntity<Publications>(publication, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{title}")
-    public ResponseEntity<?> getContent(@PathVariable("title") String title) throws ContentDoesNotExistException {
-
-        responseEntity = new ResponseEntity<List<Publications>>(publicationService.findByTitle(title), HttpStatus.OK);
-        return responseEntity;
     }
 
     @GetMapping(value = "/name/{username}")
@@ -83,8 +81,6 @@ public class PublicationController {
 
     @GetMapping("publications/{title}")
     public ResponseEntity<?> findAllByTitle(@PathVariable("title") String title) throws InternalServerErrorException {
-
-
         responseEntity = new ResponseEntity<List<Publications>>(publicationService.findByTitle(title), HttpStatus.OK);
         return responseEntity;
     }

@@ -1,6 +1,5 @@
 package com.stackroute.profileservice.service;
 
-import com.stackroute.profileservice.model.Genre;
 import com.stackroute.profileservice.model.Interest;
 import com.stackroute.profileservice.model.Profile;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -31,10 +30,10 @@ public class RabbitMQSender {
         List<Interest> interest= profile.getInterest();
         for (int i=0;i<interest.size();i++)
         {
-            List<Genre> genreList=interest.get(i).getGenre();
+            List<String> genreList=interest.get(i).getGenre();
             for (int j=0;j<genreList.size();j++)
             {
-                toSendGenre=toSendGenre+"/"+genreList.get(j).getName();
+                toSendGenre=toSendGenre+"/"+genreList.get(j);
             }
         }
 

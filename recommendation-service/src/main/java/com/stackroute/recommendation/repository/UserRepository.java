@@ -18,13 +18,13 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match (g:Genre),(u:User{name:{username}}),(b:User),(v:Book),(k:Book) where (u)-[:bought]->(v)<-[:bought]-(b)-[:bought]->(k:Book)  return distinct k")
     Collection<Book> bookReccomendation(@Param("username") String name);                // book recommendation
 
-    @Query("match(u:User),(uu:User),(b:Book),(g:Gender),(a:AgeGroup) where u.name= {username} and (u)-[:has_gender]->(g)<-[:has_gender]-(uu) and  (u)-[:has_agegroup]->(a)<-[:has_agegroup]-(uu) and (uu)-[:bought]->(b) return b")
+    @Query("match(u:User),(uu:User),(b:Book),(g:Gender),(a:ageGroup) where u.name= {username} and (u)-[:has_gender]->(g)<-[:has_gender]-(uu) and  (u)-[:has_ageGroup]->(a)<-[:has_ageGroup]-(uu) and (uu)-[:bought]->(b) return b")
     Collection<Book> getRecAccProfile(@Param("username") String username); //working
 
     @Query("match(u:User{name:{username}}),(b:Book),(g:Genre) where (u)-[:likes]->(g)<-[:has_genre]-(b) return distinct b")
     Collection<Book> getRecAccLikes(@Param("username") String username);
 
-    @Query("match(u:User{name: {username} }),(b:Book),(c:Book),(a:User) where (u)-[:bought]->(b)<-[:has_authored]-(a)-[:has_authored]->(c) return distinct c")
+    @Query("match(u:User{name: {username} }),(b:Book),(c:Book),(a:User) where (u)-[:bought]->(b)<-[:has_wrote]-(a)-[:has_wrote]->(c) return distinct c")
     Collection<Book> getRecAccAuth(@Param("username") String username);
 
 
@@ -34,12 +34,22 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match(u:User),(r:Role{name:'designer'}),(g:Genre{name:{genre}}) where (u)-[:has_role]->(r) and (u)-[:likes]->(g) return u Order by u.cost,u.exp DESC")
     Collection<User> getIllustratorRec(@Param("genre") String genre);   //illustrator recc
 
-    @Query("match(u:User{name:{author}}),(e:User{name:{editor}}),(d:User{name:{designer}}),(t:Type{name:{type}}) create(b:Book{bookName:{title},bookId:{bookId},bookPrice:{price},nop:{nop}}) ,(u)-[:has_wrote]->(b),(e)-[:has_edited]->(b) , (d)-[:has_designed]->(b), (b)-[:has_type]->(t) return b")
-    void savePublication(@Param("title") String title,@Param("author") String author,@Param("bookId") int bookId,@Param("editor") String editor,@Param("designer") String designer,@Param("nop") int nop,@Param("price") double price,@Param("type") String type);
+    @Query("match(u:User{name:{author}}) create(b:Book{bookName:{title},bookId:{bookId},bookPrice:{price},nop:{nop}}) ,(u)-[:has_wrote]->(b)")
+    void savePublication(@Param("title") String title,@Param("author") String author,@Param("bookId") int bookId,@Param("nop") int nop,@Param("price") double price);
 
     @Query("match (u:User{name:{username}}),(b:Book{bookId:{bookId}})\n"+"set b.nop=b.nop+1\n"+
             "create (u)-[:bought]->(b)")
     void savePurchasing(@Param("bookId") int bookId,@Param("username") String username);
+
+    @Query("match(b:Book{bookId:{bookId}}),(u:User{name:{editor}}) create (e)-[:has_edited]->(b)")
+    void saveEditor(@Param("editor") String editor,@Param("bookId") int bookId);
+
+    @Query("match(b:Book{bookId:{bookId}}),(u:User{name:{designer}}) create (e)-[:has_designed]->(b)")
+    void saveDesigner(@Param("designer") String editor,@Param("bookId") int bookId);
+
+    @Query("match(u:User{name:{username}}) set u.exp=u.exp+1")
+    void incrExp(@Param("username") String username);
+
 
     @Query("match(b:Book) Return b" +
             "Order by b.created_at desc" +
@@ -58,9 +68,6 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("create (t:Type{name:{type}}) return t")
     Type createType(@Param("type") String type);
-    
-    @Query("create (u:User{name:{username},cost:{cost},exp:{exp}})")
-    void createUser(@Param("username") String username,@Param("exp") int exp,@Param("cost") double cost);
 
     @Query("match (t:Type{name:{type}}) return t")
     List<Type> getType(@Param("type") String type);
@@ -92,7 +99,7 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("match(u:User{name:{username}}),(a:ageGroup{name:{ageGroup}}) create (u)-[:has_ageGroup]->(a) ")
     void setAgeGroup(@Param("ageGroup") String ageGroup,@Param("username") String username);
 
-    @Query("match(u:User{name:{username}}),(g:Gender:{name:{gender}}) create (u)-[:has_gender]->(g)")
+    @Query("match(u:User{name:{username}}),(g:Gender{name:{gender}}) create (u)-[:has_gender]->(g)")
     void setGender(@Param("gender") String ageGroup,@Param("username") String username);
 
     @Query("match(u:User{name:{username}}),(n:nationality{name:{nationality}}) create (u)-[:has_nationality]->(n)")
@@ -100,17 +107,20 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
 
 
-    @Query("create g:Gender{name:{gender}}")
+    @Query("create (g:Gender{name:{gender}})")
     void createGender(@Param("gender") String gender);
 
-    @Query("create g:Gender{name:{ageGroup}}")
+    @Query("create (g:ageGroup{name:{ageGroup}})")
     void createAgeGroup(@Param("ageGroup") String ageGroup);
 
-    @Query("create g:Gender{name:{nationality}}")
+    @Query("create (g:nationality{name:{nationality}})")
     void createNationality(@Param("nationality") String nationality);
 
-    @Query("create r:Role{name:{role}}")
+    @Query("create (r:Role{name:{role}})")
     void createRole(@Param("role") String role);
+
+    @Query("create (u:User{name:{username},cost:{cost},exp:{exp}})")
+    void createUser(@Param("username") String username,@Param("exp") int exp,@Param("cost") double cost);
 
 
     @Query("match(g:Genre{name:{genre}})<-[:has_genre]-(b:Book)<-[r:bought]-(u:User) Return u  Order by r.created_at desc  Limit 1000")
@@ -152,3 +162,4 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
 
 }
+

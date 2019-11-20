@@ -112,7 +112,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (!flag) {
             Chapter chapter = new Chapter();
             chapter.setBookId(bookId);
-            chapter.setChapterIndex(1);
+            chapter.setChapterIndex(0);
             chapters.add(chapter);
             profile.setChapterRelease(chapters);
             profileRepository.save(profile);

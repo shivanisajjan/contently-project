@@ -1,12 +1,14 @@
 package com.stackroute.awsstorage.controller;
 
-import com.stackroute.awsstorage.model.Html;
+import com.stackroute.awsstorage.model.ContentDTO;
 import com.stackroute.awsstorage.service.AmazonClient;
+import com.stackroute.awsstorage.service.RabbitMQSender;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +29,22 @@ public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     private AmazonClient amazonClient;
+    private RabbitMQSender rabbitMQSender;
 
     @Autowired
-    public FileController(AmazonClient amazonClient) {
+    public FileController(AmazonClient amazonClient, RabbitMQSender rabbitMQSender) {
         this.amazonClient = amazonClient;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     @PostMapping("/file/{filename}")
-    public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file,@PathVariable String filename) {
+    public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file, @PathVariable String filename) {
 
-        return new ResponseEntity<String>(this.amazonClient.uploadFile(file,filename), HttpStatus.CREATED);
+        return new ResponseEntity<String>(this.amazonClient.uploadFile(file, filename), HttpStatus.CREATED);
     }
 
     @PostMapping("/text/{filename}")
-    public ResponseEntity<?> uploadText(@PathVariable String filename, @RequestPart(value = "file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> uploadText(@PathVariable("filename") String filename, @RequestPart(value = "file") MultipartFile file) throws IOException {
 
         System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));
@@ -60,11 +64,9 @@ public class FileController {
 
         while ((s1 = stdInput1.readLine()) != null) {
 
-           System.out.println(s1);
+            System.out.println(s1);
 
         }
-
-
 
 
         String s = null;
@@ -78,8 +80,6 @@ public class FileController {
         };
 
 
-
-
         Process p = Runtime.getRuntime().exec(cmd);
         BufferedReader stdInput = new BufferedReader(new
                 InputStreamReader(p.getInputStream()));
@@ -91,23 +91,46 @@ public class FileController {
         String url = "";
         float percentage = 0;
         while ((s = stdInput.readLine()) != null) {
-System.out.println("s:"+s);
-            String[] result = s.split(" ",-1);
-System.out.println("result"+result);
-             url = result[0];
-             percentage = Float.parseFloat(result[1]);
-System.out.println("percentage:"+percentage);
+            System.out.println("s:" + s);
+            String[] result = s.split(" ", -1);
+            System.out.println("result");
+            try {
+                url = result[0];
+                percentage = Float.parseFloat(result[1]);
+                System.out.println("percentage:" + percentage);
+            } catch (Exception e) {
+                ContentDTO contentDTO = new ContentDTO();
+                int id = Integer.parseInt(filename);
+                contentDTO.setId(id);
+                contentDTO.setPlagarized(false);
+                contentDTO.setPlagCheckingDone(true);
+                rabbitMQSender.sendContent(contentDTO);
+                this.amazonClient.generatePDFFromHTML(filename, file);
+                return new ResponseEntity<>("Success", HttpStatus.CREATED);
+            }
 
         }
 
-        System.out.println("URL = "+url);
-        System.out.println("Percentage = "+percentage);
-        if(percentage > 35)
-            return new ResponseEntity<>("Plagiarised!\n"+url+"\n"+percentage,HttpStatus.CONFLICT);
+        System.out.println("URL = " + url);
+        System.out.println("Percentage = " + percentage);
+        if (percentage > 35) {
+            ContentDTO contentDTO = new ContentDTO();
+            int id = Integer.parseInt(filename);
+            contentDTO.setId(id);
+            contentDTO.setPlagarized(true);
+            contentDTO.setPlagCheckingDone(true);
+            rabbitMQSender.sendContent(contentDTO);
+            return new ResponseEntity<>("Plagiarised!\n" + url + "\n" + percentage, HttpStatus.CONFLICT);
+        }
 
-
-        this.amazonClient.generatePDFFromHTML(filename,file);
-        return new ResponseEntity<>("Success",HttpStatus.CREATED);
+        ContentDTO contentDTO = new ContentDTO();
+        int id = Integer.parseInt(filename);
+        contentDTO.setId(id);
+        contentDTO.setPlagarized(false);
+        contentDTO.setPlagCheckingDone(true);
+        rabbitMQSender.sendContent(contentDTO);
+        this.amazonClient.generatePDFFromHTML(filename, file);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
 
     }
 
@@ -118,8 +141,7 @@ System.out.println("percentage:"+percentage);
     }
 
     @GetMapping("/file/{filename}")
-    public ResponseEntity<InputStreamResource> getFile(@PathVariable String filename)
-    {
+    public ResponseEntity<InputStreamResource> getFile(@PathVariable String filename) {
         return this.amazonClient.getFile(filename);
     }
 }

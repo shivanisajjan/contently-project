@@ -18,13 +18,8 @@ import {map, startWith} from 'rxjs/operators';
 })
 
 export class ContentLayoutComponent implements OnInit {
-  // private genresList = ['horror', 'romance', 'thriller', 'crime', 'drama'];
-  // private genres : string[] = [];
-  // private allGenres : string[] = ['Horror','Thriller','Romance','Comedy'];
   visible = true;
   selectable = true;
-  removable = true;
-  addOnBlur = true;
   fruitCtrl = new FormControl();
 
 
@@ -145,50 +140,5 @@ export class ContentLayoutComponent implements OnInit {
         startWith(null),
         map((genre: string | null) => genre ? this._filter(genre) : this.genresList.slice()));
   }
-
-  // add(event: MatChipInputEvent): void {
-  //   // Add fruit only when MatAutocomplete is not open
-  //   // To make sure this does not conflict with OptionSelected Event
-  //   if (!this.matAutocomplete.isOpen) {
-  //     const input = event.input;
-  //     const value = event.value;
-
-  //     // Add our fruit
-  //     if ((value || '').trim()) {
-  //       this.genres.push(value.trim());
-  //     }
-
-  //     // Reset the input value
-  //     if (input) {
-  //       input.value = '';
-  //     }
-
-  //     this.fruitCtrl.setValue(null);
-  //   }
-  // }
-
-  // remove(fruit: string): void {
-  //   const index = this.genres.indexOf(fruit);
-
-  //   if (index >= 0) {
-  //     this.genres.splice(index, 1);
-  //   }
-  // }
-
-  // selected(event: MatAutocompleteSelectedEvent): void {
-  //   this.genres.push(event.option.viewValue);
-  //   this.fruitInput.nativeElement.value = '';
-  //   this.fruitCtrl.setValue(null);
-  // }
-
-  // saveGenre(){
-
-  // }
-
-  // private _filter(value: string): string[] {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.allGenres.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);
-  // }
 
 }

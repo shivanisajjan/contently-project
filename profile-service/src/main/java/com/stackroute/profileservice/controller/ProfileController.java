@@ -33,7 +33,6 @@ public class ProfileController {
     @PostMapping
     public ResponseEntity<?> saveProfile(@RequestBody Profile profile) {
         responseEntity = new ResponseEntity<Profile>(this.profileService.saveProfile(profile), HttpStatus.CREATED);
-        rabbitMQSender.sendProfile(profile);
         return responseEntity;
     }
 
@@ -70,7 +69,9 @@ public class ProfileController {
 
     @PutMapping("/update")
     public ResponseEntity<?> updateProfile(@RequestBody Profile profile) {
-        responseEntity = new ResponseEntity<Profile>(profileService.update(profile), HttpStatus.OK);
+	Profile profile1=profileService.update(profile);
+        responseEntity = new ResponseEntity<Profile>(profile1, HttpStatus.OK);
+        rabbitMQSender.sendProfile(profile1);
         return responseEntity;
     }
 

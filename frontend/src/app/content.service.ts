@@ -59,7 +59,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/role/${role}`;
+    const postUrl = `${environment.backBaseUrl}user-management/api/v1/user/role/${role}`;
     return this.http.get(postUrl, httpOptions);
   }
 
@@ -188,7 +188,7 @@ export class ContentService {
     return this.http.get(postUrl, httpOptions);
   }
 
-  requestChapterFromProfile(username, bookId): Observable<any> {
+  requestChapterFromProfile(username, bookId): Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

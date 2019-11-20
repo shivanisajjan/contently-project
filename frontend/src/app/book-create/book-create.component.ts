@@ -84,16 +84,16 @@ export class BookCreateComponent implements OnInit {
             if (this.bookDetails.editorStatus !== 'confirmed' && this.bookDetails.designerStatus !== 'confirmed') {
               this.contentService.getRecommendedEditorsOrIllustrators('editor', this.bookDetails.genres[0]).subscribe(
                 result => {
-                 this.bookDetails.editorName = result[0].name;
-                 this.bookDetails.editorStatus = 'confirmed';
-                 this.contentService.saveBookDetails(this.bookDetails).subscribe();
+                  this.bookDetails.editorName = result[0].name;
+                  this.bookDetails.editorStatus = 'confirmed';
+                  this.contentService.saveBookDetails(this.bookDetails).subscribe();
                 });
               this.contentService.getRecommendedEditorsOrIllustrators('designer', this.bookDetails.genres[0]).subscribe(
-                  result => {
-                   this.bookDetails.designerName = result[0].name;
-                   this.bookDetails.designerStatus = 'confirmed';
-                   this.contentService.saveBookDetails(this.bookDetails).subscribe();
-                  });
+                result => {
+                  this.bookDetails.designerName = result[0].name;
+                  this.bookDetails.designerStatus = 'confirmed';
+                  this.contentService.saveBookDetails(this.bookDetails).subscribe();
+                });
             }
           }
         }
@@ -369,22 +369,20 @@ export class BookCreateComponent implements OnInit {
   }
 
   changeChapterStatus(status: string, i: number) {
-    if (window.confirm('Change the Status of chapter' + this.bookDetails.status[i].chapterName + ' to :' + status)) {
-      console.log(status, i);
-      this.bookDetails.status[i].status = status;
-      console.log('status changed to :', this.bookDetails.status[i].status);
-      localStorage.setItem('book', JSON.stringify(this.bookDetails));
-      this.contentService.saveContent(this.bookDetails)
-        .subscribe(
-          data => {
-            console.log('status changed data: ', data);
-            this.setShowEditButton();
-          },
-          error => {
-            console.log('status changed error: ', error);
-          }
-        );
-    }
+    console.log(status, i);
+    this.bookDetails.status[i].status = status;
+    console.log('status changed to :', this.bookDetails.status[i].status);
+    localStorage.setItem('book', JSON.stringify(this.bookDetails));
+    this.contentService.saveContent(this.bookDetails)
+      .subscribe(
+        data => {
+          console.log('status changed data: ', data);
+          this.setShowEditButton();
+        },
+        error => {
+          console.log('status changed error: ', error);
+        }
+      );
   }
 
   // getBookDetails(id) {
@@ -416,6 +414,7 @@ export class BookCreateComponent implements OnInit {
     }
     return true;
   }
+
   sendNotification(receiver: string, bookId: number, message: string | string) {
     const newNotification: notification = new notification();
     newNotification.sender = localStorage.getItem('username');
@@ -430,7 +429,6 @@ export class BookCreateComponent implements OnInit {
     this.bookFetch.uploadToAws(file, this.bookDetails.id)
       .subscribe(
         data => {
-
           if (data === 'Success') {
             const dialogRef = this.dialog.open(PublicationBookComponent, {
               width: '50%',
@@ -584,11 +582,11 @@ export class SelectEditorDialog implements OnInit {
     console.log(term);
     // tslint:disable-next-line: max-line-length
     // tslint:disable-next-line: only-arrow-functions
-    this.editorListFiltered = this.editorList.filter(function(tag: { name: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }; }) {
+    this.editorListFiltered = this.editorList.filter(function (tag: { name: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }; }) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
     // tslint:disable-next-line: only-arrow-functions
-    this.allEditorListFiltered = this.allEditorList.filter(function(tag: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }) {
+    this.allEditorListFiltered = this.allEditorList.filter(function (tag: { toLowerCase: () => { indexOf: (arg0: any) => number; }; }) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
   }
@@ -602,7 +600,7 @@ export class SelectEditorDialog implements OnInit {
   styleUrls: ['./book-create.component.css']
 })
 // tslint:disable-next-line: component-class-suffix
-export class SelectIllustratorDialog implements  OnInit {
+export class SelectIllustratorDialog implements OnInit {
   public illustratorList;
   public illustratorListFiltered: any;
   public searchTerm: any;
@@ -666,11 +664,11 @@ export class SelectIllustratorDialog implements  OnInit {
   search(): void {
     const term = this.searchTerm;
     // tslint:disable-next-line: only-arrow-functions
-    this.illustratorListFiltered = this.illustratorList.filter(function(tag) {
+    this.illustratorListFiltered = this.illustratorList.filter(function (tag) {
       return tag.name.toLowerCase().indexOf(term) >= 0;
     });
     // tslint:disable-next-line: only-arrow-functions
-    this.allIllustratorListFiltered = this.allIllustratorList.filter(function(tag) {
+    this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
   }

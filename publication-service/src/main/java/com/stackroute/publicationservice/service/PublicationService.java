@@ -16,12 +16,11 @@ public interface PublicationService {
 
    List<Publications> findByTitle(String title);
 
-   void deleteContent(int id) throws ContentDoesNotExistException,InternalServerErrorException;
+    List<Publications> findByName(String username);
+
+    void deleteContent(int id) throws ContentDoesNotExistException,InternalServerErrorException;
 
    Publications updateContent(Publications publications) throws ContentDoesNotExistException,InternalServerErrorException;
-
-
-    List<Publications> findByEditorId(int id) throws InternalServerErrorException;
 
     public List<Publications> searchQuery(String searchQuery);
 

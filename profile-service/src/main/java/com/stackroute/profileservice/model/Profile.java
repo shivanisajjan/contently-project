@@ -17,7 +17,7 @@ public class Profile {
     private int id;
     private String username;
     private String role;
-    private List<Interest> interest;
+    private List<Interest> interest=new ArrayList<>();
     private Long ratings;
     private int experience;
     private double cost;

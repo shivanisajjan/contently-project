@@ -39,10 +39,10 @@ public class RabbitMQConsumer {
             userService.createGender(userDto.getGender());
         }
 
-        if(userDto.getGender().equals("M"))
+        if(userDto.getGender().equals("Male"))
             userService.setGender("male",userDto.getUsername());
 
-        if(userDto.getGender().equals("F"))
+        if(userDto.getGender().equals("Female"))
             userService.setGender("female",userDto.getUsername());
 
 

@@ -29,7 +29,8 @@ export class AppComponent implements OnInit {
   private stompClient;
   private notificationList: any;
   private notificationCount;
-  private notificationStatusList: notification[] = new Array();
+  private notificationStatusList: notification[] = [];
+  private notificationLoaded;
   private book: any;
   private searchValue;
 
@@ -55,7 +56,7 @@ export class AppComponent implements OnInit {
       console.log('LOGGED IN');
       this.loggedIn = true;
     }
-
+    this.notificationLoaded = false;
     this.getNotifications();
   }
 
@@ -138,11 +139,18 @@ export class AppComponent implements OnInit {
               this.notificationCount = this.notificationCount + 1;
             }
           }
+          this.notificationLoaded = true;
           // console.log('New Notifications : ', this.notificationCount);
         });
   }
+  getNotificationLoaded(): boolean{
+    return this.notificationLoaded;
+  }
 
   removeNewNotifications() {
+    if(!this.getNotificationLoaded()){
+      return;
+    }
     // tslint:disable-next-line: prefer-const
     for (let n of this.notificationList) {
       // console.log(n.status);

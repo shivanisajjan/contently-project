@@ -73,8 +73,12 @@ export class PublicationBookComponent implements OnInit {
             data => {
               this.dialogRef.close();
               this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
-              this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
-              this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
+              if(this.book.editorName !== undefined){
+                this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
+              }
+              if(this.book.designerName !== undefined){
+                this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
+              }
             }
           );
       }

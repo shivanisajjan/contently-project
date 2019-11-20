@@ -121,19 +121,24 @@
                 <mat-menu #actionsMenu="matMenu">
                   <button mat-menu-item color="primary" *ngIf="getShowEditButton(i)"
                           (click)="editFile(chapter.chapterName)" style="margin-right: 10px">
-                    <mat-icon>edit</mat-icon> Edit
+                    <mat-icon>edit</mat-icon>
+                    Edit
                   </button>
                   <button mat-menu-item color="primary" (click)="preview(chapter.chapterName)"
                           style="margin-right: 10px">
-                    <mat-icon class="mat_icon">remove_red_eye</mat-icon> Preview
+                    <mat-icon class="mat_icon">remove_red_eye</mat-icon>
+                    Preview
                   </button>
 
                   <button mat-menu-item (click)="openIssuesComponent(chapter.chapterName); drawer.toggle()">
-                    <mat-icon>comment</mat-icon> Issues
+                    <mat-icon>comment</mat-icon>
+                    Issues
                   </button>
 
-                  <button mat-menu-item (menuOpened)="commits(chapter.chapterName)" (click)="commits(chapter.chapterName)" [matMenuTriggerFor]="commitMenu">
-                    <mat-icon>update</mat-icon> Versions
+                  <button mat-menu-item (menuOpened)="commits(chapter.chapterName)"
+                          (click)="commits(chapter.chapterName)" [matMenuTriggerFor]="commitMenu">
+                    <mat-icon>update</mat-icon>
+                    Versions
                   </button>
                   <mat-menu #commitMenu="matMenu" xPosition="before">
                     <div *ngIf="commitListLoaded">
@@ -155,15 +160,21 @@
         </mat-card-content>
 
         <mat-card-actions *ngIf="ifAuthor()">
-          <button mat-raised-button class="style-button" (click)="addNewSection()">
+          <button style="margin-right: 10px;" mat-raised-button class="style-button" (click)="addNewSection()">
             <mat-icon>add</mat-icon>
           </button>
-          <button *ngIf="isPublish()" (click)="onPublish()" mat-raised-button  class="style-button">Publish</button>
+          <span [matTooltipDisabled]="isPublish()"
+                matTooltip="Status of all chapters should be 'Finished'" >
+            <button [disabled]="!isPublish()" (click)="onPublish()" mat-raised-button
+                    class="style-button">Publish
+            </button>
+          </span>
+
           <ngx-spinner
-bdColor = "rgba(51, 51, 51, 0.8)"
-size = "large"
-color = "#934d4d"
-type = "ball-8bits"></ngx-spinner>
+            bdColor="rgba(51, 51, 51, 0.8)"
+            size="large"
+            color="#934d4d"
+            type="ball-8bits"></ngx-spinner>
 
 
           <!-- <input type='file' (change)="onSelectFile($event)"> -->

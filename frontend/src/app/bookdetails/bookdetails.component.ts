@@ -40,6 +40,7 @@ export class BookdetailsComponent implements OnInit {
         },
         error => {
           console.log('error', error);
+          this.bookDetailsLoaded = false;
         }
       );
     this.contentService.getPurchaseStatus(localStorage.getItem('bookId'))
@@ -58,7 +59,7 @@ export class BookdetailsComponent implements OnInit {
         data => {
           console.log('Chapter data: ', data);
           this.releaseNext = data.releaseNext;
-          this.chapterIndex = data.chapterIndex-1;
+          this.chapterIndex = data.chapterIndex - 1;
         },
         error => {
           console.log('Chapter error: ', error);
@@ -75,8 +76,8 @@ export class BookdetailsComponent implements OnInit {
   }
 
   downloadPdf() {
-    // const bookId = 'sample';
-    const bookId = localStorage.getItem('bookId');
+    const bookId = 'sample';
+    // const bookId = localStorage.getItem('bookId');
     const fileName = bookId + '.pdf';
     const fileType = this.fileSaverService.genType(fileName);
     console.log('book id is ' + bookId);

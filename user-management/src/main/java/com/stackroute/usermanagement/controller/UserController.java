@@ -12,7 +12,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,6 @@ public class
 UserController {
 
     private UserService userService;
-    private ResponseEntity responseEntity;
     private RabbitMQSender rabbitMQSender;
 
     @Autowired
@@ -44,7 +42,7 @@ UserController {
     public ResponseEntity<User> registerUser(@RequestBody User user) throws UserAlreadyExistsExceptions, InternalServerErrorException {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));//field checking
         User user1=userService.saveUser(user);
-        return new ResponseEntity<User> (user1, HttpStatus.CREATED);
+        return new ResponseEntity<>(user1, HttpStatus.CREATED);
     }
 
 
@@ -59,18 +57,17 @@ UserController {
         AuthenticationResponse authenticationResponse=new AuthenticationResponse();
         authenticationResponse.setAuthResponse(jwtToken);
         authenticationResponse.setRole(u.getRole());
-        System.out.println(jwtToken);
          return new ResponseEntity<AuthenticationResponse> (authenticationResponse, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/delete/{username}")
-    public ResponseEntity<String> delete(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+    public ResponseEntity<String> delete(@PathVariable String username) throws InternalServerErrorException, UserDoesNotExistException {
         userService.deleteUser(username);
-        return new ResponseEntity<String>("Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<User> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+    public ResponseEntity<User> update(@RequestBody User user) throws InternalServerErrorException,  UserDoesNotExistException {
         User uname=userService.getByUsername(user.getUsername());
         user.setPassword(uname.getPassword());
         DTOUser dtouser=new DTOUser();
@@ -90,16 +87,16 @@ UserController {
         rabbitMQSender.sendRegistry(dtouser);
         rabbitMQSender.sendRegistry1(dtouser);
         userService.updateUser(user);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping(value = "{username}")
-    public ResponseEntity<User> getByUsername(@PathVariable String username) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
-        return new ResponseEntity<User>(userService.getByUsername(username) ,HttpStatus.OK);
+    public ResponseEntity<User> getByUsername(@PathVariable String username)  {
+        return new ResponseEntity<>(userService.getByUsername(username) ,HttpStatus.OK);
     }
     @GetMapping(value = "/role/{role}")
-    public ResponseEntity<?> getByRole(@PathVariable String role) throws InternalServerErrorException, InvalidRoleInfoException {
-        return new ResponseEntity<List<String>>(userService.getByRole(role), HttpStatus.OK);
+    public ResponseEntity<List<String>> getByRole(@PathVariable String role) throws  InvalidRoleInfoException {
+        return new ResponseEntity<>(userService.getByRole(role), HttpStatus.OK);
     }
 
 

@@ -2,7 +2,6 @@ package com.stackroute.usermanagement.service;
 
 
 import com.stackroute.usermanagement.exceptions.*;
-import com.stackroute.usermanagement.model.DTOUser;
 import com.stackroute.usermanagement.model.User;
 import com.stackroute.usermanagement.repository.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
@@ -16,11 +15,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
-    private RabbitMQSender rabbitMQSender;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RabbitMQSender rabbitMQSender) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.rabbitMQSender = rabbitMQSender;
     }
     @Override
     public User saveUser(User user) throws UserAlreadyExistsExceptions,InternalServerErrorException {
@@ -28,8 +25,7 @@ public class UserServiceImpl implements UserService{
             throw new UserAlreadyExistsExceptions();
         }
         try {
-            User u = userRepository.save(user);
-            return u;
+            return userRepository.save(user);
         }catch (Exception e){
             throw new InternalServerErrorException();
         }
@@ -40,14 +36,11 @@ public class UserServiceImpl implements UserService{
         User user;
         try {
             user = userRepository.findByUsername(u.getUsername());
-            System.out.println("username:"+user.getUsername());
         }
         catch(Exception ex){
-            System.out.println("Error");
             throw new InternalServerErrorException();
         }
         if(user==null || !BCrypt.checkpw(u.getPassword(),user.getPassword())){
-            System.out.println("password:"+user.getPassword());
             throw new InvalidCredentialException();
         }
         return user;
@@ -73,8 +66,7 @@ public class UserServiceImpl implements UserService{
         if(u1!= null){
             try{
                 user.setId(u1.getId());
-                User u=userRepository.save(user);
-                return u;
+                return userRepository.save(user);
             }
             catch (Exception ex){
                 throw new InternalServerErrorException();
@@ -85,8 +77,8 @@ public class UserServiceImpl implements UserService{
         }
     }
     @Override
-    public User getByUsername(String Username){
-        return userRepository.findByUsername(Username);
+    public User getByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 
     @Override

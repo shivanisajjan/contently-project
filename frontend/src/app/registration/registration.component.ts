@@ -110,17 +110,18 @@ export class RegistrationComponent implements OnInit {
     }, {validator: this.checkPasswords});
    
 
-    this.$profile.interest = new Array();
-    this.$interest = new interest();
-    this.$interest.name = "Novel";
-    this.$interest.genre = [];
-    console.log(this.$interest.name);
-    this.$profile.interest.push(this.$interest);
+    // this.$profile.interest = new Array();
+    // this.$interest = new interest();
+    // this.$interest.name = "Novel";
+    // this.$interest.genre = [];
+    // console.log(this.$interest.name);
+    // this.$profile.interest.push(this.$interest);
   }
 
   public returnUser: any;
 
   public register(username, password, email, contact) {
+    
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;
@@ -171,52 +172,52 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-  checkValue(event, check) {
-    this.interestsBoolean = true;
-    console.log(check);
-    if (check == false) {
-      if ((event == "Biography" || event == "Autobiography")) {
+  // checkValue(event, check) {
+  //   this.interestsBoolean = true;
+  //   console.log(check);
+  //   if (check == false) {
+  //     if ((event == "Biography" || event == "Autobiography")) {
 
-        this.$interest = new interest();
-        this.$interest.name = event;
-        this.$interest.genre = [];
-        console.log(this.$interest.name);
-        this.$profile.interest.push(this.$interest);
+  //       this.$interest = new interest();
+  //       this.$interest.name = event;
+  //       this.$interest.genre = [];
+  //       console.log(this.$interest.name);
+  //       this.$profile.interest.push(this.$interest);
 
-      } else {
+  //     } else {
 
-        this.$genre = new genre();
-        this.$genre.name = event;
-        this.$profile.interest[0].genre.push(this.$genre);
+  //       this.$genre = new genre();
+  //       this.$genre.name = event;
+  //       this.$profile.interest[0].genre.push(this.$genre);
 
-      }
-    } else {
-      if (event == "Biography" || event == "Autobiography") {
-        this.$interest = new interest();
-        this.$interest.name = event;
-        this.$interest.genre = [];
-        let i;
-        for (i = 1; i < this.$profile.interest.length; ++i) {
-          if (this.$profile.interest[i].name == event) {
-            this.remove = this.$profile.interest.splice(i, 1);
-            console.log(this.remove);
-            break;
-          }
-        }
+  //     }
+  //   } else {
+  //     if (event == "Biography" || event == "Autobiography") {
+  //       this.$interest = new interest();
+  //       this.$interest.name = event;
+  //       this.$interest.genre = [];
+  //       let i;
+  //       for (i = 1; i < this.$profile.interest.length; ++i) {
+  //         if (this.$profile.interest[i].name == event) {
+  //           this.remove = this.$profile.interest.splice(i, 1);
+  //           console.log(this.remove);
+  //           break;
+  //         }
+  //       }
 
-      } else {
-        let i;
-        for (i = 0; i < this.$profile.interest[0].genre.length; i++) {
-          if (this.$profile.interest[0].genre[i].name == event) {
-            this.remove = this.$profile.interest[0].genre.splice(i, 1);
-            console.log(this.remove);
-            break;
-          }
-        }
-      }
-    }
-    console.log(this.$profile);
-  }
+  //     } else {
+  //       let i;
+  //       for (i = 0; i < this.$profile.interest[0].genre.length; i++) {
+  //         if (this.$profile.interest[0].genre[i].name == event) {
+  //           this.remove = this.$profile.interest[0].genre.splice(i, 1);
+  //           console.log(this.remove);
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   console.log(this.$profile);
+  // }
 
   saveInterests(username) {
     if (this.interestsBoolean) {

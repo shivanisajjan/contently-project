@@ -5,7 +5,7 @@
 </div>
   <div >
     <mat-form-field style="width: 100%">
-      <input style="color:black" #username matInput placeholder="Username">
+      <input class="username" style="color:black" #username matInput placeholder="Username">
     </mat-form-field>
   </div>
 
@@ -20,7 +20,7 @@
   </div>
 
   <div>
-    <button mat-raised-button  (click)="authenticate(username.value, password.value)">Login</button>
+    <button class="login-button" mat-raised-button  (click)="authenticate(username.value, password.value)">Login</button>
   </div>
 
   <h2 *ngIf="fail"><br>Login failed</h2>

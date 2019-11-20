@@ -77,8 +77,9 @@ mat-icon{
 
 .content-card{
   margin: 1%;
-  background-color: rgb(37, 37, 37);
+  background-color: #252525;
   height: 430px;
+  cursor: pointer;
 }
 .content-card mat-card-header{
   padding: 2px;

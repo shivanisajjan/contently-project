@@ -59,7 +59,7 @@ export class ContentService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `${environment.backBaseUrl}user-management/api/v1/user/role/${role}`;
+    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/role/${role}`;
     return this.http.get(postUrl, httpOptions);
   }
 

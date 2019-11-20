@@ -3,12 +3,20 @@
     <app-issues [fileName]="fileName"></app-issues>
   </mat-sidenav>
 
-  <div class="continer">
+  <div *ngIf="bookDetailsLoaded">
     <br>
     <mat-card class="book-details">
-      <img mat-card-image src="../../assets/images/book_cover.jpg" alt="Photo of a Shiba Inu">
+<!--      <img mat-card-image src="https://cdn3.volusion.com/jebff.evopn/v/vspfiles/photos/554-2.jpg?v-cache=1515935622" *ngIf="getBrokenImage()" (error)="coverImage()" alt="cover image">-->
+      <img mat-card-image src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookDetails.title}}.jpg"  *ngIf="getBrokenImage()" (error)="coverImage()" alt="cover image">
       <h2>{{bookDetails.title}}</h2>
-      <p>{{bookDetails.description}}</p>
+      <mat-card-subtitle style="display: flex; align-items: center">
+        <mat-icon style="margin-right: 10px">local_offer</mat-icon>
+        {{bookDetails.typeName | titlecase}}
+        <mat-icon style="margin-right: 10px; margin-left: 40px;">label</mat-icon>
+        <span *ngFor="let genre of bookDetails.genres">{{genre | titlecase}} &nbsp;</span>
+      </mat-card-subtitle>
+
+      <p style="text-align: justify">{{bookDetails.description}}</p>
     </mat-card>
     <br>
     <div *ngIf="ifAuthor()">
@@ -164,7 +172,7 @@
             <mat-icon>add</mat-icon>
           </button>
           <span [matTooltipDisabled]="isPublish()"
-                matTooltip="Status of all chapters should be 'Finished'" >
+                matTooltip="Status of all chapters should be 'Finished'">
             <button [disabled]="!isPublish()" (click)="onPublish()" mat-raised-button
                     class="style-button">Publish
             </button>
@@ -176,8 +184,7 @@
             color="#934d4d"
             type="ball-8bits"></ngx-spinner>
 
-
-          <!-- <input type='file' (change)="onSelectFile($event)"> -->
+           <input  class="style-button" type='file' (change)="onSelectFile($event)">
         </mat-card-actions>
 
       </mat-card>

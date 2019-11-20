@@ -43,7 +43,7 @@ export class PublicationBookComponent implements OnInit {
       .subscribe(
         result => {
           this.recommended_price = result;
-          console.log('result', result);
+          console.log('price result', result);
         }
       );
   }
@@ -67,20 +67,23 @@ export class PublicationBookComponent implements OnInit {
 
     this.bookFetch.saveToPublication(this.book).subscribe(
       data => {
-        console.log(data);
-        this.bookFetch.deleteContent(this.book.id)
-          .subscribe(
-            data => {
-              this.dialogRef.close();
-              this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
-              if(this.book.editorName !== undefined){
-                this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
-              }
-              if(this.book.designerName !== undefined){
-                this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
-              }
-            }
-          );
+        console.log('save to publication data: ', data);
+        // this.bookFetch.deleteContent(this.book.id)
+        //   .subscribe(
+        //     data => {
+        //       this.dialogRef.close();
+        //       this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
+        //       if(this.book.editorName !== undefined){
+        //         this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
+        //       }
+        //       if(this.book.designerName !== undefined){
+        //         this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
+        //       }
+        //     }
+        //   );
+      },
+      error => {
+        console.log('save to publication error: ', error);
       }
     );
   }

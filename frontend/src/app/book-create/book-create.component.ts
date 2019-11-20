@@ -40,10 +40,12 @@ export class BookCreateComponent implements OnInit {
   private editor: any;
   private illustrator: any;
   private bookDetails: any;
+  private bookDetailsLoaded;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
+  private brokenImage = true;
   fileName: string;
   private published: any;
   @ViewChild(IssuesComponent, {static: true}) issueComponent: IssuesComponent;
@@ -65,8 +67,6 @@ export class BookCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     if (localStorage.getItem('role') === 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
     } else if (localStorage.getItem('role') === 'designer') {
@@ -96,6 +96,7 @@ export class BookCreateComponent implements OnInit {
                 });
             }
           }
+          this.bookDetailsLoaded = true;
         }
       );
   }
@@ -465,9 +466,10 @@ export class BookCreateComponent implements OnInit {
         });
   }
 
-  onSelectFile(event: { target: { files: { name: any; }[]; }; }) { // called each time file input changes
+  onSelectFile(event: { target: { files: { name: any; }[]; }; }) {
+    // event.target.files[0].name = this.bookDetails.title;
     if (event.target.files && event.target.files[0]) {
-      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name)
+      this.bookFetch.uploadToAwsImage(event.target.files[0], this.bookDetails.title + '.jpg')
         .subscribe(data => {
           console.log(data);
         });
@@ -512,6 +514,13 @@ export class BookCreateComponent implements OnInit {
         );
     }
 
+  }
+  coverImage() {
+    console.log('broken image');
+    this.brokenImage = false;
+  }
+  getBrokenImage() {
+    return this.brokenImage;
   }
 
 }

@@ -19,6 +19,7 @@ export class BookdetailsComponent implements OnInit {
   private bookDetailsLoaded;
   private releaseNext;
   private chapterIndex;
+  private lastChapter;
 
   constructor(
     private dialog: MatDialog,
@@ -36,11 +37,25 @@ export class BookdetailsComponent implements OnInit {
         result => {
           this.bookDetails = result;
           console.log('book-details: ', this.bookDetails);
-          this.bookDetailsLoaded = true;
+          this.contentService.getChapterFromProfile(localStorage.getItem('username'), localStorage.getItem('bookId'))
+            .subscribe(
+              data => {
+                console.log('Chapter data: ', data);
+                this.releaseNext = data.releaseNext;
+                if (data.chapterIndex === result.chapterName.length - 1) {
+                  this.lastChapter = true;
+                  console.log('last chapter');
+                }
+                this.chapterIndex = data.chapterIndex;
+                this.bookDetailsLoaded = true;
+              },
+              error => {
+                console.log('Chapter error: ', error);
+              }
+            );
         },
         error => {
           console.log('error', error);
-          this.bookDetailsLoaded = false;
         }
       );
     this.contentService.getPurchaseStatus(localStorage.getItem('bookId'))
@@ -54,17 +69,6 @@ export class BookdetailsComponent implements OnInit {
           console.log('IsPurchased error', error);
         }
       );
-    this.contentService.getChapterFromProfile(localStorage.getItem('username'), localStorage.getItem('bookId'))
-      .subscribe(
-        data => {
-          console.log('Chapter data: ', data);
-          this.releaseNext = data.releaseNext;
-          this.chapterIndex = data.chapterIndex - 1;
-        },
-        error => {
-          console.log('Chapter error: ', error);
-        }
-      );
   }
 
   getHasPurchased(): boolean {
@@ -73,6 +77,10 @@ export class BookdetailsComponent implements OnInit {
 
   getReleaseNext(): boolean {
     return this.releaseNext;
+  }
+
+  getLastChapter(): boolean {
+    return this.lastChapter;
   }
 
   downloadPdf() {

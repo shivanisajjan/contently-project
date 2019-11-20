@@ -1,9 +1,4 @@
 /*material css*/
-.continer {
-  background-image: url('../../assets/images/side_bg.jpg');
-  height: 100%;
-}
-
 .section-list {
   width: 70%;
   margin-left: 24%;
@@ -200,7 +195,7 @@ mat-spinner{
     margin-left: 1%;
     margin-top: 1%;
     border: 10px solid #ddd;
-  
+
   }
 
   .editor-illustrator {
@@ -221,10 +216,10 @@ mat-spinner{
     .status{
       margin-right:15%;
     }
-    
+
     .chat-sidenav{
       width: 70%;
     }
-  
-  
+
+
 }

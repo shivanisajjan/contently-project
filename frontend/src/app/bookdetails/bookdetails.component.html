@@ -37,12 +37,12 @@
           <i class="fas fa-rupee-sign"></i>{{bookDetails.price}}
         </div>
         <div class="action-buttons-purchased" *ngIf="!getHasPurchased()">
-          <button mat-raised-button color="primary" (click)="goToPayment()">Purchase</button>
-          <button mat-raised-button color="primary" (click)="preview()">{{bookDetails.chapterName[chapterIndex]}}</button>
-          <button mat-raised-button color="primary" (click)="requestNext()" *ngIf="!getLastChapter()" [disabled]="getReleaseNext()">Request Next Chapter</button>
+          <button mat-raised-button class="style-button" (click)="goToPayment()">Purchase</button>
+          <button mat-raised-button class="style-button" (click)="preview()">{{bookDetails.chapterName[chapterIndex]}}</button>
+          <button mat-raised-button class="style-button" (click)="requestNext()" *ngIf="!getLastChapter()" [disabled]="getReleaseNext()">Request Next Chapter</button>
         </div>
         <div class="action-buttons-not-purchased" *ngIf="getHasPurchased()">
-          <button mat-raised-button [matMenuTriggerFor]="menu" color="primary">Download</button>
+          <button mat-raised-button class="style-button" [matMenuTriggerFor]="menu" color="primary">Download</button>
           <mat-menu #menu="matMenu">
             <a mat-menu-item (click)="downloadPdf()">PDF</a>
           </mat-menu>

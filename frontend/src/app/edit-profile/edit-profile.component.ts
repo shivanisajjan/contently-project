@@ -58,6 +58,7 @@ export class EditProfileComponent implements OnInit {
   private filteredGenres: Observable<string[]>;
   private genreFormControl: FormControl;
   private typeSelected: any;
+  private maxDate = new Date();
   constructor(
     // tslint:disable-next-line: variable-name
     private _formBuilder: FormBuilder,
@@ -76,7 +77,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit() {
     this.profileData = JSON.parse(localStorage.getItem('editProfile'));
-    console.log(this.profileData.dob);
+    console.log(this.profileData);
     if (this.profileData) {
       console.log(this.changeDateFormat(this.profileData.dob));
       this.username = this.profileData.username;
@@ -97,7 +98,9 @@ export class EditProfileComponent implements OnInit {
         secondCtrl: ['', Validators.required]
        });
      } else {
+
       this.username = localStorage.getItem('username');
+      console.log(this.username);
       this.firstFormGroup = this._formBuilder.group({
         firstName: [],
         lastName: [],
@@ -127,7 +130,7 @@ export class EditProfileComponent implements OnInit {
       map((genre: string | null) => genre ? this._filter(genre) : this.genresList.slice()));
   }
 
-  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, date) {
+  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, date, email, contact) {
     console.log('adding personal details');
     console.log(date);
     const regUser: userReg = new userReg();
@@ -140,12 +143,20 @@ export class EditProfileComponent implements OnInit {
     regUser.addressLine3 = address3;
     regUser.gender = this.gender;
     regUser.dob = date;
+    regUser.email = email;
+    regUser.phoneNumber = contact;
+
     this._loginService.updateUser(regUser).subscribe(result => {
       const returnUser = result;
       if (returnUser.id != null) {
         this.updateStatus = true;
+        console.log('updated');
       }
     });
+    if(!localStorage.getItem('role')){
+      console.log('ROlE FOUND');
+      localStorage.clear();
+    }
     localStorage.removeItem('editProfile');
   }
 
@@ -292,5 +303,15 @@ export class EditProfileComponent implements OnInit {
     
     // return dateArray.join("/");
     return dateArray[0] + "/" + dateArray[1] + "/" + dateArray[2];
+    }
+
+    getErrorPhone() {
+      return this.firstFormGroup.get('contact').hasError('pattern') ? 'Not a valid phone Number' :
+        this.firstFormGroup.get('contact').hasError('minLength') ? 'Must be 10 chars' :
+        this.firstFormGroup.get('contact').hasError('maxLength') ? 'Not more than 10 chars' : '';
+    }
+
+    getErrorEmail() {
+      return this.firstFormGroup.get('email').hasError('pattern') ? 'Not a valid email address' : '';
     }
 }

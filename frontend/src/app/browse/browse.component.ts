@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, HostListener} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {ContentService} from "../content.service";
 import {Router} from "@angular/router";
@@ -9,18 +9,23 @@ import {Router} from "@angular/router";
   styleUrls: ['./browse.component.css']
 })
 export class BrowseComponent implements OnInit {
-
+  public innerWidth: any;
   private pageEvent: PageEvent = new PageEvent();
   private size = 20;
   private books = [];
   private booksLoaded;
   private bookData: any;
+  private noCol = 5;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   constructor(private contentService: ContentService,
               private router: Router) {
   }
 
   ngOnInit() {
+    this.innerWidth = window.innerWidth;
+    if(this.innerWidth<400){
+      this.noCol = 1;
+    }
     this.contentService.getAllPublishedBooks()
       .subscribe(
         data => {
@@ -56,4 +61,10 @@ export class BrowseComponent implements OnInit {
   getBookData(){
     return this.bookData;
   }
+
+  @HostListener('window:resize', ['$event'])
+onResize(event) {
+  this.innerWidth = window.innerWidth;
+}
+
 }

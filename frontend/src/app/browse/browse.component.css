@@ -4,7 +4,7 @@
   flex-wrap: wrap;
 }
 .book-card{
-  height: 256px;
+  height: 90%;
   width: 200px;
   margin: 10px;
 }

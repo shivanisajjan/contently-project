@@ -9,6 +9,7 @@ import {MatTreeFlattener, MatTreeFlatDataSource, MatSnackBar} from '@angular/mat
 import {profile} from '../profile';
 import {interest} from '../interest';
 import {genre} from '../genre';
+import {user} from '../user';
 import {Router} from '@angular/router';
 
 interface FoodNode {
@@ -120,19 +121,25 @@ export class RegistrationComponent implements OnInit {
 
   public returnUser: any;
 
-  public register(username, password, email, contact) {
-    
+  public register(username, password) {
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;
-    regUser.email = email;
-    regUser.phoneNumber = contact;
     this._loginService.registerUser(regUser).subscribe(result => {
       this.returnUser = result;
       if (this.returnUser.id != null) {
         this.registerv = true;
         localStorage.setItem('username', username);
-        this._router.navigate(['/editProfile']).then();
+        const newUser: user = new user();
+        newUser.username = username;
+        newUser.password = password;
+        this._loginService.authenticateUser(newUser).subscribe(
+          // tslint:disable-next-line: no-shadowed-variable
+          result => {
+            localStorage.setItem('token', result.body.authResponse);
+            this._router.navigate(['/editProfile']).then();
+          }
+        );
       }
    },
    (error) => {

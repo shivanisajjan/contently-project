@@ -127,7 +127,7 @@ mat-card{
 mat-card:hover{
   box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.568);
   transition: 0.2s;
-  /* margin-top: -6px; */
+  
 }
 mat-card-content{
   text-align: center;
@@ -202,7 +202,8 @@ mat-card-content{
   padding: 5%;
   color: rgb(15, 15, 15);
   /* text-shadow: 4px 4px #333333; */
-  background-image: url('../../assets/images/trend.jpg');
+  /* background-image: url('../../assets/images/trend.jpg'); */
+  background-color: white;
   background-repeat: initial;
   font-weight: bold;
   text-transform: uppercase;
@@ -286,6 +287,7 @@ mat-card-content{
   background-color: rgb(26, 26, 26);
   height: 100%;
   animation: mymove 10s infinite;
+
 }
 
 .content-card img{
@@ -293,12 +295,10 @@ mat-card-content{
   height: 100%;
 }
 
-.content-card h6{
-  width: 200px;
-}
+
 
 .card-width{
-  width: 200px;
+  width: 50px;
 }
 
 .content-cards{

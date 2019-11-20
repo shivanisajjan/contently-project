@@ -35,7 +35,7 @@ mat-icon {
   background-color: lightgrey;
 }
 .dashboard-wrapper {
-  background-image: url('../../assets/images/side_bg.jpg');
+  
 }
 .content-title {
   font-size: 2em;
@@ -125,6 +125,6 @@ mat-icon{
   }
 
   .new-content-button{
-    margin-left: 15%;
+    margin-left: 0;
     }
 }

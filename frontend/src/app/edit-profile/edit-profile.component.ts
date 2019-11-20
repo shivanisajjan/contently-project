@@ -86,7 +86,7 @@ export class EditProfileComponent implements OnInit {
       address3: [this.profileData.addressLine3],
       nationality: [this.profileData.nationality, Validators.required],
       gender: [this.profileData.gender, Validators.required],
-      date: ['', Validators.required]    });
+      date: [this.profileData.dob, Validators.required]    });
       this.secondFormGroup = this._formBuilder.group({
         secondCtrl: ['', Validators.required]
        });

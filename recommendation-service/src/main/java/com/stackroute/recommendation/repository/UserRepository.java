@@ -58,6 +58,9 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("create (t:Type{name:{type}}) return t")
     Type createType(@Param("type") String type);
+    
+    @Query("create (u:User{name:{username},cost:{cost},exp:{exp}})")
+    void createUser(@Param("username") String username,@Param("exp") int exp,@Param("cost") double cost);
 
     @Query("match (t:Type{name:{type}}) return t")
     List<Type> getType(@Param("type") String type);

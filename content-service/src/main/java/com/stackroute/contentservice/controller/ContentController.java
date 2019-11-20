@@ -49,7 +49,7 @@ public class ContentController {
         return responseEntity;
     }
     @GetMapping(value = "/content/id/{id}")
-    public ResponseEntity<Content> getTitleById(@PathVariable int id) throws InternalServerErrorException, ContentDoesNotExistException {
+    public ResponseEntity<Content> getTitleById(@PathVariable int id) throws ContentDoesNotExistException {
         responseEntity=new ResponseEntity<>(contentService.findTitleById(id),HttpStatus.OK);
         return responseEntity;
     }

@@ -30,8 +30,8 @@ public class RabbitMQConsumer {
     public void recievedMessage(UserDto userDto) {
 
         user.setName(userDto.getUsername());
-        user.setCost(0);
-        user.setExp(0);
+        
+       userService.createUser(userDto.getUsername(),0,0);
 
         if(userDto.getGender().equals("Male"))
             userService.setGender("male",userDto.getUsername());
@@ -42,7 +42,7 @@ public class RabbitMQConsumer {
 
 
 
-        userService.saveUser(this.user);
+        
         userService.setAgeGroup("a",userDto.getUsername());
         if(userDto.getDob()!=null)
         {

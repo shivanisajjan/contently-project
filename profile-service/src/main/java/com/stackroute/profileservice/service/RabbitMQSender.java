@@ -39,7 +39,7 @@ public class RabbitMQSender {
         }
 
 
-        toSendGenre=toSendGenre+"pop"+profile.getUsername()+"pop"+profile.getExperience()+"pop"+profile.getExperience();
+        toSendGenre=toSendGenre+"pop"+profile.getUsername()+"pop"+profile.getExperience()+"pop"+profile.getCost();
 
         rabbitTemplate.convertAndSend(exchange, routingkey, toSendGenre);
 

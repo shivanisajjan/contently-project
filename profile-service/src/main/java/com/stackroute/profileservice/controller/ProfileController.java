@@ -71,6 +71,7 @@ public class ProfileController {
     public ResponseEntity<?> updateProfile(@RequestBody Profile profile) {
 	Profile profile1=profileService.update(profile);
         responseEntity = new ResponseEntity<Profile>(profile1, HttpStatus.OK);
+	System.out.println("pr:"+profile1);
         rabbitMQSender.sendProfile(profile1);
         return responseEntity;
     }

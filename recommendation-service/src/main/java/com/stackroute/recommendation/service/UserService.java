@@ -128,6 +128,11 @@ public class UserService {
 
     }
 
+    void createUser(String username,int exp,double cost)
+    {
+     userRepository.createUser(username,exp,cost);    
+	}
+
     void setAgeGroup(String ageGroup,String username)
     {
         userRepository.setAgeGroup(ageGroup,username);

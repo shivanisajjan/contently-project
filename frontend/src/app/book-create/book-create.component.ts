@@ -574,6 +574,7 @@ export class SelectEditorDialog implements OnInit {
     this.contentService.getEditorsOrIllustrators('editor').subscribe(
       result => {
         this.allEditorList = result;
+        console.log(this.allEditorList);
         this.allEditorListFiltered = this.allEditorList;
       });
   }

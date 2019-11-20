@@ -122,10 +122,51 @@ public class UserService {
         return userRepository.getType(type);
 
     }
+    List<Type> getGender(String gender)
+    {
+        return userRepository.getGender(gender);
+
+    }
+
+    List<Type> getAgeGroup(String ageGroup)
+    {
+        return userRepository.getType(ageGroup);
+
+    }
+    List<Type> getRole(String role)
+    {
+        return userRepository.getRole(role);
+
+    }
+    List<Type> getNationality(String nationality)
+    {
+        return userRepository.getType(nationality);
+
+    }
+
+    void createGender(String gender)
+    {
+        userRepository.createGender(gender);
+    }
+
+    void createAgeGroup(String ageGroup)
+    {
+        userRepository.createAgeGroup(ageGroup);
+    }
+    void  createNationality(String nationality)
+    {
+        userRepository.createNationality(nationality);
+    }
+
+
     void createType(String type)
     {
         userRepository.createType(type);
 
+    }
+    void createRole(String role)
+    {
+        userRepository.createRole(role);
     }
 
     void setAgeGroup(String ageGroup,String username)
@@ -174,6 +215,7 @@ public class UserService {
     {
         userRepository.saveExpCost(exp,cost,username);
     }
+
 
 
     public void dop() {

@@ -140,7 +140,7 @@ export class ContentService {
     return this.http.get(postUrl, httpOptions);
   }
 
-  getBookDetailPage(id) {
+  getBookDetailPage(id): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -218,6 +218,16 @@ export class ContentService {
       })
     };
     const postUrl = `${environment.backBaseUrl}publication-service/api/v1/name/${localStorage.getItem('username')}`;
+    return this.http.get(postUrl, httpOptions);
+  }
+  getAllPublishedBooks(): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    const postUrl = `${environment.backBaseUrl}publication-service/api/v1/publications`;
     return this.http.get(postUrl, httpOptions);
   }
 }

@@ -69,6 +69,7 @@ import {PublicationBookComponent} from './publication-book/publication-book.comp
 import {SearchResultsComponent} from './search-results/search-results.component';
 import {IssuesComponent} from './issues/issues.component';
 import {FailureComponent} from './failure/failure.component';
+import { BrowseComponent } from './browse/browse.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import {FailureComponent} from './failure/failure.component';
     PublicationBookComponent,
     SearchResultsComponent,
     IssuesComponent,
-    FailureComponent
+    FailureComponent,
+    BrowseComponent
   ],
 
   imports: [
@@ -162,6 +164,7 @@ import {FailureComponent} from './failure/failure.component';
   providers: [
     LoginService,
     ContentService,
+    BrowseComponent,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]

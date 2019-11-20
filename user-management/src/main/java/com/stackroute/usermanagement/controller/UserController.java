@@ -70,12 +70,11 @@ UserController {
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<String> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
+    public ResponseEntity<User> update(@RequestBody User user) throws InternalServerErrorException, InvalidCredentialException, UserDoesNotExistException {
         User uname=userService.getByUsername(user.getUsername());
         user.setPassword(uname.getPassword());
         DTOUser dtouser=new DTOUser();
         dtouser.setId(uname.getId());
-        System.out.println(uname.getId());
         dtouser.setUsername(user.getUsername());
         dtouser.setRole(user.getRole());
         dtouser.setPhoneNumber(user.getPhoneNumber());
@@ -91,7 +90,7 @@ UserController {
         rabbitMQSender.sendRegistry(dtouser);
         rabbitMQSender.sendRegistry1(dtouser);
         userService.updateUser(user);
-        return new ResponseEntity<String>("Updated Successfully", HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @GetMapping(value = "{username}")

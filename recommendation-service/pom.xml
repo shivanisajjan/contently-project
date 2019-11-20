@@ -11,15 +11,9 @@
 	<artifactId>SpringNeo4j</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SpringNeo4j</name>
-	<description>Demo project for Spring Boot</description>
 
-	<properties>
-		<java.version>11</java.version>
-	</properties>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.neo4j/neo4j -->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-neo4j</artifactId>
@@ -43,8 +37,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.5.2</version>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

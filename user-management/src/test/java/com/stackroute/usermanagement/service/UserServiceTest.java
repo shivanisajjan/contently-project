@@ -42,12 +42,6 @@ public class UserServiceTest {
         verify(userRepository,times(1)).findByUsername("Shivani");
     }
 
-    @Test(expected = NullValueFieldException.class)
-    public void saveUserTestFailure() throws UserAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
-        User user1 = new User();
-        user1.setUsername("shivani");
-        User savedUser = userService.saveUser(user1);
-    }
 
     @Test(expected = UserAlreadyExistsExceptions.class)
     public void saveUserTestFailure1() throws UserAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
@@ -68,7 +62,7 @@ public class UserServiceTest {
         when(userRepository.findByUsername(any())).thenReturn(user);
         User getUser = userService.findByUsername(user1);
     }
-    @Test(expected = InvalidCredentialException.class)
+    @Test(expected = InternalServerErrorException.class)
     public void getUserByUsernameTestFailure1() throws InvalidCredentialException, InternalServerErrorException {
         when(userRepository.findByUsername(any())).thenReturn(null);
         User getUser = userService.findByUsername(user);

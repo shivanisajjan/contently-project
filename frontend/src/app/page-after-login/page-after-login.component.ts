@@ -32,7 +32,8 @@ export class PageAfterLoginComponent implements OnInit {
   }
 
   bookDetails(id) {
-    this.router.navigate(['/book-details', id]);
+    localStorage.setItem('bookId', id);
+    this.router.navigate(['/book-details']).then();
   }
 
 }

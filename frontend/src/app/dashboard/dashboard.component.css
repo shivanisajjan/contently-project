@@ -35,7 +35,7 @@ mat-icon {
   background-color: lightgrey;
 }
 .dashboard-wrapper {
-  background-image: url('../../assets/images/side_bg.jpg');
+  
 }
 .content-title {
   font-size: 2em;
@@ -77,8 +77,9 @@ mat-icon{
 
 .content-card{
   margin: 1%;
-  background-color: rgb(37, 37, 37);
+  background-color: #252525;
   height: 430px;
+  cursor: pointer;
 }
 .content-card mat-card-header{
   padding: 2px;
@@ -125,6 +126,6 @@ mat-icon{
   }
 
   .new-content-button{
-    margin-left: 15%;
+    margin-left: 0;
     }
 }

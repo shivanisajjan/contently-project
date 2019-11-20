@@ -49,3 +49,8 @@ mat-card-content > p {
 mat-card-content, mat-card-actions{
   padding: 10px;
 }
+
+.style-button{
+  background-color: rgb(250, 104, 104);
+
+}

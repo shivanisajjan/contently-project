@@ -40,10 +40,12 @@ export class BookCreateComponent implements OnInit {
   private editor: any;
   private illustrator: any;
   private bookDetails: any;
+  private bookDetailsLoaded;
   private chapterStatus = [];
   private showEditButton: boolean[] = [];
   private commitList = [];
   private commitListLoaded = false;
+  private brokenImage = true;
   fileName: string;
   private published: any;
   @ViewChild(IssuesComponent, {static: true}) issueComponent: IssuesComponent;
@@ -65,8 +67,6 @@ export class BookCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     if (localStorage.getItem('role') === 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
     } else if (localStorage.getItem('role') === 'designer') {
@@ -79,6 +79,7 @@ export class BookCreateComponent implements OnInit {
         data => {
           this.bookDetails = data;
           localStorage.setItem('book', JSON.stringify(this.bookDetails));
+          console.log('book details: ', this.bookDetails);
           this.setShowEditButton();
           if (!this.bookDetails.selectHelper) {
             if (this.bookDetails.editorStatus !== 'confirmed' && this.bookDetails.designerStatus !== 'confirmed') {
@@ -96,6 +97,7 @@ export class BookCreateComponent implements OnInit {
                 });
             }
           }
+          this.bookDetailsLoaded = true;
         }
       );
   }
@@ -130,7 +132,14 @@ export class BookCreateComponent implements OnInit {
 
   editFile(fileName: string) {
     console.log('editFile(): ', fileName);
-    this.router.navigate(['/edit/' + fileName]).then();
+    this.bookDetails.plagarismCheckDone = false;
+    this.bookDetails.plagarised = false;
+    this.contentService.saveContent(this.bookDetails)
+      .subscribe(
+        () => {
+          this.router.navigate(['/edit/' + fileName]).then();
+        }
+      );
   }
 
   openIssuesComponent(fileName: string) {
@@ -397,14 +406,25 @@ export class BookCreateComponent implements OnInit {
   // }
 
   onPublish() {
-    this.spinner.show();
-    this.publishFile();
-
+    const dialogRef = this.dialog.open(PublicationBookComponent, {
+      width: '50%',
+      data: {
+        book: this.bookDetails
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      () => {
+        console.log('closed');
+        this.spinner.hide().then();
+        // tslint:disable-next-line: no-string-literal
+        this.router.navigate['dashboard'].then();
+      });
   }
 
   isPublish(): boolean {
-    if (this.bookDetails.status === null) {
-      return;
+    const flag = this.bookDetails.plagarismCheckDone && !this.bookDetails.plagarised;
+    if (this.bookDetails.status === undefined) {
+      return false;
     }
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.bookDetails.status.length; i++) {
@@ -412,7 +432,7 @@ export class BookCreateComponent implements OnInit {
         return false;
       }
     }
-    return true;
+    return flag;
   }
 
   sendNotification(receiver: string, bookId: number, message: string | string) {
@@ -426,55 +446,65 @@ export class BookCreateComponent implements OnInit {
   }
 
   uploadFile(file: File) {
-    this.bookFetch.uploadToAws(file, this.bookDetails.id)
+    this.bookDetails.plagarismCheckDone = false;
+    this.bookDetails.plagarised = true;
+    this.contentService.saveContent(this.bookDetails)
       .subscribe(
-        data => {
-          if (data === 'Success') {
-            const dialogRef = this.dialog.open(PublicationBookComponent, {
-              width: '50%',
-              data: {
-                book: this.bookDetails
+        data2 => {
+          console.log('update content: ', data2);
+          this.bookFetch.uploadToAws(file, this.bookDetails.id)
+            .subscribe(
+              data => {
+                console.log('plagiarism checking data', data);
               }
-            });
-            dialogRef.afterClosed().subscribe(
-              () => {
-                console.log('closed');
-                this.spinner.hide().then();
-                // tslint:disable-next-line: no-string-literal
-                this.router.navigate['dashboard'].then();
-              });
-          } else {
-            const dialogRef = this.dialog.open(FailureComponent, {
-              width: '50%',
-              data: {
-                book: this.bookDetails
-              }
-            });
-            this.spinner.hide();
-          }
-        }, err => {
-          const dialogRef = this.dialog.open(FailureComponent, {
-            width: '50%',
-            data: {
-              book: this.bookDetails
-            }
-          });
-          this.spinner.hide();
+            );
+        }
+      );
 
-
-        });
+    //   if (data === 'Success') {
+    //     const dialogRef = this.dialog.open(PublicationBookComponent, {
+    //       width: '50%',
+    //       data: {
+    //         book: this.bookDetails
+    //       }
+    //     });
+    //     dialogRef.afterClosed().subscribe(
+    //       () => {
+    //         console.log('closed');
+    //         this.spinner.hide().then();
+    //         // tslint:disable-next-line: no-string-literal
+    //         this.router.navigate['dashboard'].then();
+    //       });
+    //   } else {
+    //     const dialogRef = this.dialog.open(FailureComponent, {
+    //       width: '50%',
+    //       data: {
+    //         book: this.bookDetails
+    //       }
+    //     });
+    //     this.spinner.hide();
+    //   }
+    // }, err => {
+    //   const dialogRef = this.dialog.open(FailureComponent, {
+    //     width: '50%',
+    //     data: {
+    //       book: this.bookDetails
+    //     }
+    //   });
+    //   this.spinner.hide();
   }
 
-  onSelectFile(event: { target: { files: { name: any; }[]; }; }) { // called each time file input changes
+  onSelectFile(event: { target: { files: { name: any; }[]; }; }) {
+    // event.target.files[0].name = this.bookDetails.title;
     if (event.target.files && event.target.files[0]) {
-      this.bookFetch.uploadToAws(event.target.files[0], event.target.files[0].name)
+      this.bookFetch.uploadToAwsImage(event.target.files[0], this.bookDetails.title + '.jpg')
         .subscribe(data => {
           console.log(data);
         });
     }
   }
 
-  publishFile() {
+  compileFile() {
     const fileName = `save.html`;
     const len = this.bookDetails.status.length;
     let count = 0;
@@ -503,10 +533,8 @@ export class BookCreateComponent implements OnInit {
               console.log(combined);
               txtBlob = new Blob([combined], {type: fileType});
               const file = new File([txtBlob], this.bookDetails.id);
-
               console.log(file);
               this.uploadFile(file);
-
             }
           }
         );
@@ -514,6 +542,14 @@ export class BookCreateComponent implements OnInit {
 
   }
 
+  coverImage() {
+    console.log('broken image');
+    this.brokenImage = false;
+  }
+
+  getBrokenImage() {
+    return this.brokenImage;
+  }
 }
 
 export interface Card {

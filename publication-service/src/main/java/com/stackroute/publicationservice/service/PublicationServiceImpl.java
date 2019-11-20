@@ -10,7 +10,6 @@ import com.stackroute.publicationservice.repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
@@ -27,13 +26,12 @@ public class PublicationServiceImpl implements PublicationService {
 
     private PublicationRepository publicationRepository;
     private MongoOperations mongo;
-    private MongoTemplate mongoTemplate;
 
     @Autowired
-    public PublicationServiceImpl(PublicationRepository publicationRepository, MongoOperations mongo,MongoTemplate mongoTemplate) {
+    public PublicationServiceImpl(PublicationRepository publicationRepository, MongoOperations mongo) {
         this.publicationRepository = publicationRepository;
         this.mongo = mongo;
-        this.mongoTemplate=mongoTemplate;
+
 
     }
 

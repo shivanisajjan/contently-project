@@ -1,9 +1,4 @@
 /*material css*/
-.continer {
-  background-image: url('../../assets/images/side_bg.jpg');
-  height: 100%;
-}
-
 .section-list {
   width: 70%;
   margin-left: 24%;
@@ -191,7 +186,9 @@ mat-spinner{
 .style-button{
   background-color: rgb(250, 104, 104);
 }
-
+mat-card-actions> div{
+  margin: 10px;
+}
 @media only screen and (max-width: 600px) {
   .book-details img {
     width: 100%;
@@ -200,7 +197,7 @@ mat-spinner{
     margin-left: 1%;
     margin-top: 1%;
     border: 10px solid #ddd;
-  
+
   }
 
   .editor-illustrator {
@@ -221,10 +218,8 @@ mat-spinner{
     .status{
       margin-right:15%;
     }
-    
+
     .chat-sidenav{
       width: 70%;
     }
-  
-  
 }

@@ -11,14 +11,14 @@
       <mat-step  [editable]="false">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Fill out your details</ng-template>
-          <div>
+          <!-- <div>
             <mat-form-field class="fields" >
               <input formControlName="email" #email matInput placeholder="Email" class="col">
               <mat-error *ngIf="!firstFormGroup.controls['email'].valid && firstFormGroup.controls['email'].touched">
                 {{ getErrorEmail() }}
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div>
             <mat-form-field class="fields">
@@ -49,18 +49,18 @@
             </mat-form-field>
           </div>
 
-          <div>
+          <!-- <div>
             <mat-form-field class="fields">
               <input formControlName="contact" #contact matInput placeholder="Contact Number" class="col">
               <mat-error *ngIf="!firstFormGroup.controls['contact'].valid && firstFormGroup.controls['contact'].touched">
                 {{ getErrorPhone() }}
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
 
           <div>
             <button mat-raised-button color="primary" matStepperNext
-                    (click)="register(username.value, password.value, email.value, contact.value)">Next
+                    (click)="register(username.value, password.value)">Next
             </button>
           </div>
         </form>

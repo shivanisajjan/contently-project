@@ -136,7 +136,7 @@ export class BookFetchService {
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
-    const postUrl = `${environment.gitBaseUrl}recommendation-service/api/v1/books/rec3/${username}`;
+    const postUrl = `${environment.backBaseUrl}recommendation-service/api/v1/books/rec3/${username}`;
     return this.http.get<any>(postUrl, httpOptions);
 
   }
@@ -148,7 +148,7 @@ export class BookFetchService {
     const testData = new FormData();
     testData.append('file', file);
 
-    return this.http.post('http://localhost:8081/api/v1/file/' + id, testData);
+    return this.http.post('http://13.126.150.171:8081/api/v1/file/' + id, testData);
   }
 
   uploadToAws(file, id): Observable<any> {
@@ -164,7 +164,7 @@ export class BookFetchService {
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get(`http://13.126.150.171:8081/api/v1/file/${id}`,
+    return this.http.get(`http://13.126.  150.171:8081/api/v1/file/${id}`,
       {
         responseType: 'blob',
         headers: {

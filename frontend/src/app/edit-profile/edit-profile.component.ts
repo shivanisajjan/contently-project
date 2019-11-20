@@ -10,6 +10,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class EditProfileComponent implements OnInit {
   private allGenres: string[] = ['Horror', 'Thriller', 'Romance', 'Comedy'];
 
   private $profile = new profile();
-  private $interest: interest;
+  private $fictionInterest = new interest();
+  private $nonFictionInterest = new interest();
   private $genre: genre;
   private updateStatus = false;
   private profileData;
@@ -56,13 +58,15 @@ export class EditProfileComponent implements OnInit {
   private filteredGenres: Observable<string[]>;
   private genreFormControl: FormControl;
   private typeSelected: any;
+  private maxDate = new Date();
   constructor(
     // tslint:disable-next-line: variable-name
     private _formBuilder: FormBuilder,
     // tslint:disable-next-line: variable-name
     private _loginService: LoginService,
     // tslint:disable-next-line: variable-name
-    private _router: Router
+    private _router: Router,
+    private datePipe: DatePipe
     ) {
       // if (!localStorage.getItem('token')) {
       //   this._router.navigate(['/home']).then();
@@ -75,6 +79,7 @@ export class EditProfileComponent implements OnInit {
     this.profileData = JSON.parse(localStorage.getItem('editProfile'));
     console.log(this.profileData);
     if (this.profileData) {
+      console.log(this.changeDateFormat(this.profileData.dob));
       this.username = this.profileData.username;
       this.firstFormGroup = this._formBuilder.group({
       firstName: [this.profileData.firstName, Validators.required],
@@ -86,12 +91,16 @@ export class EditProfileComponent implements OnInit {
       address3: [this.profileData.addressLine3],
       nationality: [this.profileData.nationality, Validators.required],
       gender: [this.profileData.gender, Validators.required],
-      date: ['', Validators.required]    });
+      date: [new Date(this.changeDateFormat(this.profileData.dob)), Validators.required]
+      });
+
       this.secondFormGroup = this._formBuilder.group({
         secondCtrl: ['', Validators.required]
        });
      } else {
+
       this.username = localStorage.getItem('username');
+      console.log(this.username);
       this.firstFormGroup = this._formBuilder.group({
         firstName: [],
         lastName: [],
@@ -108,12 +117,12 @@ export class EditProfileComponent implements OnInit {
          });
    }
 
-    this.$profile.interest = new Array();
-    this.$interest = new interest();
-    this.$interest.name = 'Novel';
-    this.$interest.genre = [];
-    console.log(this.$interest.name);
-    this.$profile.interest.push(this.$interest);
+    // this.$profile.interest = new Array();
+    // this.$interest = new interest();
+    // this.$interest.name = 'Novel';
+    // this.$interest.genre = [];
+    // console.log(this.$interest.name);
+    // this.$profile.interest.push(this.$interest);
 
     this.filteredGenres = this.genreFormControl.valueChanges.pipe(
       startWith(null),
@@ -121,7 +130,7 @@ export class EditProfileComponent implements OnInit {
       map((genre: string | null) => genre ? this._filter(genre) : this.genresList.slice()));
   }
 
-  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, date) {
+  addPersonalDetails(firstname, lastname, nationality, address1, address2, address3, date, email, contact) {
     console.log('adding personal details');
     console.log(date);
     const regUser: userReg = new userReg();
@@ -134,62 +143,70 @@ export class EditProfileComponent implements OnInit {
     regUser.addressLine3 = address3;
     regUser.gender = this.gender;
     regUser.dob = date;
+    regUser.email = email;
+    regUser.phoneNumber = contact;
+
     this._loginService.updateUser(regUser).subscribe(result => {
       const returnUser = result;
       if (returnUser.id != null) {
         this.updateStatus = true;
+        console.log('updated');
       }
     });
+    if(!localStorage.getItem('role')){
+      console.log('ROlE FOUND');
+      localStorage.clear();
+    }
     localStorage.removeItem('editProfile');
   }
 
-  checkValue(event, check) {
-    this.interestsBoolean = true;
-    console.log(check);
-    if (check === false) {
-      if ((event === 'Biography' || event === 'Autobiography')) {
+  // checkValue(event, check) {
+  //   this.interestsBoolean = true;
+  //   console.log(check);
+  //   if (check === false) {
+  //     if ((event === 'Biography' || event === 'Autobiography')) {
 
-        this.$interest = new interest();
-        this.$interest.name = event;
-        this.$interest.genre = [];
-        console.log(this.$interest.name);
-        this.$profile.interest.push(this.$interest);
+  //       this.$interest = new interest();
+  //       this.$interest.name = event;
+  //       this.$interest.genre = [];
+  //       console.log(this.$interest.name);
+  //       this.$profile.interest.push(this.$interest);
 
-      } else {
+  //     } else {
 
-        this.$genre = new genre();
-        this.$genre.name = event;
-        this.$profile.interest[0].genre.push(this.$genre);
+  //       this.$genre = new genre();
+  //       this.$genre.name = event;
+  //       this.$profile.interest[0].genre.push(this.$genre);
 
-      }
-    } else {
-      if (event === 'Biography' || event === 'Autobiography') {
-        this.$interest = new interest();
-        this.$interest.name = event;
-        this.$interest.genre = [];
-        let i;
-        for (i = 1; i < this.$profile.interest.length; ++i) {
-          if (this.$profile.interest[i].name === event) {
-            const remove = this.$profile.interest.splice(i, 1);
-            console.log(remove);
-            break;
-          }
-        }
+  //     }
+  //   } else {
+  //     if (event === 'Biography' || event === 'Autobiography') {
+  //       this.$interest = new interest();
+  //       this.$interest.name = event;
+  //       this.$interest.genre = [];
+  //       let i;
+  //       for (i = 1; i < this.$profile.interest.length; ++i) {
+  //         if (this.$profile.interest[i].name === event) {
+  //           const remove = this.$profile.interest.splice(i, 1);
+  //           console.log(remove);
+  //           break;
+  //         }
+  //       }
 
 
-      } else {
-        let i;
-        for (i = 0; i < this.$profile.interest[0].genre.length; i++) {
-          if (this.$profile.interest[0].genre[i].name === event) {
-            const remove = this.$profile.interest[0].genre.splice(i, 1);
-            console.log(remove);
-            break;
-          }
-        }
-      }
-    }
-    console.log(this.$profile);
-  }
+  //     } else {
+  //       let i;
+  //       for (i = 0; i < this.$profile.interest[0].genre.length; i++) {
+  //         if (this.$profile.interest[0].genre[i].name === event) {
+  //           const remove = this.$profile.interest[0].genre.splice(i, 1);
+  //           console.log(remove);
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   console.log(this.$profile);
+  // }
 
   saveInterests() {
     if (this.interestsBoolean) {
@@ -250,10 +267,19 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveGenre() {
+    this.$fictionInterest.type = 'fiction';
+    this.$nonFictionInterest.type = 'nonfiction';
+    this.$fictionInterest.genre = [];
+    this.$nonFictionInterest.genre = [];
     for (const g of this.genresSelected) {
-        this.$genre = new genre();
-        this.$genre.name = g;
-        this.$profile.interest[0].genre.push(this.$genre);
+      if (this.fictionGenres.includes(g)) {
+        this.$fictionInterest.genre.push(g);
+      } else {
+        this.$nonFictionInterest.genre.push(g);
+      }
+      this.$profile.interest = [];
+      this.$profile.interest.push(this.$fictionInterest);
+      this.$profile.interest.push(this.$nonFictionInterest);
     }
     console.log(this.$profile);
     if (this.interestsBoolean) {
@@ -269,5 +295,23 @@ export class EditProfileComponent implements OnInit {
 
   //   return this.allGenres.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);
   // }
+  changeDateFormat(date: string){
+    let dateArray = date.split("/");
+    let temp = dateArray[0];
+    dateArray[0] = dateArray[1];
+    dateArray[1] = temp;
+    
+    // return dateArray.join("/");
+    return dateArray[0] + "/" + dateArray[1] + "/" + dateArray[2];
+    }
 
+    getErrorPhone() {
+      return this.firstFormGroup.get('contact').hasError('pattern') ? 'Not a valid phone Number' :
+        this.firstFormGroup.get('contact').hasError('minLength') ? 'Must be 10 chars' :
+        this.firstFormGroup.get('contact').hasError('maxLength') ? 'Not more than 10 chars' : '';
+    }
+
+    getErrorEmail() {
+      return this.firstFormGroup.get('email').hasError('pattern') ? 'Not a valid email address' : '';
+    }
 }

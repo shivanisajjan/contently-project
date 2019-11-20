@@ -69,6 +69,9 @@ import {PublicationBookComponent} from './publication-book/publication-book.comp
 import {SearchResultsComponent} from './search-results/search-results.component';
 import {IssuesComponent} from './issues/issues.component';
 import {FailureComponent} from './failure/failure.component';
+import { BrowseComponent } from './browse/browse.component';
+import {DatePipe} from '@angular/common';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -98,7 +101,8 @@ import {FailureComponent} from './failure/failure.component';
     PublicationBookComponent,
     SearchResultsComponent,
     IssuesComponent,
-    FailureComponent
+    FailureComponent,
+    BrowseComponent
   ],
 
   imports: [
@@ -145,7 +149,8 @@ import {FailureComponent} from './failure/failure.component';
     MatPaginatorModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     LoginComponent,
@@ -162,7 +167,9 @@ import {FailureComponent} from './failure/failure.component';
   providers: [
     LoginService,
     ContentService,
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+    BrowseComponent,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

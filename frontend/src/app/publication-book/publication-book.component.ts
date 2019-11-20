@@ -43,7 +43,7 @@ export class PublicationBookComponent implements OnInit {
       .subscribe(
         result => {
           this.recommended_price = result;
-          console.log('result', result);
+          console.log('price result', result);
         }
       );
   }
@@ -67,7 +67,7 @@ export class PublicationBookComponent implements OnInit {
 
     this.bookFetch.saveToPublication(this.book).subscribe(
       data => {
-        console.log(data);
+        console.log('save to publication data: ', data);
         this.bookFetch.deleteContent(this.book.id)
           .subscribe(
             data => {
@@ -79,8 +79,12 @@ export class PublicationBookComponent implements OnInit {
               if(this.book.designerName !== undefined){
                 this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
               }
+              this.router.navigate(['/dashboard']).then();
             }
           );
+      },
+      error => {
+        console.log('save to publication error: ', error);
       }
     );
   }

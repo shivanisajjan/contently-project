@@ -1,11 +1,11 @@
 mat-card{
-    width: 70%;
+    width: 80%;
     margin: auto;
     height: 100%;
 }
 
 .edit-profile-page{
-    background-image: url('../../assets/images/side_bg.jpg');
+    /* background-image: url('../../assets/images/side_bg.jpg'); */
 }
 
 .genre-radio-group{

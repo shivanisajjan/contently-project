@@ -17,7 +17,4 @@ public interface UserService {
 
     User getByUsername(String username);
 
-    List<String> getByRole(String role) throws InvalidRoleInfoException;
-
-
 }

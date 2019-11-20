@@ -81,9 +81,5 @@ public class UserServiceImpl implements UserService{
         return userRepository.findByUsername(username);
     }
 
-    @Override
-    public List<String> getByRole(String role) throws InvalidRoleInfoException {
-        return userRepository.findByRole(role);
-    }
 
 }

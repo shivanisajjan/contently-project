@@ -94,11 +94,5 @@ UserController {
     public ResponseEntity<User> getByUsername(@PathVariable String username)  {
         return new ResponseEntity<>(userService.getByUsername(username) ,HttpStatus.OK);
     }
-    @GetMapping(value = "/role/{role}")
-    public ResponseEntity<List<String>> getByRole(@PathVariable String role) throws  InvalidRoleInfoException {
-        return new ResponseEntity<>(userService.getByRole(role), HttpStatus.OK);
-    }
-
-
 
 }

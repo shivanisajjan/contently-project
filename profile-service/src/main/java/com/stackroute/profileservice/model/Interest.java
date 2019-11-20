@@ -1,6 +1,5 @@
 package com.stackroute.profileservice.model;
 
-import jdk.jfr.MemoryAddress;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

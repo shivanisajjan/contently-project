@@ -89,14 +89,12 @@ export class DashboardComponent implements OnInit {
 
     this.getPublishedBooks();
     this.getPurchasedBooks();
-
-
   }
 
   edit(i: number) {
     console.log(this.contentsList[i]);
     localStorage.setItem('book', JSON.stringify(this.contentsList[i]));
-    this.router.navigate(['/bookCreate']).then(this.ngOnInit);
+    this.router.navigate(['/bookCreate']).then();
   }
 
   ifAuthor(): boolean {

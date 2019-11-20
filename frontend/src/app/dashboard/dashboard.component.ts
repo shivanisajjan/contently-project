@@ -128,4 +128,6 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('bookId', id);
     this.router.navigate(['/book-details']).then();
   }
+
+ 
 }

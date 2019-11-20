@@ -45,7 +45,7 @@ export class BrowseComponent implements OnInit {
     const start = event.pageIndex * event.pageSize;
     let end = start + event.pageSize;
     if(end > event.length){
-      end = event.length - 1;
+      end = event.length;
     }
     console.log(start, end);
     this.bookData = this.books.slice(start, end);

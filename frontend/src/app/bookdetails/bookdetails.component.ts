@@ -42,7 +42,7 @@ export class BookdetailsComponent implements OnInit {
               data => {
                 console.log('Chapter data: ', data);
                 this.releaseNext = data.releaseNext;
-                if(data.chapterIndex === result.chapterName.length - 1){
+                if (data.chapterIndex === result.chapterName.length - 1) {
                   this.lastChapter = true;
                   console.log('last chapter');
                 }
@@ -69,23 +69,6 @@ export class BookdetailsComponent implements OnInit {
           console.log('IsPurchased error', error);
         }
       );
-    // this.contentService.getChapterFromProfile(localStorage.getItem('username'), localStorage.getItem('bookId'))
-    //   .subscribe(
-    //     data => {
-    //       console.log('Chapter data: ', data);
-    //       this.releaseNext = data.releaseNext;
-    //       // if(data.chapterIndex === result.chapterName.length){
-    //       //   this.lastChapter = true;
-    //       //   console.log('last chapter');
-    //       // }
-    //       this.chapterIndex = data.chapterIndex-1;
-    //       this.bookDetailsLoaded = true;
-    //     },
-    //     error => {
-    //       console.log('Chapter error: ', error);
-    //     }
-    //   );
-
   }
 
   getHasPurchased(): boolean {
@@ -101,8 +84,8 @@ export class BookdetailsComponent implements OnInit {
   }
 
   downloadPdf() {
-    // const bookId = 'sample';
-    const bookId = localStorage.getItem('bookId');
+    const bookId = 'sample';
+    // const bookId = localStorage.getItem('bookId');
     const fileName = bookId + '.pdf';
     const fileType = this.fileSaverService.genType(fileName);
     console.log('book id is ' + bookId);

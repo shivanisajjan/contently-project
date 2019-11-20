@@ -70,6 +70,7 @@ import {SearchResultsComponent} from './search-results/search-results.component'
 import {IssuesComponent} from './issues/issues.component';
 import {FailureComponent} from './failure/failure.component';
 import { BrowseComponent } from './browse/browse.component';
+import {DatePipe} from '@angular/common';
 
 
 @NgModule({
@@ -165,7 +166,8 @@ import { BrowseComponent } from './browse/browse.component';
     LoginService,
     ContentService,
     BrowseComponent,
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

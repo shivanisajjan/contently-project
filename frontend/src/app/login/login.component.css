@@ -1,7 +1,7 @@
 .login-dialog{
     outline: 2px solid white;
     outline-offset: -8px;
-    color: black;
+    color: white;
     /* text-shadow: 1px 1px 5px rgb(255, 255, 255); */
 
 }
@@ -11,5 +11,14 @@
 }
 
 form{
-    background-image: url('../../assets/images/trend1.jpg');
+    background-image: url('../../assets/images/side_bg.jpg');
+    color: white;
+}
+
+.login-button{
+    background-color: rgb(250, 104, 104);
+}
+
+.username{
+    color: white;
 }

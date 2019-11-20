@@ -10,8 +10,8 @@
                                 <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
                                        <h5>{{illustrator.name}}</h5>
                                        <div class="price-experiance">
-                                        <h6>{{illustrator.price}}</h6>
-                                        <h6>{{illustrator.experience}}</h6>
+                                        <h6>Cost: {{illustrator.price}}</h6>
+                                        <h6>Experience: {{illustrator.experience}}</h6>
                                     </div> 
                                 </mat-card>
                            </div>   
@@ -21,10 +21,10 @@
                 <mat-tab class="helper-tab" label="Show All Illustrators">
                         <div *ngFor="let illustrator of allIllustratorListFiltered" class="list-editors">
                                 <mat-card  matRipple  class="editor-card" (click)="selectIllustrator(illustrator.name)" [mat-dialog-close]="editorData" cdkFocusInitial>
-                                    <h5>{{illustrator.name}}</h5>
+                                    <h5>{{illustrator.username}}</h5>
                                     <div class="price-experiance">
-                                        <h6>{{illustrator.price}}</h6>
-                                        <h6>{{illustrator.experience}}</h6>
+                                        <h6>Cost: {{illustrator.cost}}</h6>
+                                        <h6>Experience: {{illustrator.experience}}</h6>
                                     </div>    
                                 </mat-card>
                         </div>

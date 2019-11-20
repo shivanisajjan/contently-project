@@ -1,4 +1,4 @@
-package com.stackroute.contentservice;
+package com.stackroute.publicationservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

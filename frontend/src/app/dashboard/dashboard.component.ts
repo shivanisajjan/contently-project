@@ -111,7 +111,10 @@ export class DashboardComponent implements OnInit {
 
   getPublishedBooks() {
     this.contentService.getPublishedBooks().subscribe(
-      result => this.publishedList = result
+      result => {
+        this.publishedList = result;
+        console.log(result);
+      }
     );
   }
 
@@ -119,5 +122,10 @@ export class DashboardComponent implements OnInit {
     this.contentService.getPurchasedBooks().subscribe(
       result => this.purchaseList = result
     );
+  }
+
+  goToBook(id) {
+    localStorage.setItem('bookId', id);
+    this.router.navigate(['/book-details']).then();
   }
 }

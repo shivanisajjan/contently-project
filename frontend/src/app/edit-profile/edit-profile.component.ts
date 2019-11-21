@@ -10,7 +10,6 @@ import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
-import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -67,7 +66,6 @@ export class EditProfileComponent implements OnInit {
     public _loginService: LoginService,
     // tslint:disable-next-line: variable-name
     public _router: Router,
-    public datePipe: DatePipe
   ) {
     // if (!localStorage.getItem('token')) {
     //   this._router.navigate(['/home']).then();

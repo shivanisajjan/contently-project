@@ -14,13 +14,13 @@ import {Issue} from './issue';
 })
 export class IssuesComponent implements OnInit {
 
-  private issueFile: any;
-  private issueList: Issue[] = [];
-  private issuesLoaded = false;
-  private replyDrawer = false;
+  public issueFile: any;
+  public issueList: Issue[] = [];
+  public issuesLoaded = false;
+  public replyDrawer = false;
   @Input() fileName: string;
-  constructor(private bookFetch: BookFetchService,
-              private dialog: MatDialog,
+  constructor(public bookFetch: BookFetchService,
+              public dialog: MatDialog,
               public viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {

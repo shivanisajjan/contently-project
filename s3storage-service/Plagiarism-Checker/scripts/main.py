@@ -12,6 +12,11 @@ import re
 import urllib
 from sys import argv
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+
+
+
 # Given a text string, remove all non-alphanumeric
 # characters (using Unicode definition of alphanumeric).
 
@@ -29,8 +34,70 @@ API_Keys = [
 "AIzaSyBu4W1gG0EcF7QtvqB3Dv3oNWvG85-NzdQ",
 "AIzaSyB7M_jvzjKBfJlp46Kqsi4RAIT1P5s0g10",
 "AIzaSyBx6R9aulbSg_YWlCeK-WVQlcHHFWP9Lts",
-"AIzaSyC7MpSk6lH4qrgHHIkAIB2aP8JwkLzrtVA"
+"AIzaSyC7MpSk6lH4qrgHHIkAIB2aP8JwkLzrtVA",
+"AIzaSyC_Z9yFEUhNbtKXs4iqJt0MrLBd1dtYe30",
+"AIzaSyDc7-wAWPHqUDgfyRaAXAJzFxAs5wkRRfM",
+"AIzaSyBoRxHaEDw17AgK8Yv6RC_vsAscRoya-TM",
+"AIzaSyCy1yaUBU3eG1lX51kWT0jp4X6xenAuxmo",
+"AIzaSyBDZeSCLgeD8t3H3XvQIZVtkLu3HhIhOao",
+"AIzaSyBw1Mr-Wz1zaVdd34DpZck4GMe-tAmsBL4"
 ]
+
+def chk(ele):
+
+    try:
+        print "Bruh"
+    except:
+        pass
+
+
+q = []
+final = {}
+output = {}
+c = {}
+
+def fn(ele):
+    # print ele
+    # chk(ele)
+    # sys.stdout.flush()
+    # time.sleep(1)
+    global q
+    global final
+    try:
+        rt = requests.get(ele[0])
+        text = ""
+
+        try:
+            text = strip_tags(rt.content)
+        except:
+            # print 'bruh moment'
+            udata=rt.content.decode("utf-8")
+            asciidata=udata.encode("ascii","ignore")
+            text = strip_tags(asciidata)
+        
+        sentenceEnders = re.compile('[.!?]')
+        sentenceList = sentenceEnders.split(text)
+        sentencesplits = []
+        # print sentenceList
+        for sentence in sentenceList:
+            x = re.compile(r'\W+', re.UNICODE).split(sentence)
+            x = [elem for elem in x if elem != '']
+            sentencesplits.append(x)
+        # print sentencesplits
+        q1 = str(sentencesplits).translate(None, '[],\'') 
+        # print q1
+        cnt = 0
+        for x in q:
+            if x in q1:
+                # print x
+                cnt += 1
+        final[ele[0]] = cnt*100.0/len(q)
+    except Exception as e:
+        # print e
+        # print 'CANT OPEN',ele[0]
+        pass
+    # print ele[0],final[ele[0]]
+    
 
 
 def getQueries(text,n):
@@ -68,8 +135,9 @@ def getQueries(text,n):
 # Search the web for the plagiarised text
 # Calculate the cosineSimilarity of the given query vs matched content on google
 # This is returned as 2 dictionaries 
-def searchWeb(text,output,c):
-
+def searchWeb(text):
+    global output
+    global c
     try:
         # print 'text =',text
         text = text.encode('utf-8')
@@ -136,12 +204,13 @@ def searchWeb(text,output,c):
 	                
 	            
     except:
-	    return output,c
-    return output,c
+	    return 0
+    return 0
     
 
 # Use the main function to scrutinize a file for
 # plagiarism
+
 def main():
     # n-grams N VALUE SET HERE
 
@@ -164,15 +233,17 @@ def main():
     # print t
     queries = getQueries(t,n)
     
+    global q 
     q = [' '.join(d) for d in queries]
+
+    global final
     # q = queries
     found = []
     # print q[:100]
     #using 2 dictionaries: c and output
     #output is used to store the url as key and number of occurences of that url in different searches as value
     #c is used to store url as key and sum of all the cosine similarities of all matches as value    
-    output = {}
-    c = {}
+    
     i=1
     count = len(q)
     cc = 1
@@ -182,16 +253,20 @@ def main():
     # print 'count =',count
     if count>100:
         count=100
-    for s in q[:100]:
+    global output
+    global c
+    with ThreadPoolExecutor(max_workers=100) as executor:
+        futures = [executor.submit(searchWeb, x) for x in q[:100]]
+    # for s in q[:100]:
 
-        # print 's =',s
-        output,c=searchWeb(s,output,c)
+    #     # print 's =',s
+    #     output,c=searchWeb(s,output,c)
        
 
-        msg = "\r"+str(i)+"/"+str(count)+"completed..."
-        # sys.stdout.write(msg);
-        sys.stdout.flush()
-        i=i+1
+    #     msg = "\r"+str(i)+"/"+str(count)+"completed..."
+    #     # sys.stdout.write(msg);
+    #     sys.stdout.flush()
+    #     i=i+1
     #print "\n"
     # f = open(sys.argv[2],"w")
     # # print c
@@ -202,47 +277,26 @@ def main():
     #     # break
     # f.close()
  
-    final = {}
+    
+    # num_cores = multiprocessing.cpu_count()
 
+
+    # results = Parallel(n_jobs=4)(delayed(fn)(i) for i in sorted(output.iteritems(),key=operator.itemgetter(1),reverse=True))
     # print 'percentage'
-    for ele in sorted(output.iteritems(),key=operator.itemgetter(1),reverse=True):
-    	try:
-    		rt = requests.get(ele[0])
-    		text = ""
+    # results = Parallel(n_jobs=7)(delayed(fn)(i) for i in range(50))
+    # for x in range(50):
+    #     fn(x)
+    with ThreadPoolExecutor(max_workers=100) as executor:
+        futures = [executor.submit(fn, x) for x in sorted(output.iteritems(),key=operator.itemgetter(1),reverse=True)]
 
-    		try:
-    			text = strip_tags(rt.content)
-    		except:
-    			# print 'bruh moment'
-    			udata=rt.content.decode("utf-8")
-    			asciidata=udata.encode("ascii","ignore")
-    			text = strip_tags(asciidata)
-    		
-    		sentenceEnders = re.compile('[.!?]')
-    		sentenceList = sentenceEnders.split(text)
-    		sentencesplits = []
-    		# print sentenceList
-    		for sentence in sentenceList:
-    		    x = re.compile(r'\W+', re.UNICODE).split(sentence)
-    		    x = [elem for elem in x if elem != '']
-    		    sentencesplits.append(x)
-    		# print sentencesplits
-    		q1 = str(sentencesplits).translate(None, '[],\'') 
-    		# print q1
-    		cnt = 0
-    		for x in q:
-    			if x in q1:
-    				# print x
-    				cnt += 1
-    		final[ele[0]] = cnt*100.0/len(q)
-    	except Exception as e:
-    		# print e
-    		# print 'CANT OPEN',ele[0]
-    		pass
+
+    # with ThreadPoolExecutor(max_workers=7) as executor:
+    #     futures = [executor.submit(fn, x) for x in range(5)]
+    	
 
     for ele in sorted(final.iteritems(),key=operator.itemgetter(1),reverse=True):
     	print ele[0],ele[1]
-    	break
+        break
 
 
 
@@ -253,6 +307,7 @@ def main():
 
 
 if __name__ == "__main__":
+
     try:
         main()
     except:

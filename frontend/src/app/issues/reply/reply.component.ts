@@ -14,13 +14,13 @@ import {Reply} from '../reply';
 })
 export class ReplyComponent implements OnInit {
 
-  private issueFile;
-  private issue: Issue;
-  private issueList: Issue[];
-  private replyList: Reply[];
-  constructor(private dialogRef: MatDialogRef<ReplyComponent>,
-              @Inject(MAT_DIALOG_DATA)private data: any,
-              private bookFetch: BookFetchService
+  public issueFile;
+  public issue: Issue;
+  public issueList: Issue[];
+  public replyList: Reply[];
+  constructor(public dialogRef: MatDialogRef<ReplyComponent>,
+              @Inject(MAT_DIALOG_DATA)public data: any,
+              public bookFetch: BookFetchService
               ) { }
 
   ngOnInit() {

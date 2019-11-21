@@ -11,14 +11,15 @@ import {AuthService} from '../auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private fail: boolean;
-  private loggedInUser: any;
+  public fail: boolean;
+  public loggedInUser: any;
   public tokenObject: any;
+  hide: boolean;
 
 
   constructor(
-    private loginService: LoginService,
-    private router: Router,
+    public loginService: LoginService,
+    public router: Router,
     public dialogRef: MatDialogRef<LoginComponent>
     ) {
   }

@@ -10,12 +10,12 @@ import {Router} from '@angular/router';
   styleUrls: ['./search-results.component.css']
 })
 export class SearchResultsComponent implements OnInit {
-  private search;
-  private searchBooks: [];
-  private noResults = false;
+  public search;
+  public searchBooks: [];
+  public noResults = false;
 
   constructor(
-    private route: ActivatedRoute, private bookFetch: BookFetchService, private router: Router
+    public route: ActivatedRoute, public bookFetch: BookFetchService, public router: Router
   ) { }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 <div class="page-after-component">
-  
+
   <div *ngIf="gotRecs" class="trending-books">
     <h3 style="margin-left: 4%;">You may like</h3>
   </div>
@@ -7,7 +7,7 @@
     <mat-card class="content-card" *ngFor="let bookvar of bookRec, index as i" (click)="bookDetails(bookvar.bookId)">
       <!-- <h6>{{bookvar.bookName}}</h6> -->
       <div class="card-width"></div>
-      <img src="../../assets/images/sample_book_cover_1.jpg" alt="card image">
+      <img src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookvar.bookId}}.jpg" alt="card image">
     </mat-card>
   </div>
   <br>
@@ -19,7 +19,7 @@
     <mat-card class="content-card" *ngFor="let bookvar of bookVar, index as i" (click)="bookDetails(bookvar.bookId)">
       <!-- <h6>{{bookvar.bookName}}</h6> -->
       <div class="card-width"></div>
-      <img src="../../assets/images/sample_book_cover_1.jpg" alt="card image">
+      <img src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookvar.bookId}}.jpg" alt="card image">
     </mat-card>
   </div>
   <br>

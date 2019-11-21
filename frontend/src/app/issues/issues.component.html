@@ -14,7 +14,7 @@
         <p mat-subheader>{{issue.createdOn}}</p>
         <p mat-subheader>{{issue.creator}}</p>
         <mat-menu #menu="matMenu">
-          <a mat-menu-item (click)="replyToIssue(i); drawer.close();" *ngIf="issue.status === 'open'">Reply</a>
+          <a mat-menu-item (click)="replyToIssue(i)" *ngIf="issue.status === 'open'">Reply</a>
           <a mat-menu-item (click)="closeIssue(i)" *ngIf="issue.status === 'open'">Close</a>
         </mat-menu>
         <mat-divider></mat-divider>

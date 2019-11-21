@@ -15,24 +15,24 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  private profileData;
-  private contentsList;
-  private booksList = [];
-  private profileLoaded = false;
-  private contentsLoaded = false;
-  private booksLoaded = false;
-  private serverUrl = environment.backBaseUrl + 'socket';
-  private stompClient;
-  private publishedList;
-  private purchaseList;
-  private completePurchaseList = [];
+  public profileData;
+  public contentsList;
+  public booksList = [];
+  public profileLoaded = false;
+  public contentsLoaded = false;
+  public booksLoaded = false;
+  public serverUrl = environment.backBaseUrl + 'socket';
+  public stompClient;
+  public publishedList;
+  public purchaseList;
+  public completePurchaseList = [];
 
   constructor(
-    private router: Router,
-    private login: LoginService,
+    public router: Router,
+    public login: LoginService,
     // tslint:disable-next-line: variable-name
-    private _snackBar: MatSnackBar,
-    private contentService: ContentService) {
+    public _snackBar: MatSnackBar,
+    public contentService: ContentService) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }

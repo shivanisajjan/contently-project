@@ -67,12 +67,12 @@ export class RegistrationComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   public remove;
   public gender = 'Female';
-  private usernameAlreadyExists = false;
+  public usernameAlreadyExists = false;
   // tslint:disable-next-line: max-line-length
   emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   MOBILE_PATTERN:RegExp = /^[6-9]\d{9}$/;
 
-  private _transformer = (node: FoodNode, level: number) => {
+  public _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
@@ -89,10 +89,10 @@ export class RegistrationComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(
-    private _loginService: LoginService,
-    private _formBuilder: FormBuilder,
-    private _router: Router,
-    private _snackBar: MatSnackBar
+    public _loginService: LoginService,
+    public _formBuilder: FormBuilder,
+    public _router: Router,
+    public _snackBar: MatSnackBar
   ) {
     this.dataSource.data = TREE_DATA;
 
@@ -109,7 +109,7 @@ export class RegistrationComponent implements OnInit {
       password: ['', [Validators.required]],
       confirmPassword: [''],
     }, {validator: this.checkPasswords});
-   
+
 
     // this.$profile.interest = new Array();
     // this.$interest = new interest();
@@ -122,6 +122,12 @@ export class RegistrationComponent implements OnInit {
   public returnUser: any;
 
   public register(username, password) {
+    console.log(username);
+    if (username === '' || password === '') {
+      this._snackBar.open("Fill Your Details", "close", {
+        duration: 2000,
+      });
+    } else {
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;
@@ -153,6 +159,7 @@ export class RegistrationComponent implements OnInit {
 
    }
    );
+  }
   }
 
   public addPersonalDetails(username, password, email, contact, firstname, lastname, nationality, address1, address2, address3, date) {

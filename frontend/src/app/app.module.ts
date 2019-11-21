@@ -8,7 +8,6 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ContentLayoutComponent} from './content-layout/content-layout.component';
-import {NgxSpinnerModule} from 'ngx-spinner';
 import {
   BookCreateComponent,
   SelectEditorDialog,
@@ -55,7 +54,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
-import {ConversionComponent} from './conversion/conversion.component';
 import {PageAfterLoginComponent} from './page-after-login/page-after-login.component';
 import {LoadingComponent} from './loading/loading.component';
 import {PaymentComponent} from './payment/payment.component';
@@ -67,9 +65,7 @@ import {ReplyComponent} from './issues/reply/reply.component';
 import {PublicationBookComponent} from './publication-book/publication-book.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
 import {IssuesComponent} from './issues/issues.component';
-import {FailureComponent} from './failure/failure.component';
-import { BrowseComponent } from './browse/browse.component';
-import {DatePipe} from '@angular/common';
+import {BrowseComponent} from './browse/browse.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
@@ -89,7 +85,6 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     PreviewComponent,
     SelectEditorDialog,
     SelectIllustratorDialog,
-    ConversionComponent,
     PageAfterLoginComponent,
     EditProfileComponent,
     PaymentComponent,
@@ -100,12 +95,10 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     PublicationBookComponent,
     SearchResultsComponent,
     IssuesComponent,
-    FailureComponent,
     BrowseComponent
   ],
 
   imports: [
-    NgxSpinnerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -161,18 +154,14 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     NewIssueComponent,
     ReplyComponent,
     IssuesComponent,
-    FailureComponent
   ],
   providers: [
     LoginService,
     ContentService,
     BrowseComponent,
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    DatePipe
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 }
-
-

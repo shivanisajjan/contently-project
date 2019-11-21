@@ -6,8 +6,7 @@
   <div *ngIf="bookDetailsLoaded">
     <br>
     <mat-card class="book-details">
-<!--      <img mat-card-image src="https://cdn3.volusion.com/jebff.evopn/v/vspfiles/photos/554-2.jpg?v-cache=1515935622" *ngIf="getBrokenImage()" (error)="coverImage()" alt="cover image">-->
-      <img mat-card-image src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookDetails.title}}.jpg"  *ngIf="getBrokenImage()" (error)="coverImage()" alt="cover image">
+      <img mat-card-image src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookDetails.id}}.jpg"  *ngIf="getBrokenImage()" (error)="coverImage()" alt="cover image">
       <h2>{{bookDetails.title}}</h2>
       <mat-card-subtitle style="display: flex; align-items: center">
         <mat-icon style="margin-right: 10px">local_offer</mat-icon>
@@ -24,11 +23,11 @@
         <mat-grid-list cols="2" rowHeight="175px">
           <mat-grid-tile class="choose-editor-tile">
             <div class="select-editor-header">
-              <mat-grid-tile-header *ngIf="!bookDetails.editorName" matRipple [matRippleColor]="myColor" class=""
+              <mat-grid-tile-header *ngIf="!bookDetails.editorName" matRipple  class=""
                                     (click)="openSelectEditorDialog()">
                 <h2>Choose an Editor</h2>
               </mat-grid-tile-header>
-              <mat-grid-tile-header *ngIf="bookDetails.editorStatus == 'rejected'" matRipple [matRippleColor]="myColor"
+              <mat-grid-tile-header *ngIf="bookDetails.editorStatus == 'rejected'" matRipple
                                     class=""
                                     (click)="openSelectEditorDialog()">
                 <h2>Choose an Editor</h2>
@@ -38,20 +37,20 @@
               </mat-grid-tile-header>
             </div>
             <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
-            <mat-grid-tile-footer *ngIf="bookDetails.editorStatus">
+            <mat-grid-tile-footer *ngIf="bookDetails.editorStatus" >
               <h4>{{bookDetails.editorStatus | uppercase }}</h4>
             </mat-grid-tile-footer>
           </mat-grid-tile>
 
           <mat-grid-tile class="choose-editor-tile">
             <div class="select-editor-header">
-              <mat-grid-tile-header *ngIf="!bookDetails.designerName" matRipple [matRippleColor]="myColor"
+              <mat-grid-tile-header *ngIf="!bookDetails.designerName" matRipple
                                     (click)="openSelectIllustratorDialog()">
                 <h2>Choose an Illustrator</h2>
               </mat-grid-tile-header>
               <mat-grid-tile-header
                 *ngIf="bookDetails.designerStatus == 'rejected' || bookDetails.designerStatus == null"
-                matRipple [matRippleColor]="myColor" (click)="openSelectIllustratorDialog()">
+                matRipple (click)="openSelectIllustratorDialog()">
                 <h2>Choose an Illustrator</h2>
               </mat-grid-tile-header>
               <mat-grid-tile-header *ngIf="bookDetails.designerName && bookDetails.designerStatus != 'rejected'">
@@ -78,10 +77,10 @@
                 </mat-grid-tile-header>
               </div>
               <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
-              <h4>{{bookDetails.editorStatus | uppercase }}</h4>
+
             </mat-grid-tile>
 
-            <mat-grid-tile>
+            <mat-grid-tile class="choose-editor-tile">
 
               <div class="select-editor-header">
                 <mat-grid-tile-header>
@@ -89,7 +88,7 @@
                 </mat-grid-tile-header>
               </div>
               <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
-              <h4>{{bookDetails.designerStatus | uppercase }}</h4>
+
             </mat-grid-tile>
           </mat-grid-list>
         </mat-card>

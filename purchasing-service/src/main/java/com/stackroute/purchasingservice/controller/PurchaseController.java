@@ -46,11 +46,6 @@ public class PurchaseController {
     }
 
 
-
-
-
-
-
     @ApiOperation(value = "save new purchase")
     @PostMapping(value = "/save")
     public ResponseEntity<Purchase> registerUser(@RequestBody Purchase purchase) throws  InternalServerErrorException, NullValueFieldException {

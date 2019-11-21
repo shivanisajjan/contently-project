@@ -72,56 +72,56 @@ public class FileController {
         String s = null;
         File f = amazonClient.convertMultiPartToFile(file);
         String str = FileUtils.readFileToString(f);
+//
+//        String[] cmd = {
+//                "python",
+//                "./Plagiarism-Checker/scripts/main.py",
+//                str
+//        };
 
-        String[] cmd = {
-                "python",
-                "./Plagiarism-Checker/scripts/main.py",
-                str
-        };
 
+//        Process p = Runtime.getRuntime().exec(cmd);
+//        BufferedReader stdInput = new BufferedReader(new
+//                InputStreamReader(p.getInputStream()));
+//
+//        BufferedReader stdError = new BufferedReader(new
+//                InputStreamReader(p.getErrorStream()));
 
-        Process p = Runtime.getRuntime().exec(cmd);
-        BufferedReader stdInput = new BufferedReader(new
-                InputStreamReader(p.getInputStream()));
-
-        BufferedReader stdError = new BufferedReader(new
-                InputStreamReader(p.getErrorStream()));
-
-        System.out.println("Here is the standard output of the command:\n");
-        String url = "";
-        float percentage = 0;
-        while ((s = stdInput.readLine()) != null) {
-            System.out.println("s:" + s);
-            String[] result = s.split(" ", -1);
-            System.out.println("result");
-            try {
-                url = result[0];
-                percentage = Float.parseFloat(result[1]);
-                System.out.println("percentage:" + percentage);
-            } catch (Exception e) {
-                ContentDTO contentDTO = new ContentDTO();
-                int id = Integer.parseInt(filename);
-                contentDTO.setId(id);
-                contentDTO.setPlagarized(false);
-                contentDTO.setPlagCheckingDone(true);
-                rabbitMQSender.sendContent(contentDTO);
-                this.amazonClient.generatePDFFromHTML(filename, file);
-                return new ResponseEntity<>("Success", HttpStatus.CREATED);
-            }
-
-        }
-
-        System.out.println("URL = " + url);
-        System.out.println("Percentage = " + percentage);
-        if (percentage > 35) {
-            ContentDTO contentDTO = new ContentDTO();
-            int id = Integer.parseInt(filename);
-            contentDTO.setId(id);
-            contentDTO.setPlagarized(true);
-            contentDTO.setPlagCheckingDone(true);
-            rabbitMQSender.sendContent(contentDTO);
-            return new ResponseEntity<>("Plagiarised!\n" + url + "\n" + percentage, HttpStatus.CONFLICT);
-        }
+//        System.out.println("Here is the standard output of the command:\n");
+//        String url = "";
+//        float percentage = 0;
+//        while ((s = stdInput.readLine()) != null) {
+//            System.out.println("s:" + s);
+//            String[] result = s.split(" ", -1);
+//            System.out.println("result");
+//            try {
+//                url = result[0];
+//                percentage = Float.parseFloat(result[1]);
+//                System.out.println("percentage:" + percentage);
+//            } catch (Exception e) {
+//                ContentDTO contentDTO = new ContentDTO();
+//                int id = Integer.parseInt(filename);
+//                contentDTO.setId(id);
+//                contentDTO.setPlagarized(false);
+//                contentDTO.setPlagCheckingDone(true);
+//                rabbitMQSender.sendContent(contentDTO);
+//                this.amazonClient.generatePDFFromHTML(filename, file);
+//                return new ResponseEntity<>("Success", HttpStatus.CREATED);
+//            }
+//
+//        }
+//
+//        System.out.println("URL = " + url);
+//        System.out.println("Percentage = " + percentage);
+//        if (percentage > 35) {
+//            ContentDTO contentDTO = new ContentDTO();
+//            int id = Integer.parseInt(filename);
+//            contentDTO.setId(id);
+//            contentDTO.setPlagarized(true);
+//            contentDTO.setPlagCheckingDone(true);
+//            rabbitMQSender.sendContent(contentDTO);
+//            return new ResponseEntity<>("Plagiarised!\n" + url + "\n" + percentage, HttpStatus.CONFLICT);
+//        }
 
         ContentDTO contentDTO = new ContentDTO();
         int id = Integer.parseInt(filename);

@@ -68,6 +68,7 @@ public class ProfileController {
         return responseEntity;
     }
 
+
     @PostMapping("/release/{username}/{id}")
     public ResponseEntity<Chapter> releaseNext(@PathVariable("username") String username, @PathVariable("id") int id) {
         responseEntity = new ResponseEntity<>(profileService.updateReleaseNext(username, id), HttpStatus.OK);

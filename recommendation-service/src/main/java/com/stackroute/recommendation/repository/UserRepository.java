@@ -1,9 +1,6 @@
 package com.stackroute.recommendation.repository;
 
-import com.stackroute.recommendation.domain.Book;
-import com.stackroute.recommendation.domain.Genre;
-import com.stackroute.recommendation.domain.Type;
-import com.stackroute.recommendation.domain.User;
+import com.stackroute.recommendation.domain.*;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
@@ -73,13 +70,13 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     List<Type> getType(@Param("type") String type);
 
     @Query("match (g:Gender{name:{gender}}) return g")
-    List<Type> getGender(@Param("gender") String gender);
+    List<Gender> getGender(@Param("gender") String gender);
 
     @Query("match (r:Role{name:{role}}) return r")
-    List<Type> getRole(@Param("role") String role);
+    List<Role> getRole(@Param("role") String role);
 
     @Query("match (a:ageGroup{name:{ageGroup}}) return a")
-    List<Type> getAgeGroup(@Param("ageGroup") String ageGroup);
+    List<ageGroup> getAgeGroup(@Param("ageGroup") String ageGroup);
 
     @Query("match (n:nationality{name:{nationality}}) return n")
     List<Type> getNationality(@Param("nationality") String nationality);

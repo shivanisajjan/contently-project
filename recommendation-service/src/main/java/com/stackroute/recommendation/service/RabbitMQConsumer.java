@@ -51,7 +51,7 @@ public class RabbitMQConsumer {
             userService.createAgeGroup("o");
 
 
-        userService.setAgeGroup("a", userDto.getUsername());
+
         if (userDto.getDob() != null) {
 
 
@@ -88,7 +88,7 @@ public class RabbitMQConsumer {
 
         if (userDto.getRole().equals("designer"))
             userService.createDesigner(userDto.getUsername());
-        else
+        else if(userDto.getRole().equals("editor"))
             userService.createEditor(userDto.getUsername());
 
     }

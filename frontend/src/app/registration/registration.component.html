@@ -23,6 +23,9 @@
           <div>
             <mat-form-field class="fields">
               <input formControlName="username" #username matInput placeholder="Username" class="col" required>
+              <mat-error *ngIf="firstFormGroup.hasError('required', 'username')">
+                Please enter your new username
+              </mat-error>
               <mat-error *ngIf="usernameAlreadyExists">
                 Username Already Exists
               </mat-error>
@@ -161,6 +164,6 @@
     <div class="space"></div>
   </div>
 
-  <h2 *ngIf="registerv" style="color: white">Registered Successfully</h2>
+  <!-- <h2 *ngIf="registerv" style="color: white">Registered Successfully</h2> -->
 
 </div>

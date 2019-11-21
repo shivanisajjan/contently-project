@@ -135,18 +135,18 @@ public class UserService {
         return userRepository.getType(type);
 
     }
-    List<Type> getGender(String gender)
+    List<Gender> getGender(String gender)
     {
         return userRepository.getGender(gender);
 
     }
 
-    List<Type> getAgeGroup(String ageGroup)
+    List<ageGroup> getAgeGroup(String ageGroup)
     {
         return userRepository.getAgeGroup(ageGroup);
 
     }
-    List<Type> getRole(String role)
+    List<Role> getRole(String role)
     {
         return userRepository.getRole(role);
 

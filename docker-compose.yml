@@ -63,7 +63,7 @@ services:
       - purchasing-service
       - s3storage-service
     ports:
-      - 8080:8080
+      - 8525:8525
     links:
       - user-management
       - eureka-server

@@ -30,7 +30,7 @@ export class ContentService {
     return this.http.put(postUrl, content, httpOptions);
   }
 
-  getRecommendedEditorsOrIllustrators(role, genre) {
+  getRecommendedEditorsOrIllustrators(role, genre): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

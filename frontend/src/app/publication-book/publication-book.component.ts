@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ContentService} from '../content.service';
-import {BookFetchService} from '../bookFetch.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {formatDate} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ContentService } from '../content.service';
+import { BookFetchService } from '../bookFetch.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -20,26 +20,47 @@ export class PublicationBookComponent implements OnInit {
   private book;
 
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
-              public dialogRef: MatDialogRef<PublicationBookComponent>
+    public dialogRef: MatDialogRef<PublicationBookComponent>
   ) { }
 
   ngOnInit() {
+    let cond1 = false;
+    let cond2 = false;
     this.book = JSON.parse(localStorage.getItem('book'));
     console.log('hello:', this.book);
     console.log(this.book.editorName);
-    this.contentService.getPay(this.book.editorName)
-      .subscribe(
-        result => {
-          this.editorPay = result;
-        }
-      );
-    this.contentService.getPay(this.book.designerName)
-      .subscribe(
-        result => {
-          this.illustratorPay = result;
-        }
-      );
-    this.contentService.recommendedPrice(this.book.editorPay, this.book.illustratorPay)
+    if (this.book.editorName === null) {
+      this.editorPay = 0;
+      cond1 = true;
+    } else {
+      this.contentService.getPay(this.book.editorName)
+        .subscribe(
+          result => {
+            console.log('pay', result);
+            this.editorPay = result;
+            cond1 = true;
+          }
+        );
+    }
+    if (this.book.designerName === null) {
+      this.illustratorPay = 0;
+      cond2 = true;
+    } else {
+      this.contentService.getPay(this.book.designerName)
+        .subscribe(
+          result => {
+            this.illustratorPay = result;
+            cond2 = true;
+          }
+        );
+    }
+    console.log(cond1, cond2);
+    while ( (cond1 && cond2) === false) {
+      console.log('cond: ', cond1 && cond2);
+    }
+    console.log(this.editorPay, this.illustratorPay);
+
+    this.contentService.recommendedPrice(this.editorPay, this.illustratorPay)
       .subscribe(
         result => {
           this.recommended_price = result;
@@ -73,10 +94,10 @@ export class PublicationBookComponent implements OnInit {
             data => {
               this.dialogRef.close();
               this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
-              if(this.book.editorName !== null){
+              if (this.book.editorName !== null) {
                 this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
               }
-              if(this.book.designerName !== null){
+              if (this.book.designerName !== null) {
                 this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
               }
               this.router.navigate(['/dashboard']).then();

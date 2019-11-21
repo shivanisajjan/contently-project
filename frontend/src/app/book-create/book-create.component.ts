@@ -48,6 +48,7 @@ export class BookCreateComponent implements OnInit {
   private brokenImage = true;
   fileName: string;
   private published: any;
+  private noAutomate = false;
   @ViewChild(IssuesComponent, {static: true}) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
@@ -80,17 +81,14 @@ export class BookCreateComponent implements OnInit {
           this.bookDetails = data;
           localStorage.setItem('book', JSON.stringify(this.bookDetails));
           console.log('book details: ', this.bookDetails);
-          if(this.bookDetails.editorName === nullgetRecommendedEditorsOrIllustrators){
-            console.log('undefined');
-          }
-          else{
-            console.log('defined');
-          }
           this.setShowEditButton();
           if (!this.bookDetails.selectHelper) {
             if (this.bookDetails.editorStatus !== 'confirmed' && this.bookDetails.designerStatus !== 'confirmed') {
               this.contentService.getRecommendedEditorsOrIllustrators('editor', this.bookDetails.genres[0]).subscribe(
                 result => {
+                  if(result.length === 0){
+                    this.noAutomate = true;
+                  }
                   this.bookDetails.editorName = result[0].name;
                   this.bookDetails.editorStatus = 'confirmed';
                   this.contentService.saveBookDetails(this.bookDetails).subscribe();

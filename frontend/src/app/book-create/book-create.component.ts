@@ -48,6 +48,7 @@ export class BookCreateComponent implements OnInit {
   private brokenImage = true;
   fileName: string;
   private published: any;
+  private noAutomate = false;
   @ViewChild(IssuesComponent, {static: true}) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
@@ -85,6 +86,9 @@ export class BookCreateComponent implements OnInit {
             if (this.bookDetails.editorStatus !== 'confirmed' && this.bookDetails.designerStatus !== 'confirmed') {
               this.contentService.getRecommendedEditorsOrIllustrators('editor', this.bookDetails.genres[0]).subscribe(
                 result => {
+                  if(result.length === 0){
+                    this.noAutomate = true;
+                  }
                   this.bookDetails.editorName = result[0].name;
                   this.bookDetails.editorStatus = 'confirmed';
                   this.contentService.saveBookDetails(this.bookDetails).subscribe();
@@ -422,7 +426,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   isPublish(): boolean {
-    const flag = this.bookDetails.plagarismCheckDone && !this.bookDetails.plagarised;
+    const flag = this.bookDetails.plagarismCheckDone && !this.bookDetails.plagarised && this.brokenImage;
     if (this.bookDetails.status === undefined) {
       return false;
     }
@@ -707,36 +711,6 @@ export class SelectIllustratorDialog implements OnInit {
     this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
-  }
-
-
-}
-
-@Component({
-  // tslint:disable-next-line: component-selector
-  selector: 'set-status-dialog',
-  templateUrl: 'set-status-dialog.html',
-  styleUrls: ['./book-create.component.css']
-})
-// tslint:disable-next-line: component-class-suffix
-export class SetStatusDialog {
-  @Output() chapterStatusEvent = new EventEmitter<any>();
-  private chapterStatus = 'Status';
-
-  constructor(
-    public dialogRef: MatDialogRef<SetStatusDialog>,
-    @Inject(MAT_DIALOG_DATA) public statusData: string) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  setChapterStatus() {
-    console.log(this.chapterStatus);
-    this.statusData = this.chapterStatus;
-    this.chapterStatusEvent.emit(this.chapterStatus);
-    this.dialogRef.close();
   }
 
 

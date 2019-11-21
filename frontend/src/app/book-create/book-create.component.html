@@ -68,7 +68,7 @@
       </mat-card>
       <br>
 
-      <div *ngIf="!isSelectHelper()">
+      <div *ngIf="!isSelectHelper() && !noAutomate">
         <mat-card *ngIf="!isSelectHelper()" class="editor-illustrator">
           <mat-grid-list *ngIf="bookDetails.editorName" cols="2" rowHeight="175px">
             <mat-grid-tile class="choose-editor-tile">
@@ -183,7 +183,7 @@
               <mat-icon>add</mat-icon>
             </button>
             <span [matTooltipDisabled]="isPublish()"
-                  matTooltip="Please check for plagiarism and mark all chapters as 'Finished'">
+                  matTooltip="Please check for plagiarism, mark all chapters as 'Finished' and upload cover image">
             <button [disabled]="!isPublish()" (click)="onPublish()" mat-raised-button
                     class="style-button">Publish
             </button>

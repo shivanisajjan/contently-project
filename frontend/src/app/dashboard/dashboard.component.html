@@ -110,7 +110,7 @@
      
     <div class="content-cards">
       
-      <mat-card class="content-card" *ngFor="let content of purchaseList, index as i" (click)="goToBook(content.id)">
+      <mat-card class="content-card" *ngFor="let content of completePurchaseList, index as i" (click)="goToBook(content.id)">
           <mat-card-header>
               <mat-card-title>  {{content.title}}</mat-card-title>
               <mat-card-subtitle>{{content.authorName}}</mat-card-subtitle>

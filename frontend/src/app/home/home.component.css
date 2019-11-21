@@ -112,7 +112,7 @@
   justify-content: center;
 }
 .author-avatar{
-  height: 150px;
+  height: 200px;
   width: 150px;
   margin: 0 auto;
   border-radius: 50%;
@@ -276,6 +276,7 @@ mat-card-content{
   color: black;
   background-color: #f1797f;
  }
+ 
  
 
  .author-subtitle{

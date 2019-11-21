@@ -1,0 +1,11 @@
+#cardhere img{
+    width: 70%;
+}
+
+.no-results{
+    height: 500px;
+}
+
+.no-results h2{
+    top:100px;
+}

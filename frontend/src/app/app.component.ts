@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
             duration: 2000,
           });
           // tslint:disable-next-line: no-unused-expression
-          this.ngOnInit;
+          this.ngOnInit();
         }
       });
     });

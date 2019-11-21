@@ -4,7 +4,7 @@
                [pageSizeOptions]="[20]"
                (page)="pageEvent = pageChanged($event)">
 </mat-paginator>
-<mat-grid-list [cols]="noCol" rowHeight="300px" *ngIf="pageEvent" class="all-books">
+<mat-grid-list [cols]="getCol()" rowHeight="300px" *ngIf="pageEvent" class="all-books">
   <mat-grid-tile rowspan="1" colspan="1" *ngFor="let book of bookData, index as i" (click)="bookDetails(book.id)">
     <mat-card class="book-card" >
       <mat-card-content>

@@ -1,9 +1,9 @@
 <!--<div style="background-image: url('../../assets/images/main_bg.jpeg');" class="register-component" id="contact-section">-->
 <div class="register-component" id="contact-section">
 
-  <div class="trending-books">
+  <!-- <div class="trending-books">
     <h3 style="margin-left: 4%;">Register Here</h3>
-    </div>
+    </div> -->
 
   <div class="register-component-body">
     <mat-horizontal-stepper >
@@ -22,7 +22,7 @@
 
           <div>
             <mat-form-field class="fields">
-              <input formControlName="username" #username matInput placeholder="Username" class="col">
+              <input formControlName="username" #username matInput placeholder="Username" class="col" required>
               <mat-error *ngIf="usernameAlreadyExists">
                 Username Already Exists
               </mat-error>
@@ -158,6 +158,7 @@
       </mat-step> -->
 
     </mat-horizontal-stepper>
+    <div class="space"></div>
   </div>
 
   <h2 *ngIf="registerv" style="color: white">Registered Successfully</h2>

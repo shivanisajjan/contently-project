@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {Router} from '@angular/router';
-import {ActivatedRoute} from '@angular/router';
-import {ContentService} from '../content.service';
-import {BookFetchService} from '../bookFetch.service';
-import {FileSaverService} from 'ngx-filesaver';
-import {PreviewComponent} from "../book-create/preview/preview.component";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ContentService } from '../content.service';
+import { BookFetchService } from '../bookFetch.service';
+import { FileSaverService } from 'ngx-filesaver';
+import { PreviewComponent } from "../book-create/preview/preview.component";
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-bookdetails',
@@ -17,6 +18,7 @@ export class BookdetailsComponent implements OnInit {
   private bookId;
   private bookDetails: any;
   private bookDetailsLoaded;
+  private chapterDetailsLoaded;
   private releaseNext;
   private chapterIndex;
   private lastChapter;
@@ -37,6 +39,10 @@ export class BookdetailsComponent implements OnInit {
         result => {
           this.bookDetails = result;
           console.log('book-details: ', this.bookDetails);
+          if (!localStorage.getItem('token')) {
+            this.bookDetailsLoaded = true;
+            return;
+          }
           this.contentService.getChapterFromProfile(localStorage.getItem('username'), localStorage.getItem('bookId'))
             .subscribe(
               data => {
@@ -48,6 +54,7 @@ export class BookdetailsComponent implements OnInit {
                 }
                 this.chapterIndex = data.chapterIndex;
                 this.bookDetailsLoaded = true;
+                this.chapterDetailsLoaded = true;
               },
               error => {
                 console.log('Chapter error: ', error);
@@ -58,6 +65,9 @@ export class BookdetailsComponent implements OnInit {
           console.log('error', error);
         }
       );
+    if (!localStorage.getItem('token')) {
+      return;
+    }
     this.contentService.getPurchaseStatus(localStorage.getItem('bookId'))
       .subscribe(
         data => {
@@ -92,15 +102,24 @@ export class BookdetailsComponent implements OnInit {
     this.bookFetch.getFromAws(fileName)
       .subscribe(
         data => {
-          const blob = new Blob([data], {type: fileType});
+          const blob = new Blob([data], { type: fileType });
           this.fileSaverService.save(blob, fileName);
         }
       );
   }
 
   goToPayment() {
-    localStorage.setItem('price', this.bookDetails.price);
-    this.router.navigate(['/pay']).then();
+    if (!localStorage.getItem('token')) {
+      const dialogRef = this.dialog.open(LoginComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    } else {
+      localStorage.setItem('price', this.bookDetails.price);
+      this.router.navigate(['/pay']).then();
+    }
+
   }
 
   preview() {

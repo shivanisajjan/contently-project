@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   private stompClient;
   private publishedList;
   private purchaseList;
+  private completePurchaseList = [];
 
   constructor(
     private router: Router,
@@ -120,7 +121,15 @@ export class DashboardComponent implements OnInit {
 
   getPurchasedBooks() {
     this.contentService.getPurchasedBooks().subscribe(
-      result => this.purchaseList = result
+      result => {
+        this.purchaseList = result;
+        for(let p of this.purchaseList){
+          this.contentService.getBookDetailPage(p.book_id).subscribe(
+            // tslint:disable-next-line: no-shadowed-variable
+            result => this.completePurchaseList.push(result)
+          )
+        }
+      }
     );
   }
 
@@ -129,5 +138,4 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/book-details']).then();
   }
 
- 
 }

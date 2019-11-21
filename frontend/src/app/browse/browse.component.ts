@@ -39,7 +39,10 @@ export class BrowseComponent implements OnInit {
         }
       );
   }
-
+getCol(){
+  console.log('cols caled');
+  return this.noCol;
+}
   bookDetails(bookId: any) {
     localStorage.setItem('bookId', bookId);
     this.router.navigate(['book-details']).then();

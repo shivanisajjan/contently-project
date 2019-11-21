@@ -19,6 +19,10 @@ form{
   margin-left:22%;
 }
 
+.space{
+  height: 120px;
+}
+
 .input-field{
   padding-left: 3%;
 }

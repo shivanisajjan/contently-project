@@ -122,6 +122,12 @@ export class RegistrationComponent implements OnInit {
   public returnUser: any;
 
   public register(username, password) {
+    console.log(username);
+    if (username === '' || password === '') {
+      this._snackBar.open("Fill Your Details", "close", {
+        duration: 2000,
+      });
+    } else {
     const regUser: userReg = new userReg();
     regUser.username = username;
     regUser.password = password;
@@ -153,6 +159,7 @@ export class RegistrationComponent implements OnInit {
 
    }
    );
+  }
   }
 
   public addPersonalDetails(username, password, email, contact, firstname, lastname, nationality, address1, address2, address3, date) {

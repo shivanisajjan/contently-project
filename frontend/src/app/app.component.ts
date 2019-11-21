@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
@@ -8,7 +8,6 @@ import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import $ from 'jquery';
 import {MatSnackBar} from '@angular/material';
 import {notification} from './notification';
 import {NotificationService} from './notification.service';
@@ -61,7 +60,7 @@ export class AppComponent implements OnInit {
     this.getNotifications();
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [])
   onWindowsResize() {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
   }

@@ -104,7 +104,6 @@ export class BookCreateComponent implements OnInit {
   }
 
   isSelectHelper(): boolean {
-    // return localStorage.getItem('selectHelper')=== 'true';
     return this.bookDetails.selectHelper;
   }
 

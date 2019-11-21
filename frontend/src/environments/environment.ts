@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   gitBaseUrl: 'https://api.github.com/',
-  backBaseUrl: 'http://13.126.150.171:8080/',
-  socketUrl: 'http://13.126.150.171:8716/socket'
+  backBaseUrl: 'https://contently.stackroute.io:8989/',
+  socketUrl: 'https://contently.stackroute.io:8990/socket'
 };
 
 /*

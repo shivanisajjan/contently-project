@@ -1,3 +1,4 @@
+<br>
 <h2 class="to container">Search Results</h2>
 <div class="container">
   <section class="row container">
@@ -6,6 +7,10 @@
         <img (click)="bookDetails(search.id)" src="https://www.booktopia.com.au/blog/wp-content/uploads/2018/12/the-arsonist.jpg" alt="top_track">
         <p>{{search.title}}</p>
       </div>
+    </div>
+
+    <div *ngIf="noResults" class="no-results">
+      <h2>No Results</h2>      
     </div>
   </section>
 </div>

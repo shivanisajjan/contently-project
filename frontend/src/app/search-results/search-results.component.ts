@@ -11,7 +11,8 @@ import {Router} from '@angular/router';
 })
 export class SearchResultsComponent implements OnInit {
   private search;
-  private searchBooks: any;
+  private searchBooks: [];
+  private noResults = false;
 
   constructor(
     private route: ActivatedRoute, private bookFetch: BookFetchService, private router: Router
@@ -24,6 +25,10 @@ export class SearchResultsComponent implements OnInit {
         result => {
           this.searchBooks = result;
           console.log(this.searchBooks);
+          if(this.searchBooks.length === 0){
+            console.log('no results');
+            this.noResults = true;
+          }
         },
         error => {
           console.log('error: ', error);

@@ -38,7 +38,7 @@
               </mat-grid-tile-header>
             </div>
             <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
-            <mat-grid-tile-footer *ngIf="bookDetails.editorStatus">
+            <mat-grid-tile-footer *ngIf="bookDetails.editorStatus" >
               <h4>{{bookDetails.editorStatus | uppercase }}</h4>
             </mat-grid-tile-footer>
           </mat-grid-tile>
@@ -78,9 +78,7 @@
                 </mat-grid-tile-header>
               </div>
               <h3 *ngIf="bookDetails.editorName">{{bookDetails.editorName}}</h3>
-              <mat-grid-tile-footer *ngIf="bookDetails.designerStatus">
-                <h4>{{bookDetails.editorStatus | uppercase }}</h4>
-              </mat-grid-tile-footer>
+            
             </mat-grid-tile>
 
             <mat-grid-tile>
@@ -91,9 +89,7 @@
                 </mat-grid-tile-header>
               </div>
               <h3 *ngIf="bookDetails.designerName">{{bookDetails.designerName}}</h3>
-              <mat-grid-tile-footer *ngIf="bookDetails.designerStatus">
-                <h4>{{bookDetails.designerStatus | uppercase }}</h4>
-              </mat-grid-tile-footer>
+             
             </mat-grid-tile>
           </mat-grid-list>
         </mat-card>

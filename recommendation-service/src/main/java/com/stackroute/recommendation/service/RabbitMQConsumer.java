@@ -51,7 +51,7 @@ public class RabbitMQConsumer {
             userService.createAgeGroup("o");
 
 
-        userService.setAgeGroup("a", userDto.getUsername());
+
         if (userDto.getDob() != null) {
 
 

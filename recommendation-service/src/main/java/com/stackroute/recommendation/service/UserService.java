@@ -143,7 +143,7 @@ public class UserService {
 
     List<Type> getAgeGroup(String ageGroup)
     {
-        return userRepository.getType(ageGroup);
+        return userRepository.getAgeGroup(ageGroup);
 
     }
     List<Type> getRole(String role)

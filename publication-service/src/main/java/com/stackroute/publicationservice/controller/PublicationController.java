@@ -55,11 +55,6 @@ public class PublicationController {
         return new ResponseEntity<List<Publications>>(publicationService.getAllPublications(), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id) throws InternalServerErrorException, ContentDoesNotExistException {
-        publicationService.deleteContent(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
-    }
 
     @PutMapping(value = "/update")
     public ResponseEntity<?> update(@RequestBody Publications publication) throws InternalServerErrorException, ContentDoesNotExistException {

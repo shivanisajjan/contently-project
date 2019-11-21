@@ -29,14 +29,14 @@ export class LoginService {
   }
 
   updateUser(regUser: userReg): any {
-    // const header = {
-    //     Authorization: 'Batman ' + localStorage.getItem('token')
-    //   };
-    // const httpOptions = {
-    //     headers: header
-    //   };
+    const header = {
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      };
+    const httpOptions = {
+        headers: header
+      };
     const postUrl = `${environment.backBaseUrl}user-management/api/v1/user/update`;
-    return this.http.put(postUrl, regUser);
+    return this.http.put(postUrl, regUser, httpOptions);
   }
 
   saveInterests(saveProfile: profile): any {
@@ -46,8 +46,8 @@ export class LoginService {
     const httpOptions = {
       headers: header
     };
-    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile`;
-    return this.http.post(postUrl, saveProfile, httpOptions);
+    const postUrl = `${environment.backBaseUrl}profile-service/api/v1/profile/update`;
+    return this.http.put(postUrl, saveProfile, httpOptions);
   }
 
   getUser(): Observable<any> {

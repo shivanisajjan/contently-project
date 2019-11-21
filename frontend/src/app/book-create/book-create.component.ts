@@ -419,9 +419,7 @@ export class BookCreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       () => {
         console.log('closed');
-        this.spinner.hide().then();
-        // tslint:disable-next-line: no-string-literal
-        this.router.navigate['dashboard'].then();
+        this.router.navigate(['dashboard']).then();
       });
   }
 

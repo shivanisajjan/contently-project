@@ -25,15 +25,18 @@ export class PageAfterLoginComponent implements OnInit {
     this.gotRecs = false;
     this._bookFetch.getRecommendation()
       .subscribe(data => {
-        console.log(data);  
+        console.log(data);
         this.bookVar = data;
       });
     this._bookFetch.getRecommendedBooks(localStorage.getItem('username')).subscribe(
       data => {
         this.bookRec = data;
         if (this.bookRec.length === 0) {
-          this.gotRecs = true;
+          this.gotRecs = false;
         }
+      },
+      error => {
+        this.gotRecs = false;
       }
     );
   }

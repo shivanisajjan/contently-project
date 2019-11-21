@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ContentService } from '../content.service';
-import { BookFetchService } from '../bookFetch.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { formatDate } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ContentService} from '../content.service';
+import {BookFetchService} from '../bookFetch.service';
+import {Router, ActivatedRoute} from '@angular/router';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {formatDate} from '@angular/common';
 
 
 @Component({
@@ -20,15 +20,16 @@ export class PublicationBookComponent implements OnInit {
   private book;
 
   constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
-    public dialogRef: MatDialogRef<PublicationBookComponent>
-  ) { }
+              public dialogRef: MatDialogRef<PublicationBookComponent>
+  ) {
+  }
 
   ngOnInit() {
     let cond1 = false;
     let cond2 = false;
     this.book = JSON.parse(localStorage.getItem('book'));
     console.log('hello:', this.book);
-    console.log(this.book.editorName);
+
     if (this.book.editorName === null) {
       this.editorPay = 0;
       cond1 = true;
@@ -55,18 +56,20 @@ export class PublicationBookComponent implements OnInit {
         );
     }
     console.log(cond1, cond2);
-    while ( (cond1 && cond2) === false) {
-      console.log('cond: ', cond1 && cond2);
-    }
-    console.log(this.editorPay, this.illustratorPay);
+    console.log(cond1 && cond2);
 
-    this.contentService.recommendedPrice(this.editorPay, this.illustratorPay)
-      .subscribe(
-        result => {
-          this.recommended_price = result;
-          console.log('price result', result);
-        }
-      );
+    console.log(cond1 && cond2);
+    setTimeout(() => {
+      console.log('condition: ', cond1 && cond2);
+      this.contentService.recommendedPrice(this.editorPay, this.illustratorPay)
+        .subscribe(
+          result => {
+            this.recommended_price = result;
+            console.log('price result', result);
+          }
+        );
+    }, 3000);
+      
   }
 
   savePublication(price) {

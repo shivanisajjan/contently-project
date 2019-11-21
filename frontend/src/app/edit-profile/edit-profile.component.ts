@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { interest } from '../interest';
-import { genre } from '../genre';
-import { profile } from '../profile';
-import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
-import { userReg } from '../userReg';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import {interest} from '../interest';
+import {genre} from '../genre';
+import {profile} from '../profile';
+import {LoginService} from '../login.service';
+import {Router} from '@angular/router';
+import {userReg} from '../userReg';
+import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
+import {Observable} from 'rxjs';
+import {startWith, map} from 'rxjs/operators';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EditProfileComponent implements OnInit {
   private username;
-  private gender = 'female';
+  private gender;
   isLinear = false;
   public interestsBoolean = true;
   firstFormGroup: FormGroup;
@@ -59,6 +59,7 @@ export class EditProfileComponent implements OnInit {
   private genreFormControl: FormControl;
   private typeSelected: any;
   private maxDate = new Date();
+
   constructor(
     // tslint:disable-next-line: variable-name
     private _formBuilder: FormBuilder,
@@ -67,13 +68,13 @@ export class EditProfileComponent implements OnInit {
     // tslint:disable-next-line: variable-name
     private _router: Router,
     private datePipe: DatePipe
-    ) {
-      // if (!localStorage.getItem('token')) {
-      //   this._router.navigate(['/home']).then();
-      // }
-      this.genreFormControl = new FormControl();
+  ) {
+    // if (!localStorage.getItem('token')) {
+    //   this._router.navigate(['/home']).then();
+    // }
+    this.genreFormControl = new FormControl();
 
-    }
+  }
 
   ngOnInit() {
     this.profileData = JSON.parse(localStorage.getItem('editProfile'));
@@ -82,22 +83,22 @@ export class EditProfileComponent implements OnInit {
       console.log(this.changeDateFormat(this.profileData.dob));
       this.username = this.profileData.username;
       this.firstFormGroup = this._formBuilder.group({
-      firstName: [this.profileData.firstName, Validators.required],
-      lastName: [this.profileData.lastName],
-      email: [this.profileData.email],
-      contact: [this.profileData.phoneNumber],
-      address1: [this.profileData.addressLine1],
-      address2: [this.profileData.addressLine2],
-      address3: [this.profileData.addressLine3],
-      nationality: [this.profileData.nationality, Validators.required],
-      gender: [this.profileData.gender, Validators.required],
-      date: [new Date(this.changeDateFormat(this.profileData.dob)), Validators.required]
+        firstName: [this.profileData.firstName, Validators.required],
+        lastName: [this.profileData.lastName],
+        email: [this.profileData.email],
+        contact: [this.profileData.phoneNumber],
+        address1: [this.profileData.addressLine1],
+        address2: [this.profileData.addressLine2],
+        address3: [this.profileData.addressLine3],
+        nationality: [this.profileData.nationality, Validators.required],
+        gender: [this.profileData.gender, Validators.required],
+        date: [new Date(this.changeDateFormat(this.profileData.dob)), Validators.required]
       });
 
       this.secondFormGroup = this._formBuilder.group({
         secondCtrl: ['', Validators.required]
-       });
-     } else {
+      });
+    } else {
 
       this.username = localStorage.getItem('username');
       console.log(this.username);
@@ -111,11 +112,12 @@ export class EditProfileComponent implements OnInit {
         address3: [],
         nationality: ['', Validators.required],
         gender: ['', Validators.required],
-        date: ['', Validators.required]    });
+        date: ['', Validators.required]
+      });
       this.secondFormGroup = this._formBuilder.group({
-          secondCtrl: ['', Validators.required]
-         });
-   }
+        secondCtrl: ['', Validators.required]
+      });
+    }
 
     // this.$profile.interest = new Array();
     // this.$interest = new interest();
@@ -153,10 +155,7 @@ export class EditProfileComponent implements OnInit {
         console.log('updated');
       }
     });
-    if(!localStorage.getItem('role')){
-      console.log('ROlE FOUND');
-      localStorage.clear();
-    }
+
     localStorage.removeItem('editProfile');
   }
 
@@ -267,8 +266,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveGenre() {
-    this.$fictionInterest.type = 'fiction';
-    this.$nonFictionInterest.type = 'nonfiction';
+    this.$fictionInterest.name = 'fiction';
+    this.$nonFictionInterest.name = 'nonfiction';
     this.$fictionInterest.genre = [];
     this.$nonFictionInterest.genre = [];
     for (const g of this.genresSelected) {
@@ -284,7 +283,16 @@ export class EditProfileComponent implements OnInit {
     console.log(this.$profile);
     if (this.interestsBoolean) {
       this.$profile.username = this.username;
-      this._loginService.saveInterests(this.$profile).subscribe();
+      this._loginService.saveInterests(this.$profile).subscribe(
+        data => {
+          if (!localStorage.getItem('role')) {
+            console.log('ROlE FOUND');
+            localStorage.clear();
+            this._router.navigate(['']).then();
+          }
+        }
+      );
+
       this._router.navigate(['/afterLogin']).then();
     }
 
@@ -295,23 +303,23 @@ export class EditProfileComponent implements OnInit {
 
   //   return this.allGenres.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);
   // }
-  changeDateFormat(date: string){
+  changeDateFormat(date: string) {
     let dateArray = date.split("/");
     let temp = dateArray[0];
     dateArray[0] = dateArray[1];
     dateArray[1] = temp;
-    
+
     // return dateArray.join("/");
     return dateArray[0] + "/" + dateArray[1] + "/" + dateArray[2];
-    }
+  }
 
-    getErrorPhone() {
-      return this.firstFormGroup.get('contact').hasError('pattern') ? 'Not a valid phone Number' :
-        this.firstFormGroup.get('contact').hasError('minLength') ? 'Must be 10 chars' :
+  getErrorPhone() {
+    return this.firstFormGroup.get('contact').hasError('pattern') ? 'Not a valid phone Number' :
+      this.firstFormGroup.get('contact').hasError('minLength') ? 'Must be 10 chars' :
         this.firstFormGroup.get('contact').hasError('maxLength') ? 'Not more than 10 chars' : '';
-    }
+  }
 
-    getErrorEmail() {
-      return this.firstFormGroup.get('email').hasError('pattern') ? 'Not a valid email address' : '';
-    }
+  getErrorEmail() {
+    return this.firstFormGroup.get('email').hasError('pattern') ? 'Not a valid email address' : '';
+  }
 }

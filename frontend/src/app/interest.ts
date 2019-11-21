@@ -1,5 +1,5 @@
 
 export class interest {
-    type: string;
+    name: string;
     genre: string[];
 }

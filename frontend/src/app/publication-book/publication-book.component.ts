@@ -58,25 +58,18 @@ export class PublicationBookComponent implements OnInit {
     console.log(cond1, cond2);
     console.log(cond1 && cond2);
 
-    // while((cond1 && cond2) === false){
-      console.log(cond1 && cond2);
-      setTimeout(() => {
-        console.log('condition: ', cond1 && cond2);
-      }, 2000);
-    // }
-
-    console.log(cond1, cond2);
     console.log(cond1 && cond2);
-
-    console.log(this.editorPay, this.illustratorPay);
-
-    this.contentService.recommendedPrice(this.editorPay, this.illustratorPay)
-      .subscribe(
-        result => {
-          this.recommended_price = result;
-          console.log('price result', result);
-        }
-      );
+    setTimeout(() => {
+      console.log('condition: ', cond1 && cond2);
+      this.contentService.recommendedPrice(this.editorPay, this.illustratorPay)
+        .subscribe(
+          result => {
+            this.recommended_price = result;
+            console.log('price result', result);
+          }
+        );
+    }, 3000);
+      
   }
 
   savePublication(price) {

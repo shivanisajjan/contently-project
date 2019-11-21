@@ -62,4 +62,8 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+  register() {
+    this.dialogRef.close();
+    this.router.navigate(['/register']).then();
+  }
 }

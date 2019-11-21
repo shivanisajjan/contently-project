@@ -66,8 +66,7 @@ export class BookFetchService {
   searchBooks(searchValue): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
+        'Content-Type': 'application/json'
       })
     };
     return this.http.get<any>(environment.backBaseUrl + 'publication-service/api/v1/publications/search/' + searchValue, httpOptions);

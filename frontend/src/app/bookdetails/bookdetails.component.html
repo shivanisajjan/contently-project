@@ -39,7 +39,7 @@
         <div class="action-buttons-purchased" *ngIf="!getHasPurchased()">
           <button mat-raised-button class="style-button" (click)="goToPayment()">Purchase</button>
           <button mat-raised-button class="style-button" (click)="preview()">{{bookDetails.chapterName[chapterIndex]}}</button>
-          <button mat-raised-button class="style-button" (click)="requestNext()" *ngIf="!getLastChapter()" [disabled]="getReleaseNext()">Request Next Chapter</button>
+          <button mat-raised-button class="style-button" (click)="requestNext()" *ngIf="!getLastChapter() && chapterDetailsLoaded" [disabled]="getReleaseNext()">Request Next Chapter</button>
         </div>
         <div class="action-buttons-not-purchased" *ngIf="getHasPurchased()">
           <button mat-raised-button class="style-button" [matMenuTriggerFor]="menu" color="primary">Download</button>

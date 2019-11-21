@@ -22,7 +22,7 @@
 
           <div>
             <mat-form-field class="fields">
-              <input formControlName="username" #username matInput placeholder="Username" class="col">
+              <input formControlName="username" #username matInput placeholder="Username" class="col" required>
               <mat-error *ngIf="usernameAlreadyExists">
                 Username Already Exists
               </mat-error>

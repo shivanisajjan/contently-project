@@ -143,8 +143,8 @@ export class ContentService {
   getBookDetailPage(id): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Batman ' + localStorage.getItem('token')
+        'Content-Type': 'application/json'
+        // Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
     const postUrl = `${environment.backBaseUrl}publication-service/api/v1/book/id/${id}`;

@@ -422,7 +422,7 @@ export class BookCreateComponent implements OnInit {
   }
 
   isPublish(): boolean {
-    const flag = this.bookDetails.plagarismCheckDone && !this.bookDetails.plagarised;
+    const flag = this.bookDetails.plagarismCheckDone && !this.bookDetails.plagarised && this.brokenImage;
     if (this.bookDetails.status === undefined) {
       return false;
     }

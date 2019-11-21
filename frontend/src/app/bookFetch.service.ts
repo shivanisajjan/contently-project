@@ -100,7 +100,7 @@ export class BookFetchService {
       })
     };
     console.log('recommending..');
-    return this.http.get<any>(environment.backBaseUrl + 'recommendation-service/api/v1/books', httpOptions);
+    return this.http.get<any>(environment.backBaseUrl + 'recommendation-service/api/v1/books/trending', httpOptions);
   }
 
   saveToPublication(bookDetails): Observable<any> {

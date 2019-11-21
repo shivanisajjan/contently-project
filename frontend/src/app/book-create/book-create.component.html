@@ -182,7 +182,7 @@
             <button style="margin-right: 10px;" mat-raised-button class="style-button" (click)="addNewSection()">
               <mat-icon>add</mat-icon>
             </button>
-            <span [matTooltipDisabled]="isPublish()"
+            <span [matTooltipDisabled]="isPublish()" style="margin-right: 10px;"
                   matTooltip="Please check for plagiarism and mark all chapters as 'Finished'">
             <button [disabled]="!isPublish()" (click)="onPublish()" mat-raised-button
                     class="style-button">Publish

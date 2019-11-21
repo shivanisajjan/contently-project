@@ -13,7 +13,6 @@ import {
   BookCreateComponent,
   SelectEditorDialog,
   SelectIllustratorDialog,
-  SetStatusDialog
 } from './book-create/book-create.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';

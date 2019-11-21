@@ -28,7 +28,8 @@ const routes: Routes = [
   {path: 'pay', component: PaymentComponent},
   {path: 'loading', component: LoadingComponent},
   {path: 'download', component: DownloadComponent},
-  {path: 'searchResults/:search', component: SearchResultsComponent}
+  {path: 'searchResults/:search', component: SearchResultsComponent},
+  {path: '**', component: HomeComponent}
 ];
 
 @NgModule({

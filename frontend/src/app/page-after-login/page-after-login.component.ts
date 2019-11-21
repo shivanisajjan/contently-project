@@ -10,12 +10,12 @@ import {Router} from '@angular/router';
 export class PageAfterLoginComponent implements OnInit {
   public bookVar: [];
   public bookRec: [];
-  private gotRecs: boolean;
+  public gotRecs: boolean;
 
   constructor(
     // tslint:disable-next-line: variable-name
-    private _bookFetch: BookFetchService,
-    private router: Router) {
+    public _bookFetch: BookFetchService,
+    public router: Router) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }

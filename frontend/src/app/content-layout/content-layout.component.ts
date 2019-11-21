@@ -26,25 +26,25 @@ export class ContentLayoutComponent implements OnInit {
   @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
-  private fictionGenres = ['classic', 'comic', 'contemporary', 'crime', 'detective', 'fable', 'fairy tale',
+  public fictionGenres = ['classic', 'comic', 'contemporary', 'crime', 'detective', 'fable', 'fairy tale',
     'fan fiction', 'fantasy', 'folk tale', 'historical fiction', 'horror', 'humor', 'legend', 'magical realism',
     'meta fiction', 'mystery', 'mythology', 'mythopoeia', 'picture book', 'realistic fiction', 'romance', 'science fiction',
     'short story', 'suspense', 'swashbuckler', 'tall tale', 'theoretical fiction', 'thriller', 'western'];
-  private nonFictionGenres = ['essay', 'journalism', 'lab report', 'memoir', 'narrative nonfiction',
+  public nonFictionGenres = ['essay', 'journalism', 'lab report', 'memoir', 'narrative nonfiction',
     'owner\'s manual', 'personal narrative', 'reference book', 'speech', 'textbook', 'biography'];
-  private genresSelected = [];
-  private genresList = [];
-  private separatorKeysCodes: number[] = [ENTER, COMMA];
-  private filteredGenres: Observable<string[]>;
-  private genreFormControl: FormControl;
-  private typeSelected: any;
+  public genresSelected = [];
+  public genresList = [];
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public filteredGenres: Observable<string[]>;
+  public genreFormControl: FormControl;
+  public typeSelected: any;
 
   @ViewChild('genreInput', {static: false}) genreInput: ElementRef<HTMLInputElement>;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private bookFetch: BookFetchService,
-              private contentService: ContentService) {
+  constructor(public http: HttpClient,
+              public router: Router,
+              public bookFetch: BookFetchService,
+              public contentService: ContentService) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -124,7 +124,7 @@ export class ContentLayoutComponent implements OnInit {
     }
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.genresList.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);
   }

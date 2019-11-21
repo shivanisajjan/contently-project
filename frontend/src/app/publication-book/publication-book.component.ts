@@ -14,12 +14,12 @@ import {formatDate} from '@angular/common';
 export class PublicationBookComponent implements OnInit {
 
   // tslint:disable-next-line: variable-name
-  private recommended_price;
-  private editorPay;
-  private illustratorPay;
-  private book;
+  public recommended_price;
+  public editorPay;
+  public illustratorPay;
+  public book;
 
-  constructor(private contentService: ContentService, private bookFetch: BookFetchService, private router: Router,
+  constructor(public contentService: ContentService, public bookFetch: BookFetchService, public router: Router,
               public dialogRef: MatDialogRef<PublicationBookComponent>
   ) {
   }
@@ -69,7 +69,7 @@ export class PublicationBookComponent implements OnInit {
           }
         );
     }, 3000);
-      
+
   }
 
   savePublication(price) {

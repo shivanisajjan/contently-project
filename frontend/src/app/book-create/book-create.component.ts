@@ -6,7 +6,6 @@ import {
   EventEmitter,
   ComponentFactoryResolver,
   ViewChild,
-  ViewContainerRef
 } from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -24,9 +23,7 @@ import {formatDate} from '@angular/common';
 import {PublicationBookComponent} from '../publication-book/publication-book.component';
 import {IssuesComponent} from '../issues/issues.component';
 import {Observable} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {FailureComponent} from '../failure/failure.component';
 
 @Component({
   selector: 'app-book-create',
@@ -36,31 +33,31 @@ import {FailureComponent} from '../failure/failure.component';
 
 export class BookCreateComponent implements OnInit {
 
-  private isPublished = false;
-  private editor: any;
-  private illustrator: any;
-  private bookDetails: any;
-  private bookDetailsLoaded;
-  private chapterStatus = [];
-  private showEditButton: boolean[] = [];
-  private commitList = [];
-  private commitListLoaded = false;
-  private brokenImage = true;
+  public isPublished = false;
+  public editor: any;
+  public illustrator: any;
+  public bookDetails: any;
+  public bookDetailsLoaded;
+  public chapterStatus = [];
+  public showEditButton: boolean[] = [];
+  public commitList = [];
+  public commitListLoaded = false;
+  public brokenImage = true;
   fileName: string;
-  private published: any;
-  private noAutomate = false;
+  public published: any;
+  public noAutomate = false;
   @ViewChild(IssuesComponent, {static: true}) issueComponent: IssuesComponent;
   options: string[] = ['Editor1', 'Editor2', 'Editor3'];
 
-  constructor(private bookFetch: BookFetchService,
-              private spinner: NgxSpinnerService,
-              private router: Router,
-              private dialog: MatDialog,
-              private contentService: ContentService,
-              private route: ActivatedRoute,
-              private fileSaverService: FileSaverService,
-              private notificationService: NotificationService,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(public bookFetch: BookFetchService,
+              public spinner: NgxSpinnerService,
+              public router: Router,
+              public dialog: MatDialog,
+              public contentService: ContentService,
+              public route: ActivatedRoute,
+              public fileSaverService: FileSaverService,
+              public notificationService: NotificationService,
+              public componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     }
@@ -261,7 +258,7 @@ export class BookCreateComponent implements OnInit {
       );
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
@@ -499,7 +496,7 @@ export class BookCreateComponent implements OnInit {
   onSelectFile(event: { target: { files: { name: any; }[]; }; }) {
     // event.target.files[0].name = this.bookDetails.title;
     if (event.target.files && event.target.files[0]) {
-      this.bookFetch.uploadToAwsImage(event.target.files[0], this.bookDetails.title + '.jpg')
+      this.bookFetch.uploadToAwsImage(event.target.files[0], this.bookDetails.id + '.jpg')
         .subscribe(data => {
           console.log(data);
         });
@@ -577,7 +574,7 @@ export class SelectEditorDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SelectEditorDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private contentService: ContentService) {
+    public contentService: ContentService) {
   }
 
   ngOnInit(): void {
@@ -654,8 +651,8 @@ export class SelectIllustratorDialog implements OnInit {
     public dialogRef: MatDialogRef<SelectIllustratorDialog>,
     // tslint:disable-next-line: ban-types
     @Inject(MAT_DIALOG_DATA) public data: String,
-    private contentService: ContentService,
-    // private changeDetectorRef: ChangeDetectorRef
+    public contentService: ContentService,
+    // public changeDetectorRef: ChangeDetectorRef
   ) {
   }
 

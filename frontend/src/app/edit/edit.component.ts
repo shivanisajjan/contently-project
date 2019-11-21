@@ -13,17 +13,17 @@ import {formatDate} from '@angular/common';
 })
 export class EditComponent implements OnInit {
 
-  private book: Book;
-  private fileName: string;
-  private editorForm: FormGroup;
-  private editorStyle = {
+  public book: Book;
+  public fileName: string;
+  public editorForm: FormGroup;
+  public editorStyle = {
     height: '400px',
     backgroundColor: 'white',
   };
 
-  constructor(private router: Router,
-              private bookFetch: BookFetchService,
-              private route: ActivatedRoute,
+  constructor(public router: Router,
+              public bookFetch: BookFetchService,
+              public route: ActivatedRoute,
   ) {
     if (!localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();

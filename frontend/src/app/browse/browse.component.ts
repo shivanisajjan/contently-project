@@ -10,15 +10,15 @@ import {Router} from "@angular/router";
 })
 export class BrowseComponent implements OnInit {
   public innerWidth: any;
-  private pageEvent: PageEvent = new PageEvent();
-  private size = 20;
-  private books = [];
-  private booksLoaded;
-  private bookData: any;
-  private noCol = 5;
+  public pageEvent: PageEvent = new PageEvent();
+  public size = 20;
+  public books = [];
+  public booksLoaded;
+  public bookData: any;
+  public noCol = 5;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  constructor(private contentService: ContentService,
-              private router: Router) {
+  constructor(public contentService: ContentService,
+              public router: Router) {
   }
 
   ngOnInit() {

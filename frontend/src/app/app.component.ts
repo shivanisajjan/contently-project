@@ -13,6 +13,7 @@ import {MatSnackBar} from '@angular/material';
 import {notification} from './notification';
 import {NotificationService} from './notification.service';
 import {ContentService} from './content.service';
+import {environment} from "../environments/environment";
 
 
 @Component({
@@ -22,17 +23,17 @@ import {ContentService} from './content.service';
 })
 export class AppComponent implements OnInit {
   title = 'contently';
-  private showNavigationBarLinks = true;
-  private TABLET = 768;
-  private loggedIn = false;
-  private serverUrl = 'http://13.126.150.171:8716/socket';
-  private stompClient;
-  private notificationList: any;
-  private notificationCount;
-  private notificationStatusList: notification[] = [];
-  private notificationLoaded;
-  private book: any;
-  private searchValue;
+  public showNavigationBarLinks = true;
+  public TABLET = 768;
+  public loggedIn = false;
+  public serverUrl = environment.socketUrl;
+  public stompClient;
+  public notificationList: any;
+  public notificationCount;
+  public notificationStatusList: notification[] = [];
+  public notificationLoaded;
+  public book: any;
+  public searchValue;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -40,13 +41,13 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,
-              private dialog: MatDialog,
-              private authService: AuthService,
-              private router: Router,
-              private snackBar: MatSnackBar,
-              private notificationService: NotificationService,
-              private contentService: ContentService) {
+  constructor(public breakpointObserver: BreakpointObserver,
+              public dialog: MatDialog,
+              public authService: AuthService,
+              public router: Router,
+              public snackBar: MatSnackBar,
+              public notificationService: NotificationService,
+              public contentService: ContentService) {
     this.showNavigationBarLinks = window.innerWidth > this.TABLET;
 
   }

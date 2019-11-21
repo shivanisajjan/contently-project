@@ -147,7 +147,7 @@ export class BookFetchService {
     const testData = new FormData();
     testData.append('file', file);
 
-    return this.http.post('http://13.126.150.171:8081/api/v1/file/' + id, testData);
+    return this.http.post(environment.backBaseUrl + 's3storage-service/api/v1/file/' + id, testData);
   }
 
   uploadToAws(file, id): Observable<any> {
@@ -158,12 +158,12 @@ export class BookFetchService {
     testData.append('file', file);
     console.log('After');
 
-    return this.http.post('http://13.126.150.171:8081/' + 'api/v1/text/' + id, testData, {responseType: 'text'});
+    return this.http.post(environment.backBaseUrl + 's3storage-service/api/v1/text/' + id, testData, {responseType: 'text'});
   }
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get(`http://13.126.  150.171:8081/api/v1/file/${id}`,
+    return this.http.get(`${environment.backBaseUrl}/s3storage-service/api/v1/file/${id}`,
       {
         responseType: 'blob',
         headers: {

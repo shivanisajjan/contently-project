@@ -19,21 +19,21 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-  private username;
-  private gender;
+  public username;
+  public gender;
   isLinear = false;
   public interestsBoolean = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  private genres: string[] = [];
-  private allGenres: string[] = ['Horror', 'Thriller', 'Romance', 'Comedy'];
+  public genres: string[] = [];
+  public allGenres: string[] = ['Horror', 'Thriller', 'Romance', 'Comedy'];
 
-  private $profile = new profile();
-  private $fictionInterest = new interest();
-  private $nonFictionInterest = new interest();
-  private $genre: genre;
-  private updateStatus = false;
-  private profileData;
+  public $profile = new profile();
+  public $fictionInterest = new interest();
+  public $nonFictionInterest = new interest();
+  public $genre: genre;
+  public updateStatus = false;
+  public profileData;
 
   visible = true;
   selectable = true;
@@ -46,28 +46,28 @@ export class EditProfileComponent implements OnInit {
   @ViewChild('genreInput', {static: false}) genreInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
-  private fictionGenres = ['classic', 'comic', 'contemporary', 'crime', 'detective', 'fable', 'fairy tale',
+  public fictionGenres = ['classic', 'comic', 'contemporary', 'crime', 'detective', 'fable', 'fairy tale',
     'fan fiction', 'fantasy', 'folk tale', 'historical fiction', 'horror', 'humor', 'legend', 'magical realism',
     'meta fiction', 'mystery', 'mythology', 'mythopoeia', 'picture book', 'realistic fiction', 'romance', 'science fiction',
     'short story', 'suspense', 'swashbuckler', 'tall tale', 'theoretical fiction', 'thriller', 'western'];
-  private nonFictionGenres = ['essay', 'journalism', 'lab report', 'memoir', 'narrative nonfiction',
+  public nonFictionGenres = ['essay', 'journalism', 'lab report', 'memoir', 'narrative nonfiction',
     'owner\'s manual', 'personal narrative', 'reference book', 'speech', 'textbook', 'biography'];
-  private genresSelected = [];
-  private genresList = [];
-  private separatorKeysCodes: number[] = [ENTER, COMMA];
-  private filteredGenres: Observable<string[]>;
-  private genreFormControl: FormControl;
-  private typeSelected: any;
-  private maxDate = new Date();
+  public genresSelected = [];
+  public genresList = [];
+  public separatorKeysCodes: number[] = [ENTER, COMMA];
+  public filteredGenres: Observable<string[]>;
+  public genreFormControl: FormControl;
+  public typeSelected: any;
+  public maxDate = new Date();
 
   constructor(
     // tslint:disable-next-line: variable-name
-    private _formBuilder: FormBuilder,
+    public _formBuilder: FormBuilder,
     // tslint:disable-next-line: variable-name
-    private _loginService: LoginService,
+    public _loginService: LoginService,
     // tslint:disable-next-line: variable-name
-    private _router: Router,
-    private datePipe: DatePipe
+    public _router: Router,
+    public datePipe: DatePipe
   ) {
     // if (!localStorage.getItem('token')) {
     //   this._router.navigate(['/home']).then();
@@ -246,7 +246,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  private _filter(value: string): string[] {
+  public _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     // tslint:disable-next-line: no-shadowed-variable
     return this.genresList.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);
@@ -298,7 +298,7 @@ export class EditProfileComponent implements OnInit {
 
   }
 
-  // private _filter(value: string): string[] {
+  // public _filter(value: string): string[] {
   //   const filterValue = value.toLowerCase();
 
   //   return this.allGenres.filter(genre => genre.toLowerCase().indexOf(filterValue) === 0);

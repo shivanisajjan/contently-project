@@ -80,6 +80,12 @@ export class BookCreateComponent implements OnInit {
           this.bookDetails = data;
           localStorage.setItem('book', JSON.stringify(this.bookDetails));
           console.log('book details: ', this.bookDetails);
+          if(this.bookDetails.editorName === nullgetRecommendedEditorsOrIllustrators){
+            console.log('undefined');
+          }
+          else{
+            console.log('defined');
+          }
           this.setShowEditButton();
           if (!this.bookDetails.selectHelper) {
             if (this.bookDetails.editorStatus !== 'confirmed' && this.bookDetails.designerStatus !== 'confirmed') {
@@ -707,36 +713,6 @@ export class SelectIllustratorDialog implements OnInit {
     this.allIllustratorListFiltered = this.allIllustratorList.filter(function (tag) {
       return tag.toLowerCase().indexOf(term) >= 0;
     });
-  }
-
-
-}
-
-@Component({
-  // tslint:disable-next-line: component-selector
-  selector: 'set-status-dialog',
-  templateUrl: 'set-status-dialog.html',
-  styleUrls: ['./book-create.component.css']
-})
-// tslint:disable-next-line: component-class-suffix
-export class SetStatusDialog {
-  @Output() chapterStatusEvent = new EventEmitter<any>();
-  private chapterStatus = 'Status';
-
-  constructor(
-    public dialogRef: MatDialogRef<SetStatusDialog>,
-    @Inject(MAT_DIALOG_DATA) public statusData: string) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  setChapterStatus() {
-    console.log(this.chapterStatus);
-    this.statusData = this.chapterStatus;
-    this.chapterStatusEvent.emit(this.chapterStatus);
-    this.dialogRef.close();
   }
 
 

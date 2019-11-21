@@ -73,10 +73,10 @@ export class PublicationBookComponent implements OnInit {
             data => {
               this.dialogRef.close();
               this.contentService.saveToPurchase(this.book.id, localStorage.getItem('username')).subscribe();
-              if(this.book.editorName !== undefined){
+              if(this.book.editorName !== null){
                 this.contentService.saveToPurchase(this.book.id, this.book.editorName).subscribe();
               }
-              if(this.book.designerName !== undefined){
+              if(this.book.designerName !== null){
                 this.contentService.saveToPurchase(this.book.id, this.book.designerName).subscribe();
               }
               this.router.navigate(['/dashboard']).then();

@@ -2,7 +2,6 @@ package com.stackroute.profileservice.model;
 
 import lombok.*;
 
-import java.util.Calendar;
 import java.util.Date;
 
 @Data

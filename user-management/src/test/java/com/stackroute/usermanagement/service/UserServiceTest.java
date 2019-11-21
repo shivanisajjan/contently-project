@@ -24,79 +24,83 @@ public class UserServiceTest {
     //Inject the mocks as dependencies into UserServiceImpl
     @InjectMocks
     UserServiceImpl userService;
+    private String firstname="Shivani";
+    private  String lastname="sajjan";
+    private String dob="26/08/1998";
+    private String role="reader";
+    private String email="shivanisajjan@gmail.com";
+    private String gender="female";
+    private String national="Indian";
+    private String address1="vallabh nagar";
+    private String address2="wanaparthy";
+    private String address3="Mahabubnagar";
+
 
     @Before
     public void setUp(){
         //Initialising the mock object
         MockitoAnnotations.initMocks(this);
-        user = new User(5L,"Shivani", BCrypt.hashpw("shivani", BCrypt.gensalt()),"Shivani","sajjan","26-08-1998","reader","shivanisajjan@gmail.com",9145533692L,"female","Indian","vallabh nagar","wanaparthy","Mahabubnagar");
+        user = new User(5L,firstname, BCrypt.hashpw("shivani", BCrypt.gensalt()),firstname,lastname,dob,role,email,9145533692L,gender,national,address1,address2,address3);
     }
 
     @Test
-    public void saveUserTestSuccess() throws UserAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
+    public void saveUserTestSuccess() throws UserAlreadyExistsExceptions,  InternalServerErrorException {
 
         when(userRepository.save(any())).thenReturn(user);
-        User savedUser = userService.saveUser(user);
-        //verify here verifies that userRepository save method is only called once
+        userService.saveUser(user);
         verify(userRepository,times(1)).save(user);
-        verify(userRepository,times(1)).findByUsername("Shivani");
+        verify(userRepository,times(1)).findByUsername(firstname);
     }
 
-    @Test(expected = NullValueFieldException.class)
-    public void saveUserTestFailure() throws UserAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
-        User user1 = new User();
-        user1.setUsername("shivani");
-        User savedUser = userService.saveUser(user1);
-    }
 
     @Test(expected = UserAlreadyExistsExceptions.class)
-    public void saveUserTestFailure1() throws UserAlreadyExistsExceptions, NullValueFieldException, InternalServerErrorException {
+    public void saveUserTestFailure1() throws UserAlreadyExistsExceptions, InternalServerErrorException {
        when(userRepository.findByUsername(any())).thenReturn(user);
-        User savedUser = userService.saveUser(user);
+        userService.saveUser(user);
     }
     @Test
     public void getUserByUsernameTestSuccess() throws InvalidCredentialException, InternalServerErrorException {
-        User user1 = new User(5L,"Shivani", "shivani","Shivani","sajjan","26-08-1998","reader","shivanisajjan@gmail.com",9145533692L,"female","Indian","vallabh nagar","wanaparthy","Mahabubnagar");
+        User user1 = new User(5L,firstname, "shivani",firstname,lastname,dob,role,email,9145533692L,gender,national,address1,address2,address3);
         when(userRepository.findByUsername(any())).thenReturn(user);
-        User getUser = userService.findByUsername(user1);
+        userService.findByUsername(user1);
         //verify here verifies that userRepository save method is only called once
-        verify(userRepository,times(1)).findByUsername("Shivani");
+        verify(userRepository,times(1)).findByUsername(firstname);
     }
     @Test(expected = InvalidCredentialException.class)
     public void getUserByUsernameTestFailure() throws InvalidCredentialException, InternalServerErrorException {
-        User user1 = new User(5L,"Shivani", "shivanisajjan","Shivani","sajjan","26-08-1998","reader","shivanisajjan@gmail.com",9145533692L,"female","Indian","vallabh nagar","wanaparthy","Mahabubnagar");
+        User user1 = new User(5L,firstname, "shivanisajjan",firstname,lastname,dob,role,email,9145533692L,gender,national,address1,address2,address3);
         when(userRepository.findByUsername(any())).thenReturn(user);
-        User getUser = userService.findByUsername(user1);
+        userService.findByUsername(user1);
     }
     @Test(expected = InvalidCredentialException.class)
     public void getUserByUsernameTestFailure1() throws InvalidCredentialException, InternalServerErrorException {
         when(userRepository.findByUsername(any())).thenReturn(null);
-        User getUser = userService.findByUsername(user);
+        userService.findByUsername(user);
     }
     @Test
     public void deleteUserTestSuccess() throws UserDoesNotExistException, InternalServerErrorException {
         when(userRepository.findByUsername(any())).thenReturn(user);
-        User getUser = userService.deleteUser("Shivani");
+        userService.deleteUser(firstname);
         //verify here verifies that userRepository save method is only called once
-        verify(userRepository,times(1)).findByUsername("Shivani");
+        verify(userRepository,times(1)).findByUsername(firstname);
         verify(userRepository,times(1)).delete(user);
     }
     @Test(expected = UserDoesNotExistException.class)
     public void deleteUserTestFailure() throws UserDoesNotExistException, InternalServerErrorException {
         when(userRepository.findByUsername(any())).thenReturn(null);
-        User getUser = userService.deleteUser("Shivani");
+        userService.deleteUser(firstname);
     }
     @Test
     public void updateUserTestSuccess() throws UserDoesNotExistException, InternalServerErrorException {
         when(userRepository.findByUsername(any())).thenReturn(user);
-        User getUser = userService.updateUser(user);
+        userService.updateUser(user);
         //verify here verifies that userRepository save method is only called once
-        verify(userRepository,times(1)).findByUsername("Shivani");
+        verify(userRepository,times(1)).findByUsername(firstname);
         verify(userRepository,times(1)).save(user);
     }
     @Test(expected = UserDoesNotExistException.class)
     public void updateUserTestFailure() throws UserDoesNotExistException, InternalServerErrorException {
         when(userRepository.findByUsername(any())).thenReturn(null);
-        User getUser = userService.updateUser(user);
+        userService.updateUser(user);
     }
 }

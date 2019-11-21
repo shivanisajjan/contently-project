@@ -42,7 +42,9 @@ public class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    private List<User> list =null;
+    private String link="/api/v1/user/register";
+    private String link1="/api/v1/user/login";
+    private List<User> userList=new ArrayList<>();
 
     @Before
     public void setUp(){
@@ -50,14 +52,14 @@ public class UserControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new GlobalExceptionHandler()).build();
         user = new User(5L,"Shivani",BCrypt.hashpw("shivani", BCrypt.gensalt()),"Shivani","sajjan","26-08-1998","reader","shivanisajjan@gmail.com",9145533692L,"female","Indian","vallabh nagar","wanaparthy","Mahabubnagar");
-        list = new ArrayList();
-        list.add(user);
+        userList= new ArrayList();
+        userList.add(user);
     }
 
     @Test
     public void userRegistry() throws Exception {
         when(userService.saveUser(any())).thenReturn(user);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
+        mockMvc.perform(MockMvcRequestBuilders.post(link)
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
@@ -65,23 +67,23 @@ public class UserControllerTest {
       @Test
      public void userRegistryFailure() throws Exception {
         when(userService.saveUser(any())).thenThrow(UserAlreadyExistsExceptions.class);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
+        mockMvc.perform(MockMvcRequestBuilders.post(link)
         .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
                 .andExpect(MockMvcResultMatchers.status().isConflict())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
     public void userRegistryFailure1() throws Exception {
-        when(userService.saveUser(any())).thenThrow(NullValueFieldException.class);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
+        when(userService.saveUser(any())).thenThrow(UserAlreadyExistsExceptions.class);
+        mockMvc.perform(MockMvcRequestBuilders.post(link)
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isNotAcceptable())
+                .andExpect(MockMvcResultMatchers.status().isConflict())
                 .andDo(MockMvcResultHandlers.print());
     }
     @Test
     public void userLogin() throws Exception {
         when(userService.findByUsername(any())).thenReturn(user);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/login")
+        mockMvc.perform(MockMvcRequestBuilders.post(link1)
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andDo(MockMvcResultHandlers.print());
@@ -89,7 +91,7 @@ public class UserControllerTest {
     @Test
     public void userLoginFailure() throws Exception {
         when(userService.findByUsername(any())).thenThrow(InternalServerErrorException.class);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/login")
+        mockMvc.perform(MockMvcRequestBuilders.post(link1)
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andDo(MockMvcResultHandlers.print());
@@ -102,24 +104,8 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
-    @Test
-    public void updateUser() throws Exception {
-        when(userService.updateUser( any())).thenReturn(user);
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/user/update")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
 
 
-    }
-    @Test
-    public void updateUserFailure() throws Exception {
-        when(userService.updateUser(any())).thenThrow(UserDoesNotExistException.class);
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/user/update")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(user)))
-                .andExpect(MockMvcResultMatchers.status().isConflict())
-                .andDo(MockMvcResultHandlers.print());
-    }
     @Test
     public void deleteUser() throws Exception {
         when(userService.deleteUser(any())).thenReturn(user);

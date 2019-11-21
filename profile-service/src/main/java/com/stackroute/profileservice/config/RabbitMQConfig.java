@@ -22,7 +22,6 @@ public class RabbitMQConfig {
     @Value("${registry.rabbitmq.routingkey}")
     private String routingkey;
 
-
     @Bean
     Queue queue() {
         return new Queue(queueName, false);

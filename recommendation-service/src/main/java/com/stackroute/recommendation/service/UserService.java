@@ -84,9 +84,9 @@ public class UserService {
         return price;
     }
 
-    void savePublication(String title,String author,int bookId,String editor,String designer,int nop,double price,String type)
+    void savePublication(String title,String author,int bookId,int nop,double price)
     {
-        userRepository.savePublication(title,author,bookId,editor,designer,nop,price,type);
+        userRepository.savePublication(title,author,bookId,nop,price);
 
     }
 
@@ -100,11 +100,24 @@ public class UserService {
         userRepository.savePurchasing(bookId,user);
 
     }
+    public void saveEditor(String editor,int bookId)
+    {
+        userRepository.saveEditor(editor,bookId);
+    }
+    public void saveDesigner(String designer,int bookId)
+    {
+        userRepository.saveDesigner(designer,bookId);
+    }
 
     public void saveGenre(String genre,String username)
     {
         userRepository.saveGenre(genre,username);
 
+    }
+
+    void incrExp(String username)
+    {
+        userRepository.incrExp(username);
     }
 
     public Genre saveThisGenre(String genre)
@@ -168,6 +181,11 @@ public class UserService {
     {
         userRepository.createRole(role);
     }
+
+    void createUser(String username,int exp,double cost)
+    {
+     userRepository.createUser(username,exp,cost);    
+	}
 
     void setAgeGroup(String ageGroup,String username)
     {

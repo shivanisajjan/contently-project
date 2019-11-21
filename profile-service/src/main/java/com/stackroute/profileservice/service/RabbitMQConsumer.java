@@ -23,15 +23,11 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = "registry_queue1")
     public void recievedMessage(DTOUser userDto) {
-	System.out.println("in exchange:"+userDto.getId());
-	int i = userDto.getId().intValue();
-	System.out.println("int"+i);
-        Profile profile=new Profile();
-	profile.setId(i);
+        int i = userDto.getId().intValue();
+        Profile profile = new Profile();
+        profile.setId(i);
         profile.setUsername(userDto.getUsername());
-       	profile.setRole(userDto.getRole());
-	System.out.println("in exchange:"+profile);
-	this.profileService.saveProfile(profile);
-        System.out.println("finished");
+        profile.setRole(userDto.getRole());
+        this.profileService.saveProfile(profile);
     }
 }

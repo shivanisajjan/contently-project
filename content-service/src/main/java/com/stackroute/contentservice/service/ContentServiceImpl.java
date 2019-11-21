@@ -76,22 +76,27 @@ public class ContentServiceImpl implements ContentService {
     public List<Content> findByName(String name) throws InternalServerErrorException
     {
         List<Content> contentList=new ArrayList<>();
+        System.out.println("name:"+name);
         try
         {
             List<Content> content=contentRepository.findByName(name);
             if(content.get(0).getAuthorName().equals(name)){
+                System.out.println("I am Author");
                 return contentRepository.findByName(name);
             }
             else {
                 if (content.get(0).getEditorName()!=null && content.get(0).getEditorName().equals(name)) {
+                    System.out.println("I an editor");
                     for (Content content1 : content) {
                         if (content1.getEditorStatus().equals("confirmed")) {
+                            System.out.println(":Content:"+content1);
                             contentList.add(content1);
                         }
                     }
                     return contentList;
                 }
                 else {
+                    System.out.println("I am designer");
                     for(Content content1:content){
                         if(content1.getDesignerStatus().equals("confirmed")){
                             contentList.add(content1);
@@ -103,6 +108,7 @@ public class ContentServiceImpl implements ContentService {
         }
         catch (Exception e)
         {
+            System.out.println("Exception");
             throw new InternalServerErrorException();
         }
     }

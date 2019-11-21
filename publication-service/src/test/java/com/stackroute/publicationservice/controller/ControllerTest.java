@@ -101,7 +101,7 @@ public class ControllerTest {
     public void testGetSuccess() throws Exception
     {
         when(publicationService.findByTitle(any())).thenReturn(list);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/Varun")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/publications/Varun")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(publications)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -126,21 +126,6 @@ public class ControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andDo(MockMvcResultHandlers.print());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private static String asJsonString(final Object obj)
     {

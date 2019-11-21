@@ -1,10 +1,7 @@
 package com.stackroute.profileservice.service;
 
-//import com.stackroute.profileservice.exceptions.MovieExistsByIdGlobalException;
-//import com.stackroute.profileservice.exceptions.MovieNotFoundGlobalException;
 import com.stackroute.profileservice.model.Chapter;
 import com.stackroute.profileservice.model.Profile;
-
 import java.text.ParseException;
 import java.util.List;
 

@@ -46,14 +46,19 @@ public class PublicationServiceImpl implements PublicationService {
 
     }
 
-   public List<Publications> findByTitle(String title) {
+    @Override
+    public List<Publications> getAllPublications() throws InternalServerErrorException {
+        try{
+            return publicationRepository.findAll();
+        }
+        catch (Exception e){
+            throw new InternalServerErrorException();
+        }
+    }
+
+
+    public List<Publications> findByTitle(String title) {
             return publicationRepository.findByTitle(title);
-//        try {
-//            return publicationRepository.findByTitle(title);
-//        }
-//        catch(Exception ex){
-//            throw new InternalServerErrorException();
-//        }
     }
 
     @Override

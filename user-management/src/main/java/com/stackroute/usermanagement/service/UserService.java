@@ -15,9 +15,6 @@ public interface UserService {
 
     User updateUser(User user) throws UserDoesNotExistException,InternalServerErrorException;
 
-    User getByUsername(String Username);
-
-    List<String> getByRole(String role) throws InvalidRoleInfoException;
-
+    User getByUsername(String username);
 
 }

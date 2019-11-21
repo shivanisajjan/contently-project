@@ -15,10 +15,10 @@ public class RabbitMQSender {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    @Value("publication_exchange")
+    @Value("${publication.rabbitmq.exchange}")
     private String exchange;
 
-    @Value("publication_routingkey")
+    @Value("${publication.rabbitmq.routingkey}")
     private String routingkey;
 
 

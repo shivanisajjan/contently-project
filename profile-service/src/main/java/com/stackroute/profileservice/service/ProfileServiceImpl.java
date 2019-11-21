@@ -3,9 +3,9 @@ package com.stackroute.profileservice.service;
 import com.stackroute.profileservice.model.Chapter;
 import com.stackroute.profileservice.model.Profile;
 import com.stackroute.profileservice.repository.ProfileRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -18,22 +18,18 @@ import java.util.List;
 
 @Service
 @Primary
+@Slf4j
 public class ProfileServiceImpl implements ProfileService {
     private ProfileRepository profileRepository;
-    private MongoOperations mongo;
 
     @Autowired
-    public ProfileServiceImpl(ProfileRepository profileRepository, MongoOperations mongo) {
+    public ProfileServiceImpl(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
-        this.mongo = mongo;
     }
 
     @Override
     public Profile saveProfile(Profile profile) {
-
-        Profile profile1 = this.profileRepository.save(profile);
-        System.out.println(profile1.toString());
-        return profile1;
+        return this.profileRepository.save(profile);
     }
 
     @Override
@@ -48,8 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
         profile1.setExperience(profile.getExperience());
         profile1.setInterest(profile.getInterest());
         profile1.setRatings(profile.getRatings());
-        Profile profile2 = profileRepository.save(profile1);
-        return profile2;
+        return profileRepository.save(profile1);
     }
 
     @Override
@@ -69,30 +64,24 @@ public class ProfileServiceImpl implements ProfileService {
         Profile profile = profileRepository.findByName(username);
         List<Chapter> chapters = profile.getChapterRelease();
         int i = 0;
-        boolean flag = false;
         for (Chapter chapter : chapters) {
             if (bookId == chapter.getBookId()) {
-                flag = true;
                 if (chapter.isReleaseNext()) {
                     Date date = Calendar.getInstance().getTime();
                     DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy hh:mm:ss");
                     String strDate = dateFormat.format(date);
                     date = dateFormat.parse(strDate);
-                    System.out.println("currenttime:"+date);
 
-                    Date date1=chapter.getDate();
+                    Date date1 = chapter.getDate();
                     DateFormat dateFormat1 = new SimpleDateFormat("mm-dd-yyyy hh:mm:ss");
                     String endDate = dateFormat1.format(date1);
-                    date1= dateFormat1.parse(endDate);
-                    System.out.println("starttime:"+date1);
+                    date1 = dateFormat1.parse(endDate);
                     long diff = date.getTime() - date1.getTime();
-                    System.out.println("diif:"+diff);
                     long diffDays = diff / (24 * 60 * 60 * 1000);
-                    System.out.println("days:"+diffDays);
+                    log.info(String.valueOf(diffDays));
                     long diffMinutes = diff / (60 * 1000) % 60;
-                    System.out.println("diffMin:"+diffMinutes);
+                    log.info(String.valueOf(diffMinutes));
                     long diffSeconds = diff / 1000 % 60;
-                    System.out.println("diffSeconds:"+diffSeconds);
                     if (diffSeconds >= 30) {
                         chapters.get(i).setChapterIndex(chapter.getChapterIndex() + 1);
                         chapters.get(i).setReleaseNext(false);
@@ -109,16 +98,13 @@ public class ProfileServiceImpl implements ProfileService {
             }
             i++;
         }
-        if (!flag) {
-            Chapter chapter = new Chapter();
-            chapter.setBookId(bookId);
-            chapter.setChapterIndex(1);
-            chapters.add(chapter);
-            profile.setChapterRelease(chapters);
-            profileRepository.save(profile);
-            return chapter;
-        }
-        return null;
+        Chapter chapter = new Chapter();
+        chapter.setBookId(bookId);
+        chapter.setChapterIndex(0);
+        chapters.add(chapter);
+        profile.setChapterRelease(chapters);
+        profileRepository.save(profile);
+        return chapter;
     }
 
     @Override
@@ -128,7 +114,6 @@ public class ProfileServiceImpl implements ProfileService {
         int i = 0;
         for (Chapter chapter : chapters) {
             if (bookId == chapter.getBookId()) {
-                Date dateobj = new Date();
                 chapters.get(i).setReleaseNext(true);
                 Date date = Calendar.getInstance().getTime();
                 chapters.get(i).setDate(date);
@@ -143,19 +128,6 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public List<Profile> getByRole(String role) {
-        List<Profile> profile = profileRepository.findByRole(role);
-        return profile;
+        return  profileRepository.findByRole(role);
     }
-
-
-//
-//
-//    @Override
-//    public List<ReaderProfile> getMoviesbyTitle(String title) throws MovieNotFoundGlobalException{
-//        List<ReaderProfile> li=this.movieRepository.findBytitle(title);
-//        if(li.isEmpty()){
-//            throw new MovieNotFoundGlobalException();
-//        }
-//        return li;
-//    }
 }

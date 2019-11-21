@@ -6,6 +6,7 @@ import com.stackroute.contentservice.exceptions.ContentDoesNotExistException;
 import com.stackroute.contentservice.exceptions.InternalServerErrorException;
 import com.stackroute.contentservice.exceptions.NullValueFieldException;
 import com.stackroute.contentservice.model.Content;
+import com.stackroute.contentservice.model.ContentDTO;
 import com.stackroute.contentservice.service.ContentService;
 import com.stackroute.contentservice.service.RabbitMQSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,9 @@ public class ContentController {
         return responseEntity;
     }
     @GetMapping(value = "/content/id/{id}")
-    public ResponseEntity<Content> getTitleById(@PathVariable int id) throws InternalServerErrorException, ContentDoesNotExistException {
+    public ResponseEntity<Content> getTitleById(@PathVariable int id) throws ContentDoesNotExistException {
         responseEntity=new ResponseEntity<>(contentService.findTitleById(id),HttpStatus.OK);
         return responseEntity;
     }
+
 }

@@ -1,11 +1,8 @@
 package com.stackroute.contentservice;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.testng.annotations.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class ContentServiceApplicationTests {
 

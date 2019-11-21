@@ -9,17 +9,17 @@
       <mat-form-field class="search-form" color="accent">
         <input matInput type="search" placeholder="Search">
       </mat-form-field>
-      <button mat-icon-button (click)="search()">
+      <button mat-icon-button (click)="drawer.toggle(); search()">
         <mat-icon>search</mat-icon>
       </button>
       <div *ngIf="!ifToken(); then thenBlock; else elseBlock"></div>
       <ng-template #thenBlock>
-        <a mat-button routerLink="/register">Register</a>
-        <a mat-button (click)="onLogin()">Login</a>
+        <a mat-list-item routerLink="/register">Register</a>
+        <a mat-list-item (click)="drawer.toggle(); onLogin()">Login</a>
       </ng-template>
       <ng-template #elseBlock>
-        <a mat-list-item routerLink="/afterLogin">Home</a>
-        <a mat-list-item routerLink="/dashboard">Profile</a>
+        <a mat-list-item routerLink="/afterLogin" (click)="drawer.toggle()">Home</a>
+        <a mat-list-item routerLink="/dashboard" (click)="drawer.toggle()">Profile</a>
         <a mat-list-item (click)="removeNewNotifications()" matBadge="{{notificationCount}}" matBadgeColor="accent"
            [matMenuTriggerFor]="notification">Notifications</a>
         <mat-menu class="notification-menu" #notification="matMenu">

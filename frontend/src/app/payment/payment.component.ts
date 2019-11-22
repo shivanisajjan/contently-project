@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ContentService} from '../content.service';
 import {Router} from '@angular/router';
+import {LoginComponent} from "../login/login.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-payment',
@@ -10,7 +12,8 @@ import {Router} from '@angular/router';
 export class PaymentComponent implements OnInit {
 
   constructor(public contentService: ContentService,
-              public router: Router) {
+              public router: Router,
+              public dialog: MatDialog,) {
   }
 
   public boook;
@@ -21,6 +24,13 @@ export class PaymentComponent implements OnInit {
   public invalidFeedback: string;
 
   ngOnInit() {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
     this.price = localStorage.getItem('price');
     this.loadStripe();
   }

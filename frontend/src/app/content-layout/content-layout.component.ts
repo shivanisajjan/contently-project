@@ -10,6 +10,8 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {LoginComponent} from "../login/login.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-content-layout',
@@ -44,15 +46,20 @@ export class ContentLayoutComponent implements OnInit {
   constructor(public http: HttpClient,
               public router: Router,
               public bookFetch: BookFetchService,
-              public contentService: ContentService) {
-    if (!localStorage.getItem('token')) {
-      this.router.navigate(['/home']).then();
-    }
+              public contentService: ContentService,
+              public dialog: MatDialog,) {
+
     this.genreFormControl = new FormControl();
   }
 
   ngOnInit() {
-
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
     this.filteredGenres = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
       map((genre: string | null) => genre ? this._filter(genre) : this.genresList.slice()));
@@ -81,7 +88,7 @@ export class ContentLayoutComponent implements OnInit {
               data2 => {
                 console.log('Create Repo data: ', data2);
                 localStorage.setItem('book', JSON.stringify(data));
-                this.router.navigate(['/bookCreate']).then();
+                this.router.navigate(['content-layout']).then();
               },
               error2 => {
                 console.log('Create Repo error', error2);

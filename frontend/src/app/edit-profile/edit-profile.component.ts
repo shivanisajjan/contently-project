@@ -10,6 +10,8 @@ import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
+import {LoginComponent} from "../login/login.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -66,12 +68,19 @@ export class EditProfileComponent implements OnInit {
     public _loginService: LoginService,
     // tslint:disable-next-line: variable-name
     public _router: Router,
+    public dialog: MatDialog
   ) {
     // if (!localStorage.getItem('token')) {
-    //   this._router.navigate(['/home']).then();
+    //   this._router.navigate(['/index']).then();
     // }
     this.genreFormControl = new FormControl();
-
+    if (!localStorage.getItem('token')) {
+      this._router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
   }
 
   ngOnInit() {
@@ -209,7 +218,7 @@ export class EditProfileComponent implements OnInit {
     if (this.interestsBoolean) {
       this.$profile.username = this.username;
       this._loginService.saveInterests(this.$profile).subscribe();
-      this._router.navigate(['/afterLogin']).then();
+      this._router.navigate(['/home']).then();
     }
   }
 
@@ -291,7 +300,7 @@ export class EditProfileComponent implements OnInit {
         }
       );
 
-      this._router.navigate(['/afterLogin']).then();
+      this._router.navigate(['/home']).then();
     }
 
   }

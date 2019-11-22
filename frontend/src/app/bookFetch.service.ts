@@ -148,7 +148,6 @@ export class BookFetchService {
     testData.append('file', file);
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Batman ' + localStorage.getItem('token')
       })
     };
@@ -179,7 +178,7 @@ export class BookFetchService {
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get(`${environment.backBaseUrl}/s3storage-service/api/v1/file/${id}`,
+    return this.http.get(`${environment.backBaseUrl}s3storage-service/api/v1/file/${id}`,
       {
         responseType: 'blob',
         headers: {

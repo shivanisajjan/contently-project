@@ -68,9 +68,9 @@ export class AppComponent implements OnInit {
   search(searchValue) {
     this.searchValue = searchValue;
     console.log(this.searchValue);
-    this.router.navigate(['/home'])
+    this.router.navigate(['/index'])
       .then( () =>
-        this.router.navigate(['/searchResults', this.searchValue])
+        this.router.navigate(['/search', this.searchValue])
       );
 
   }
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit {
   onLogout() {
     console.log('LOGGED OUT');
     localStorage.clear();
-    this.router.navigate(['/home']).then();
+    this.router.navigate(['/index']).then();
   }
 
   ifToken() {

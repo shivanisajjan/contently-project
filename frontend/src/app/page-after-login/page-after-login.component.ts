@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BookFetchService} from '../bookFetch.service';
 import {Router} from '@angular/router';
+import {LoginComponent} from "../login/login.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-page-after-login',
@@ -15,9 +17,14 @@ export class PageAfterLoginComponent implements OnInit {
   constructor(
     // tslint:disable-next-line: variable-name
     public _bookFetch: BookFetchService,
-    public router: Router) {
+    public router: Router,
+    public dialog: MatDialog,) {
     if (!localStorage.getItem('token')) {
-      this.router.navigate(['/home']).then();
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
     }
   }
 

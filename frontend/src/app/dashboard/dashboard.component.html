@@ -44,7 +44,7 @@
   <mat-expansion-panel class="testing">
     <mat-expansion-panel-header>
         Current Projects
-        <button mat-button  class="new-content-button" routerLink="/contentLayout" *ngIf="ifAuthor()">New Content</button>
+        <button mat-button  class="new-content-button" routerLink="/create-content" *ngIf="ifAuthor()">New Content</button>
       </mat-expansion-panel-header>
       <div class="content-cards">
       <mat-card class="content-card" *ngFor="let content of contentsList, index as i">
@@ -77,7 +77,7 @@
     <mat-expansion-panel-header>
       Published Books
     </mat-expansion-panel-header>
-    
+
       <div class="content-cards">
         <mat-card class="content-card" *ngFor="let content of publishedList, index as i" (click)="goToBook(content.id)">
             <mat-card-header>
@@ -107,9 +107,9 @@
     <mat-expansion-panel-header>
       Purchases
     </mat-expansion-panel-header>
-     
+
     <div class="content-cards">
-      
+
       <mat-card class="content-card" *ngFor="let content of completePurchaseList, index as i" (click)="goToBook(content.id)">
           <mat-card-header>
               <mat-card-title>  {{content.title}}</mat-card-title>
@@ -136,6 +136,6 @@
 
   </mat-expansion-panel>
 
-  
+
   <div style="height: 170px;"></div>
 </div>

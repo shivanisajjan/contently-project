@@ -96,14 +96,14 @@ export class BookdetailsComponent implements OnInit {
   downloadPdf() {
     // const bookId = 'sample';
     const bookId = localStorage.getItem('bookId');
-    const fileName = bookId + '.pdf';
+    const fileName = bookId;
     const fileType = this.fileSaverService.genType(fileName);
     console.log('book id is ' + bookId);
     this.bookFetch.getFromAws(fileName)
       .subscribe(
         data => {
           const blob = new Blob([data], { type: fileType });
-          this.fileSaverService.save(blob, fileName);
+          this.fileSaverService.save(blob, fileName + '.pdf');
         }
       );
   }

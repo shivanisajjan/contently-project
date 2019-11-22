@@ -1,11 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {BookFetchService} from '../../bookFetch.service';
 import {NgForm} from '@angular/forms';
 import {Commit} from '../../book-create/commit';
 import {formatDate} from '@angular/common';
 import {Issue} from '../issue';
 import {Reply} from '../reply';
+import {Router} from "@angular/router";
+import {LoginComponent} from "../../login/login.component";
 
 @Component({
   selector: 'app-reply',
@@ -20,10 +22,19 @@ export class ReplyComponent implements OnInit {
   public replyList: Reply[];
   constructor(public dialogRef: MatDialogRef<ReplyComponent>,
               @Inject(MAT_DIALOG_DATA)public data: any,
-              public bookFetch: BookFetchService
+              public bookFetch: BookFetchService,
+              public router: Router,
+              public dialog: MatDialog,
               ) { }
 
   ngOnInit() {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
     this.issueFile = this.data.file;
     this.issueList = JSON.parse(atob(this.issueFile.content));
     this.issue = this.issueList[this.data.index];
@@ -31,6 +42,7 @@ export class ReplyComponent implements OnInit {
     console.log('File: ', this.issueFile);
     console.log('Issue: ', this.issue);
     console.log('Replies: ', this.replyList);
+
   }
 
   postReply(reply: NgForm) {

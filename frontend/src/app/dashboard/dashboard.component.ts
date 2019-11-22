@@ -8,6 +8,8 @@ import $ from 'jquery';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {bool} from 'aws-sdk/clients/signer';
 import {environment} from '../../environments/environment';
+import {LoginComponent} from "../login/login.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-dashboard',
@@ -32,9 +34,14 @@ export class DashboardComponent implements OnInit {
     public login: LoginService,
     // tslint:disable-next-line: variable-name
     public _snackBar: MatSnackBar,
-    public contentService: ContentService) {
+    public contentService: ContentService,
+    public dialog: MatDialog,) {
     if (!localStorage.getItem('token')) {
-      this.router.navigate(['/home']).then();
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
     }
     this.initializeWebSocketConnection();
   }
@@ -95,7 +102,7 @@ export class DashboardComponent implements OnInit {
   edit(i: number) {
     console.log(this.contentsList[i]);
     localStorage.setItem('book', JSON.stringify(this.contentsList[i]));
-    this.router.navigate(['/bookCreate']).then();
+    this.router.navigate(['content-layout']).then();
   }
 
   ifAuthor(): boolean {
@@ -104,7 +111,7 @@ export class DashboardComponent implements OnInit {
 
   editProfile() {
     localStorage.setItem('editProfile', JSON.stringify(this.profileData));
-    this.router.navigate(['/editProfile']).then();
+    this.router.navigate(['edit-profile']).then();
   }
   ifConfirmed(status: string): boolean {
     return status === 'confirmed';

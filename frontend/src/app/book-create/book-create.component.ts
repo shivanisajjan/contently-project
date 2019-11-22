@@ -24,6 +24,7 @@ import {PublicationBookComponent} from '../publication-book/publication-book.com
 import {IssuesComponent} from '../issues/issues.component';
 import {Observable} from 'rxjs';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-book-create',
@@ -59,12 +60,19 @@ export class BookCreateComponent implements OnInit {
               public notificationService: NotificationService,
               public componentFactoryResolver: ComponentFactoryResolver) {
     if (!localStorage.getItem('token')) {
-      this.router.navigate(['/home']).then();
+      this.router.navigate(['/index']).then();
     }
     this.bookDetails = JSON.parse(localStorage.getItem('book'));
   }
 
   ngOnInit() {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
     if (localStorage.getItem('role') === 'editor') {
       this.chapterStatus = ['Editing Phase', 'Editing Done'];
     } else if (localStorage.getItem('role') === 'designer') {

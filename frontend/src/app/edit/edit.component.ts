@@ -5,6 +5,8 @@ import {BookFetchService} from '../bookFetch.service';
 import {Book} from '../book-create/book';
 import {Commit} from '../book-create/commit';
 import {formatDate} from '@angular/common';
+import {LoginComponent} from "../login/login.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-edit',
@@ -24,9 +26,14 @@ export class EditComponent implements OnInit {
   constructor(public router: Router,
               public bookFetch: BookFetchService,
               public route: ActivatedRoute,
+              public dialog: MatDialog,
   ) {
     if (!localStorage.getItem('token')) {
-      this.router.navigate(['/home']).then();
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
     }
     this.route.params.subscribe(params => {
       // tslint:disable-next-line: no-string-literal
@@ -61,7 +68,7 @@ export class EditComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.router.navigate(['/bookCreate']).then();
+          this.router.navigate(['content-layout']).then();
         },
         error => {
           console.log(error);
@@ -70,7 +77,7 @@ export class EditComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['/bookCreate']).then();
+    this.router.navigate(['content-layout']).then();
   }
 }
 

@@ -143,7 +143,7 @@ export class RegistrationComponent implements OnInit {
           // tslint:disable-next-line: no-shadowed-variable
           result => {
             localStorage.setItem('token', result.body.authResponse);
-            this._router.navigate(['/editProfile']).then();
+            this._router.navigate(['edit-profile']).then();
           }
         );
       }
@@ -237,7 +237,7 @@ export class RegistrationComponent implements OnInit {
     if (this.interestsBoolean) {
       this.$profile.username = username;
       this._loginService.saveInterests(this.$profile).subscribe();
-      this._router.navigate(['/home']).then();
+      this._router.navigate(['/index']).then();
     }
 
   }

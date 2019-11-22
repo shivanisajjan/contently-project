@@ -6,6 +6,8 @@ import {ReplyComponent} from './reply/reply.component';
 import {BookFetchService} from '../bookFetch.service';
 import {MatDialog} from '@angular/material/dialog';
 import {Issue} from './issue';
+import {Router} from "@angular/router";
+import {LoginComponent} from "../login/login.component";
 
 @Component({
   selector: 'app-issues',
@@ -21,9 +23,17 @@ export class IssuesComponent implements OnInit {
   @Input() fileName: string;
   constructor(public bookFetch: BookFetchService,
               public dialog: MatDialog,
-              public viewContainerRef: ViewContainerRef) { }
+              public viewContainerRef: ViewContainerRef,
+              public router: Router) { }
 
   ngOnInit() {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
     console.log('Filename in Issue:', this.fileName);
     this.loadIssues();
   }

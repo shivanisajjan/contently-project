@@ -67,10 +67,4 @@ export class BrowseComponent implements OnInit {
   getBookData() {
     return this.bookData;
   }
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //   this.innerWidth = window.innerWidth;
-  // }
-
 }

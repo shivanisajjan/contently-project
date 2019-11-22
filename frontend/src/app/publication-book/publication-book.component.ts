@@ -4,6 +4,7 @@ import {BookFetchService} from '../bookFetch.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {formatDate} from '@angular/common';
+import {LoginComponent} from "../login/login.component";
 
 
 @Component({
@@ -19,12 +20,22 @@ export class PublicationBookComponent implements OnInit {
   public illustratorPay;
   public book;
 
-  constructor(public contentService: ContentService, public bookFetch: BookFetchService, public router: Router,
-              public dialogRef: MatDialogRef<PublicationBookComponent>
+  constructor(public contentService: ContentService,
+              public bookFetch: BookFetchService,
+              public router: Router,
+              public dialogRef: MatDialogRef<PublicationBookComponent>,
+              public dialog: MatDialog,
   ) {
   }
 
   ngOnInit() {
+    if (!localStorage.getItem('token')) {
+      this.router.navigate(['/index']).then(
+        () => {
+          this.dialog.open(LoginComponent);
+        }
+      );
+    }
     let cond1 = false;
     let cond2 = false;
     this.book = JSON.parse(localStorage.getItem('book'));

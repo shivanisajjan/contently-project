@@ -55,10 +55,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {PageAfterLoginComponent} from './page-after-login/page-after-login.component';
-import {LoadingComponent} from './loading/loading.component';
 import {PaymentComponent} from './payment/payment.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {DownloadComponent} from './download/download.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NewIssueComponent} from './issues/new-issue/new-issue.component';
 import {ReplyComponent} from './issues/reply/reply.component';
@@ -88,8 +86,6 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     PageAfterLoginComponent,
     EditProfileComponent,
     PaymentComponent,
-    LoadingComponent,
-    DownloadComponent,
     NewIssueComponent,
     ReplyComponent,
     PublicationBookComponent,

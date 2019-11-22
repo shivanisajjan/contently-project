@@ -14,9 +14,8 @@ export class LoginComponent implements OnInit {
   public fail: boolean;
   public loggedInUser: any;
   public tokenObject: any;
-  hide: boolean;
-
-
+  hide: boolean = true;
+  
   constructor(
     public loginService: LoginService,
     public router: Router,
@@ -52,7 +51,7 @@ export class LoginComponent implements OnInit {
             );
           this.dialogRef.close();
           if (result.body.role === 'reader/author') {
-            this.router.navigate(['/afterLogin']).then();
+            this.router.navigate(['/home']).then();
           } else {
           this.router.navigate(['/dashboard']).then();
         }

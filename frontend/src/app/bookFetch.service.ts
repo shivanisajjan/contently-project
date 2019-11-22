@@ -146,8 +146,12 @@ export class BookFetchService {
 
     const testData = new FormData();
     testData.append('file', file);
-
-    return this.http.post(environment.backBaseUrl + 's3storage-service/api/v1/file/' + id, testData);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
+    return this.http.post(environment.backBaseUrl + 's3storage-service/api/v1/file/' + id, testData, httpOptions);
   }
 
   uploadToAws(file, id): Observable<any> {
@@ -157,17 +161,28 @@ export class BookFetchService {
     const testData = new FormData();
     testData.append('file', file);
     console.log('After');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      })
+    };
 
-    return this.http.post(environment.backBaseUrl + 's3storage-service/api/v1/text/' + id, testData, {responseType: 'text'});
+    return this.http.post(environment.backBaseUrl + 's3storage-service/api/v1/text/' + id, testData, {
+      responseType: 'text',
+      headers: {
+        Authorization: 'Batman ' + localStorage.getItem('token')
+      },
+    });
   }
 
   getFromAws(id): Observable<any> {
     console.log('get from aws called');
-    return this.http.get(`${environment.backBaseUrl}/s3storage-service/api/v1/file/${id}`,
+    return this.http.get(`${environment.backBaseUrl}s3storage-service/api/v1/file/${id}`,
       {
         responseType: 'blob',
         headers: {
-          Authorization: localStorage.getItem('token'),
+          Authorization: 'Batman ' + localStorage.getItem('token'),
           accept: 'application/pdf'
         },
       }

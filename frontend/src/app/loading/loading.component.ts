@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoadingComponent implements OnInit {
 
-private id;
-  constructor(private router: Router, private route: ActivatedRoute) { }
+public id;
+  constructor(public router: Router, public route: ActivatedRoute) { }
 
   ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');

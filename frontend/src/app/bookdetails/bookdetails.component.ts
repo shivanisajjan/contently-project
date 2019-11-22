@@ -14,22 +14,22 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: ['./bookdetails.component.css']
 })
 export class BookdetailsComponent implements OnInit {
-  private hasPurchased;
-  private bookId;
-  private bookDetails: any;
-  private bookDetailsLoaded;
-  private chapterDetailsLoaded;
-  private releaseNext;
-  private chapterIndex;
-  private lastChapter;
+  public hasPurchased;
+  public bookId;
+  public bookDetails: any;
+  public bookDetailsLoaded;
+  public chapterDetailsLoaded;
+  public releaseNext;
+  public chapterIndex;
+  public lastChapter;
 
   constructor(
-    private dialog: MatDialog,
-    private route: ActivatedRoute,
-    private contentService: ContentService,
-    private bookFetch: BookFetchService,
+    public dialog: MatDialog,
+    public route: ActivatedRoute,
+    public contentService: ContentService,
+    public bookFetch: BookFetchService,
     public fileSaverService: FileSaverService,
-    private router: Router
+    public router: Router
   ) {
   }
 
@@ -94,8 +94,8 @@ export class BookdetailsComponent implements OnInit {
   }
 
   downloadPdf() {
-    const bookId = 'sample';
-    // const bookId = localStorage.getItem('bookId');
+    // const bookId = 'sample';
+    const bookId = localStorage.getItem('bookId');
     const fileName = bookId + '.pdf';
     const fileType = this.fileSaverService.genType(fileName);
     console.log('book id is ' + bookId);

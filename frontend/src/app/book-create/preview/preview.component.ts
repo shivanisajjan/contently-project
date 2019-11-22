@@ -9,8 +9,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class PreviewComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<PreviewComponent>,
-              @Inject(MAT_DIALOG_DATA)private data) {
+  constructor(public dialogRef: MatDialogRef<PreviewComponent>,
+              @Inject(MAT_DIALOG_DATA)public data) {
   }
 
   ngOnInit() {

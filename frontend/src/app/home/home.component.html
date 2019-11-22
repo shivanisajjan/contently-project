@@ -33,7 +33,7 @@
         <mat-card class="content-card" *ngFor="let bookvar of bookVar, index as i" (click)="bookDetails(bookvar.bookId)">
             <!-- <h6>{{bookvar.bookName}}</h6> -->
             <div class="card-width"></div>
-            <img  src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookvar.bookName}}.jpg" alt="card image">
+            <img  src="https://convertedbooks.s3.ap-south-1.amazonaws.com/{{bookvar.bookId}}.jpg" alt="card image">
         </mat-card>
       </div>
   <br><br>

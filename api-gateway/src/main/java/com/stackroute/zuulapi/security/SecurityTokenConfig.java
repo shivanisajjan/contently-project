@@ -28,7 +28,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .and().
                 addFilterBefore(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
                 // authorization requests config
-                .authorizeRequests().antMatchers("/user-management/api/v1/user/login","/user-management/api/v1/user/register","/user-management/api/v1/user/update","/recommendation-service/api/v1/books").permitAll()
+                .authorizeRequests().antMatchers("/user-management/api/v1/user/login","/user-management/api/v1/user/register","/recommendation-service/api/v1/books/trending","/publication-service/api/v1/book/id/{id}","/publication-service/api/v1/publications/search/{title}").permitAll()
                 // must be an admin if trying to access admin area (authentication is also required here)
 //                .antMatchers("/gallery" + "/admin/**").hasRole("ADMIN")
                 // Any other request must be authenticated

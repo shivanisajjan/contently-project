@@ -12,8 +12,8 @@ export class HomeComponent implements OnInit {
   public bookVar: [];
   constructor(
     // tslint:disable-next-line: variable-name
-    private _bookFetch: BookFetchService,
-    private router: Router) {
+    public _bookFetch: BookFetchService,
+    public router: Router) {
   }
 
   ngOnInit() {

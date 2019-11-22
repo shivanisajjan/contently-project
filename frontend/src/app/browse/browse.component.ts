@@ -10,20 +10,21 @@ import {Router} from "@angular/router";
 })
 export class BrowseComponent implements OnInit {
   public innerWidth: any;
-  private pageEvent: PageEvent = new PageEvent();
-  private size = 20;
-  private books = [];
-  private booksLoaded;
-  private bookData: any;
-  private noCol = 5;
+  public pageEvent: PageEvent = new PageEvent();
+  public size = 20;
+  public books = [];
+  public booksLoaded;
+  public bookData: any;
+  public noCol = 5;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  constructor(private contentService: ContentService,
-              private router: Router) {
+
+  constructor(public contentService: ContentService,
+              public router: Router) {
   }
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-    if(this.innerWidth<400){
+    if (this.innerWidth < 400) {
       this.noCol = 1;
     }
     this.contentService.getAllPublishedBooks()
@@ -39,10 +40,12 @@ export class BrowseComponent implements OnInit {
         }
       );
   }
-getCol(){
-  console.log('cols caled');
-  return this.noCol;
-}
+
+  getCol() {
+    console.log('cols caled');
+    return this.noCol;
+  }
+
   bookDetails(bookId: any) {
     localStorage.setItem('bookId', bookId);
     this.router.navigate(['book-details']).then();
@@ -52,7 +55,7 @@ getCol(){
     console.log('event: ', event);
     const start = event.pageIndex * event.pageSize;
     let end = start + event.pageSize;
-    if(end > event.length){
+    if (end > event.length) {
       end = event.length;
     }
     console.log(start, end);
@@ -61,13 +64,13 @@ getCol(){
     return event;
   }
 
-  getBookData(){
+  getBookData() {
     return this.bookData;
   }
 
-  @HostListener('window:resize', ['$event'])
-onResize(event) {
-  this.innerWidth = window.innerWidth;
-}
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event) {
+  //   this.innerWidth = window.innerWidth;
+  // }
 
 }

@@ -79,15 +79,6 @@ public class ControllerTest {
     }
 
     @Test
-    public void testDeleteSuccess() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/delete/123")
-                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(publications)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
     public void testUpdateSuccess() throws Exception
     {
         when(publicationService.updateContent(any())).thenReturn(publications);

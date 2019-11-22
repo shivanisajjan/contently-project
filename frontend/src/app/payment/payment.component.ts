@@ -9,16 +9,16 @@ import {Router} from '@angular/router';
 })
 export class PaymentComponent implements OnInit {
 
-  constructor(private contentService: ContentService,
-              private router: Router) {
+  constructor(public contentService: ContentService,
+              public router: Router) {
   }
 
   public boook;
-  private handler: any;
-  private id;
-  private price;
+  public handler: any;
+  public id;
+  public price;
 
-  private invalidFeedback: string;
+  public invalidFeedback: string;
 
   ngOnInit() {
     this.price = localStorage.getItem('price');

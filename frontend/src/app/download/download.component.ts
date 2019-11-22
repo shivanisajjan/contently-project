@@ -13,7 +13,7 @@ export class DownloadComponent implements OnInit {
   public blob;
 
   // tslint:disable-next-line: variable-name
-  constructor(private _fileSaverService: FileSaverService, private bookFetch: BookFetchService) { }
+  constructor(public _fileSaverService: FileSaverService, public bookFetch: BookFetchService) { }
 
   ngOnInit() {
     this.test = localStorage.getItem('bookId');

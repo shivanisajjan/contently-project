@@ -9,8 +9,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 export class AddNewSectionComponent implements OnInit {
 
   constructor(
-              private dialogRef: MatDialogRef<AddNewSectionComponent>,
-              @Inject(MAT_DIALOG_DATA)private data: String) { }
+              public dialogRef: MatDialogRef<AddNewSectionComponent>,
+              @Inject(MAT_DIALOG_DATA)public data: String) { }
 
   ngOnInit() {
   }

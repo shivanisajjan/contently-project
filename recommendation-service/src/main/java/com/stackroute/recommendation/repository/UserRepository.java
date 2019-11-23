@@ -48,7 +48,7 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     void incrExp(@Param("username") String username);
 
 
-    @Query("match(b:Book) Return b" +
+    @Query("match(b:Book) Return b " +
             "Order by b.created_at desc" +
             ",b.nop desc  Limit 15  ")
     Collection<Book> getTrending();

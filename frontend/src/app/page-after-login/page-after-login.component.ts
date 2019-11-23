@@ -39,11 +39,11 @@ export class PageAfterLoginComponent implements OnInit {
       data => {
         this.bookRec = data;
         if (this.bookRec.length === 0) {
-          this.gotRecs = false;
+          this.gotRecs = true;
         }
       },
       error => {
-        this.gotRecs = false;
+        this.gotRecs = true;
       }
     );
   }

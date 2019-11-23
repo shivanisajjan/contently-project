@@ -22,7 +22,7 @@ public class UserController {
     public Collection<Book> getBooksRecommendation(@PathVariable String name){return userService.getBooksRecommendation(name);}
 
     @GetMapping("books/trending")
-    public Collection<Book> getTrending(@PathVariable String name){return userService.getTrending();}
+    public Collection<Book> getTrending(){return userService.getTrending();}
 
 
     @GetMapping("editor/{genre}")

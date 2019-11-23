@@ -5,7 +5,7 @@
   overflow-x: scroll;
 
 }
-#recbox::-webkit-scrollbar{
+.content-cards::-webkit-scrollbar{
 
   height: 0;
   width: 0;
@@ -77,7 +77,6 @@ h1,h2,h3,h4{
 .content-card{
   margin: 1%;
   background-color: rgb(26, 26, 26);
-  height: 100%;
   animation: mymove 10s infinite;
 }
 
@@ -86,16 +85,29 @@ h1,h2,h3,h4{
   height: 100%;
 }
 
-.content-card h6{
-  width: 200px;
-}
 
 .card-width{
   width: 200px;
 }
+
 
 .content-cards{
   display: flex;
   overflow-x: scroll;
 }
 
+@media only screen and (max-width: 600px) {
+   
+  .content-card{
+    margin: 1%;
+    background-color: rgb(26, 26, 26);
+    animation: mymove 10s infinite;
+    height:100%;
+    width: 100%;
+  }
+  
+  .content-card img{
+    width: 100%;
+    height: 100%;
+  }
+}

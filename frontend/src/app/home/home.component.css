@@ -117,14 +117,14 @@
   margin: 0 auto;
   border-radius: 50%;
 }
-mat-card{
+.author-card{
   padding: 10px;
   justify-content: center;
   flex-basis: 33%;
   margin: 0 10px;
  
 }
-mat-card:hover{
+.author-card:hover{
   box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.568);
   transition: 0.2s;
   
@@ -286,9 +286,8 @@ mat-card-content{
  .content-card{
   margin: 1%;
   background-color: rgb(26, 26, 26);
-  height: 100%;
   animation: mymove 10s infinite;
-
+ 
 }
 
 .content-card img{
@@ -297,9 +296,8 @@ mat-card-content{
 }
 
 
-
 .card-width{
-  width: 50px;
+  width: 200px;
 }
 
 .content-cards{
@@ -394,6 +392,19 @@ mat-card-content{
   
   .landing-content img{
     display: none;
+  }
+  
+  .content-card{
+    margin: 1%;
+    background-color: rgb(26, 26, 26);
+    animation: mymove 10s infinite;
+    height:100%;
+    width: 100%;
+  }
+  
+  .content-card img{
+    width: 100%;
+    height: 100%;
   }
   
 }

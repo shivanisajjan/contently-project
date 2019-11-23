@@ -116,7 +116,7 @@ export class AppComponent implements OnInit {
     this.stompClient.connect({}, (frame) => {
       that.stompClient.subscribe('/user/' + localStorage.getItem('username') + '/notif', (message) => {
         if (message.body) {
-          // console.log('New Notification');
+          console.log('New Notification');
           this.snackBar.open(message.body, 'close', {
             duration: 2000,
           });

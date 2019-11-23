@@ -587,7 +587,7 @@ export class SelectEditorDialog implements OnInit {
   ngOnInit(): void {
     this.getRecommendedEditors();
     this.getAllEditors();
-    console.log(this.data);
+    console.log(this.data.genre[0]);
   }
 
   onNoClick(): void {
@@ -602,7 +602,7 @@ export class SelectEditorDialog implements OnInit {
 
   getRecommendedEditors() {
     console.log('Fetching Editors');
-    this.contentService.getRecommendedEditorsOrIllustrators('editor', this.data[0]).subscribe(
+    this.contentService.getRecommendedEditorsOrIllustrators('editor', this.data.genre[0]).subscribe(
       result => {
         this.editorList = result;
         this.editorListFiltered = this.editorList;
@@ -657,7 +657,7 @@ export class SelectIllustratorDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SelectIllustratorDialog>,
     // tslint:disable-next-line: ban-types
-    @Inject(MAT_DIALOG_DATA) public data: String,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public contentService: ContentService,
     // public changeDetectorRef: ChangeDetectorRef
   ) {
@@ -684,7 +684,7 @@ export class SelectIllustratorDialog implements OnInit {
 
   getRecommendedIllustrators() {
     console.log('Fetching Illustrators');
-    this.contentService.getRecommendedEditorsOrIllustrators('illustrator', this.data[0]).subscribe(
+    this.contentService.getRecommendedEditorsOrIllustrators('illustrator', this.data.genre[0]).subscribe(
       result => {
         this.illustratorList = result;
         this.illustratorListFiltered = this.illustratorList;

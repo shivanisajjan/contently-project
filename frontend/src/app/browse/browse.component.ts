@@ -24,7 +24,7 @@ export class BrowseComponent implements OnInit {
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-    if (this.innerWidth < 400) {
+    if (this.innerWidth < 769) {
       this.noCol = 1;
     }
     this.contentService.getAllPublishedBooks()

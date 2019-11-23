@@ -28,7 +28,7 @@ public class ContentServiceImpl implements ContentService {
     @Autowired
     private MongoOperations mongo;
 
-    public Content saveContent(Content content) throws ContentAlreadyExistsExceptions,NullValueFieldException,InternalServerErrorException {
+    public Content saveContent(Content content) throws InternalServerErrorException {
         try {
             return contentRepository.save(content);
         }

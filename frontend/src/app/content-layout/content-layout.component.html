@@ -4,12 +4,12 @@
     </div>
 <mat-card>
   <mat-card-content>
-    <form #newContent="ngForm">
+    <form #newContent="ngForm" >
 
       <div class="input-group">
         <h5><label>Title : </label></h5>
         <mat-form-field class="input-item">
-          <input matInput name="title" ngModel placeholder="Title">
+          <input matInput id="title" name="title" ngModel placeholder="Title" required>
         </mat-form-field>
       </div>
 
@@ -34,7 +34,7 @@
               <input #genreInput placeholder="Add Genre" [formControl]="genreFormControl"
                      [matAutocomplete]="auto" [matChipInputFor]="chipList"
                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-                     (matChipInputTokenEnd)="add($event)">
+                     (matChipInputTokenEnd)="add($event)" required>
             </label>
           </mat-chip-list>
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">

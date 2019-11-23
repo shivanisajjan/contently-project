@@ -29,6 +29,9 @@
               <mat-error *ngIf="usernameAlreadyExists">
                 Username Already Exists
               </mat-error>
+              <mat-error *ngIf="firstFormGroup.hasError('pattern','username')">
+                Please enter username without speacial characters or whitespace
+              </mat-error>
             </mat-form-field>
           </div>
 
@@ -39,9 +42,12 @@
               <mat-error *ngIf="firstFormGroup.hasError('required', 'password')">
                 Please enter your new password
               </mat-error>
+              <mat-error *ngIf="firstFormGroup.hasError('pattern', 'password')">
+                Password should have at least 8 characters in length, lowercase letters, uppercase letters, numbers and special characters.
+              </mat-error>
             </mat-form-field>
           </div>
-
+          <br>
           <div>
             <mat-form-field class="fields">
               <input formControlName="confirmPassword" matInput placeholder="Confirm password"

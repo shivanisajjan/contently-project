@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   public loggedInUser: any;
   public tokenObject: any;
   hide: boolean = true;
-  
+
   constructor(
     public loginService: LoginService,
     public router: Router,

@@ -5,6 +5,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {formatDate} from '@angular/common';
 import {LoginComponent} from "../login/login.component";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -19,12 +20,14 @@ export class PublicationBookComponent implements OnInit {
   public editorPay;
   public illustratorPay;
   public book;
+  public setPriceFormGroup: FormGroup;
 
   constructor(public contentService: ContentService,
               public bookFetch: BookFetchService,
               public router: Router,
               public dialogRef: MatDialogRef<PublicationBookComponent>,
               public dialog: MatDialog,
+              public formBuilder: FormBuilder
   ) {
   }
 
@@ -36,6 +39,9 @@ export class PublicationBookComponent implements OnInit {
         }
       );
     }
+    this.setPriceFormGroup = this.formBuilder.group({
+      price : ['', Validators.required]
+    });
     let cond1 = false;
     let cond2 = false;
     this.book = JSON.parse(localStorage.getItem('book'));

@@ -105,7 +105,7 @@ public class FileController {
 //                contentDTO.setPlagarized(false);
 //                contentDTO.setPlagCheckingDone(true);
 //                rabbitMQSender.sendContent(contentDTO);
-//                this.amazonClient.generatePDFFromHTML(filename, file);
+//        this.amazonClient.generatePDFFromHTML(filename, file);
 //                return new ResponseEntity<>("Success", HttpStatus.CREATED);
 //            }
 //

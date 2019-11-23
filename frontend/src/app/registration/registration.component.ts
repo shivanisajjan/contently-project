@@ -104,9 +104,9 @@ export class RegistrationComponent implements OnInit {
     this.registerv = false;
     this.firstFormGroup = this._formBuilder.group({
       email: ['', [Validators.pattern(this.emailregex), Validators.required]],
-      username: ['', Validators.required],
+      username: ['', [Validators.pattern(/^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/), Validators.required]],
       contact: ['', [Validators.pattern(this.MOBILE_PATTERN),Validators.minLength(10), Validators.maxLength(10), Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       confirmPassword: [''],
     }, {validator: this.checkPasswords});
 

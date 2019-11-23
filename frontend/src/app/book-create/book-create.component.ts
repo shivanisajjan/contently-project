@@ -59,9 +59,6 @@ export class BookCreateComponent implements OnInit {
               public fileSaverService: FileSaverService,
               public notificationService: NotificationService,
               public componentFactoryResolver: ComponentFactoryResolver) {
-    if (!localStorage.getItem('token')) {
-      this.router.navigate(['/index']).then();
-    }
     this.bookDetails = JSON.parse(localStorage.getItem('book'));
   }
 

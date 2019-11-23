@@ -65,6 +65,7 @@ import {SearchResultsComponent} from './search-results/search-results.component'
 import {IssuesComponent} from './issues/issues.component';
 import {BrowseComponent} from './browse/browse.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { TeamComponent } from './team/team.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     PublicationBookComponent,
     SearchResultsComponent,
     IssuesComponent,
-    BrowseComponent
+    BrowseComponent,
+    TeamComponent
   ],
 
   imports: [

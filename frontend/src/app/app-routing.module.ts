@@ -11,6 +11,7 @@ import {PageAfterLoginComponent} from './page-after-login/page-after-login.compo
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {PaymentComponent} from './payment/payment.component';
 import {SearchResultsComponent} from './search-results/search-results.component';
+import {TeamComponent} from "./team/team.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/index', pathMatch: 'full'},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'edit-profile', component: EditProfileComponent},
   {path: 'pay', component: PaymentComponent},
   {path: 'search/:search', component: SearchResultsComponent},
+  {path: 'team', component: TeamComponent},
   {path: '**', component: HomeComponent}
 ];
 

@@ -122,12 +122,11 @@
   justify-content: center;
   flex-basis: 33%;
   margin: 0 10px;
- 
+
 }
 .author-card:hover{
   box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.568);
   transition: 0.2s;
-  
 }
 mat-card-content{
   text-align: center;
@@ -146,7 +145,7 @@ mat-card-content{
   /* background-color: #0a0927; */
 /* background-color: #f35445; */
   /* background-image: url('../../assets/images/side_bg.jpg'); */
-  
+
 }
 #cardhere
 {
@@ -215,20 +214,20 @@ mat-card-content{
 .landing{
   background-image: url('../../assets/images/landing.jpg');
   height: 550px;
-  
+
   /* background-size: cover; */
 }
 
 .landing-content{
   color: white;
   /* background-color: #f1797f; */
-  
+
   border-radius: 25px;
   width: 65%;
-  margin: auto;  
+  margin: auto;
   display: flex;
   height: 100%;
-  
+
 }
 
 .landing-body{
@@ -265,7 +264,7 @@ mat-card-content{
 
  h3{
   font-family: 'Quicksand', sans-serif ;
-  
+
  }
 
  .programs{
@@ -276,8 +275,8 @@ mat-card-content{
   color: black;
   background-color: #f1797f;
  }
- 
- 
+
+
 
  .author-subtitle{
    color: black;
@@ -315,7 +314,7 @@ mat-card-content{
   outline-offset: -30px;
  } */
 
- 
+
 
  @media only screen and (max-width: 600px) {
   .our-authors-body{
@@ -367,14 +366,14 @@ mat-card-content{
   .landing-content{
     color: white;
     /* background-color: #f1797f; */
-    
+
     border-radius: 25px;
     width: 80%;
-    margin: auto;  
+    margin: auto;
     display: flex;
-    
+
   }
-  
+
   .landing-body{
     margin-top: 15px;
     padding-left: 5%;
@@ -390,10 +389,11 @@ mat-card-content{
     padding-top: 12%;
     text-shadow: 2px 0 0 #000000, -2px 0 0 #000000, 0 2px 0 #000000, 0 -2px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
   }
-  
+
   .landing-content img{
     display: none;
   }
+
   
   .content-card{
     margin: 1%;
@@ -408,4 +408,5 @@ mat-card-content{
     height: 100%;
   }
   
+
 }

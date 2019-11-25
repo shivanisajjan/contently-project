@@ -13,8 +13,9 @@ pipeline {
         stage('build') {
             when { branch 'master' }
             steps {
-                sh "ssh ubuntu@10.20.1.216 'cd ~/'contently_master' ; mvn clean package -DskipTests'"
-                 sh "ssh ubuntu@10.20.1.216 'cd ~/'contently_master'/frontend ; npm install'"
+                sh "ssh ubuntu@10.20.1.216 'sudo docker rm -f contently-frontend'"
+                sh "ssh ubuntu@10.20.1.216 'sudo docker rmi contently_contently-frontend'"
+                sh "ssh ubuntu@10.20.1.216 'cd ~/'contently_master'/frontend ; npm install'"
                 sh "ssh ubuntu@10.20.1.216 'cd ~/'contently_master'/frontend ; ng build'"
             }
         }

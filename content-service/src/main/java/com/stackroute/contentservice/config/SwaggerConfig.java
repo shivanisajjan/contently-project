@@ -1,4 +1,4 @@
-package com.stackroute.purchasingservice.config;
+package com.stackroute.contentservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
